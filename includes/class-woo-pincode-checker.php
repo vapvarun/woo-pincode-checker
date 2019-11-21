@@ -121,6 +121,7 @@ class Woo_Pincode_Checker {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-pincode-checker-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-pincode-cheker-form.php';
 
 		$this->loader = new Woo_Pincode_Checker_Loader();
 
@@ -158,7 +159,8 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wpc_admin_menu' );
-
+		$this->loader->add_filter( 'set-screen-option', $plugin_admin, 'pincode_per_page_set_option', 10, 3);
+		
 	}
 
 	/**
@@ -171,10 +173,13 @@ class Woo_Pincode_Checker {
 	private function define_public_hooks() {
 
 		$plugin_public = new Woo_Pincode_Checker_Public( $this->get_plugin_name(), $this->get_version() );
+		$pincode_form = new Woo_Pincode_Checker_Form( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'wp_ajax_nopriv_picodecheck_ajax_submit', $pincode_form, 'picodecheck_ajax_submit' );
+		$this->loader->add_action( 'wp_ajax_picodecheck_ajax_submit', $pincode_form, 'picodecheck_ajax_submit' );
+		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $pincode_form, 'pincode_field' );
 	}
 
 	/**

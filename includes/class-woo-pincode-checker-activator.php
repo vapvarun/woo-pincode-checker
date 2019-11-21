@@ -51,5 +51,4 @@ class Woo_Pincode_Checker_Activator {
 			dbDelta( $edd_sql );
 		}
 	}
-
 }

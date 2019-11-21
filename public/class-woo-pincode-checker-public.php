@@ -97,7 +97,7 @@ class Woo_Pincode_Checker_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-public.js', array( 'jquery' ), $this->version, false );
-
+		wp_localize_script( $this->plugin_name, 'pincode_check', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
 }
