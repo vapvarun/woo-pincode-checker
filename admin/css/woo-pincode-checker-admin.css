@@ -2,3 +2,65 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+ 
+/* check box design */
+.wbwss-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.wbwss-switch input {display:none;}
+
+.wbwss-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.wbwss-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .wbwss-slider {
+    background-color: #2196F3;
+}
+
+input:focus + .wbwss-slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .wbwss-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.wbwss-slider.wbwss-round {
+    border-radius: 34px;
+}
+
+.wbwss-slider.wbwss-round:before {
+    border-radius: 50%;
+}
+
+.wbwss-label{
+    font-size: 15px;
+    font-weight: 600;
+}

@@ -1,5 +1,6 @@
 <?php
 require_once('class-woo-pincode-checker-listing.php');
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -39,7 +40,8 @@ class Woo_Pincode_Checker_Admin {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
-
+    
+	private $plugin_settings_tabs;
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -115,11 +117,73 @@ class Woo_Pincode_Checker_Admin {
 		
 		add_submenu_page('pincode_lists', esc_html__('Upload pincodes','woo-pincode-checker'), esc_html__('Upload pincodes','woo-pincode-checker'), 'manage_options', 'wpc_upload_pincodes', array( $this,'wpc_upload_pincodes_func'));
 		
-		add_submenu_page('pincode_lists', esc_html__('Settings','woo-pincode-checker'), esc_html__('Settings','woo-pincode-checker'), 'manage_options', 'wpc_settings_pincodes', array( $this,'wpc_settings_pincodes_func'));
+		/* add sub menu in wnplugin setting page */
+		if ( empty ( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+			add_menu_page( esc_html__( 'WB Plugins', 'woo-pincode-checker' ), esc_html__( 'WB Plugins', 'woo-pincode-checker' ), 'manage_options', 'wbcomplugins', array( $this, 'wpc_admin_settings_page' ), 'dashicons-lightbulb', 59 );
+		 	add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'woo-pincode-checker' ), esc_html__( 'General', 'woo-pincode-checker' ), 'manage_options', 'wbcomplugins' );
+		}
+		add_submenu_page( 'wbcomplugins', esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' ), esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' ), 'manage_options', 'woo-pincode-checker', array( $this, 'wpc_admin_settings_page' ) );
 		
 		/* screen Option */
 		add_action( 'load-'.$page_hook, array( $this, 'load_user_list_table_screen_options' ) );
     }
+	
+	public function wpc_admin_settings_page() {
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+		
+		?>
+	
+		 <div class="wrap">
+			<div class="ess-admin-header">
+				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+				<h1 class="wbcom-plugin-heading">
+					<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
+				</h1>
+			</div>
+			<div class="wbcom-admin-settings-page">
+				<?php
+				$this->wpc_plugin_settings_tabs();
+				settings_fields( $current );
+				do_settings_sections( $current );
+				?>
+			</div>
+		 </div>
+		<?php 
+	}
+	
+	/**
+	  * add tab in setting page 
+	  */
+	public function wpc_plugin_settings_tabs() {
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+		
+		$tab_html = '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
+		
+		foreach ( $this->plugin_settings_tabs as $edd_tab => $tab_name ) {
+			$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
+			$page      = 'woo-pincode-checker';
+			$tab_html .= '<a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a>';
+		} 
+		$tab_html .= '</h2></div>';
+		echo $tab_html;
+	}
+	
+	/**
+	  * Get general settings html.
+	  */
+	public function wpc_general_settings_content() {
+		require_once 'partials/woo-pincode-checker-admin-display.php';
+	}
+	
+	/**
+	  * Register all settings.
+	  */
+	public function wpc_add_admin_register_setting() {
+		$this->plugin_settings_tabs['wpc-general'] = esc_html__( 'General', 'woo-pincode-checker' );
+		register_setting( 'wpc_general_settings', 'wpc_general_settings' );
+		add_settings_section( 'wpc-general', ' ', array( $this, 'wpc_general_settings_content' ), 'wpc-general' ); 
+	} 
+	
 	
 	/**
 	  * add screen option 
@@ -127,7 +191,7 @@ class Woo_Pincode_Checker_Admin {
 	public function load_user_list_table_screen_options() {
 		$arguments = array(
 			'label'		=>	__( 'Pincode Per Page', 'woo-pincode-checker' ),
-			'default'	=>	5,
+			'default'	=>	20,
 			'option'	=>	'pincode_checker_per_page'
 		);
 		add_screen_option( 'per_page', $arguments );
@@ -180,7 +244,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 	
 	/**
-	 * Add Pincod.
+	 * Add Pincode.
 	 *
 	 * @since    1.0.0
 	 */
@@ -347,7 +411,7 @@ class Woo_Pincode_Checker_Admin {
 		$bytes      = apply_filters( 'import_upload_size_limit', wp_max_upload_size() );
 		$size       = size_format( $bytes );
 		
-		if( isset($_POST['upload_pincodes']) ) {
+		if( isset( $_POST['upload_pincodes'] ) ) {
 			$is_import=true;
 			$filetype = wp_check_filetype( wc_clean( wp_unslash( $_FILES['import']['name'] ) ), array(
 						'csv' => 'text/csv',

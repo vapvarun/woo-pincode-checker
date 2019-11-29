@@ -28,7 +28,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		$table_columns = array(
 						'cb'		      => '<input type="checkbox" />', 		 
 						'pincode'	      => __( 'Pincode', 'woo-pincode-checker' ),			
-						'city'            => _x( 'City', 'woo-pincode-checker' ),
+						'city'            => __( 'City', 'woo-pincode-checker' ),
 						'state'		      => __( 'State', 'woo-pincode-checker' ),
 						'delivery_days'	  => __( 'Delivery Days', 'woo-pincode-checker' ),
 						'case_on_delivery'=> __( 'Case on Delivery', 'woo-pincode-checker' ),
@@ -86,8 +86,8 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 	
 	/**
-      *	fetch data from database 
-	  */
+     *	fetch data from database 
+	 */
 	 public function fetch_table_data( $pincode_per_page, $page_number = 1 ) {
 		global $wpdb;	
 		
@@ -113,8 +113,8 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
     }	
 	
 	/**
-      *	display default column 
-	  */
+     *	display default column 
+	 */
 	public function column_default( $item, $column_name ) {		
 		switch ( $column_name ) {			
 			case 'pincode':
@@ -129,8 +129,8 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 	
 	/** 
-	  * display bulk checkbox 
-	  */
+	 * display bulk checkbox 
+	 */
 	public function column_cb( $item ) {
 		
 		return sprintf(
@@ -139,14 +139,14 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 	
 	/** 
-	  * display edit/delete option
-	  */
+	 * display edit/delete option
+	 */
 	public function column_pincode( $item ) {
 		
 		$actions = array(
-            'edit'      => sprintf('<a href="?page=%s&action=%s&id=%s">Edit</a>','add_wpc_pincode','edit',$item['id']),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&id=%s">Delete</a>',$_REQUEST['page'],'delete',$item['id']), 
-        );
+						'edit'	=> sprintf('<a href="?page=%s&action=%s&id=%s">Edit</a>','add_wpc_pincode','edit',$item['id']),
+						'delete'=> sprintf('<a href="?page=%s&action=%s&id=%s">Delete</a>',$_REQUEST['page'],'delete',$item['id']), 
+					);
 		return sprintf('%1$s %2$s', $item['pincode'], $this->row_actions($actions) );
 	}
 	
@@ -156,10 +156,10 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	public function get_sortable_columns() {
 		
 		$sortable_columns = array (
-								'pincode' => array( 'pincode',true ),
-								'city'    => array('city',true ),
-								'state'   => array( 'state',true ),
-							);
+									'pincode' => array( 'pincode',true ),
+									'city'    => array('city',true ),
+									'state'   => array( 'state',true ),
+								);
 		return $sortable_columns;
 	}
 	
@@ -167,17 +167,16 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	  * Delete action
 	  */
 	public function handle_table_actions() {		
-	   global $wpdb;
+		global $wpdb;
 	   
-	     $id = $_REQUEST['id'];
+	    $id = $_REQUEST['id'];
 		/* delete action */	   
 		if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] === 'delete' ) ) {
 			self::delete_pincode( absint( $_GET['id'] ) );
 		}
 		
 		/* bulk delete */
-		if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'bulk-delete' )
-		) {
+		if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'bulk-delete' ) ) {
 			$delete_ids = esc_sql( $_REQUEST['bulk-delete'] );
             
 			if( $delete_ids != '' ) {
@@ -188,30 +187,27 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			}
 			
 			wp_redirect( esc_url( add_query_arg() ) ); 
-			exit;
+			wp_die();
 		}
 	}
 	
 	/**
-      *	Delete Query 
-	  */
+     *	Delete Query 
+	 */
 	public static function delete_pincode( $id ) {
 		global $wpdb;
 
-		$wpdb->delete(
-				"{$wpdb->prefix}pincode_checker",
-				[ 'id' => $id ],
-				[ '%d' ]
-			);
+		$wpdb->delete( "{$wpdb->prefix}pincode_checker",
+						[ 'id' => $id ],
+						[ '%d' ]
+					);
 	}
 	
 	/** 
-	  * Delete Action
-	  */
+	 * Delete Action
+	 */
 	public function get_bulk_actions() {
-		$actions = [
-					'bulk-delete' => 'Delete'
-				];
+		$actions = [ 'bulk-delete' => 'Delete' ];
 
 		return $actions;
 	}
