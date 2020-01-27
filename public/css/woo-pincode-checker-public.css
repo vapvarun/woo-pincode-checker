@@ -2,14 +2,15 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
- 
+
 /* date 21-11-19 */
 
 .woocommerce div.product form.cart .button {
     float: none !important;
 }
 
-.woocommerce form #pincode_field_idp.form-row input.input-text, #pincode_field_idp .woocommerce form #pincode_field_idp.form-row textarea {
+.woocommerce form #pincode_field_idp.form-row input.input-text,
+#pincode_field_idp .woocommerce form #pincode_field_idp.form-row textarea {
     border-width: 0 0 2px;
     border-color: #000;
 }
@@ -21,10 +22,14 @@
     font-size: 15px;
 }
 
-.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button {
-	font-size:15px;
-	margin: 5px 0;
-	padding:10px 15px;
+.woocommerce #respond input#submit,
+.woocommerce #pincode_field_idp a.button,
+.woocommerce #avlpin a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+    font-size: 15px;
+    margin: 5px 0;
+    padding: 10px 15px;
 }
 
 .wc-delivery-time-response p {
@@ -34,14 +39,16 @@
     font-weight: 600;
 }
 
-.entry-content .delivery-info h6 {
-	margin: 5px 0px 0px 0px;
+.entry-content .delivery-info h6,
+.delivery-info h6 {
+    margin: 10px 0;
+    display: inline-block;
 }
 
 .delivery-info ul, ol {
     margin: 0;
-	list-style:none;
-} 
+    list-style: none;
+}
 
 .delivery-info ul li {
     line-height: 1.5;
@@ -56,12 +63,13 @@
     font-weight: 500;
 }
 
-.delivery-info span, .delivery-info .delivery {
-	display:inline-block;
+.delivery-info span,
+.delivery-info .delivery {
+    display: inline-block;
 }
 
 .delivery-info span h6 {
-	font-size:14px;
+    font-size: 14px;
 }
 
 .wc-delivery-time-response {
