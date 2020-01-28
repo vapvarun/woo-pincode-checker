@@ -32,7 +32,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 			
 			    <tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Show Deliver Date', 'woo-pincode-checker' ); ?></label>
+						<label><?php esc_html_e( 'Show Delivery Date', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td>
 					    <label class="wbwss-switch">
