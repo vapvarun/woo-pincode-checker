@@ -43,7 +43,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 					
 				</tr>
 				
-				<tr id="wbwss-wpc-deliver-date" <?php if ( !isset($$general_settings['date_display'])) {?> style="display:none" <?php }?>>
+				<tr id="wbwss-wpc-deliver-date" <?php if ( !isset($general_settings['date_display'])) {?> style="display:none" <?php }?>>
 					<th scope="row">
 						<label><?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?></label>
 					</th>
