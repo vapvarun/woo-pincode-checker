@@ -168,8 +168,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	  */
 	public function handle_table_actions() {		
 		global $wpdb;
-	   
-	    $id = $_REQUEST['id'];
+		
 		/* delete action */	   
 		if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] === 'delete' ) ) {
 			self::delete_pincode( absint( $_GET['id'] ) );

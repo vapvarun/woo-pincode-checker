@@ -314,7 +314,7 @@ class Woo_Pincode_Checker_Admin {
 		}
 		
 		/* if edit action then display record */
-		if( $_REQUEST['action'] == 'edit' ) {
+		if( isset($_REQUEST['action']) && $_REQUEST['action'] == 'edit' ) {
 			$id = $_REQUEST['id'];
 			$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 			$sql = "SELECT * FROM ".$pincode_checker_table_name." Where `id` =".$id;
@@ -325,7 +325,7 @@ class Woo_Pincode_Checker_Admin {
 		<div class="wrap wpc-add-pincode-wrap">	
            		
 			<h2>
-			   <?php if( $_REQUEST['action'] == 'edit' ) {
+			   <?php if( isset($_REQUEST['action']) && $_REQUEST['action'] == 'edit' ) {
 					esc_html_e('Edit Pincode','woo-pincode-checker' ); 
 			   } else {
 				   esc_html_e('Add Pincode','woo-pincode-checker' ); 
@@ -342,7 +342,7 @@ class Woo_Pincode_Checker_Admin {
 								</th>
 								
 								<td>
-									<input type="text"  pattern="[a-zA-Z0-9\s]+" required="required" class="regular-text" id="wpc-pincode" value="<?php echo $query_results[0]['pincode'];?>" name="wpc-pincode">
+									<input type="text"  pattern="[a-zA-Z0-9\s]+" required="required" class="regular-text" id="wpc-pincode" value="<?php echo ( isset($query_results[0]['pincode'])) ? $query_results[0]['pincode'] : '';?>" name="wpc-pincode">
 								</td>
 							</tr>
 							<tr>
@@ -352,7 +352,7 @@ class Woo_Pincode_Checker_Admin {
 								</th>
 
 								<td>
-									<input type="text" required="required" class="regular-text" id="wpc-city" value="<?php echo $query_results[0]['city'];?>" name="wpc-city">
+									<input type="text" required="required" class="regular-text" id="wpc-city" value="<?php echo (isset($query_results[0]['city'])) ? $query_results[0]['city'] : '';?>" name="wpc-city">
 								</td>
 
 							</tr>
@@ -363,7 +363,7 @@ class Woo_Pincode_Checker_Admin {
 								</th>
 
 								<td>
-									<input type="text" required="required" class="regular-text" id="wpc-state" name="wpc-state" value="<?php echo $query_results[0]['state'];?>">
+									<input type="text" required="required" class="regular-text" id="wpc-state" name="wpc-state" value="<?php echo (isset($query_results[0]['state'])) ? $query_results[0]['state'] : '';?>">
 								</td>
 
 							</tr>
@@ -373,18 +373,18 @@ class Woo_Pincode_Checker_Admin {
 									<label for="wpc-delivery-days"><?php esc_html_e('Delivery within days','woo-pincode-checker'); ?></label>
 								</th>
 
-								<td><input type="number" min="1" max="365" step="1" class="regular-text" id="wpc-delivery-days" name="wpc-delivery-days" value="<?php echo $query_results[0]['delivery_days'];?>"></td>
+								<td><input type="number" min="1" max="365" step="1" class="regular-text" id="wpc-delivery-days" name="wpc-delivery-days" value="<?php echo (isset($query_results[0]['delivery_days'])) ? $query_results[0]['delivery_days'] : '';?>"></td>
 							</tr>
 							<tr>
 								<th>
 									<label for="wpc-case-on-delivery"><?php esc_html_e('Cash on Delivery','woo-pincode-checker'); ?></label>
 								</th>
 
-								<td><input type="checkbox" value="1" class="regular-text" id="wpc-case-on-delivery" name="wpc-case-on-delivery" <?php checked( '1',  $query_results[0]['case_on_delivery'] ); ?>> &nbsp; <?php esc_html_e( 'Enable Cash on deliver for this pincode', 'woo-pincode-checker' )?></td>
+								<td><input type="checkbox" value="1" class="regular-text" id="wpc-case-on-delivery" name="wpc-case-on-delivery" <?php checked( '1',  (isset($query_results[0]['case_on_delivery'])) ? $query_results[0]['case_on_delivery'] : '' ); ?>> &nbsp; <?php esc_html_e( 'Enable Cash on deliver for this pincode', 'woo-pincode-checker' )?></td>
 							</tr>
 						</tbody>
 					</table>
-					<?php if( $_REQUEST['action'] == 'edit' ) {
+					<?php if( isset($_REQUEST['action']) && $_REQUEST['action'] == 'edit' ) {
 						submit_button( __('Edit Picode', 'woo-pincode-checker' )); 
 					} else {
 						submit_button( __('Add Picode', 'woo-pincode-checker' )); 
