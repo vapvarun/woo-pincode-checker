@@ -162,7 +162,7 @@ class Woo_Pincode_Checker_Form {
 	    $wpc_general_settings = get_option( 'wpc_general_settings' );
 		?>
 		<style>
-
+			.delivery-info-wrap,
 			.avlpin p { <?php if( $wpc_general_settings['textcolor'] == ''){ echo "color:#000;"; } else { echo "color:$wpc_general_settings[textcolor]".';'; }  ?> }
 
 			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button  { <?php if( $wpc_general_settings['buttoncolor'] == ''){ echo "background-color:#a46497;"; } else { echo "background-color:$wpc_general_settings[buttoncolor]".';'; }  ?> }
