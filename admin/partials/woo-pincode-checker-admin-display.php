@@ -49,12 +49,14 @@ $general_settings = $wpc_globals->wpc_general_settings;
 					</th>
 					<td>
 						<label class="wpc-delivery_date">
-							<input type="text" name="wpc_general_settings[delivery_date]" value="<?php echo $general_settings['delivery_date'];?>">
-						</label>
-						<p class="description"><?php esc_html_e( 'M jS - July 1st', 'woo-pincode-checker' ); ?></p>
-						<p class="description"><?php esc_html_e( 'D, jS M  – Mon, 25th Nov', 'woo-pincode-checker' ); ?></p>
-						<p class="description"><?php esc_html_e( 'D, M d  – Sat, Nov 23', 'woo-pincode-checker' ); ?></p>
-						<p class="description"><?php esc_html_e( 'M d  – Nov 23', 'woo-pincode-checker' ); ?></p>
+							<select name="wpc_general_settings[delivery_date]" >
+								<option value=""><?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker');?></option>
+								<option value="M jS" <?php selected($general_settings['delivery_date'], 'M jS');?>><?php esc_html_e( 'M jS - July 1st', 'woo-pincode-checker' ); ?></option>
+								<option value="D, jS M" <?php selected($general_settings['delivery_date'], 'D, jS M');?>><?php esc_html_e( 'D, jS M  – Mon, 25th Nov', 'woo-pincode-checker' ); ?></option>
+								<option value="D, M d" <?php selected($general_settings['delivery_date'], 'D, M d');?>><?php esc_html_e( 'D, M d  – Sat, Nov 23', 'woo-pincode-checker' ); ?></option>
+								<option value="M d" <?php selected($general_settings['delivery_date'], 'M d');?>><?php esc_html_e( 'M d  – Nov 23', 'woo-pincode-checker' ); ?></option>								
+							</select>
+						</label>						
 					</td>
 				</tr>
 				
