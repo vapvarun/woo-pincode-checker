@@ -20,6 +20,11 @@ global $wpc_globals;
 global $wp_roles; 
 $general_settings = $wpc_globals->wpc_general_settings;
 
+$general_settings['date_display'] = isset( $general_settings['date_display'] ) ? $general_settings['date_display'] : '';
+$general_settings['delivery_date'] = isset( $general_settings['delivery_date'] ) ? $general_settings['delivery_date'] : '';
+$general_settings['textcolor'] = isset( $general_settings['textcolor'] ) ? $general_settings['textcolor'] : '';
+$general_settings['buttoncolor'] = isset( $general_settings['buttoncolor'] ) ? $general_settings['buttoncolor'] : '';
+$general_settings['buttontcolor'] = isset( $general_settings['buttontcolor'] ) ? $general_settings['buttontcolor'] : '';
 ?>
 <div class="wbcom-tab-content">
 	<form method="post" action="options.php">
