@@ -3,7 +3,7 @@ Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/
 Tags: WooCommerce
 Requires at least: 3.0.1
-Tested up to: 5.3.2
+Tested up to: 5.4.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -29,6 +29,8 @@ e.g.
 If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
 
 == Changelog ==
+= 1.1.0 =
+Fixed: #11 Notices and warnings in backend dashboard settings
 
 = 1.0.0 =
 * Initial release.
