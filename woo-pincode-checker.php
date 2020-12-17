@@ -35,6 +35,9 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'WOO_PINCODE_CHECKER_VERSION', '1.1.0' );
+define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
+
+
 
 /**
  * The code that runs during plugin activation.
