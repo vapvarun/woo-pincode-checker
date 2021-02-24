@@ -1,0 +1,811 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Woo Pincode Checker\n"
+"POT-Creation-Date: 2021-02-25 01:29+0530\n"
+"PO-Revision-Date: 2021-02-25 01:29+0530\n"
+"Last-Translator: Varun Dubey <varun@wbcomdesigns.com>\n"
+"Language-Team: Varun Dubey <varun@wbcomdesigns.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: woo-pincode-checker.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/class-woo-pincode-checker-admin.php:112
+#: admin/class-woo-pincode-checker-listing.php:16
+msgid "Pincodes"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:114
+msgid "Pincode List"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:116
+#: admin/class-woo-pincode-checker-admin.php:331
+msgid "Add Pincode"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:118
+msgid "Upload pincodes"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:122
+msgid "WB Plugins"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:123
+#: admin/class-woo-pincode-checker-admin.php:182
+msgid "General"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: admin/class-woo-pincode-checker-admin.php:125
+#: admin/class-woo-pincode-checker-admin.php:140
+msgid "Woo Pincode Checker"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:193
+msgid "Pincode Per Page"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:222
+msgid "Pincode Lists"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:223
+msgid "Add New"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:283
+msgid "Added Pincode Successfully."
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:300
+msgid "Update Pincode Successfully ."
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:305
+msgid "Please fill valid pincode info."
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:329
+msgid "Edit Pincode"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:341
+#: admin/class-woo-pincode-checker-listing.php:15
+#: admin/class-woo-pincode-checker-listing.php:30
+msgid "Pincode"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:351
+#: admin/class-woo-pincode-checker-listing.php:31
+msgid "City"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:362
+#: admin/class-woo-pincode-checker-listing.php:32
+msgid "State"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:373
+msgid "Delivery within days"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:380
+msgid "Cash on Delivery"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:383
+msgid "Enable Cash on deliver for this pincode"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:388
+msgid "Edit Picode"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:390
+msgid "Add Picode"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:421
+msgid "Invalid file type. The importer supports CSV file formats."
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:456
+msgid "Import Pincodes CSV file Successfully."
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:471
+msgid "Upload pincodes from a CSV file"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:482
+msgid "Choose a CSV file from your computer:"
+msgstr ""
+
+#. translators: %s: maximum upload size
+#: admin/class-woo-pincode-checker-admin.php:494
+#, php-format
+msgid "Maximum size: %s"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:506
+msgid "Import CSV File"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-listing.php:33
+msgid "Delivery Days"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-listing.php:34
+msgid "Case on Delivery"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:40
+msgid "Show Delivery Date"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:53
+#: admin/partials/woo-pincode-checker-admin-display.php:58
+msgid "Select Delivery Date Format"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:59
+msgid "M jS - July 1st"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:60
+msgid "D, jS M  – Mon, 25th Nov"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:61
+msgid "D, M d  – Sat, Nov 23"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:62
+msgid "M d  – Nov 23"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:70
+msgid "Check Pincode Label Text Color"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:78
+msgid "Check Button Color"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:86
+msgid "Check Button Text Color"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:3
+msgid "Plugin License Settings"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:8
+#: admin/wbcom/templates/wbcom-license-page.php:21
+msgid "Product"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:9
+#: admin/wbcom/templates/wbcom-license-page.php:22
+msgid "Version"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:10
+#: admin/wbcom/templates/wbcom-license-page.php:23
+msgid "Key"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:11
+#: admin/wbcom/templates/wbcom-license-page.php:24
+msgid "Status"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:12
+#: admin/wbcom/templates/wbcom-license-page.php:25
+msgid "Action"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:8
+msgid "Free Addons"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:14
+msgid "Install"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:18
+#: admin/wbcom/wbcom-admin-settings.php:151
+msgid "Activate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:22
+#: admin/wbcom/wbcom-admin-settings.php:152
+msgid "Deactivate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:50
+msgid "Paid Addons"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:67
+msgid "View"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:3
+#: admin/wbcom/wbcom-admin-settings.php:75
+#: admin/wbcom/wbcom-admin-settings.php:98
+msgid "Support"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:5
+msgid "Having any question or issue ?"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:7
+msgid ""
+"Our team is here to help you out at anytime. If you have any idea about how "
+"we could improve. You can share access to your site on our helpdesk if it "
+"can help getting faster. There are two ways to in touch with us :"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:19
+msgid "Tickets Support"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:20
+msgid ""
+"Open a ticket on our helpdesk, we don't guarantee a fast response but within "
+"a week. Except if you've purchased one of our product we'll reply within 24 "
+"hours."
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:24
+msgid "Open a ticket"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:39
+#: admin/wbcom/templates/wbcom-support-page.php:44
+msgid "Contact Us"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-support-page.php:40
+msgid ""
+"Create a new thread on our plugin page, participation is open to anyone from "
+"all around the world. We'll be there to help as well but can't guarantee any "
+"delay."
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:4
+msgid "Reign BuddyPress"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:12
+msgid "REIGN Community"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:14
+msgid "Multiple Member Directory Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:15
+msgid "Multiple Member Header Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:16
+msgid "Multiple Group Directory Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:17
+msgid "Multiple Group Header Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:18
+msgid "BuddyPress Customization Options"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:19
+msgid "BuddyPress Extra Widgets"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:20
+msgid "Inbuilt Social Profile Module"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:23
+#: admin/wbcom/templates/wbcom-themes-page.php:50
+#: admin/wbcom/templates/wbcom-themes-page.php:74
+#: admin/wbcom/templates/wbcom-themes-page.php:97
+msgid "Purchase"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:24
+#: admin/wbcom/templates/wbcom-themes-page.php:51
+#: admin/wbcom/templates/wbcom-themes-page.php:75
+#: admin/wbcom/templates/wbcom-themes-page.php:98
+msgid "Preview"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:30
+msgid "LearnMate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:39
+msgid "Learnmate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:41
+msgid "Add Review to your course"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:42
+msgid "Course Coming Soon"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:43
+#: admin/wbcom/templates/wbcom-themes-page.php:70
+msgid "Grid And List Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:44
+msgid "Learndash/LifterLMS Extra Widgets"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:45
+msgid "Unparalleled Course Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:46
+msgid "Awesome Learndash/LifterLMS Pages"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:47
+msgid "Distraction Free Reading"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:57
+msgid "StoreMate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:65
+msgid "ShopMate Dokan"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:67
+msgid "Dokan Extra Widgets"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:68
+msgid "Unique Single Product Page Customization"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:69
+msgid "Awesome WooCommerce Pages"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:71
+msgid "Automated Mega Menu Support"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:81
+msgid "Jobmate"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:89
+msgid "Jobmate Theme"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:91
+msgid "Simple live searching and filtering"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:92
+msgid "Unique Job listing Page"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:93
+msgid "Awesome Resume list Page"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:94
+msgid "Outstanding all job maanger pagesLayout"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:57
+msgid "Settings"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:63
+#: admin/wbcom/wbcom-admin-settings.php:92
+msgid "Components"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:69
+#: admin/wbcom/wbcom-admin-settings.php:95
+msgid "Themes"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:192
+msgid "Custom Font Uploader"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:194
+msgid ""
+"It also allows you to upload your own custom font to your site and use them "
+"using custom css."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:200
+msgid "BuddyPress Activity Filter"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:202
+msgid ""
+"Admin can set default and customised activities to be listed on front-end."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:208
+msgid "BuddyPress Activity Social Share"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:210
+msgid ""
+"This plugin allows anyone easily share BuddyPress Activites on major social "
+"media (Facebook, Twitter, Google+, Linkedin )."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:216
+msgid "BuddyPress Create Group Type"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:218
+msgid "It will help to create group type for BuddyPress Groups."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:224
+msgid "BuddyPress Member Reviews"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:226
+msgid ""
+"This plugin allows only site members to add reviews to the buddypress "
+"members on the site and even rate the member’s profile out of 5 points with "
+"multiple review criteria."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:232
+msgid "BuddyPress Group Reviews"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:234
+msgid ""
+"This plugin allows the BuddyPress Members to give reviews to the BuddyPress "
+"groups on the site. The review form allows the users to give text review, "
+"even rate the group on the basis of multiple criterias."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:240
+msgid "BuddyPress Favorite Notification"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:242
+msgid ""
+"BuddyPress Favorite Notification adds a notification for BuddyPress activity."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:248
+msgid "Custom Email Options"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:250
+msgid "Override default email options of Worpdress."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:256
+msgid "BuddyPress Checkins"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:258
+msgid ""
+"This plugin allows BuddyPress members to share their location when they are "
+"posting activities, you can add places where you visited, nearby locations "
+"based on google places."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:264
+msgid "BuddyPress Job Manager"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:266
+msgid ""
+"Incorporates BuddyPress with the WP Job Manager plugin by creating specific "
+"tabs in employer’s and candidate’s profiles."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:272
+msgid "BuddyPress user ToDo List"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:274
+msgid ""
+"This plugin allows you to create your personal task list with timestamp. You "
+"can mark them complete when you are done with them. It will also send "
+"reminder when you have any overdue task."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:280
+msgid "Shortcodes for BuddyPress"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:282
+msgid ""
+"This plugin will add an extended feature to the big name “BuddyPress” that "
+"will generate Shortcode for Listing Activity Streams , Members and Groups on "
+"any post/page in website."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:288
+msgid "Woo Open Graph"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:290
+msgid ""
+"This plugin will add an extended feature to the big name “WooCommerce” that "
+"will adds well executed and accurate Open Graph Meta Tags to your site with "
+"title,description and WooCommerce featured image."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:296
+msgid "BuddyPress Lock"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:298
+msgid ""
+"This plugin allows the administrator to lock the certain parts of their "
+"site. It help to create private BuddyPress community by locking certain "
+"BuddyPress Components, WordPress Pages, Custom Post Types for public view "
+"without using any membership plugin."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:304
+msgid "Woo Audio Preview"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:306
+msgid ""
+"This plugin Allows playing the audio files in sample mode to prevent "
+"unauthorized downloading of the audio files. It helps to display sample "
+"files at single product page."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:312
+msgid "WordPress System Log"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:314
+msgid ""
+"This plugin helps administrators of the site see their environment on which "
+"the site is currently running that includes WordPress environment, tha "
+"database it requires, Server Environment and the plugins installed and "
+"activated on the site."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:320
+msgid "BP Post From Anywhere"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:322
+msgid ""
+"This plugin will generate shortcode and widgets for post updates section for "
+"activities so you can post update from anywhere, it might be sidebar, some "
+"page or any template file."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:328
+msgid "Woo Document Preview"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:330
+msgid ""
+"This will allow you to add document preview at single product page. Which "
+"helps to offer more better idea when you are selling ebooks, pdf or some "
+"documents."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:336
+msgid "WordPress Media Category"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:338
+#: admin/wbcom/wbcom-admin-settings.php:354
+msgid ""
+"This plugin helps administrators of the site categorize their wordpress "
+"media."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:344
+msgid "Woo Price Quotes"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:346
+msgid ""
+"This plugin helps in quoting the products that admin wishes to hide its "
+"purchasing details."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:352
+msgid "EDD Service Extended"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:360
+msgid "WB Ads Rotator with Split Test"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:362
+msgid ""
+"This plugin is designed for the SPLIT TESTING, you can check performance of "
+"your ads layout and on the basis of them you can select one of them for your "
+"regular use."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:380
+msgid "BuddyPress Moderation Pro"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:381
+msgid ""
+"BuddyPress Community Moderation offers a solution for site owners to keep "
+"their communities straight. With community policing strategy, members of the "
+"community have an option for moderation sitewide by attaching flags to "
+"content created within the various components."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:386
+msgid "BuddyPress Polls"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:387
+msgid ""
+"Use BuddyPress Polls plugin to create polls inside the activity, let your "
+"user response to your polls. Members can create pools like activities, "
+"easily votes on them."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:392
+msgid "BuddyPress Resume Manager"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:393
+msgid ""
+"BuddyPress Resume Manager adds a separate BuddyPress Resume menu at a user’s "
+"BuddyPress Profile Page to display individual member resume. We have added "
+"predefined fields for the resumes and site admin and enable and disable them."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:398
+msgid "BuddyPress Profanity"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:399
+msgid ""
+"Use BuddyPress Profanity plugin to censor content in your community! Easily "
+"Censor all the unwanted words in activities, private messages contents by "
+"specifying a list of keywords to be filtered."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:404
+msgid "BuddyPress Private Community Pro"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:405
+msgid ""
+"This plugin offers a lockdown for BuddyPress Component and will ask users to "
+"log in go further to check profile or any other protected details."
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:410
+msgid "BuddyPress Profile Pro"
+msgstr ""
+
+#: admin/wbcom/wbcom-admin-settings.php:411
+msgid ""
+"This plugin gives you the power to extend BuddyPress Profiles with repeater "
+"fields and groups. You can easily add multiple field groups and display them "
+"at member’s profile."
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:85
+msgid "Available at"
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:85
+msgid "change"
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:89
+#: public/class-woo-pincode-cheker-form.php:127
+msgid "Oops! We are not currently servicing your area."
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:95
+#: public/class-woo-pincode-cheker-form.php:131
+msgid "Check"
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:104
+msgid "Delivered By : "
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:115
+msgid "Cash On Delivery Available"
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Plugin/Ui.php:54
+msgid "View details"
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Plugin/Ui.php:82
+#, php-format
+msgid "More information about %s"
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Plugin/Ui.php:133
+msgid "Check for updates"
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Plugin/Ui.php:220
+#, php-format
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Plugin/Ui.php:222
+#, php-format
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Plugin/Ui.php:224
+#, php-format
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Plugin/Ui.php:230
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr ""
+
+#: wpc-update-checker/Puc/v4p10/Vcs/PluginUpdateChecker.php:100
+msgid "There is no changelog available."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://wbcomdesigns.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allows the site admin to add the pincode availability feature on their sites "
+"with woo pincode checker plugin."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "wbcomdesigns"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://wbcomdesigns.com/plugins"
+msgstr ""
