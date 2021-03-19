@@ -26,7 +26,7 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 		 * @var      array $wss_general_settings
 		 */
 		public $wpc_general_settings;
-		
+
 		/**
 		 * Main Wbcom_WSS_Global_Functions Instance.
 		 * Ensures only one instance of Wbcom_WSS_Global_Functions is loaded or can be loaded.
@@ -44,37 +44,36 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 		 * Initialize the class and set its properties.
 		 *
 		 * @since  1.0.0
-	     * @access public		
+		 * @access public
 		 */
 		public function __construct() {
 			$this->setup_plugin_global();
 		}
-		
+
 		public function setup_plugin_global() {
 			$wpc_general_settings = '';
 			$new_general_settings = array();
 			if ( is_multisite() && is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
 				$wpc_general_settings = get_site_option( 'wpc_general_settings' );
-				
+
 			} else {
 				$wpc_general_settings = get_option( 'wpc_general_settings' );
 			}
-			
+
 			if ( ! empty( $wpc_general_settings ) ) {
 				if ( ! empty( $wpc_general_settings['delivery_date'] ) ) {
-					
-			 		$new_general_settings['date_display'] = isset($wpc_general_settings['date_display']) ? $wpc_general_settings['date_display'] : '';
-			 		$new_general_settings['delivery_date'] = $wpc_general_settings['delivery_date'];
-			 		$new_general_settings['textcolor'] = $wpc_general_settings['textcolor'];
-			 		$new_general_settings['buttoncolor'] = $wpc_general_settings['buttoncolor'];
-			 		$new_general_settings['buttontcolor'] = $wpc_general_settings['buttontcolor'];
-			 	}
-			} 
-			
+					$new_general_settings['date_display']  = isset( $wpc_general_settings['date_display'] ) ? $wpc_general_settings['date_display'] : '';
+					$new_general_settings['delivery_date'] = $wpc_general_settings['delivery_date'];
+					$new_general_settings['textcolor']     = $wpc_general_settings['textcolor'];
+					$new_general_settings['buttoncolor']   = $wpc_general_settings['buttoncolor'];
+					$new_general_settings['buttontcolor']  = $wpc_general_settings['buttontcolor'];
+				}
+			}
+
 			$this->wpc_general_settings = $new_general_settings;
-			
+
 		}
-		
+
 		/**
 		 * Save admin settings.
 		 *
@@ -85,9 +84,9 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 		public function woo_wpc_admin_settings( $setting_key ) {
 			$saved_setting = '';
 
-			if( ! empty( $wpc_admin_settings ) && is_array( $wpc_admin_settings ) ) {	
-				if( isset( $wpc_admin_settings[$setting_key] ) ) {
-					$saved_setting = $wpc_admin_settings[$setting_key];
+			if ( ! empty( $wpc_admin_settings ) && is_array( $wpc_admin_settings ) ) {
+				if ( isset( $wpc_admin_settings[ $setting_key ] ) ) {
+					$saved_setting = $wpc_admin_settings[ $setting_key ];
 				}
 			}
 
