@@ -126,6 +126,10 @@ class Woo_Pincode_Checker {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-pincode-checker-public.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-pincode-cheker-form.php';
+		/**
+		 * Include plugin Update Checker file.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wpc-update-checker/plugin-update-checker.php';
 
 		$this->loader = new Woo_Pincode_Checker_Loader();
 
