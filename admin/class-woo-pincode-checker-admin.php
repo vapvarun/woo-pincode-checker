@@ -1,6 +1,4 @@
 <?php
-require_once 'class-woo-pincode-checker-listing.php';
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -10,7 +8,7 @@ require_once 'class-woo-pincode-checker-listing.php';
  * @package    Woo_Pincode_Checker
  * @subpackage Woo_Pincode_Checker/admin
  */
-
+require_once 'class-woo-pincode-checker-listing.php';
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -41,6 +39,11 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	private $version;
 
+	/**
+	 * Plugin setting tab.
+	 *
+	 * @var      string    $plugin_settings_tabs    Plugin setting tab.
+	 */
 	private $plugin_settings_tabs;
 	/**
 	 * Initialize the class and set its properties.
@@ -127,13 +130,14 @@ class Woo_Pincode_Checker_Admin {
 		/* screen Option */
 		add_action( 'load-' . $page_hook, array( $this, 'load_user_list_table_screen_options' ) );
 	}
-
+	/**
+	 * Plugins setting page.
+	 */
 	public function wpc_admin_settings_page() {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
 
 		?>
-	
-		 <div class="wrap">
+		<div class="wrap">
 			<div class="ess-admin-header">
 				<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 				<h1 class="wbcom-plugin-heading">
@@ -147,12 +151,12 @@ class Woo_Pincode_Checker_Admin {
 				do_settings_sections( $current );
 				?>
 			</div>
-		 </div>
+		</div>
 		<?php
 	}
 
 	/**
-	 * add tab in setting page
+	 * Add tab in setting page.
 	 */
 	public function wpc_plugin_settings_tabs() {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
@@ -165,7 +169,7 @@ class Woo_Pincode_Checker_Admin {
 			$tab_html .= '<a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a>';
 		}
 		$tab_html .= '</h2></div>';
-		echo $tab_html;
+		echo wp_kses_post( $tab_html );
 	}
 
 	/**
@@ -186,7 +190,7 @@ class Woo_Pincode_Checker_Admin {
 
 
 	/**
-	 * add screen option
+	 * Add screen option.
 	 */
 	public function load_user_list_table_screen_options() {
 		$arguments = array(
@@ -197,13 +201,12 @@ class Woo_Pincode_Checker_Admin {
 		add_screen_option( 'per_page', $arguments );
 		$this->Woo_Pincode_Checker_Listing = new Woo_Pincode_Checker_Listing( 'woo-pincode-checker' );
 	}
-
 	/**
-	 * Save screen option
+	 * Save screen option.
 	 */
 	public function pincode_per_page_set_option( $status, $option, $value ) {
 
-		if ( 'pincode_checker_per_page' == $option ) {
+		if ( 'pincode_checker_per_page' === $option ) {
 			return $value;
 		}
 		return $status;
@@ -217,15 +220,13 @@ class Woo_Pincode_Checker_Admin {
 	public function wpc_pincode_lists_func() {
 		?>
 		<div class="wrap">
-			
 			<h2>
 				<?php esc_html_e( 'Pincode Lists', 'woo-pincode-checker' ); ?>
-				<a class="add-new-h2" href="<?php echo admin_url( 'admin.php?page=add_wpc_pincode' ); ?>"><?php esc_html_e( 'Add New', 'woo-pincode-checker' ); ?></a>
+				<a class="add-new-h2" href="<?php echo esc_url( admin_url( 'admin.php?page=add_wpc_pincode' ) ); ?>"><?php esc_html_e( 'Add New', 'woo-pincode-checker' ); ?></a>
 			</h2>
-			
 			<div class="pincode-listing">
 				<form id="nds-user-list-form" method="get">
-					<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
+					<input type="hidden" name="page" value="<?php echo esc_html( $_REQUEST['page'] ); ?>" />
 					<?php
 					$pincode_list = new Woo_Pincode_Checker_Listing();
 
@@ -253,19 +254,19 @@ class Woo_Pincode_Checker_Admin {
 		global $wpdb;
 
 		$wpc_message = $message_type = '';
-		if ( isset( $_POST['wpc-pincode-submit'] ) && $_POST['wpc-pincode-submit'] != '' ) {
+		if ( isset( $_POST['wpc-pincode-submit'] ) && '' !== $_POST['wpc-pincode-submit'] ) {
 			$wpc_pincode          = sanitize_text_field( $_POST['wpc-pincode'] );
 			$wpc_city             = sanitize_text_field( $_POST['wpc-city'] );
 			$wpc_state            = sanitize_text_field( $_POST['wpc-state'] );
 			$wpc_delivery_days    = sanitize_text_field( $_POST['wpc-delivery-days'] );
 			$wpc_case_on_delivery = sanitize_text_field( $_POST['wpc-case-on-delivery'] );
 
-			if ( $wpc_pincode != '' ) {
+			if ( '' !== $wpc_pincode ) {
 
 				$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 				$num_rows                   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $pincode_checker_table_name . ' where `pincode` = %s', $wpc_pincode ) );
 
-				if ( $num_rows == 0 ) {
+				if ( 0 === $num_rows ) {
 					/* insert Record */
 					$wpdb->insert(
 						$pincode_checker_table_name,
@@ -282,7 +283,7 @@ class Woo_Pincode_Checker_Admin {
 					$wpc_message  = esc_html__( 'Added Pincode Successfully.', 'woo-pincode-checker' );
 				} else {
 					/* update Record */
-					if ( $_REQUEST['action'] == 'edit' ) {
+					if ( 'edit' === $_REQUEST['action'] ) {
 						$id = $_REQUEST['id'];
 						$wpdb->update(
 							$pincode_checker_table_name,
@@ -305,16 +306,16 @@ class Woo_Pincode_Checker_Admin {
 			}
 		}
 
-		if ( $wpc_message != '' ) {
+		if ( '' !== $wpc_message ) {
 			?>
 			<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
-				<p><?php echo $wpc_message; ?></p>
+				<p><?php echo esc_html( $wpc_message ); ?></p>
 			</div>
 			<?php
 		}
 
 		/* if edit action then display record */
-		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
+		if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 			$id                         = $_REQUEST['id'];
 			$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 			$sql                        = 'SELECT * FROM ' . $pincode_checker_table_name . ' Where `id` =' . $id;
@@ -324,7 +325,7 @@ class Woo_Pincode_Checker_Admin {
 		<div class="wrap wpc-add-pincode-wrap">	
 			<h2>
 			<?php
-			if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
+			if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 				esc_html_e( 'Edit Pincode', 'woo-pincode-checker' );
 			} else {
 				esc_html_e( 'Add Pincode', 'woo-pincode-checker' );
@@ -340,7 +341,7 @@ class Woo_Pincode_Checker_Admin {
 									<label for="wpc-pincode"><?php esc_html_e( 'Pincode', 'woo-pincode-checker' ); ?></label>
 								</th>
 								<td>
-									<input type="text"  ="[patterna-zA-Z0-9\s]+" required="required" class="regular-text" id="wpc-pincode" value="<?php echo ( isset( $query_results[0]['pincode'] ) ) ? $query_results[0]['pincode'] : ''; ?>" name="wpc-pincode">
+									<input type="text"  pattern="[patterna-zA-Z0-9\s]+" required="required" class="regular-text" id="wpc-pincode" value="<?php echo ( isset( $query_results[0]['pincode'] ) ) ? $query_results[0]['pincode'] : ''; ?>" name="wpc-pincode">
 								</td>
 							</tr>
 							<tr>
@@ -383,7 +384,7 @@ class Woo_Pincode_Checker_Admin {
 						</tbody>
 					</table>
 					<?php
-					if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
+					if ( isset( $_REQUEST['action'] ) && 'edit' === $_REQUEST['action'] ) {
 						submit_button( __( 'Edit Pincode', 'woo-pincode-checker' ) );
 					} else {
 						submit_button( __( 'Add Pincode', 'woo-pincode-checker' ) );
@@ -422,7 +423,7 @@ class Woo_Pincode_Checker_Admin {
 				$is_import    = false;
 			}
 
-			if ( $is_import == true ) {
+			if ( true === $is_import ) {
 
 				if ( $_FILES['import']['size'] > 0 ) {
 
@@ -430,10 +431,10 @@ class Woo_Pincode_Checker_Admin {
 					$i    = 0;
 
 					while ( ( $getData = fgetcsv( $file, 100000, ',' ) ) !== false ) {
-						if ( $i != 0 ) {
+						if ( 0 !== $i ) {
 							$num_rows = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $pincode_checker_table_name . ' where `pincode` = %s', $getData[0] ) );
 
-							if ( $num_rows == 0 ) {
+							if ( 0 === $num_rows ) {
 								$wpdb->insert(
 									$pincode_checker_table_name,
 									array(
@@ -457,10 +458,10 @@ class Woo_Pincode_Checker_Admin {
 			}
 		}
 
-		if ( $wpc_message != '' ) {
+		if ( '' !== $wpc_message ) {
 			?>
 			<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
-				<p><?php echo $wpc_message; ?></p>
+				<p><?php echo esc_html( $wpc_message ); ?></p>
 			</div>
 			<?php
 		}

@@ -37,8 +37,44 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'WOO_PINCODE_CHECKER_VERSION', '1.1.0' );
 define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
 
+if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wpc_admin_page_link' );
+} else {
+	add_action( 'admin_notices', 'wpc_admin_notice' );
+
+}
 
 
+/**
+ * Display admin notice
+ *
+ * @author   Wbcom Designs
+ * @since    1.0.0
+ */
+function wpc_admin_notice() {
+	$woo_plugin = esc_html__( 'Woocommerce', 'woo-pincode-checker' );
+	$wpc_plugin = esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' );
+
+	echo '<div class="error"><p>' . sprintf( esc_html__( '%1$s requires %2$s to be installed and active..', 'woo-pincode-checker' ), '<strong>' . esc_html( $wpc_plugin ) . '</strong>', '<strong>' . esc_html( $woo_plugin ) . '</strong>' ) . '</p></div>';
+	if ( isset( $_GET['activate'] ) ) {
+		unset( $_GET['activate'] );
+	}
+}
+/**
+ * Settings link for this plugin.
+ *
+ * @param array $links The plugin setting links array.
+ * @return array
+ * @author   Wbcom Designs
+ * @since    1.0.0
+ */
+function wpc_admin_page_link( $links ) {
+	$page_link = array(
+		'<a href="' . admin_url( 'admin.php?page=woo-pincode-checker' ) . '">' . esc_html__( 'Settings', 'bp-member-reviews' ) . '</a>',
+	);
+	return array_merge( $links, $page_link );
+}
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-woo-pincode-checker-activator.php

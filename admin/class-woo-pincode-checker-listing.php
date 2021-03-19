@@ -1,9 +1,26 @@
 <?php
+/**
+ * The admin pincode cheker listing.
+ *
+ * @link       https://wbcomdesigns.com/plugins
+ * @since      1.0.0
+ *
+ * @package    Woo_Pincode_Checker
+ * @subpackage Woo_Pincode_Checker/admin
+ */
 
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
-
+/**
+ * The admin pincode cheker listing.
+ *
+ * Defines the constructor, columns, fetching data from database and display listing and actions.
+ *
+ * @package    Woo_Pincode_Checker
+ * @subpackage Woo_Pincode_Checker/admin
+ * @author     wbcomdesigns <admin@wbcomdesigns.com>
+ */
 class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 	/**
@@ -23,7 +40,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * display column
+	 * Display column.
 	 */
 	public function get_columns() {
 
@@ -39,7 +56,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * code for fetch data and display listing
+	 * Code for fetch data and display listing.
 	 */
 	public function prepare_items() {
 		$columns               = $this->get_columns();
@@ -77,11 +94,14 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		$this->items = $this->fetch_table_data( $pincode_per_page, $current_page );
 	}
 
+	/**
+	 * Count a pincode from database.
+	 */
 	public static function record_count() {
 		global $wpdb;
 
 		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
-		if ( isset( $_REQUEST['s'] ) && $_REQUEST['s'] != '' ) {
+		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) {
 			$sql .= " WHERE `pincode` LIKE '%" . $_REQUEST['s'] . "%' ";
 		}
 
@@ -89,7 +109,10 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 *  fetch data from database
+	 * Fetch data from database.
+	 *
+	 * @param string $pincode_per_page Display per page pincode.
+	 * @param string $page_number Pagination.
 	 */
 	public function fetch_table_data( $pincode_per_page, $page_number = 1 ) {
 		global $wpdb;
@@ -97,7 +120,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		/* -- Preparing your query -- */
 		$pincode_query = "SELECT * FROM {$wpdb->prefix}pincode_checker";
 
-		if ( isset( $_REQUEST['s'] ) && $_REQUEST['s'] != '' ) {
+		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) {
 			$pincode_query .= " WHERE `pincode` LIKE '%" . $_REQUEST['s'] . "%' ";
 		}
 
@@ -116,7 +139,10 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 *  display default column
+	 *  Display default column.
+	 *
+	 * @param string $item Display pincode.
+	 * @param string $column_name Display the column name.
 	 */
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
@@ -143,7 +169,9 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * display edit/delete option
+	 * Display edit/delete option.
+	 *
+	 * @param string $item Display the pincodes.
 	 */
 	public function column_pincode( $item ) {
 
@@ -174,16 +202,16 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		global $wpdb;
 
 		/* delete action */
-		if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] === 'delete' ) ) {
+		if ( ( isset( $_REQUEST['action'] ) && 'delete' === $_REQUEST['action'] ) ) {
 			self::delete_pincode( absint( $_GET['id'] ) );
 		}
 
 		/* bulk delete */
-		if ( ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'bulk-delete' ) ) {
+		if ( ( isset( $_REQUEST['action'] ) && 'bulk-delete' === $_REQUEST['action'] ) ) {
 			$delete_ids = esc_sql( $_REQUEST['bulk-delete'] );
 
-			if ( $delete_ids != '' ) {
-				// loop over the array of record IDs and delete them
+			if ( '' !== $delete_ids ) {
+				// loop over the array of record IDs and delete them.
 				foreach ( $delete_ids as $id ) {
 					self::delete_pincode( $id );
 				}
