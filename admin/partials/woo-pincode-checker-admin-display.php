@@ -67,19 +67,19 @@ style="display:none" <?php } ?>>
 				</tr>
 				<tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Check Pincode Label Text Color', 'woo-pincode-checker' ); ?></label>
+						<label><?php esc_html_e( 'Select Pincode Label Text Color', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td><input type="text" name="wpc_general_settings[textcolor]" class="regular-text" id="textcolor" value="<?php echo $general_settings['textcolor']; ?>"></td>
 				</tr>
 				<tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Check Button Color', 'woo-pincode-checker' ); ?></label>
+						<label><?php esc_html_e( 'Select Button Color', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td><input type="text" name="wpc_general_settings[buttoncolor]" class="regular-text" id="buttoncolor" value="<?php echo $general_settings['buttoncolor']; ?>"></td>
 				</tr>
 				<tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Check Button Text Color', 'woo-pincode-checker' ); ?></label>
+						<label><?php esc_html_e( 'Select Button Text Color', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td><input type="text" class="regular-text" id="buttontcolor" name="wpc_general_settings[buttontcolor]" value="<?php echo $general_settings['buttontcolor']; ?>"></td>
 				</tr>
