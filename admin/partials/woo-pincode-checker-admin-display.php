@@ -49,7 +49,7 @@ $general_settings['buttontcolor']  = isset( $general_settings['buttontcolor'] ) 
 				<?php
 				if ( ! isset( $general_settings['date_display'] ) ) {
 					?>
-style="display:none" <?php } ?>>
+  style="display:none" <?php } ?>>
 					<th scope="row">
 						<label><?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?></label>
 					</th>

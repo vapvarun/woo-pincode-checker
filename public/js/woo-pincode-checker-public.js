@@ -43,7 +43,7 @@
 							pin_code : pin_code
 						},
 						success : function( response ) {
-						  if(response == 1) {
+						if(response == 1) {
 								location.reload();
 						  } else {
 							$('#error_pin').show();

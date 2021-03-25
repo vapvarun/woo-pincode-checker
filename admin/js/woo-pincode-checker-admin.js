@@ -1,4 +1,4 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
 	/**
@@ -28,16 +28,16 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-	 
-	$( document ).ready(function() {
-		$( '#wpc_date_display').on( 'click', function() {
-			
-			if( $(this).prop("checked") == true ){
-				$( '#wbwss-wpc-deliver-date' ).show(500);
+
+	$(document).ready(function () {
+		$('#wpc_date_display').on('click', function () {
+
+			if ($(this).prop("checked") == true) {
+				$('#wbwss-wpc-deliver-date').show(500);
 			} else {
-				$( '#wbwss-wpc-deliver-date' ).hide(500);
+				$('#wbwss-wpc-deliver-date').hide(500);
 			}
 		});
 	});
-	
-})( jQuery );
+
+})(jQuery);

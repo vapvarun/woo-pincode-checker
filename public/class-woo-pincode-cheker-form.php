@@ -34,24 +34,24 @@ class Woo_Pincode_Checker_Form {
 
 	}
 
-	/**
-	 * Display Pincode check form on product page.
+	/*
+	 * Display Pincode check form on product page
 	 */
 	public function pincode_field() {
 		global $table_prefix, $wpdb,$woocommerce;
 
-		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && '' !== $_COOKIE['valid_pincode'] ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
+		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
 
 		$num_rows = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
 
-		if ( 0 === $num_rows ) {
+		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}
 
 		/* check pincode is set in cookie or not */
-		if ( isset( $cookie_pin ) && '' !== $cookie_pin ) {
+		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 
-			$query = ' SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
+			$query = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
 
 			$getdata = $wpdb->get_results( $query );
 			foreach ( $getdata as $data ) {
@@ -73,7 +73,7 @@ class Woo_Pincode_Checker_Form {
 
 			$user_ID = get_current_user_id();
 
-			if ( isset( $user_ID ) && 0 !== $user_ID ) {
+			if ( isset( $user_ID ) && $user_ID != 0 ) {
 
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
 			}
@@ -99,7 +99,7 @@ class Woo_Pincode_Checker_Form {
 				<div class="delivery-info-wrap">
 					<div class="delivery-info">
 						<div class="header">
-						<?php if ( isset( $wpc_general_settings['date_display'] ) && 'on' === $wpc_general_settings['date_display'] ) { ?>
+						<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>
 								<h6><?php esc_html_e( 'Delivered By : ', 'woo-pincode-checker' ); ?></h6>
 								<div class="delivery">
 									<ul class="ul-disc">
@@ -111,7 +111,7 @@ class Woo_Pincode_Checker_Form {
 							<?php
 						}
 
-						if ( 1 == $cash_on_delivery ) {
+						if ( $cash_on_delivery == 1 ) {
 							?>
 								<div class="cash_on_delivery"><?php esc_html_e( 'Cash On Delivery Available', 'woo-pincode-checker' ); ?></div>
 							<?php } ?>
@@ -137,25 +137,27 @@ class Woo_Pincode_Checker_Form {
 	}
 
 
-	/**
-	 *  Set picode in cookie.
+	/*
+	 *  set picode in cookie
+	 *
 	 */
 	public function picodecheck_ajax_submit() {
 		global $wpdb;
-		$user_input_pincode = sanitize_text_field( $_POST['pin_code'] );
-		$sql                = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = " . $user_input_pincode;
+		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( $_POST['pin_code'] ) : '';
+		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `{$wpdb->prefix}pincode_checker` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
 		$result             = $wpdb->get_var( $sql );
-		if ( 0 === $result ) {
-			echo '0';
-		} else {
+
+		if ( ! empty( $result ) ) {
 			setcookie( 'valid_pincode', $user_input_pincode, time() + ( 10 * 365 * 24 * 60 * 60 ), '/' );
 			echo '1';
+		} else {
+			echo '0';
 		}
 		wp_die();
 	}
 
-	/**
-	 * Css of general setting option value.
+	/*
+	 * css of general setting option value
 	 *
 	 */
 	public function hook_css() {
@@ -165,7 +167,7 @@ class Woo_Pincode_Checker_Form {
 			.delivery-info-wrap,
 			.avlpin p { 
 			<?php
-			if ( '' === $wpc_general_settings['textcolor'] ) {
+			if ( $wpc_general_settings['textcolor'] == '' ) {
 				echo 'color:#000;';
 			} else {
 				echo "color:$wpc_general_settings[textcolor]" . ';'; }
@@ -174,7 +176,7 @@ class Woo_Pincode_Checker_Form {
 
 			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button  { 
 			<?php
-			if ( '' === $wpc_general_settings['buttoncolor'] ) {
+			if ( $wpc_general_settings['buttoncolor'] == '' ) {
 				echo 'background-color:#a46497;';
 			} else {
 				echo "background-color:$wpc_general_settings[buttoncolor]" . ';'; }
@@ -183,7 +185,7 @@ class Woo_Pincode_Checker_Form {
 
 			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button  { 
 			<?php
-			if ( '' === $wpc_general_settings['buttontcolor'] ) {
+			if ( $wpc_general_settings['buttontcolor'] == '' ) {
 				echo 'color:#fff;';
 			} else {
 				echo "color:$wpc_general_settings[buttontcolor]" . ';'; }
