@@ -51,7 +51,6 @@ function wpc_plugins_files() {
 	if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 		require_once ABSPATH . '/wp-admin/includes/plugin.php';
 	}
-	
 	if ( ! class_exists( 'WooCommerce', false ) ) {
 		add_action( 'admin_notices', 'wpc_admin_notice' );
 	} else {

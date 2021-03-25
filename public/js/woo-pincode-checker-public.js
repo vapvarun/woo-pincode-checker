@@ -48,13 +48,13 @@
 						  } else {
 							$('#error_pin').show();
 							$('.delivery_msg').hide();
-						  }
+							$('.add_to_cart_button, .single_add_to_cart_button').remove();
+						}
 						}
 				}); 
 
 			}
 		});
-		
 		/* already pincode checking form */ 
 		$("#change_pin").click(function(){
 		
