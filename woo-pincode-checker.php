@@ -37,43 +37,38 @@ define( 'WOO_PINCODE_CHECKER_VERSION', '1.1.0' );
 define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
 
 /**
- * Check if Woocommerce plugin is active or not.
- */
-if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-
-	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wpc_admin_page_link' );
-} else {
-	add_action( 'admin_notices', 'wpc_admin_notice' );
-
-}
-/**
- * Display admin notice
+ * Include needed files if required plugin is active
  *
- * @author   Wbcom Designs
- * @since    1.0.0
+ * @since   1.0.0
+ * @author  Wbcom Designs
  */
-function wpc_admin_notice() {
-	$woo_plugin = esc_html__( 'Woocommerce', 'woo-pincode-checker' );
-	$wpc_plugin = esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' );
+add_action( 'plugins_loaded', 'wpc_plugins_files' );
 
-	echo '<div class="error"><p>' . sprintf( esc_html__( '%1$s requires %2$s to be installed and active..', 'woo-pincode-checker' ), '<strong>' . esc_html( $wpc_plugin ) . '</strong>', '<strong>' . esc_html( $woo_plugin ) . '</strong>' ) . '</p></div>';
-	if ( isset( $_GET['activate'] ) ) {
-		unset( $_GET['activate'] );
+/**
+ * WCMP plugin requires files.
+ */
+function wpc_plugins_files() {
+	if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+		require_once ABSPATH . '/wp-admin/includes/plugin.php';
+	}
+	
+	if ( ! class_exists( 'WooCommerce', false ) ) {
+		add_action( 'admin_notices', 'wpc_admin_notice' );
+	} else {
+		register_activation_hook( __FILE__, 'activate_woo_pincode_checker' );
 	}
 }
+
 /**
- * Settings link for this plugin.
- *
- * @param array $links The plugin setting links array.
- * @return array
- * @author   Wbcom Designs
- * @since    1.0.0
+ * Give the notice if plugin is not activated.
  */
-function wpc_admin_page_link( $links ) {
-	$page_link = array(
-		'<a href="' . admin_url( 'admin.php?page=woo-pincode-checker' ) . '">' . esc_html__( 'Settings', 'bp-member-reviews' ) . '</a>',
-	);
-	return array_merge( $links, $page_link );
+function wpc_admin_notice() {
+	$woo_plugin  = esc_html__( 'WooCommerce', 'woo-pincode-checker' );
+	$wcmp_plugin = esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' );
+
+	/* translators: %1$s: WooCommerce plugin, %2$s: WooCommerce Custom My Account Page plugin */
+	echo '<div class="error notice is-dismissible" id="message"><p>' . sprintf( esc_html__( '%1$s requires %2$s to be installed and active.', 'woo-pincode-checker' ), '<strong>' . esc_attr( $wcmp_plugin ) . '</strong>', '<strong>' . esc_attr( $woo_plugin ) . '</strong>' ) . '</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">' .
+	esc_html__( 'Dismiss this notice.', 'woo-pincode-checker' ) . '</span></button></div>';
 }
 /**
  * The code that runs during plugin activation.
