@@ -122,7 +122,7 @@ class Woo_Pincode_Checker_Form {
 
 			<?php
 
-		} else {
+		} elseif ( get_post_meta( get_the_ID(), 'featured-checkbox', true ) == 'no' ) {
 			?>
 			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field">
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are not currently servicing your area.', 'woo-pincode-checker' ); ?></div>
