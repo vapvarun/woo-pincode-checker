@@ -25,6 +25,7 @@ $general_settings['delivery_date'] = isset( $general_settings['delivery_date'] )
 $general_settings['textcolor']     = isset( $general_settings['textcolor'] ) ? $general_settings['textcolor'] : '';
 $general_settings['buttoncolor']   = isset( $general_settings['buttoncolor'] ) ? $general_settings['buttoncolor'] : '';
 $general_settings['buttontcolor']  = isset( $general_settings['buttontcolor'] ) ? $general_settings['buttontcolor'] : '';
+$class          = '';
 if ( $general_settings['date_display'] == false ) {
 	$class = 'hide';
 }
