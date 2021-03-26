@@ -60,7 +60,11 @@ input:checked + .wbwss-slider:before {
     border-radius: 50%;
 }
 
-.wbwss-label{
+.wbwss-label {
     font-size: 15px;
     font-weight: 600;
+}
+
+.hide {
+    display: none;
 }

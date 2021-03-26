@@ -64,12 +64,11 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 				if ( ! empty( $wpc_general_settings['delivery_date'] ) ) {
 					$new_general_settings['date_display']  = isset( $wpc_general_settings['date_display'] ) ? $wpc_general_settings['date_display'] : '';
 					$new_general_settings['delivery_date'] = $wpc_general_settings['delivery_date'];
-					$new_general_settings['textcolor']     = $wpc_general_settings['textcolor'];
-					$new_general_settings['buttoncolor']   = $wpc_general_settings['buttoncolor'];
-					$new_general_settings['buttontcolor']  = $wpc_general_settings['buttontcolor'];
 				}
+					$new_general_settings['textcolor']    = $wpc_general_settings['textcolor'];
+					$new_general_settings['buttoncolor']  = $wpc_general_settings['buttoncolor'];
+					$new_general_settings['buttontcolor'] = $wpc_general_settings['buttontcolor'];
 			}
-
 			$this->wpc_general_settings = $new_general_settings;
 
 		}

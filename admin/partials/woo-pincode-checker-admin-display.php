@@ -25,6 +25,9 @@ $general_settings['delivery_date'] = isset( $general_settings['delivery_date'] )
 $general_settings['textcolor']     = isset( $general_settings['textcolor'] ) ? $general_settings['textcolor'] : '';
 $general_settings['buttoncolor']   = isset( $general_settings['buttoncolor'] ) ? $general_settings['buttoncolor'] : '';
 $general_settings['buttontcolor']  = isset( $general_settings['buttontcolor'] ) ? $general_settings['buttontcolor'] : '';
+if ( $general_settings['date_display'] == false ) {
+	$class = 'hide';
+}
 ?>
 <div class="wbcom-tab-content">
 	<form method="post" action="options.php">
@@ -45,7 +48,7 @@ $general_settings['buttontcolor']  = isset( $general_settings['buttontcolor'] ) 
 						</label>
 					</td>
 					</tr>
-				<tr id="wbwss-wpc-deliver-date" 
+				<tr id="wbwss-wpc-deliver-date" class="<?php echo esc_attr( $class ); ?>"
 				<?php
 				if ( ! isset( $general_settings['date_display'] ) ) {
 					?>
