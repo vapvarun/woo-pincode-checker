@@ -77,7 +77,7 @@ class Woo_Pincode_Checker_Form {
 
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
 			}
-
+			if ( get_post_meta( get_the_ID(), 'featured-checkbox', true ) == 'no' ) {
 			?>
 			<div style="clear:both;font-size:18px; font-weight:600" class="wc-delivery-time-response">
 
@@ -99,7 +99,7 @@ class Woo_Pincode_Checker_Form {
 				<div class="delivery-info-wrap">
 					<div class="delivery-info">
 						<div class="header">
-						<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>
+					<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>
 								<h6><?php esc_html_e( 'Delivered By : ', 'woo-pincode-checker' ); ?></h6>
 								<div class="delivery">
 									<ul class="ul-disc">
@@ -109,10 +109,10 @@ class Woo_Pincode_Checker_Form {
 									</ul>
 								</div>
 							<?php
-						}
+					}
 
-						if ( $cash_on_delivery == 1 ) {
-							?>
+					if ( $cash_on_delivery == 1 ) {
+						?>
 								<div class="cash_on_delivery"><?php esc_html_e( 'Cash On Delivery Available', 'woo-pincode-checker' ); ?></div>
 							<?php } ?>
 						</div>
@@ -120,8 +120,8 @@ class Woo_Pincode_Checker_Form {
 				</div>
 			</div>
 
-			<?php
-
+				<?php
+					}
 		} elseif ( get_post_meta( get_the_ID(), 'featured-checkbox', true ) == 'no' ) {
 			?>
 			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field">
@@ -136,11 +136,10 @@ class Woo_Pincode_Checker_Form {
 		}
 	}
 
-
 	/*
-	 *  set picode in cookie
-	 *
-	 */
+	*  set picode in cookie
+	*
+	*/
 	public function picodecheck_ajax_submit() {
 		global $wpdb;
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( $_POST['pin_code'] ) : '';
@@ -157,9 +156,9 @@ class Woo_Pincode_Checker_Form {
 	}
 
 	/*
-	 * css of general setting option value
-	 *
-	 */
+	* css of general setting option value
+	*
+	*/
 	public function hook_css() {
 		$wpc_general_settings = get_option( 'wpc_general_settings' );
 		?>
