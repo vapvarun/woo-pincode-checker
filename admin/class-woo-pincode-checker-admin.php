@@ -126,7 +126,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	public function wpc_admin_settings_page() {
-		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
 		?>
 	<div class="wrap">
@@ -151,7 +151,7 @@ class Woo_Pincode_Checker_Admin {
 	 * Add tab in setting page.
 	 */
 	public function wpc_plugin_settings_tabs() {
-		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
 		$tab_html = '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
 
@@ -170,11 +170,17 @@ class Woo_Pincode_Checker_Admin {
 	public function wpc_general_settings_content() {
 		include_once 'partials/woo-pincode-checker-admin-display.php';
 	}
-
+	
+	public function wpc_welcome_content() {
+		include_once 'partials/woo-welcome-page.php';
+	}
 	/**
 	 * Register all settings.
 	 */
 	public function wpc_add_admin_register_setting() {
+		$this->plugin_settings_tabs['wpc-welcome'] = esc_html__( 'Welcome', 'woo-pincode-checker' );		
+		add_settings_section( 'wpc-welcome', ' ', array( $this, 'wpc_welcome_content' ), 'wpc-welcome' );
+		
 		$this->plugin_settings_tabs['wpc-general'] = esc_html__( 'General', 'woo-pincode-checker' );
 		register_setting( 'wpc_general_settings', 'wpc_general_settings' );
 		add_settings_section( 'wpc-general', ' ', array( $this, 'wpc_general_settings_content' ), 'wpc-general' );

@@ -112,3 +112,17 @@ function run_woo_pincode_checker() {
 
 }
 run_woo_pincode_checker();
+
+
+/**
+ * redirect to plugin settings page after activated
+ */
+
+add_action( 'activated_plugin', 'woo_pincode_checker_activation_redirect_settings' );
+function woo_pincode_checker_activation_redirect_settings( $plugin ){
+
+	if( $plugin == plugin_basename( __FILE__ ) ) {
+		wp_redirect( admin_url( 'admin.php?page=woo-pincode-checker' ) ) ;
+		exit;
+	}
+}
