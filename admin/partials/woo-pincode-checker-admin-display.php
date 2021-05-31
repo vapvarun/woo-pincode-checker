@@ -43,9 +43,9 @@ if ( $general_settings['date_display'] == false ) {
 						<label><?php esc_html_e( 'Show Delivery Date', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td>
-						<label class="wbwss-switch">
+						<label class="wb-switch">
 							<input type="checkbox" id="wpc_date_display" name="wpc_general_settings[date_display]" <?php checked( esc_attr( $general_settings['date_display'] ), 'on' ); ?> value="on">
-							<div class="wbwss-slider wbwss-round"></div>
+							<div class="wb-slider wb-round"></div>
 						</label>
 					</td>
 					</tr>

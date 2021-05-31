@@ -129,20 +129,23 @@ class Woo_Pincode_Checker_Admin {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
 		?>
-	<div class="wrap">
-			<div class="ess-admin-header">
-		<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-				<h1 class="wbcom-plugin-heading">
-		<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
-				</h1>
-			</div>
-			<div class="wbcom-admin-settings-page">
-		<?php
-		$this->wpc_plugin_settings_tabs();
-		settings_fields( $current );
-		do_settings_sections( $current );
-		?>
-			</div>
+                <div class="wrap">
+                    <hr class="wp-header-end">
+                    <div class="wbcom-wrap">
+                                <div class="ess-admin-header">
+                        <?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+                                        <h1 class="wbcom-plugin-heading">
+                        <?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
+                                        </h1>
+                                </div>
+                                <div class="wbcom-admin-settings-page">
+                        <?php
+                        $this->wpc_plugin_settings_tabs();
+                        settings_fields( $current );
+                        do_settings_sections( $current );
+                        ?>
+                                </div>
+                    </div>
 		</div>
 		<?php
 	}
@@ -153,15 +156,15 @@ class Woo_Pincode_Checker_Admin {
 	public function wpc_plugin_settings_tabs() {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
-		$tab_html = '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
+		$tab_html = '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 
 		foreach ( $this->plugin_settings_tabs as $edd_tab => $tab_name ) {
 			$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
 			$page      = 'woo-pincode-checker';
-			$tab_html .= '<a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a>';
+			$tab_html .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a></li>';
 		}
-		$tab_html .= '</h2></div>';
-		echo wp_kses_post( $tab_html );
+		$tab_html .= '</div></ul></div>';
+		echo ( $tab_html ); // WPCS: XSS ok.
 	}
 
 	/**
