@@ -74,11 +74,13 @@ class Woo_Pincode_Checker {
 		}
 		$this->plugin_name = 'woo-pincode-checker';
 
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wpc-update-checker/Puc/v4p10/Factory.php';
+
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->woo_pincode_checker_plugin_updater();
+		// $this->woo_pincode_checker_plugin_updater();
 
 	}
 
@@ -202,11 +204,17 @@ class Woo_Pincode_Checker {
 	 * @since    1.0.0
 	 */
 	public function woo_pincode_checker_plugin_updater() {
-		$bpep_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
+		$Puc_v4p10_Factory = new Puc_v4p10_Factory();
+		$bpep_export_impoer_updater = $Puc_v4p10_Factory->buildUpdateChecker(
 			'https://demos.wbcomdesigns.com/exporter/free-plugins/woo-pincode-checker.json',
 			WOO_PINCODE_CHECKER_PLUGIN_FILE,
 			'woo-pincode-checker'
 		);
+		// $bpep_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
+		// 	'https://demos.wbcomdesigns.com/exporter/free-plugins/woo-pincode-checker.json',
+		// 	WOO_PINCODE_CHECKER_PLUGIN_FILE,
+		// 	'woo-pincode-checker'
+		// );
 	}
 
 	/**
