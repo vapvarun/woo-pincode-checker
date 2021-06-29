@@ -3,7 +3,7 @@ Contributors: wbcomdesigns
 Donate link: https://wbcomdesigns.com/
 Tags: WooCommerce
 Requires at least: 3.0.1
-Tested up to: 5.4.0
+Tested up to: 5.7.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -29,6 +29,18 @@ e.g.
 If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
 
 == Changelog ==
+= 1.2.0 =
+Fixed: (#31) Fixed hide pincode checker issue
+Fixed: (#31) Fixed pincode checker for specific product
+Fixed: Undefined variable: class notice
+Fixed: (#25) Fixed delivery date format settings display issue
+Fixed: (#28) Remove cart button if pincode is not deliverable
+Fixed: (#12) Fixed Error if woocommerce plugin is not activated
+Fixed: (#27) Fixed pincode checker issue
+Fixed: (#12) Add admin notice if woocommerce plugin is not activated
+Fixed: (#26) change admin color setting text
+Fixed: PHPCS error
+
 = 1.1.0 =
 Fixed: #11 Notices and warnings in backend dashboard settings
 
