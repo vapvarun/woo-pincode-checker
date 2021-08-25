@@ -158,7 +158,9 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * display bulk checkbox
+	 * Display bulk checkbox.
+	 *
+	 * @param array $item Get a Posts.
 	 */
 	public function column_cb( $item ) {
 
@@ -183,7 +185,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * Sortable column
+	 * Sortable column.
 	 */
 	public function get_sortable_columns() {
 
@@ -196,7 +198,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * Delete action
+	 * Delete action.
 	 */
 	public function handle_table_actions() {
 		global $wpdb;
@@ -223,7 +225,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 *  Delete Query
+	 *  Delete Query.
 	 */
 	public static function delete_pincode( $id ) {
 		global $wpdb;
@@ -236,7 +238,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * Delete Action
+	 * Delete Action.
 	 */
 	public function get_bulk_actions() {
 		$actions = array( 'bulk-delete' => 'Delete' );

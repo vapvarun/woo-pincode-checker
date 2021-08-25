@@ -6,19 +6,19 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="<?php echo plugins_url() . '/woo-pincode-checker/admin/wbcom/assets/imgs/reign.jpg';?>" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo plugins_url() . '/woo-pincode-checker/admin/wbcom/assets/imgs/reign.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
 					</div>
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'REIGN Community', 'woo-pincode-checker' ); ?></h2>
 						<ul class="wbcom_theme_features_list">
-                            <li><?php esc_html_e( 'Multiple Member Directory Layout', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Multiple Member Header Layout', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Multiple Group Directory Layout', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Multiple Group Header Layout', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'BuddyPress Customization Options', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'BuddyPress Extra Widgets', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Inbuilt Social Profile Module', 'woo-pincode-checker' ); ?></li>
-                        </ul>
+							<li><?php esc_html_e( 'Multiple Member Directory Layout', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Multiple Member Header Layout', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Multiple Group Directory Layout', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Multiple Group Header Layout', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'BuddyPress Customization Options', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'BuddyPress Extra Widgets', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Inbuilt Social Profile Module', 'woo-pincode-checker' ); ?></li>
+						</ul>
 						<div class="wbcom-middle">
 							<a href="https://wbcomdesigns.com/downloads/reign-buddypress-theme/#pricing-table-leranmate" class="wbcom-button wbcom-purchase" target="_blank"><?php esc_html_e( 'Purchase', 'woo-pincode-checker' ); ?></a>
 							<a target="_blank" href="http://demos.wbcomdesigns.com/reign-demo1/" class="wbcom-button"><?php esc_html_e( 'Preview', 'woo-pincode-checker' ); ?></a>
@@ -32,20 +32,20 @@
 			<div class="wbcom-demo-importer">
 				<div class="container">
 					<div class="wbcom-image-wrapper">
-						<img src="<?php echo plugins_url() . '/woo-pincode-checker/admin/wbcom/assets/imgs/learnmate.jpg';?>" alt="Avatar" class="image" style="width:100%">
+						<img src="<?php echo plugins_url() . '/woo-pincode-checker/admin/wbcom/assets/imgs/learnmate.jpg'; ?>" alt="Avatar" class="image" style="width:100%">
 					</div>
 					
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'Learnmate', 'woo-pincode-checker' ); ?></h2>
 						<ul class="wbcom_theme_features_list">
-                            <li><?php esc_html_e( 'Add Review to your course', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Course Coming Soon', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Grid And List Layout', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Learndash/LifterLMS Extra Widgets', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Unparalleled Course Layout', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Awesome Learndash/LifterLMS Pages', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Distraction Free Reading', 'woo-pincode-checker' ); ?></li>
-                        </ul>
+							<li><?php esc_html_e( 'Add Review to your course', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Course Coming Soon', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Grid And List Layout', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Learndash/LifterLMS Extra Widgets', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Unparalleled Course Layout', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Awesome Learndash/LifterLMS Pages', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Distraction Free Reading', 'woo-pincode-checker' ); ?></li>
+						</ul>
 						<div class="wbcom-middle">
 							<a href="https://wbcomdesigns.com/downloads/learnmate-learndash/#pricing-table-leranmate" class="wbcom-button wbcom-purchase" target="_blank"><?php esc_html_e( 'Purchase', 'woo-pincode-checker' ); ?></a>
 							<a target="_blank" href="https://wpbp.in/learndash/" class="wbcom-button" ><?php esc_html_e( 'Preview', 'woo-pincode-checker' ); ?></a>
@@ -64,12 +64,12 @@
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'ShopMate Dokan', 'woo-pincode-checker' ); ?></h2>
 						<ul class="wbcom_theme_features_list">
-                            <li><?php esc_html_e( 'Dokan Extra Widgets', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Unique Single Product Page Customization', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Awesome WooCommerce Pages', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Grid And List Layout', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Automated Mega Menu Support', 'woo-pincode-checker' ); ?></li>
-                        </ul>
+							<li><?php esc_html_e( 'Dokan Extra Widgets', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Unique Single Product Page Customization', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Awesome WooCommerce Pages', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Grid And List Layout', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Automated Mega Menu Support', 'woo-pincode-checker' ); ?></li>
+						</ul>
 						<div class="wbcom-middle">
 							<a target="_blank" href="https://wbcomdesigns.com/downloads/storemate-dokan/#pricing-table-leranmate" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'Purchase', 'woo-pincode-checker' ); ?></a>
 							<a target="_blank" href="https://demos.wbcomdesigns.in/reign-dokan/" class="wbcom-button"><?php esc_html_e( 'Preview', 'woo-pincode-checker' ); ?></a>
@@ -88,11 +88,11 @@
 					<div class="wbcom-demo-title">
 						<h2><?php esc_html_e( 'Jobmate Theme', 'woo-pincode-checker' ); ?></h2>
 						<ul class="wbcom_theme_features_list">
-                            <li><?php esc_html_e( 'Simple live searching and filtering', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Unique Job listing Page', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Awesome Resume list Page', 'woo-pincode-checker' ); ?></li>
-                            <li><?php esc_html_e( 'Outstanding all job maanger pagesLayout', 'woo-pincode-checker' ); ?></li>
-                        </ul>
+							<li><?php esc_html_e( 'Simple live searching and filtering', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Unique Job listing Page', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Awesome Resume list Page', 'woo-pincode-checker' ); ?></li>
+							<li><?php esc_html_e( 'Outstanding all job maanger pagesLayout', 'woo-pincode-checker' ); ?></li>
+						</ul>
 						<div class="wbcom-middle">
 							<a target="_blank" href="https://wbcomdesigns.com/downloads/jobmate-theme/" class="wbcom-button wbcom-purchase"><?php esc_html_e( 'Purchase', 'woo-pincode-checker' ); ?></a>
 							<a target="_blank" href="http://demos.wbcomdesigns.in/jobmate-theme/" class="wbcom-button"><?php esc_html_e( 'Preview', 'woo-pincode-checker' ); ?></a>

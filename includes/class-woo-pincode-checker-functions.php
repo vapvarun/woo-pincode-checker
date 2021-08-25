@@ -2,7 +2,7 @@
 /**
  * Includes Global functions.
  *
- * @package Wbcom_Woo_Sell_Services
+ * @package Woo_Pincode_Checker
  * @author Wbcom Designs
  */
 
@@ -11,6 +11,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 
+	/**
+	 * Includes Global functions.
+	 *
+	 * This is used to define internationalization, admin-specific hooks, and
+	 * public-facing site hooks.
+	 *
+	 * Also maintains the unique identifier of this plugin as well as the current
+	 * version of the plugin.
+	 *
+	 * @since      1.0.0
+	 * @package    Woo_Pincode_Checker
+	 * @subpackage Woo_Pincode_Checker/includes
+	 * @author     wbcomdesigns <admin@wbcomdesigns.com>
+	 */
 	class Woo_Pincode_Checker_Functions {
 		/**
 		 * The single instance of the class.
@@ -50,6 +64,9 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 			$this->setup_plugin_global();
 		}
 
+		/**
+		 * Function setup the global setting of this plugin.
+		 */
 		public function setup_plugin_global() {
 			$wpc_general_settings = '';
 			$new_general_settings = array();
@@ -78,6 +95,8 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 		 *
 		 * @author Wbcom Designs
 		 * @since  1.0.0
+		 *
+		 * @param array $setting_key Get a setting key.
 		 * @access public
 		 */
 		public function woo_wpc_admin_settings( $setting_key ) {

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -31,13 +30,13 @@ class Woo_Pincode_Checker_Activator {
 	 */
 	public static function activate() {
 		global $wpdb;
-		
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		$charset_collate = $wpdb->get_charset_collate();
-		
+
 		/* Create EDD Sell Message table */
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
-		if($wpdb->get_var("show tables like '$pincode_checker_table_name'") != $pincode_checker_table_name) {
+		if ( $wpdb->get_var( "show tables like '$pincode_checker_table_name'" ) != $pincode_checker_table_name ) {
 
 			$edd_sql = "CREATE TABLE $pincode_checker_table_name (
 						id mediumint(11) NOT NULL AUTO_INCREMENT,

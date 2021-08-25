@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a admin area view for the plugin
  *
@@ -25,8 +24,8 @@ $general_settings['delivery_date'] = isset( $general_settings['delivery_date'] )
 $general_settings['textcolor']     = isset( $general_settings['textcolor'] ) ? $general_settings['textcolor'] : '';
 $general_settings['buttoncolor']   = isset( $general_settings['buttoncolor'] ) ? $general_settings['buttoncolor'] : '';
 $general_settings['buttontcolor']  = isset( $general_settings['buttontcolor'] ) ? $general_settings['buttontcolor'] : '';
-$class          = '';
-if ( $general_settings['date_display'] == false ) {
+$class                             = '';
+if ( false == $general_settings['date_display'] ) {
 	$class = 'hide';
 }
 ?>
@@ -73,19 +72,19 @@ if ( $general_settings['date_display'] == false ) {
 					<th scope="row">
 						<label><?php esc_html_e( 'Select Pincode Label Text Color', 'woo-pincode-checker' ); ?></label>
 					</th>
-					<td><input type="text" name="wpc_general_settings[textcolor]" class="regular-text" id="textcolor" value="<?php echo $general_settings['textcolor']; ?>"></td>
+					<td><input type="text" name="wpc_general_settings[textcolor]" class="regular-text" id="textcolor" value="<?php echo esc_attr( $general_settings['textcolor'] ); ?>"></td>
 				</tr>
 				<tr>
 					<th scope="row">
 						<label><?php esc_html_e( 'Select Button Color', 'woo-pincode-checker' ); ?></label>
 					</th>
-					<td><input type="text" name="wpc_general_settings[buttoncolor]" class="regular-text" id="buttoncolor" value="<?php echo $general_settings['buttoncolor']; ?>"></td>
+					<td><input type="text" name="wpc_general_settings[buttoncolor]" class="regular-text" id="buttoncolor" value="<?php echo esc_attr( $general_settings['buttoncolor'] ); ?>"></td>
 				</tr>
 				<tr>
 					<th scope="row">
 						<label><?php esc_html_e( 'Select Button Text Color', 'woo-pincode-checker' ); ?></label>
 					</th>
-					<td><input type="text" class="regular-text" id="buttontcolor" name="wpc_general_settings[buttontcolor]" value="<?php echo $general_settings['buttontcolor']; ?>"></td>
+					<td><input type="text" class="regular-text" id="buttontcolor" name="wpc_general_settings[buttontcolor]" value="<?php echo esc_attr( $general_settings['buttontcolor'] ); ?>"></td>
 				</tr>
 				</tbody>
 		</table>

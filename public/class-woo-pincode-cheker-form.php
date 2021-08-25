@@ -1,5 +1,24 @@
 <?php
+/**
+ * The Pincode Checker Form functionality of the plugin.
+ *
+ * @link       https://wbcomdesigns.com/plugins
+ * @since      1.0.0
+ *
+ * @package    Woo_Pincode_Checker
+ * @subpackage Woo_Pincode_Checker/public
+ */
 
+/**
+ * The Pincode Checker Form functionality of the plugin.
+ *
+ * Defines the plugin name, version, and two examples hooks for how to
+ * enqueue the public-facing stylesheet and JavaScript.
+ *
+ * @package    Woo_Pincode_Checker
+ * @subpackage Woo_Pincode_Checker/public
+ * @author     wbcomdesigns <admin@wbcomdesigns.com>
+ */
 class Woo_Pincode_Checker_Form {
 
 	/**
@@ -33,9 +52,8 @@ class Woo_Pincode_Checker_Form {
 		$this->version     = $version;
 
 	}
-
-	/*
-	 * Display Pincode check form on product page
+	/**
+	 * Display Pincode check form on product page.
 	 */
 	public function pincode_field() {
 		global $table_prefix, $wpdb,$woocommerce;
@@ -138,11 +156,9 @@ class Woo_Pincode_Checker_Form {
 			<?php
 		}
 	}
-
-	/*
-	*  set picode in cookie
-	*
-	*/
+	/**
+	 * Set pincode in cookie.
+	 */
 	public function picodecheck_ajax_submit() {
 		global $wpdb;
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( $_POST['pin_code'] ) : '';
@@ -158,10 +174,9 @@ class Woo_Pincode_Checker_Form {
 		wp_die();
 	}
 
-	/*
-	* css of general setting option value
-	*
-	*/
+	/**
+	 * CSS of general setting option value.
+	 */
 	public function hook_css() {
 		$wpc_general_settings = get_option( 'wpc_general_settings' );
 		$wpc_label_color      = isset( $wpc_general_settings['textcolor'] ) ? $wpc_general_settings['textcolor'] : '';

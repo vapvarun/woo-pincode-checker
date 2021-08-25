@@ -42,7 +42,15 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	private $version;
 
+	/**
+	 * The Settings tabs of this plugin.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string    $plugin_settings_tabs    Plugin Setting Tab.
+	 */
 	private $plugin_settings_tabs;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -125,6 +133,12 @@ class Woo_Pincode_Checker_Admin {
 		add_action( 'load-' . $page_hook, array( $this, 'load_user_list_table_screen_options' ) );
 	}
 
+	/**
+	 * Actions performed to create a submenu page content.
+	 *
+	 * @since    1.0.0
+	 * @access public
+	 */
 	public function wpc_admin_settings_page() {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
 
@@ -148,7 +162,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
-	 * Add tab in setting page.
+	 * Actions performed to create tabs on the sub menu page.
 	 */
 	public function wpc_plugin_settings_tabs() {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
@@ -182,7 +196,7 @@ class Woo_Pincode_Checker_Admin {
 
 
 	/**
-	 * add screen option
+	 * Add screen option.
 	 */
 	public function load_user_list_table_screen_options() {
 		$arguments = array(
@@ -195,7 +209,11 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
-	 * Save screen option
+	 * Save screen option.
+	 *
+	 * @param string $status  Get a Screen Status.
+	 * @param string $option  Get a Screen option.
+	 * @param string $value Get a Screen value.
 	 */
 	public function pincode_per_page_set_option( $status, $option, $value ) {
 		if ( 'pincode_checker_per_page' == $option ) {
@@ -214,11 +232,11 @@ class Woo_Pincode_Checker_Admin {
 		<div class="wrap">
 		<h2>
 		<?php esc_html_e( 'Pincode Lists', 'woo-pincode-checker' ); ?>
-				<a class="add-new-h2" href="<?php echo admin_url( 'admin.php?page=add_wpc_pincode' ); ?>"><?php esc_html_e( 'Add New', 'woo-pincode-checker' ); ?></a>
+				<a class="add-new-h2" href="<?php echo esc_url( admin_url( 'admin.php?page=add_wpc_pincode' ) ); ?>"><?php esc_html_e( 'Add New', 'woo-pincode-checker' ); ?></a>
 			</h2>
 			<div class="pincode-listing">
 				<form id="nds-user-list-form" method="get">
-					<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
+					<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
 		<?php
 		$pincode_list = new Woo_Pincode_Checker_Listing();
 
@@ -301,7 +319,7 @@ class Woo_Pincode_Checker_Admin {
 		if ( $wpc_message != '' ) {
 			?>
 			<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
-				<p><?php echo $wpc_message; ?></p>
+				<p><?php echo wp_kses_post( $wpc_message ); ?></p>
 			</div>
 			<?php
 		}
@@ -333,7 +351,7 @@ class Woo_Pincode_Checker_Admin {
 									<label for="wpc-pincode"><?php esc_html_e( 'Pincode', 'woo-pincode-checker' ); ?></label>
 								</th>
 								<td>
-									<input type="text"  pattern="[a-zA-Z0-9\s]+" required="required" class="regular-text" id="wpc-pincode" value="<?php echo ( isset( $query_results[0]['pincode'] ) ) ? $query_results[0]['pincode'] : ''; ?>" name="wpc-pincode">
+									<input type="text"  pattern="[a-zA-Z0-9\s]+" required="required" class="regular-text" id="wpc-pincode" value="<?php echo ( isset( $query_results[0]['pincode'] ) ) ? esc_attr( $query_results[0]['pincode'] ) : ''; ?>" name="wpc-pincode">
 								</td>
 							</tr>
 							<tr>
@@ -343,7 +361,7 @@ class Woo_Pincode_Checker_Admin {
 								</th>
 
 								<td>
-									<input type="text" required="required" class="regular-text" id="wpc-city" value="<?php echo ( isset( $query_results[0]['city'] ) ) ? $query_results[0]['city'] : ''; ?>" name="wpc-city">
+									<input type="text" required="required" class="regular-text" id="wpc-city" value="<?php echo ( isset( $query_results[0]['city'] ) ) ? esc_attr( $query_results[0]['city'] ) : ''; ?>" name="wpc-city">
 								</td>
 
 							</tr>
@@ -354,7 +372,7 @@ class Woo_Pincode_Checker_Admin {
 								</th>
 
 								<td>
-									<input type="text" required="required" class="regular-text" id="wpc-state" name="wpc-state" value="<?php echo ( isset( $query_results[0]['state'] ) ) ? $query_results[0]['state'] : ''; ?>">
+									<input type="text" required="required" class="regular-text" id="wpc-state" name="wpc-state" value="<?php echo ( isset( $query_results[0]['state'] ) ) ? esc_attr( $query_results[0]['state'] ) : ''; ?>">
 								</td>
 
 							</tr>
@@ -364,7 +382,7 @@ class Woo_Pincode_Checker_Admin {
 									<label for="wpc-delivery-days"><?php esc_html_e( 'Delivery within days', 'woo-pincode-checker' ); ?></label>
 								</th>
 
-								<td><input type="number" min="1" max="365" step="1" class="regular-text" id="wpc-delivery-days" name="wpc-delivery-days" value="<?php echo ( isset( $query_results[0]['delivery_days'] ) ) ? $query_results[0]['delivery_days'] : ''; ?>"></td>
+								<td><input type="number" min="1" max="365" step="1" class="regular-text" id="wpc-delivery-days" name="wpc-delivery-days" value="<?php echo ( isset( $query_results[0]['delivery_days'] ) ) ? esc_attr( $query_results[0]['delivery_days'] ) : ''; ?>"></td>
 							</tr>
 							<tr>
 								<th>
@@ -453,7 +471,7 @@ class Woo_Pincode_Checker_Admin {
 		if ( $wpc_message != '' ) {
 			?>
 			<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
-				<p><?php echo $wpc_message; ?></p>
+				<p><?php echo wp_kses_post( $wpc_message ); ?></p>
 			</div>
 			<?php
 		}
@@ -514,9 +532,10 @@ function wcpc_featured_meta() {
 add_action( 'add_meta_boxes', 'wcpc_featured_meta' );
 
 /**
- * Outputs the content of the meta box
+ * Outputs the content of the meta box.
+ *
+ * @param array $post Get a Post Object.
  */
-
 function wcpc_meta_callback( $post ) {
 	wp_nonce_field( basename( __FILE__ ), 'prfx_nonce' );
 	$prfx_stored_meta = get_post_meta( $post->ID );
@@ -531,7 +550,7 @@ function wcpc_meta_callback( $post ) {
 				checked( $prfx_stored_meta['featured-checkbox'][0], 'yes' );}
 			?>
 				/>
-			<?php _e( 'Check if Hide for this Product:', 'woo-pincode-checker' ); ?>
+			<?php esc_html_e( 'Check if Hide for this Product:', 'woo-pincode-checker' ); ?>
 		</label>
 
 	</div>
