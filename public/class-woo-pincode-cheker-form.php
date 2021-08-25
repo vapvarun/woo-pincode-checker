@@ -102,7 +102,7 @@ class Woo_Pincode_Checker_Form {
 			?>
 			<div style="clear:both;font-size:18px; font-weight:600" class="wc-delivery-time-response">
 
-				<span class='avlpin' id='avlpin'><p><?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?> <?php echo esc_html( $cookie_pin ); ?></p><a class="button" id='change_pin'><?php esc_html_e( 'change', 'woo-pincode-checker' ); ?></a></span>
+				<span class='avlpin' id='avlpin'><p><?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?> <?php echo esc_html( $cookie_pin ); ?></p><a class="button wpc-check-button" id='change_pin'><?php esc_html_e( 'change', 'woo-pincode-checker' ); ?></a></span>
 
 				<div class="pin_div pincode_check_btn" id="my_custom_checkout_field2" style="display:none;">
 
@@ -112,7 +112,7 @@ class Woo_Pincode_Checker_Form {
 
 						<input type="text" required="required" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="Enter Your Pincode" id="pincode_field_id" name="pincode_field" class="input-text" />
 
-						<a class="button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
+						<a class="button wpc-check-button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
 					</p>
 				</div>
 
@@ -150,7 +150,7 @@ class Woo_Pincode_Checker_Form {
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 					<input type="text" required="required" value="" placeholder="Enter Your Pincode" id="pincode_field_id" name="pincode_field" class="input-text" />
-					<a class="button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
+					<a class="button wpc-check-button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
 				</p>
 			</div>
 			<?php
@@ -195,7 +195,7 @@ class Woo_Pincode_Checker_Form {
 			?>
 			}
 
-			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button  { 
+			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( $wpc_btn_color == '' ) {
 				echo 'background-color:#a46497;';
@@ -204,7 +204,7 @@ class Woo_Pincode_Checker_Form {
 			?>
 			}
 
-			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button  { 
+			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( $wpc_btn_text_color == '' ) {
 				echo 'color:#fff;';
