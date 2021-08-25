@@ -47,7 +47,10 @@ class Woo_Pincode_Checker_Form {
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}
-
+		$wpc_hide_form = get_post_meta( get_the_ID(), 'featured-checkbox', true );
+		if ( 'yes' === $wpc_hide_form ) {
+			return;
+		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 
@@ -77,8 +80,8 @@ class Woo_Pincode_Checker_Form {
 
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
 			}
-			if ( get_post_meta( get_the_ID(), 'featured-checkbox', true ) == 'no' ) {
-				?>
+
+			?>
 			<div style="clear:both;font-size:18px; font-weight:600" class="wc-delivery-time-response">
 
 				<span class='avlpin' id='avlpin'><p><?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?> <?php echo esc_html( $cookie_pin ); ?></p><a class="button" id='change_pin'><?php esc_html_e( 'change', 'woo-pincode-checker' ); ?></a></span>
@@ -121,8 +124,8 @@ class Woo_Pincode_Checker_Form {
 			</div>
 
 				<?php
-			}
-		} elseif ( get_post_meta( get_the_ID(), 'featured-checkbox', true ) == 'no' ) {
+
+		} else {
 			?>
 			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field">
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are not currently servicing your area.', 'woo-pincode-checker' ); ?></div>
