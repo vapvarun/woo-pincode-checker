@@ -48,6 +48,8 @@
 .delivery-info ul, ol {
     margin: 0;
     list-style: none;
+    padding: 0px;
+    margin-left: 0px !important;
 }
 
 .delivery-info ul li {
