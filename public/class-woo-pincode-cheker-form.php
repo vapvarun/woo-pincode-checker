@@ -78,7 +78,7 @@ class Woo_Pincode_Checker_Form {
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
 			}
 			if ( get_post_meta( get_the_ID(), 'featured-checkbox', true ) == 'no' ) {
-			?>
+				?>
 			<div style="clear:both;font-size:18px; font-weight:600" class="wc-delivery-time-response">
 
 				<span class='avlpin' id='avlpin'><p><?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?> <?php echo esc_html( $cookie_pin ); ?></p><a class="button" id='change_pin'><?php esc_html_e( 'change', 'woo-pincode-checker' ); ?></a></span>
@@ -121,7 +121,7 @@ class Woo_Pincode_Checker_Form {
 			</div>
 
 				<?php
-					}
+			}
 		} elseif ( get_post_meta( get_the_ID(), 'featured-checkbox', true ) == 'no' ) {
 			?>
 			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field">
@@ -161,33 +161,37 @@ class Woo_Pincode_Checker_Form {
 	*/
 	public function hook_css() {
 		$wpc_general_settings = get_option( 'wpc_general_settings' );
+		$wpc_label_color      = isset( $wpc_general_settings['textcolor'] ) ? $wpc_general_settings['textcolor'] : '';
+		$wpc_btn_color        = isset( $wpc_general_settings['buttoncolor'] ) ? $wpc_general_settings['buttoncolor'] : '';
+		$wpc_btn_text_color   = isset( $wpc_general_settings['buttontcolor'] ) ? $wpc_general_settings['buttontcolor'] : '';
 		?>
 		<style>
 			.delivery-info-wrap,
 			.avlpin p { 
 			<?php
-			if ( $wpc_general_settings['textcolor'] == '' ) {
+			if ( $wpc_label_color == '' ) {
 				echo 'color:#000;';
 			} else {
-				echo "color:$wpc_general_settings[textcolor]" . ';'; }
+				echo "color:$wpc_label_color" . ';';
+			}
 			?>
 			}
 
 			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button  { 
 			<?php
-			if ( $wpc_general_settings['buttoncolor'] == '' ) {
+			if ( $wpc_btn_color == '' ) {
 				echo 'background-color:#a46497;';
 			} else {
-				echo "background-color:$wpc_general_settings[buttoncolor]" . ';'; }
+				echo "background-color:$wpc_btn_color" . ';'; }
 			?>
 			}
 
 			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button, .woocommerce #avlpin a.button, .woocommerce button.button, .woocommerce input.button  { 
 			<?php
-			if ( $wpc_general_settings['buttontcolor'] == '' ) {
+			if ( $wpc_btn_text_color == '' ) {
 				echo 'color:#fff;';
 			} else {
-				echo "color:$wpc_general_settings[buttontcolor]" . ';'; }
+				echo "color:$wpc_btn_text_color" . ';'; }
 			?>
 			}
 

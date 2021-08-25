@@ -251,7 +251,7 @@ class Woo_Pincode_Checker_Admin {
 			$wpc_city             = sanitize_text_field( $_POST['wpc-city'] );
 			$wpc_state            = sanitize_text_field( $_POST['wpc-state'] );
 			$wpc_delivery_days    = sanitize_text_field( $_POST['wpc-delivery-days'] );
-			$wpc_case_on_delivery = sanitize_text_field( $_POST['wpc-case-on-delivery'] );
+			$wpc_case_on_delivery = sanitize_text_field( isset( $_POST['wpc-case-on-delivery'] ) ? $_POST['wpc-case-on-delivery'] : '' );
 
 			if ( $wpc_pincode != '' ) {
 
