@@ -97,7 +97,7 @@ if ( ! class_exists( 'Puc_v4p10_Vcs_PluginUpdateChecker' ) ) :
 			if ( empty( $info->sections['changelog'] ) ) {
 				$info->sections['changelog'] = $api->getRemoteChangelog( $ref, $this->package->getAbsoluteDirectoryPath() );
 				if ( empty( $info->sections['changelog'] ) ) {
-					$info->sections['changelog'] = __( 'There is no changelog available.', 'bp-xprofile-export-import' );
+					$info->sections['changelog'] = __( 'There is no changelog available.', 'woo-pincode-checker' );
 				}
 			}
 

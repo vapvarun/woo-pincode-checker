@@ -411,7 +411,7 @@ class Woo_Pincode_Checker_Admin {
 			);
 			if ( ! in_array( $filetype['type'], array( 'csv' => 'text/csv' ), true ) ) {
 				$message_type = 'error';
-				$wpc_message  = esc_html__( 'Invalid file type. The importer supports CSV file formats.', 'wpc-pincode-submit' );
+				$wpc_message  = esc_html__( 'Invalid file type. The importer supports CSV file formats.', 'woo-pincode-checker' );
 				$is_import    = false;
 			}
 
@@ -445,7 +445,7 @@ class Woo_Pincode_Checker_Admin {
 					}
 					fclose( $file );
 					$message_type = 'updated';
-					$wpc_message  = esc_html__( 'Import Pincodes CSV file Successfully.', 'wpc-pincode-submit' );
+					$wpc_message  = esc_html__( 'Import Pincodes CSV file Successfully.', 'woo-pincode-checker' );
 				}
 			}
 		}
@@ -470,7 +470,7 @@ class Woo_Pincode_Checker_Admin {
 								<tr>
 									<th scope="row">
 										<label for="upload">
-											<?php esc_html_e( 'Choose a CSV file from your computer:', 'wpc-pincode-submit' ); ?>
+											<?php esc_html_e( 'Choose a CSV file from your computer:', 'woo-pincode-checker' ); ?>
 										</label>
 									</th>
 									<td>
@@ -482,7 +482,7 @@ class Woo_Pincode_Checker_Admin {
 											<?php
 											printf(
 												/* translators: %s: maximum upload size */
-												esc_html__( 'Maximum size: %s', 'wpc-pincode-submit' ),
+												esc_html__( 'Maximum size: %s', 'woo-pincode-checker' ),
 												esc_html( $size )
 											);
 											?>
@@ -494,7 +494,7 @@ class Woo_Pincode_Checker_Admin {
 						</table>
 					</section>
 					<div class="wc-actions">
-						<button type="submit" class="button button-primary button-next" value="<?php esc_attr_e( 'Import CSV File', 'wpc-pincode-submit' ); ?>" name="upload_pincodes"><?php esc_html_e( 'Import CSV File', 'wpc-pincode-submit' ); ?></button>
+						<button type="submit" class="button button-primary button-next" value="<?php esc_attr_e( 'Import CSV File', 'woo-pincode-checker' ); ?>" name="upload_pincodes"><?php esc_html_e( 'Import CSV File', 'woo-pincode-checker' ); ?></button>
 
 					</div>
 				</form>
@@ -509,7 +509,7 @@ class Woo_Pincode_Checker_Admin {
  * Adds a meta box to the post editing screen
  */
 function wcpc_featured_meta() {
-	add_meta_box( 'prfx_meta', __( 'Woocommerce Pincode Checker', 'prfx-textdomain' ), 'wcpc_meta_callback', 'product', 'normal', 'high' );
+	add_meta_box( 'prfx_meta', __( 'Woocommerce Pincode Checker', 'woo-pincode-checker' ), 'wcpc_meta_callback', 'product', 'normal', 'high' );
 }
 add_action( 'add_meta_boxes', 'wcpc_featured_meta' );
 
@@ -531,7 +531,7 @@ function wcpc_meta_callback( $post ) {
 				checked( $prfx_stored_meta['featured-checkbox'][0], 'yes' );}
 			?>
 				/>
-			<?php _e( 'Check if Hide for this Product:', 'prfx-textdomain' ); ?>
+			<?php _e( 'Check if Hide for this Product:', 'woo-pincode-checker' ); ?>
 		</label>
 
 	</div>

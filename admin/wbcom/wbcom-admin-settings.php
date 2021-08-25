@@ -191,7 +191,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 				'0'	 => array(
 					'name'			 => esc_html__( 'Custom Font Uploader', 'woo-pincode-checker' ),
 					'slug'			 => 'custom-font-uploader',
-					'description'	 => esc_html__( 'It also allows you to upload your own custom font to your site and use them using custom css.', 'woo-sell-services' ),
+					'description'	 => esc_html__( 'It also allows you to upload your own custom font to your site and use them using custom css.', 'woo-pincode-checker' ),
 					'status'		 => $this->wbcom_plugin_status( 'custom-font-uploader' ),
 					'wp_url'		 => 'https://wordpress.org/plugins/custom-font-uploader/',
 					'icon'			 => 'fas fa-2x fa-upload'
@@ -199,7 +199,7 @@ if ( !class_exists( 'Wbcom_Admin_Settings' ) ) {
 				'1'	 => array(
 					'name'			 => esc_html__( 'BuddyPress Activity Filter', 'woo-pincode-checker' ),
 					'slug'			 => 'bp-activity-filter',
-					'description'	 => esc_html__( 'Admin can set default and customised activities to be listed on front-end.', 'woo-sell-services' ),
+					'description'	 => esc_html__( 'Admin can set default and customised activities to be listed on front-end.', 'woo-pincode-checker' ),
 					'status'		 => $this->wbcom_plugin_status( 'bp-activity-filter' ),
 					'wp_url'		 => 'https://wordpress.org/plugins/bp-activity-filter/',
 					'icon'			 => 'fas fa-2x fa-filter'
