@@ -190,7 +190,7 @@ class Woo_Pincode_Checker_Form {
 			if ( $wpc_label_color == '' ) {
 				echo 'color:#000;';
 			} else {
-				echo "color:$wpc_label_color" . ';';
+				echo "color:$wpc_label_color !important" . ';';
 			}
 			?>
 			}
