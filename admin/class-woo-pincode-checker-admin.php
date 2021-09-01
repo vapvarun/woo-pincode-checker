@@ -544,10 +544,10 @@ function wcpc_meta_callback( $post ) {
 <p>
 	<div class="prfx-row-content">
 		<label for="featured-checkbox">
-			<input type="checkbox" name="featured-checkbox" id="featured-checkboxs" value="yes" 
+			<input type="checkbox" name="hide_pincode_checker" id="featured-checkboxs" value="yes" 
 			<?php
-			if ( isset( $prfx_stored_meta['featured-checkbox'] ) ) {
-				checked( $prfx_stored_meta['featured-checkbox'][0], 'yes' );}
+			if ( isset( $prfx_stored_meta['hide_pincode_checker'] ) ) {
+				checked( $prfx_stored_meta['hide_pincode_checker'][0], 'yes' );}
 			?>
 				/>
 			<?php esc_html_e( 'Check if Hide for this Product:', 'woo-pincode-checker' ); ?>
@@ -575,10 +575,10 @@ function wcpc_meta_save( $post_id ) {
 	}
 
 	// Checks for input and saves - save checked as yes and unchecked at no.
-	if ( isset( $_POST['featured-checkbox'] ) ) {
-		update_post_meta( $post_id, 'featured-checkbox', 'yes' );
+	if ( isset( $_POST['hide_pincode_checker'] ) ) {
+		update_post_meta( $post_id, 'hide_pincode_checker', 'yes' );
 	} else {
-		update_post_meta( $post_id, 'featured-checkbox', 'no' );
+		update_post_meta( $post_id, 'hide_pincode_checker', 'no' );
 	}
 
 }

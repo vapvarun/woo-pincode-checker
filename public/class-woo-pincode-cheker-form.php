@@ -65,7 +65,7 @@ class Woo_Pincode_Checker_Form {
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}
-		$wpc_hide_form = get_post_meta( get_the_ID(), 'featured-checkbox', true );
+		$wpc_hide_form = get_post_meta( get_the_ID(), 'hide_pincode_checker', true );
 		if ( 'yes' === $wpc_hide_form ) {
 			return;
 		}
