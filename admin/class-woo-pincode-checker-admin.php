@@ -140,24 +140,27 @@ class Woo_Pincode_Checker_Admin {
 	 * @access public
 	 */
 	public function wpc_admin_settings_page() {
-		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
 		?>
-	<div class="wrap">
-			<div class="ess-admin-header">
-		<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-				<h1 class="wbcom-plugin-heading">
-		<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
-				</h1>
-			</div>
-			<div class="wbcom-admin-settings-page">
-		<?php
-		$this->wpc_plugin_settings_tabs();
-		settings_fields( $current );
-		do_settings_sections( $current );
-		?>
-			</div>
-		</div>
+                <div class="wrap">
+                        <hr class="wp-header-end">
+                        <div class="wbcom-wrap">
+                                <div class="ess-admin-header">
+                                        <?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+                                        <h1 class="wbcom-plugin-heading">
+                                                <?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
+                                        </h1>
+                                </div>
+                                <div class="wbcom-admin-settings-page">
+                                        <?php
+                                        $this->wpc_plugin_settings_tabs();
+                                        settings_fields( $current );
+                                        do_settings_sections( $current );
+                                        ?>
+                                </div>
+                        </div>
+                </div>
 		<?php
 	}
 
@@ -165,17 +168,25 @@ class Woo_Pincode_Checker_Admin {
 	 * Actions performed to create tabs on the sub menu page.
 	 */
 	public function wpc_plugin_settings_tabs() {
-		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-general';
+		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
-		$tab_html = '<div class="wbcom-tabs-section"><h2 class="nav-tab-wrapper">';
+		$tab_html = '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 
 		foreach ( $this->plugin_settings_tabs as $edd_tab => $tab_name ) {
 			$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
 			$page      = 'woo-pincode-checker';
-			$tab_html .= '<a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a>';
+			$tab_html .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a></li>';
 		}
-		$tab_html .= '</h2></div>';
-		echo wp_kses_post( $tab_html );
+		$tab_html .= '</div></ul></div>';
+		echo ( $tab_html ); // WPCS: XSS ok.
+
+	}
+
+        /**
+	 * Get welcome settings html.
+	 */
+        public function wpc_welcome_content() {
+		include_once 'partials/woo-welcome-page.php';
 	}
 
 	/**
@@ -196,6 +207,9 @@ class Woo_Pincode_Checker_Admin {
 	 * Register all settings.
 	 */
 	public function wpc_add_admin_register_setting() {
+                $this->plugin_settings_tabs['wpc-welcome'] = esc_html__( 'Welcome', 'woo-pincode-checker' );
+		add_settings_section( 'wpc-welcome', ' ', array( $this, 'wpc_welcome_content' ), 'wpc-welcome' );
+
 		$this->plugin_settings_tabs['wpc-general'] = esc_html__( 'General', 'woo-pincode-checker' );
 		register_setting( 'wpc_general_settings', 'wpc_general_settings' );
 		add_settings_section( 'wpc-general', ' ', array( $this, 'wpc_general_settings_content' ), 'wpc-general' );
@@ -343,7 +357,7 @@ class Woo_Pincode_Checker_Admin {
 			$query_results              = $wpdb->get_results( $sql, ARRAY_A );
 		}
 		?>
-		<div class="wrap wpc-add-pincode-wrap">    
+		<div class="wrap wpc-add-pincode-wrap">
 		<h2>
 		<?php
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
@@ -487,7 +501,7 @@ class Woo_Pincode_Checker_Admin {
 			<?php
 		}
 		?>
-		<div class="wrap wpc-upload-pincode-wrap">            
+		<div class="wrap wpc-upload-pincode-wrap">
 			<h2>
 		<?php esc_html_e( 'Upload pincodes from a CSV file', 'woo-pincode-checker' ); ?>
 			</h2>
@@ -495,7 +509,7 @@ class Woo_Pincode_Checker_Admin {
 				<form enctype="multipart/form-data" method="post">
 					<section>
 						<table class="form-table wpc-pincode-submit-importer-options">
-							<tbody>                                
+							<tbody>
 								<tr>
 									<th scope="row">
 										<label for="upload">
@@ -555,7 +569,7 @@ function wcpc_meta_callback( $post ) {
 <p>
 	<div class="prfx-row-content">
 		<label for="featured-checkbox">
-			<input type="checkbox" name="hide_pincode_checker" id="featured-checkboxs" value="yes" 
+			<input type="checkbox" name="hide_pincode_checker" id="featured-checkboxs" value="yes"
 			<?php
 			if ( isset( $prfx_stored_meta['hide_pincode_checker'] ) ) {
 				checked( $prfx_stored_meta['hide_pincode_checker'][0], 'yes' );}
@@ -565,7 +579,7 @@ function wcpc_meta_callback( $post ) {
 		</label>
 
 	</div>
-</p>   
+</p>
 
 	<?php
 }
@@ -594,6 +608,3 @@ function wcpc_meta_save( $post_id ) {
 
 }
 add_action( 'save_post', 'wcpc_meta_save' );
-
-
-

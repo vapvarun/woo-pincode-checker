@@ -35,16 +35,16 @@ if ( false == $general_settings['date_display'] ) {
 		settings_fields( 'wpc_general_settings' );
 		do_settings_sections( 'wpc_general_settings' );
 		?>
-		<table class="form-table">		
+		<table class="form-table">
 			<tbody>
 			<tr>
 					<th scope="row">
 						<label><?php esc_html_e( 'Show Delivery Date', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td>
-						<label class="wbwss-switch">
+						<label class="wb-switch">
 							<input type="checkbox" id="wpc_date_display" name="wpc_general_settings[date_display]" <?php checked( esc_attr( $general_settings['date_display'] ), 'on' ); ?> value="on">
-							<div class="wbwss-slider wbwss-round"></div>
+							<div class="wb-slider wb-round"></div>
 						</label>
 					</td>
 					</tr>
@@ -63,9 +63,9 @@ if ( false == $general_settings['date_display'] ) {
 								<option value="M jS" <?php selected( $general_settings['delivery_date'], 'M jS' ); ?>><?php esc_html_e( 'M jS - July 1st', 'woo-pincode-checker' ); ?></option>
 								<option value="D, jS M" <?php selected( $general_settings['delivery_date'], 'D, jS M' ); ?>><?php esc_html_e( 'D, jS M  – Mon, 25th Nov', 'woo-pincode-checker' ); ?></option>
 								<option value="D, M d" <?php selected( $general_settings['delivery_date'], 'D, M d' ); ?>><?php esc_html_e( 'D, M d  – Sat, Nov 23', 'woo-pincode-checker' ); ?></option>
-								<option value="M d" <?php selected( $general_settings['delivery_date'], 'M d' ); ?>><?php esc_html_e( 'M d  – Nov 23', 'woo-pincode-checker' ); ?></option>								
+								<option value="M d" <?php selected( $general_settings['delivery_date'], 'M d' ); ?>><?php esc_html_e( 'M d  – Nov 23', 'woo-pincode-checker' ); ?></option>
 							</select>
-						</label>						
+						</label>
 					</td>
 				</tr>
 				<tr>

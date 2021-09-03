@@ -36,6 +36,9 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'WOO_PINCODE_CHECKER_VERSION', '1.2.0' );
 define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
 
+define( 'WPCP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'WPCP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
 /**
  * Include needed files if required plugin is active
  *
@@ -112,3 +115,15 @@ function run_woo_pincode_checker() {
 
 }
 run_woo_pincode_checker();
+
+/**
+ * redirect to plugin settings page after activated
+ */
+add_action( 'activated_plugin', 'woo_pincode_checker_activation_redirect_settings' );
+function woo_pincode_checker_activation_redirect_settings( $plugin ){
+
+	if( $plugin == plugin_basename( __FILE__ ) ) {
+		wp_redirect( admin_url( 'admin.php?page=woo-pincode-checker' ) ) ;
+		exit;
+	}
+}
