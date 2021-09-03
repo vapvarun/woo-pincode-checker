@@ -45,7 +45,7 @@ define( 'WPCP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
  * @since   1.0.0
  * @author  Wbcom Designs
  */
-add_action( 'plugins_loaded', 'wpc_plugins_files' );
+add_action( 'admin_init', 'wpc_plugins_files' );
 
 /**
  * WCMP plugin requires files.
@@ -55,6 +55,7 @@ function wpc_plugins_files() {
 		require_once ABSPATH . '/wp-admin/includes/plugin.php';
 	}
 	if ( ! class_exists( 'WooCommerce', false ) ) {
+		deactivate_plugins( plugin_basename( __FILE__ ) );
 		add_action( 'admin_notices', 'wpc_admin_notice' );
 	} else {
 		register_activation_hook( __FILE__, 'activate_woo_pincode_checker' );
@@ -117,13 +118,15 @@ function run_woo_pincode_checker() {
 run_woo_pincode_checker();
 
 /**
- * redirect to plugin settings page after activated
+ * Redirect to plugin settings page after activated.
  */
-add_action( 'activated_plugin', 'woo_pincode_checker_activation_redirect_settings' );
-function woo_pincode_checker_activation_redirect_settings( $plugin ){
+function woo_pincode_checker_activation_redirect_settings( $plugin ) {
 
-	if( $plugin == plugin_basename( __FILE__ ) ) {
-		wp_redirect( admin_url( 'admin.php?page=woo-pincode-checker' ) ) ;
+	if ( $plugin == plugin_basename( __FILE__ ) ) {
+		wp_redirect( admin_url( 'admin.php?page=woo-pincode-checker' ) );
 		exit;
 	}
+}
+if ( class_exists( 'WooCommerce' ) ) {
+	add_action( 'activated_plugin', 'woo_pincode_checker_activation_redirect_settings' );
 }

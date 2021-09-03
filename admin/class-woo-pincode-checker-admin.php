@@ -121,14 +121,14 @@ class Woo_Pincode_Checker_Admin {
 		add_submenu_page( 'pincode_lists', esc_html__( 'Add Pincode', 'woo-pincode-checker' ), esc_html__( 'Add Pincode', 'woo-pincode-checker' ), 'manage_options', 'add_wpc_pincode', array( $this, 'wpc_add_pincode_func' ) );
 
 		add_submenu_page( 'pincode_lists', esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), 'manage_options', 'wpc_upload_pincodes', array( $this, 'wpc_upload_pincodes_func' ) );
-
-		/* add sub menu in wnplugin setting page */
-		if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
-			add_menu_page( esc_html__( 'WB Plugins', 'woo-pincode-checker' ), esc_html__( 'WB Plugins', 'woo-pincode-checker' ), 'manage_options', 'wbcomplugins', array( $this, 'wpc_admin_settings_page' ), 'dashicons-lightbulb', 59 );
-			add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'woo-pincode-checker' ), esc_html__( 'General', 'woo-pincode-checker' ), 'manage_options', 'wbcomplugins' );
+		if ( class_exists( 'WooCommerce' ) ) {
+			/* add sub menu in wnplugin setting page */
+			if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
+				add_menu_page( esc_html__( 'WB Plugins', 'woo-pincode-checker' ), esc_html__( 'WB Plugins', 'woo-pincode-checker' ), 'manage_options', 'wbcomplugins', array( $this, 'wpc_admin_settings_page' ), 'dashicons-lightbulb', 59 );
+				add_submenu_page( 'wbcomplugins', esc_html__( 'General', 'woo-pincode-checker' ), esc_html__( 'General', 'woo-pincode-checker' ), 'manage_options', 'wbcomplugins' );
+			}
+			add_submenu_page( 'wbcomplugins', esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' ), esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' ), 'manage_options', 'woo-pincode-checker', array( $this, 'wpc_admin_settings_page' ) );
 		}
-		add_submenu_page( 'wbcomplugins', esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' ), esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' ), 'manage_options', 'woo-pincode-checker', array( $this, 'wpc_admin_settings_page' ) );
-
 		/* screen Option */
 		add_action( 'load-' . $page_hook, array( $this, 'load_user_list_table_screen_options' ) );
 	}
@@ -143,24 +143,24 @@ class Woo_Pincode_Checker_Admin {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
 		?>
-                <div class="wrap">
-                        <hr class="wp-header-end">
-                        <div class="wbcom-wrap">
-                                <div class="ess-admin-header">
-                                        <?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-                                        <h1 class="wbcom-plugin-heading">
-                                                <?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
-                                        </h1>
-                                </div>
-                                <div class="wbcom-admin-settings-page">
-                                        <?php
-                                        $this->wpc_plugin_settings_tabs();
-                                        settings_fields( $current );
-                                        do_settings_sections( $current );
-                                        ?>
-                                </div>
-                        </div>
-                </div>
+				<div class="wrap">
+						<hr class="wp-header-end">
+						<div class="wbcom-wrap">
+								<div class="ess-admin-header">
+										<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+										<h1 class="wbcom-plugin-heading">
+												<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
+										</h1>
+								</div>
+								<div class="wbcom-admin-settings-page">
+										<?php
+										$this->wpc_plugin_settings_tabs();
+										settings_fields( $current );
+										do_settings_sections( $current );
+										?>
+								</div>
+						</div>
+				</div>
 		<?php
 	}
 
@@ -182,10 +182,10 @@ class Woo_Pincode_Checker_Admin {
 
 	}
 
-        /**
-	 * Get welcome settings html.
-	 */
-        public function wpc_welcome_content() {
+		/**
+		 * Get welcome settings html.
+		 */
+	public function wpc_welcome_content() {
 		include_once 'partials/woo-welcome-page.php';
 	}
 
@@ -207,7 +207,7 @@ class Woo_Pincode_Checker_Admin {
 	 * Register all settings.
 	 */
 	public function wpc_add_admin_register_setting() {
-                $this->plugin_settings_tabs['wpc-welcome'] = esc_html__( 'Welcome', 'woo-pincode-checker' );
+				$this->plugin_settings_tabs['wpc-welcome'] = esc_html__( 'Welcome', 'woo-pincode-checker' );
 		add_settings_section( 'wpc-welcome', ' ', array( $this, 'wpc_welcome_content' ), 'wpc-welcome' );
 
 		$this->plugin_settings_tabs['wpc-general'] = esc_html__( 'General', 'woo-pincode-checker' );
