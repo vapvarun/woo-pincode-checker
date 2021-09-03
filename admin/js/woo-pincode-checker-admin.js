@@ -30,6 +30,7 @@
 	 */
 
 	$(document).ready(function () {
+
 		$('#wpc_date_display').on('click', function () {
 
 			if ($(this).prop("checked") == true) {
@@ -38,6 +39,23 @@
 				$('#wbwss-wpc-deliver-date').hide(500);
 			}
 		});
+
+		/*faq tab accordion*/
+		var wpc_elmt = document.getElementsByClassName("wpc-accordion");
+		var k;
+		var wpc_elmt_len = wpc_elmt.length;
+		for (k = 0; k < wpc_elmt_len; k++) {
+			wpc_elmt[k].onclick = function () {
+				this.classList.toggle("active");
+				var panel = this.nextElementSibling;
+				if (panel.style.maxHeight) {
+					panel.style.maxHeight = null;
+				} else {
+					panel.style.maxHeight = panel.scrollHeight + "px";
+				}
+			}
+		}
+
 	});
 
 })(jQuery);

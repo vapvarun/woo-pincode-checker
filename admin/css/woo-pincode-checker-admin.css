@@ -68,3 +68,71 @@ input:checked + .wbwss-slider:before {
 .hide {
     display: none;
 }
+
+/*----------  Faq Style  ----------*/
+.wpc-admin-col-12 {
+    float: left;
+    padding: 10px 0;
+    width: 100%;
+}
+.wpc-adming-setting{
+    float: left;
+    width: 90%;
+}
+button.wpc-accordion {
+    background-color: hsl(0, 0%, 87%);
+    border: medium none;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: hsl(0, 0%, 27%);
+    cursor: pointer;
+    font-size: 15px;
+    margin: 0 5%;
+    outline: medium none;
+    padding: 15px 20px;
+    text-align: left;
+    transition: all 0.4s ease 0s;
+    width: 90%;
+}
+button.wpc-accordion.active, button.wpc-accordion:hover {
+    background-color: hsl(207, 90%, 54%);
+    color:white;
+}
+div.wpc-panel {
+    background-color: white;
+    margin:0px 5%;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 18px;
+    transition: max-height 0.2s ease-out;
+}
+button.wpc-accordion::after {
+    color: hsl(0, 0%, 47%);
+    content: "+";
+    float: right;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+button.wpc-accordion::after:hover {
+    color: white;
+}
+button.wpc-accordion.active::after {
+    content: "−";
+    color:white;
+}
+.wpc-admin-row{
+    border-top: 1px solid #ddd;
+    clear: both;
+    overflow: hidden;
+    padding-bottom: 5px;
+}
+
+.wpc-tab-3-title {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.wpc-tab-content .form-table td {
+    padding: 0;
+}

@@ -186,12 +186,23 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
+	 * Get faq html.
+	 */
+	public function wpc_faq_settings_content() {
+		include_once 'partials/woo-pincode-checker-faq-display.php';
+	}
+
+	/**
 	 * Register all settings.
 	 */
 	public function wpc_add_admin_register_setting() {
 		$this->plugin_settings_tabs['wpc-general'] = esc_html__( 'General', 'woo-pincode-checker' );
 		register_setting( 'wpc_general_settings', 'wpc_general_settings' );
 		add_settings_section( 'wpc-general', ' ', array( $this, 'wpc_general_settings_content' ), 'wpc-general' );
+
+		$this->plugin_settings_tabs['wpc-faq'] = esc_html__( 'Faq', 'woo-pincode-checker' );
+		register_setting( 'wpc_faq_settings', 'wpc_faq_settings' );
+		add_settings_section( 'wpc-faq', ' ', array( $this, 'wpc_faq_settings_content' ), 'wpc-faq' );
 	}
 
 
