@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fired during plugin activation
  *
@@ -31,7 +32,6 @@ class Woo_Pincode_Checker_Activator {
 	public static function activate() {
 		global $wpdb;
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		$charset_collate = $wpdb->get_charset_collate();
 
 		/* Create EDD Sell Message table */
@@ -44,9 +44,10 @@ class Woo_Pincode_Checker_Activator {
 						city  varchar(255) NOT NULL, 
 						state  varchar(255) NOT NULL,
 						delivery_days int(11)   NOT NULL,
-						case_on_delivery tinyint(2) NOT NULL default '0',
+						case_on_delivery tinyint(2) NULL default '0' ,
 						UNIQUE KEY id (id)
 			) $charset_collate;";
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $edd_sql );
 		}
 	}
