@@ -14,7 +14,7 @@
  * Plugin Name:       Woo Pincode Checker
  * Plugin URI:        https://wbcomdesigns.com
  * Description:       Allows the site admin to add the pincode availability feature on their sites with woo pincode checker plugin.
- * Version:           1.2.0
+ * Version:           1.3.0
  * Author:            wbcomdesigns
  * Author URI:        https://wbcomdesigns.com/plugins
  * License:           GPL-2.0+
@@ -33,7 +33,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WOO_PINCODE_CHECKER_VERSION', '1.2.0' );
+define( 'WOO_PINCODE_CHECKER_VERSION', '1.3.0' );
 define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
 
 define( 'WPCP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
