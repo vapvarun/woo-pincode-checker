@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-25 06:51:15+00:00\n"
+"POT-Creation-Date: 2021-12-27 05:30:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,127 +24,136 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: admin/class-woo-pincode-checker-admin.php:109
+#: admin/class-woo-pincode-checker-admin.php:117
 #: admin/class-woo-pincode-checker-listing.php:34
 msgid "Pincodes"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:111
+#: admin/class-woo-pincode-checker-admin.php:119
 msgid "Pincode List"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:113
-#: admin/class-woo-pincode-checker-admin.php:323
-#: admin/class-woo-pincode-checker-admin.php:382
+#: admin/class-woo-pincode-checker-admin.php:121
+#: admin/class-woo-pincode-checker-admin.php:366
+#: admin/class-woo-pincode-checker-admin.php:425
 msgid "Add Pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:115
+#: admin/class-woo-pincode-checker-admin.php:123
 msgid "Upload pincodes"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:119
+#: admin/class-woo-pincode-checker-admin.php:127
 msgid "WB Plugins"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:120
-#: admin/class-woo-pincode-checker-admin.php:178
+#: admin/class-woo-pincode-checker-admin.php:128
+#: admin/class-woo-pincode-checker-admin.php:213
 msgid "General"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:122
-#: admin/class-woo-pincode-checker-admin.php:136 woo-pincode-checker.php:66
+#: admin/class-woo-pincode-checker-admin.php:130
+#: admin/class-woo-pincode-checker-admin.php:152
+#: admin/partials/woo-welcome-page.php:15 woo-pincode-checker.php:70
 msgid "Woo Pincode Checker"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:189
-msgid "Pincode Per Page"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:216
-msgid "Pincode Lists"
+#: admin/class-woo-pincode-checker-admin.php:210
+msgid "Welcome"
 msgstr ""
 
 #: admin/class-woo-pincode-checker-admin.php:217
+msgid "FAQ"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:228
+msgid "Pincode Per Page"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:259
+msgid "Pincode Lists"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:260
 msgid "Add New"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:275
+#: admin/class-woo-pincode-checker-admin.php:318
 msgid "Added Pincode Successfully."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:292
+#: admin/class-woo-pincode-checker-admin.php:335
 msgid "Update Pincode Successfully ."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:297
+#: admin/class-woo-pincode-checker-admin.php:340
 msgid "Please fill valid pincode info."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:321
-#: admin/class-woo-pincode-checker-admin.php:380
+#: admin/class-woo-pincode-checker-admin.php:364
+#: admin/class-woo-pincode-checker-admin.php:423
 msgid "Edit Pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:333
+#: admin/class-woo-pincode-checker-admin.php:376
 #: admin/class-woo-pincode-checker-listing.php:33
 #: admin/class-woo-pincode-checker-listing.php:49
 msgid "Pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:342
+#: admin/class-woo-pincode-checker-admin.php:385
 #: admin/class-woo-pincode-checker-listing.php:50
 msgid "City"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:353
+#: admin/class-woo-pincode-checker-admin.php:396
 #: admin/class-woo-pincode-checker-listing.php:51
 msgid "State"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:364
+#: admin/class-woo-pincode-checker-admin.php:407
 msgid "Delivery within days"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:371
+#: admin/class-woo-pincode-checker-admin.php:414
 #: admin/class-woo-pincode-checker-listing.php:53
 msgid "Cash on Delivery"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:374
+#: admin/class-woo-pincode-checker-admin.php:417
 msgid "Enable Cash on deliver for this pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:414
+#: admin/class-woo-pincode-checker-admin.php:457
 msgid "Invalid file type. The importer supports CSV file formats."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:448
+#: admin/class-woo-pincode-checker-admin.php:491
 msgid "Import Pincodes CSV file Successfully."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:463
+#: admin/class-woo-pincode-checker-admin.php:506
 msgid "Upload pincodes from a CSV file"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:473
+#: admin/class-woo-pincode-checker-admin.php:516
 msgid "Choose a CSV file from your computer:"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:485
+#: admin/class-woo-pincode-checker-admin.php:528
 #. translators: %s: maximum upload size
 msgid "Maximum size: %s"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:497
+#: admin/class-woo-pincode-checker-admin.php:540
 msgid "Import CSV File"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:512
+#: admin/class-woo-pincode-checker-admin.php:555
 msgid "Woocommerce Pincode Checker"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:534
+#: admin/class-woo-pincode-checker-admin.php:578
 msgid "Check if Hide for this Product:"
 msgstr ""
 
@@ -152,275 +161,485 @@ msgstr ""
 msgid "Delivery Days"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:43
+#: admin/partials/woo-pincode-checker-admin-display.php:42
 msgid "Show Delivery Date"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:58
-#: admin/partials/woo-pincode-checker-admin-display.php:63
+#: admin/partials/woo-pincode-checker-admin-display.php:57
+#: admin/partials/woo-pincode-checker-admin-display.php:62
 msgid "Select Delivery Date Format"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:64
+#: admin/partials/woo-pincode-checker-admin-display.php:63
 msgid "M jS - July 1st"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:65
+#: admin/partials/woo-pincode-checker-admin-display.php:64
 msgid "D, jS M  – Mon, 25th Nov"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:66
+#: admin/partials/woo-pincode-checker-admin-display.php:65
 msgid "D, M d  – Sat, Nov 23"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:67
+#: admin/partials/woo-pincode-checker-admin-display.php:66
 msgid "M d  – Nov 23"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:74
+#: admin/partials/woo-pincode-checker-admin-display.php:73
 msgid "Select Pincode Label Text Color"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:80
+#: admin/partials/woo-pincode-checker-admin-display.php:79
 msgid "Select Button Color"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:86
+#: admin/partials/woo-pincode-checker-admin-display.php:85
 msgid "Select Button Text Color"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:3
+#: admin/partials/woo-pincode-checker-faq-display.php:22
+msgid "FAQ(s) "
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:31
+msgid "Does This plugin requires Woocommerce?"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:35
+msgid "Yes, It needs you to have Woocommerce installed and activated."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:43
+msgid "What to do after activated the plugin?"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:47
+msgid "You Need to add or upload pincodes."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:55
+msgid "How to upload the Pincodes?"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:59
+msgid ""
+"If you want to manually upload the pin code from the backend then navigate "
+"to the Dashboard > Pincodes > Add Pincode. Now you can add the Pincode by "
+"providing Pincode, city, state, delivery within days, and payment option ( "
+"cash on delivery). Enable cash on delivery option if you want to provide "
+"this payment option for the particular pincode."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:62
+msgid ""
+"If you want to bulk upload the pin code from a CSV file then Navigate to "
+"the WP Dashboard > upload Pincodes tab and import the CSV file to add the "
+"Pin codes in bulk."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:65
+msgid ""
+"you need to add csv file column as Pincode, city, state, delivery within "
+"days, Cash on delivery."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:73
+msgid "How to configure the backend settings?"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:77
+msgid ""
+"To configure the backend settings, navigate to the Dashboard > WB plugins > "
+"Woo pin code checker. Now here you can find the general setting of the "
+"plugin."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:80
+msgid ""
+"Show Delivery Date: Enable this option to display the delivery date on the "
+"product page."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:83
+msgid ""
+"Select Delivery Date Format: This option allows you to select any date "
+"format from the dropdown list to display on the product page."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:86
+msgid ""
+"Select Pincode Label Text Color: Allow you to select Pincode Label Text "
+"Color."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:89
+msgid "Select Button Color: Allow you to select the “check” button color."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:92
+msgid "Select Button Text Color: Allow you to select Button Text Color."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:100
+msgid "Can I hide pincode checker form for the specific product?"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:104
+msgid ""
+"Yes, This plugin allows you to hide pincode checker form for the specific "
+"product."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:107
+msgid ""
+"To hide the pincode checker form Navigate to the WP Dashboard > Products > "
+"Add New Product or Edit any product page and you will find the checkbox ( "
+"Check if Hide for this Product ). you can check this checkbox to hide "
+"pincode checker form for the specific product."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:115
+msgid "Where to find the pincode checker form in my website?"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:119
+msgid ""
+"Navigate to the shop page and click on any product in which you want to "
+"check that shipping is available or not in a particular postal code. Now "
+"here you will find the “Check button” to check the availability of the "
+"product. Fill in your area pin code and click on the button."
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-faq-display.php:122
+msgid ""
+"Now it will display the message if the product is available or not in a "
+"particular Pincode. It will also display the delivery date so that "
+"customers can know the timeline of their available orders before placing "
+"the order. It also displays that cash on delivery is available or not at a "
+"particular Pincode."
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:16
+msgid ""
+"Allows the site admin to add the pin code availability feature on their "
+"sites with woo pin code checker plugin. If you are starting your online "
+"shopping site, the Woo pin code checker is a perfect option for you."
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:26
+msgid "Help &amp; Support Resources"
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:27
+msgid ""
+"Here are all the resources you may need to get help from us. Documentation "
+"is usually the best place to start. Should you require help anytime, our "
+"customer care team is available to assist you at the support center."
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:33
+msgid "Documentation"
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:34
+msgid ""
+"We have prepared an extensive guide on Woo Pincode Checker to learn all "
+"aspects of the plugin. You will find most of your answers here."
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:35
+msgid "Read Documentation"
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:39
+msgid "Support Center"
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:40
+msgid ""
+"We strive to offer the best customer care via our support center. Once your "
+"theme is activated, you can ask us for help anytime."
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:41
+msgid "Get Support"
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:45
+msgid "Got Feedback?"
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:46
+msgid ""
+"We want to hear about your experience with the plugin. We would also love "
+"to hear any suggestions you may for future updates."
+msgstr ""
+
+#: admin/partials/woo-welcome-page.php:47
+msgid "Send Feedback"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-license-page.php:5
 msgid "Plugin License Settings"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:8
-#: admin/wbcom/templates/wbcom-license-page.php:21
+#: admin/wbcom/templates/wbcom-license-page.php:10
+#: admin/wbcom/templates/wbcom-license-page.php:22
 msgid "Product"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:9
-#: admin/wbcom/templates/wbcom-license-page.php:22
+#: admin/wbcom/templates/wbcom-license-page.php:11
+#: admin/wbcom/templates/wbcom-license-page.php:23
 msgid "Version"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:10
-#: admin/wbcom/templates/wbcom-license-page.php:23
+#: admin/wbcom/templates/wbcom-license-page.php:12
+#: admin/wbcom/templates/wbcom-license-page.php:24
 msgid "Key"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:11
-#: admin/wbcom/templates/wbcom-license-page.php:24
+#: admin/wbcom/templates/wbcom-license-page.php:13
+#: admin/wbcom/templates/wbcom-license-page.php:25
 msgid "Status"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-license-page.php:12
-#: admin/wbcom/templates/wbcom-license-page.php:25
+#: admin/wbcom/templates/wbcom-license-page.php:14
+#: admin/wbcom/templates/wbcom-license-page.php:26
 msgid "Action"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:8
+#: admin/wbcom/templates/wbcom-plugins-page.php:10
+msgid "Paid Addons"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:29
+#: admin/wbcom/templates/wbcom-themes-page.php:118
+#: admin/wbcom/templates/wbcom-themes-page.php:139
+msgid "View"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-plugins-page.php:38
 msgid "Free Addons"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:14
+#: admin/wbcom/templates/wbcom-plugins-page.php:44
 msgid "Install"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:18
+#: admin/wbcom/templates/wbcom-plugins-page.php:48
 #: admin/wbcom/wbcom-admin-settings.php:151
 msgid "Activate"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:22
+#: admin/wbcom/templates/wbcom-plugins-page.php:52
 #: admin/wbcom/wbcom-admin-settings.php:152
 msgid "Deactivate"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-plugins-page.php:50
-msgid "Paid Addons"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:67
-msgid "View"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:3
+#: admin/wbcom/templates/wbcom-support-page.php:5
 #: admin/wbcom/wbcom-admin-settings.php:75
 #: admin/wbcom/wbcom-admin-settings.php:98
 msgid "Support"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-support-page.php:5
+#: admin/wbcom/templates/wbcom-support-page.php:7
 msgid "Having any question or issue ?"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-support-page.php:7
+#: admin/wbcom/templates/wbcom-support-page.php:9
 msgid ""
 "Our team is here to help you out at anytime. If you have any idea about how "
 "we could improve. You can share access to your site on our helpdesk if it "
 "can help getting faster. There are two ways to in touch with us :"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-support-page.php:19
+#: admin/wbcom/templates/wbcom-support-page.php:21
 msgid "Tickets Support"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-support-page.php:20
+#: admin/wbcom/templates/wbcom-support-page.php:22
 msgid ""
 "Open a ticket on our helpdesk, we don't guarantee a fast response but "
 "within a week. Except if you've purchased one of our product we'll reply "
 "within 24 hours."
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-support-page.php:24
+#: admin/wbcom/templates/wbcom-support-page.php:26
 msgid "Open a ticket"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-support-page.php:39
-#: admin/wbcom/templates/wbcom-support-page.php:44
+#: admin/wbcom/templates/wbcom-support-page.php:41
+#: admin/wbcom/templates/wbcom-support-page.php:46
 msgid "Contact Us"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-support-page.php:40
+#: admin/wbcom/templates/wbcom-support-page.php:42
 msgid ""
 "Create a new thread on our plugin page, participation is open to anyone "
 "from all around the world. We'll be there to help as well but can't "
 "guarantee any delay."
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:4
-msgid "Reign BuddyPress"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-themes-page.php:12
-msgid "REIGN Community"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-themes-page.php:14
-msgid "Multiple Member Directory Layout"
+#: admin/wbcom/templates/wbcom-themes-page.php:13
+msgid "Reign Theme"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:15
-msgid "Multiple Member Header Layout"
+msgid "Multiple Member Directory Layout"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:16
-msgid "Multiple Group Directory Layout"
+msgid "Multiple Member Header Layout"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:17
-msgid "Multiple Group Header Layout"
+msgid "Multiple Group Directory Layout"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:18
-msgid "BuddyPress Customization Options"
+msgid "Multiple Group Header Layout"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:19
-msgid "BuddyPress Extra Widgets"
+msgid "BuddyPress Customization Options"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:20
+msgid "BuddyPress Extra Widgets"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:21
 msgid "Inbuilt Social Profile Module"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:23
-#: admin/wbcom/templates/wbcom-themes-page.php:50
-#: admin/wbcom/templates/wbcom-themes-page.php:74
-#: admin/wbcom/templates/wbcom-themes-page.php:97
+#: admin/wbcom/templates/wbcom-themes-page.php:24
+#: admin/wbcom/templates/wbcom-themes-page.php:49
+#: admin/wbcom/templates/wbcom-themes-page.php:72
+#: admin/wbcom/templates/wbcom-themes-page.php:94
 msgid "Purchase"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:24
-#: admin/wbcom/templates/wbcom-themes-page.php:51
-#: admin/wbcom/templates/wbcom-themes-page.php:75
-#: admin/wbcom/templates/wbcom-themes-page.php:98
+#: admin/wbcom/templates/wbcom-themes-page.php:25
+#: admin/wbcom/templates/wbcom-themes-page.php:50
+#: admin/wbcom/templates/wbcom-themes-page.php:73
+#: admin/wbcom/templates/wbcom-themes-page.php:95
 msgid "Preview"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:30
-msgid "LearnMate"
+#: admin/wbcom/templates/wbcom-themes-page.php:38
+msgid "LearnMate Solution"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:39
-msgid "Learnmate"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-themes-page.php:41
+#: admin/wbcom/templates/wbcom-themes-page.php:40
 msgid "Add Review to your course"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:42
+#: admin/wbcom/templates/wbcom-themes-page.php:41
 msgid "Course Coming Soon"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:43
-#: admin/wbcom/templates/wbcom-themes-page.php:70
+#: admin/wbcom/templates/wbcom-themes-page.php:42
+#: admin/wbcom/templates/wbcom-themes-page.php:68
 msgid "Grid And List Layout"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:44
+#: admin/wbcom/templates/wbcom-themes-page.php:43
 msgid "Learndash/LifterLMS Extra Widgets"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:45
+#: admin/wbcom/templates/wbcom-themes-page.php:44
 msgid "Unparalleled Course Layout"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:46
+#: admin/wbcom/templates/wbcom-themes-page.php:45
 msgid "Awesome Learndash/LifterLMS Pages"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:47
+#: admin/wbcom/templates/wbcom-themes-page.php:46
 msgid "Distraction Free Reading"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:57
-msgid "StoreMate"
+#: admin/wbcom/templates/wbcom-themes-page.php:63
+msgid "StoreMate Solution"
 msgstr ""
 
 #: admin/wbcom/templates/wbcom-themes-page.php:65
-msgid "ShopMate Dokan"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-themes-page.php:67
 msgid "Dokan Extra Widgets"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:68
+#: admin/wbcom/templates/wbcom-themes-page.php:66
 msgid "Unique Single Product Page Customization"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:69
+#: admin/wbcom/templates/wbcom-themes-page.php:67
 msgid "Awesome WooCommerce Pages"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:71
+#: admin/wbcom/templates/wbcom-themes-page.php:69
 msgid "Automated Mega Menu Support"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:81
-msgid "Jobmate"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-themes-page.php:89
+#: admin/wbcom/templates/wbcom-themes-page.php:86
 msgid "Jobmate Theme"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:91
+#: admin/wbcom/templates/wbcom-themes-page.php:88
 msgid "Simple live searching and filtering"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:92
+#: admin/wbcom/templates/wbcom-themes-page.php:89
 msgid "Unique Job listing Page"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:93
+#: admin/wbcom/templates/wbcom-themes-page.php:90
 msgid "Awesome Resume list Page"
 msgstr ""
 
-#: admin/wbcom/templates/wbcom-themes-page.php:94
+#: admin/wbcom/templates/wbcom-themes-page.php:91
 msgid "Outstanding all job maanger pagesLayout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:108
+msgid "BuddyX Theme"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:110
+msgid "Responsive BuddyPress Theme"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:111
+#: admin/wbcom/templates/wbcom-themes-page.php:134
+msgid "Site Ready In One-Click"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:112
+msgid "Members and Groups Layout"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:113
+msgid "WooCommerce Ready"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:114
+msgid "Supported Muitiple Plugins"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:115
+#: admin/wbcom/templates/wbcom-themes-page.php:136
+msgid "Suitable for All Devices"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:131
+msgid "KnowX Theme"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:133
+msgid "Free WordPress Theme"
+msgstr ""
+
+#: admin/wbcom/templates/wbcom-themes-page.php:135
+msgid "Create Knowledge base"
 msgstr ""
 
 #: admin/wbcom/wbcom-admin-settings.php:57
@@ -429,12 +648,12 @@ msgstr ""
 
 #: admin/wbcom/wbcom-admin-settings.php:63
 #: admin/wbcom/wbcom-admin-settings.php:92
-msgid "Components"
+msgid "Our Plugins"
 msgstr ""
 
 #: admin/wbcom/wbcom-admin-settings.php:69
 #: admin/wbcom/wbcom-admin-settings.php:95
-msgid "Themes"
+msgid "Our Themes"
 msgstr ""
 
 #: admin/wbcom/wbcom-admin-settings.php:192
@@ -727,43 +946,48 @@ msgid ""
 "them at member’s profile."
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:87
+#: public/class-woo-pincode-cheker-form.php:105
 msgid "Available at"
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:87
+#: public/class-woo-pincode-cheker-form.php:105
 msgid "change"
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:91
-#: public/class-woo-pincode-cheker-form.php:131
-msgid "Oops! We are not currently servicing your area."
+#: public/class-woo-pincode-cheker-form.php:109
+#: public/class-woo-pincode-cheker-form.php:149
+msgid "Oops! We are currently not servicing in your area."
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:97
-#: public/class-woo-pincode-cheker-form.php:135
+#: public/class-woo-pincode-cheker-form.php:113
+#: public/class-woo-pincode-cheker-form.php:152
+msgid "Enter Your Pincode"
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:115
+#: public/class-woo-pincode-cheker-form.php:153
 msgid "Check"
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:106
+#: public/class-woo-pincode-cheker-form.php:124
 msgid "Delivered By : "
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:119
+#: public/class-woo-pincode-cheker-form.php:137
 msgid "Cash On Delivery Available"
 msgstr ""
 
-#: woo-pincode-checker.php:65
+#: woo-pincode-checker.php:69
 msgid "WooCommerce"
 msgstr ""
 
-#: woo-pincode-checker.php:69
+#: woo-pincode-checker.php:73
 #. translators: %1$s: WooCommerce plugin, %2$s: WooCommerce Custom My Account
 #. Page plugin
 msgid "%1$s requires %2$s to be installed and active."
 msgstr ""
 
-#: woo-pincode-checker.php:70
+#: woo-pincode-checker.php:74
 msgid "Dismiss this notice."
 msgstr ""
 
