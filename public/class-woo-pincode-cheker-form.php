@@ -110,7 +110,7 @@ class Woo_Pincode_Checker_Form {
 
 					<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 
-						<input type="text" required="required" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="Enter Your Pincode" id="pincode_field_id" name="pincode_field" class="input-text" />
+						<input type="text" required="required" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
 
 						<a class="button wpc-check-button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
 					</p>
@@ -149,7 +149,7 @@ class Woo_Pincode_Checker_Form {
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-					<input type="text" required="required" value="" placeholder="Enter Your Pincode" id="pincode_field_id" name="pincode_field" class="input-text" />
+					<input type="text" required="required" value="" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
 					<a class="button wpc-check-button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
 				</p>
 			</div>
