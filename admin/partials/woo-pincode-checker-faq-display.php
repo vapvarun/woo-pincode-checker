@@ -64,6 +64,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<p> 
 							<?php esc_html_e( 'you need to add csv file column as pincode, city, state, delivery within days, cash on delivery.', 'woo-pincode-checker' ); ?>     
 						</p>
+						<p> 
+							<label for="upload">
+								<?php esc_html_e( 'Download Sample CSV File:', 'woo-pincode-checker' ); ?>
+							</label>
+							<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>"><?php esc_html_e( 'Click Here', 'woo-pincode-checker' ); ?></a>
+						</p>
 					</div>
 				</div>
 			</div>
