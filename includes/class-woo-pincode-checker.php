@@ -165,10 +165,11 @@ class Woo_Pincode_Checker {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		
+
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wpc_admin_menu', 100 );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wpc_add_admin_register_setting' );
-	
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'wcpc_featured_meta' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'wcpc_meta_save' );
 		/* screen option */
 		$this->loader->add_filter( 'set-screen-option', $plugin_admin, 'pincode_per_page_set_option', 10, 3 );
 

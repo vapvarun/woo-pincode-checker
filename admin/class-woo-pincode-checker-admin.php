@@ -577,65 +577,65 @@ class Woo_Pincode_Checker_Admin {
 		</div>
 		<?php
 	}
-}
 
-/**
- * Adds a meta box to the post editing screen
- */
-function wcpc_featured_meta() {
-	add_meta_box( 'prfx_meta', __( 'Woocommerce Pincode Checker', 'woo-pincode-checker' ), 'wcpc_meta_callback', 'product', 'normal', 'high' );
-}
-add_action( 'add_meta_boxes', 'wcpc_featured_meta' );
-
-/**
- * Outputs the content of the meta box.
- *
- * @param array $post Get a Post Object.
- */
-function wcpc_meta_callback( $post ) {
-	wp_nonce_field( basename( __FILE__ ), 'prfx_nonce' );
-	$prfx_stored_meta = get_post_meta( $post->ID );
-	?>
-
-<p>
-	<div class="prfx-row-content">
-		<label for="featured-checkbox">
-			<input type="checkbox" name="hide_pincode_checker" id="featured-checkboxs" value="yes"
-			<?php
-			if ( isset( $prfx_stored_meta['hide_pincode_checker'] ) ) {
-				checked( $prfx_stored_meta['hide_pincode_checker'][0], 'yes' );}
-			?>
-				/>
-			<?php esc_html_e( 'Check if Hide for this Product:', 'woo-pincode-checker' ); ?>
-		</label>
-
-	</div>
-</p>
-
-	<?php
-}
-
-/**
- * Saves the custom meta input
- */
-function wcpc_meta_save( $post_id ) {
-
-	// Checks save status - overcome autosave, etc.
-	$is_autosave    = wp_is_post_autosave( $post_id );
-	$is_revision    = wp_is_post_revision( $post_id );
-	$is_valid_nonce = ( isset( $_POST['prfx_nonce'] ) && wp_verify_nonce( $_POST['prfx_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
-
-	// Exits script depending on save status.
-	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
-		return;
+	/**
+	 * Adds a meta box to the post editing screen
+	 */
+	public function wcpc_featured_meta() {
+		add_meta_box( 'wpc-hide-pincode-checker', __( 'Pincode/Zipcode for Shipping Availability', 'woo-pincode-checker' ), array( $this, 'wcpc_meta_callback' ), 'product', 'normal', 'high' );
 	}
 
-	// Checks for input and saves - save checked as yes and unchecked at no.
-	if ( isset( $_POST['hide_pincode_checker'] ) ) {
-		update_post_meta( $post_id, 'hide_pincode_checker', 'yes' );
-	} else {
-		update_post_meta( $post_id, 'hide_pincode_checker', 'no' );
+	/**
+	 * Outputs the content of the meta box.
+	 *
+	 * @param array $post Get a Post Object.
+	 */
+	public function wcpc_meta_callback( $post ) {
+		wp_nonce_field( basename( __FILE__ ), 'wpc_hide_pincode_nonce' );
+		$wpc_hide_pincode_checker = get_post_meta( $post->ID );
+		?>
+			<p>
+				<div class="prfx-row-content">
+					<label for="featured-checkbox">
+						<input type="checkbox" name="wpc_hide_pincode_checker" id="featured-checkboxs" value="yes"
+						<?php
+						if ( isset( $wpc_hide_pincode_checker['wpc_hide_pincode_checker'] ) ) {
+							checked( $wpc_hide_pincode_checker['wpc_hide_pincode_checker'][0], 'yes' );}
+						?>
+							/>
+						<?php esc_html_e( 'Enable if you want to hide shipping availability:', 'woo-pincode-checker' ); ?>
+					</label>
+
+				</div>
+			</p>
+
+		<?php
+	}
+
+	/**
+	 * Saves the custom meta input
+	 *
+	 * @param INT $post_id Post ID.
+	 */
+	public function wcpc_meta_save( $post_id ) {
+
+		// Checks save status - overcome autosave, etc.
+		$is_autosave    = wp_is_post_autosave( $post_id );
+		$is_revision    = wp_is_post_revision( $post_id );
+		$is_valid_nonce = ( isset( $_POST['wpc_hide_pincode_nonce'] ) && wp_verify_nonce( $_POST['wpc_hide_pincode_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
+
+		// Exits script depending on save status.
+		if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+			return;
+		}
+
+		// Checks for input and saves - save checked as yes and unchecked at no.
+		if ( isset( $_POST['wpc_hide_pincode_checker'] ) ) {
+			update_post_meta( $post_id, 'wpc_hide_pincode_checker', 'yes' );
+		} else {
+			update_post_meta( $post_id, 'wpc_hide_pincode_checker', 'no' );
+		}
+
 	}
 
 }
-add_action( 'save_post', 'wcpc_meta_save' );
