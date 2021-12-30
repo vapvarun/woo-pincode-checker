@@ -83,8 +83,9 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 					$new_general_settings['delivery_date'] = $wpc_general_settings['delivery_date'];
 				}
 					$new_general_settings['cod_display']              = isset( $wpc_general_settings['cod_display'] ) ? $wpc_general_settings['cod_display'] : '';
-					$new_general_settings['textcolor']                = $wpc_general_settings['textcolor'];
-					$new_general_settings['buttoncolor']              = $wpc_general_settings['buttoncolor'];
+					$new_general_settings['textcolor']                = ( isset( $wpc_general_settings['textcolor'] ) ) ? $wpc_general_settings['textcolor'] : '';
+					$new_general_settings['buttoncolor']              = ( isset( $wpc_general_settings['buttoncolor'] ) ) ? $wpc_general_settings['buttoncolor'] : '';
+					$new_general_settings['buttontcolor']             = ( isset( $wpc_general_settings['buttontcolor'] ) ) ? $wpc_general_settings['buttontcolor'] : '';
 					$new_general_settings['check_btn_text']           = $wpc_general_settings['check_btn_text'];
 					$new_general_settings['change_btn_text']          = $wpc_general_settings['change_btn_text'];
 					$new_general_settings['delivery_date_label_text'] = $wpc_general_settings['delivery_date_label_text'];

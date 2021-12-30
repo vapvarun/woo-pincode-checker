@@ -101,6 +101,11 @@ class Woo_Pincode_Checker_Form {
 		if ( 'yes' === $wpc_hide_form ) {
 			return;
 		}
+		$wpc_check_btn_label     = wpc_get_check_btn_label();
+		$wpc_change_btn_label    = wpc_get_change_btn_label();
+		$wpc_delivery_date_label = wpc_get_delivery_date_label();
+		$wpc_availability_label  = wpc_get_availability_label();
+		$wpc_cod_label           = wpc_get_cod_label();
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 
@@ -115,14 +120,9 @@ class Woo_Pincode_Checker_Form {
 			}
 
 			/* set delivery date */
-			$wpc_general_settings    = get_option( 'wpc_general_settings' );
-			$delivery_date_format    = $wpc_general_settings['delivery_date'];
-			$delivery_date           = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) );
-			$wpc_check_btn_label     = wpc_get_check_btn_label();
-			$wpc_change_btn_label    = wpc_get_change_btn_label();
-			$wpc_delivery_date_label = wpc_get_delivery_date_label();
-			$wpc_availability_label  = wpc_get_availability_label();
-			$wpc_cod_label           = wpc_get_cod_label();
+			$wpc_general_settings = get_option( 'wpc_general_settings' );
+			$delivery_date_format = $wpc_general_settings['delivery_date'];
+			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) );
 
 			/* set pincode */
 			$customer = new WC_Customer();
@@ -266,19 +266,17 @@ class Woo_Pincode_Checker_Form {
 
 			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
 			<?php
-			if ( $wpc_btn_color == '' ) {
-				echo 'background-color:#a46497;';
-			} else {
-				echo "background-color:$wpc_btn_color" . ';'; }
+			if ( ! empty( $wpc_btn_color ) ) {
+				echo "background-color:$wpc_btn_color" . ';';
+			}
 			?>
 			}
 
 			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
 			<?php
-			if ( $wpc_btn_text_color == '' ) {
-				echo 'color:#fff;';
-			} else {
-				echo "color:$wpc_btn_text_color" . ';'; }
+			if ( ! empty( $wpc_btn_text_color ) ) {
+				echo "color:$wpc_btn_text_color" . ';';
+			}
 			?>
 			}
 
