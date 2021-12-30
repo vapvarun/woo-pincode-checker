@@ -195,14 +195,22 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		/* add ajax for pincode checker */
-		$this->loader->add_action( 'wp_ajax_nopriv_picodecheck_ajax_submit', $pincode_form, 'picodecheck_ajax_submit' );
-		$this->loader->add_action( 'wp_ajax_picodecheck_ajax_submit', $pincode_form, 'picodecheck_ajax_submit' );
-
-		/* add pincode checker form shop page */
-		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $pincode_form, 'pincode_field' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
+		$this->loader->add_action( 'wp_ajax_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
+		$wpc_pincode_btn_position = wpc_single_product_button_position();
+		if ( 'woocommerce_before_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_action( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_pincode_field' );
+		} elseif ( 'woocommerce_after_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_action( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_pincode_field' );
+		} elseif ( 'woocommerce_after_add_to_cart_quantity' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_action( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_pincode_field' );
+		}
 
 		/* admin setting css */
-		$this->loader->add_action( 'wp_head', $pincode_form, 'hook_css' );
+		$this->loader->add_action( 'wp_head', $pincode_form, 'wpc_add_custom_css' );
 	}
 
 	/**

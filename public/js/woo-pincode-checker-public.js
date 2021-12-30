@@ -1,4 +1,4 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
 	/**
@@ -28,39 +28,39 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-	$( document ).ready(function() {
-		
+	$(document).ready(function () {
+
 		/* default pincode form button */
-		$("#checkpin").click(function() {
+		$("#checkpin").click(function () {
 			var pin_code = $('#pincode_field_id').val();
-			console.log( pin_code );
-			if(pin_code != '') {
+			console.log(pin_code);
+			if (pin_code != '') {
 				$.ajax({
-						url : pincode_check.ajaxurl,
-						type : 'post',
-						data : {
-							action   : 'picodecheck_ajax_submit',
-							pin_code : pin_code
-						},
-						success : function( response ) {
-						if(response == 1) {
-								location.reload();
-						  } else {
+					url: pincode_check.ajaxurl,
+					type: 'post',
+					data: {
+						action: 'wpc_picode_check_ajax_submit',
+						pin_code: pin_code
+					},
+					success: function (response) {
+						if (response == 1) {
+							location.reload();
+						} else {
 							$('#error_pin').show();
 							$('.delivery_msg').hide();
 							$('.add_to_cart_button, .single_add_to_cart_button').remove();
 						}
-						}
-				}); 
+					}
+				});
 
 			}
 		});
-		/* already pincode checking form */ 
-		$("#change_pin").click(function(){
-		
-				$('#my_custom_checkout_field2').show();
-				$('#avlpin').hide();
-				$('.delivery-info-wrap').hide();
-			});
+		/* already pincode checking form */
+		$("#change_pin").click(function () {
+
+			$('#my_custom_checkout_field2').show();
+			$('#avlpin').hide();
+			$('.delivery-info-wrap').hide();
+		});
 	});
-})( jQuery );
+})(jQuery);

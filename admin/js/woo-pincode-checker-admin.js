@@ -57,8 +57,16 @@
 		}
 
 
-		$('#products-to-quote').selectize({
-			placeholder: "Select Category",
+		$('#wpc_delivery_date').selectize({
+			placeholder: "Select Delivery Date",
+			plugins: ['remove_button'],
+		});
+		$('#wpc-exclude-category').selectize({
+			placeholder: "Exclude Category",
+			plugins: ['remove_button'],
+		});
+		$('#wpc_pincode_position').selectize({
+			placeholder: "Select Pincode Position",
 			plugins: ['remove_button'],
 		});
 

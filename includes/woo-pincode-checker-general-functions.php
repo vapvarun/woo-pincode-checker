@@ -36,3 +36,13 @@ function wpc_get_products_to_pincode_checker_by_category() {
 
 	return apply_filters( 'alter_wpc_get_products_to_pincode_checker_by_category', $wpc_pinocode_by_category );
 }
+
+/**
+ * Function for get single product page button position.
+ */
+function wpc_single_product_button_position() {
+	$wpc_general_settings       = get_option( 'wpc_general_settings' );
+	$wpc_single_button_position = ( isset( $wpc_general_settings['pincode_position'] ) && ! empty( $wpc_general_settings['pincode_position'] ) ) ? $wpc_general_settings['pincode_position'] : '';
+
+	return apply_filters( 'alter_wpc_single_product_button_position', $wpc_single_button_position );
+}

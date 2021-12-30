@@ -37,7 +37,7 @@ if ( false == $general_settings['date_display'] ) {
 		?>
 		<table class="form-table">
 			<tbody>
-			<tr>
+				<tr>
 					<th scope="row">
 						<label><?php esc_html_e( 'Show Delivery Date', 'woo-pincode-checker' ); ?></label>
 					</th>
@@ -47,7 +47,7 @@ if ( false == $general_settings['date_display'] ) {
 							<div class="wb-slider wb-round"></div>
 						</label>
 					</td>
-					</tr>
+				</tr>
 				<tr id="wbwss-wpc-deliver-date" class="<?php echo esc_attr( $class ); ?>"
 				<?php
 				if ( ! isset( $general_settings['date_display'] ) ) {
@@ -58,7 +58,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label class="wpc-delivery_date">
-							<select name="wpc_general_settings[delivery_date]" >
+							<select id="wpc_delivery_date" name="wpc_general_settings[delivery_date]" >
 								<option value=""><?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?></option>
 								<option value="M jS" <?php selected( $general_settings['delivery_date'], 'M jS' ); ?>><?php esc_html_e( 'M jS - July 1st', 'woo-pincode-checker' ); ?></option>
 								<option value="D, jS M" <?php selected( $general_settings['delivery_date'], 'D, jS M' ); ?>><?php esc_html_e( 'D, jS M  – Mon, 25th Nov', 'woo-pincode-checker' ); ?></option>
@@ -69,24 +69,38 @@ if ( false == $general_settings['date_display'] ) {
 					</td>
 				</tr>
 				<tr class="wcpq-pro-products">
-				<th scope="row"><label for="blogname"><?php esc_html_e( 'Exclude category for shipping availbility', 'woo-pincode-checker' ); ?></label></th>
-				<td>
-					<select id="products-to-quote"  name="wpc_general_settings[categories_for_shipping][]" multiple>
-						<?php if ( ! empty( $products_categories ) ) { ?>
-							<?php
-							foreach ( $products_categories as $products_category ) {
+					<th scope="row"><label for="blogname"><?php esc_html_e( 'Exclude category for shipping availbility', 'woo-pincode-checker' ); ?></label></th>
+					<td>
+						<select id="wpc-exclude-category"  name="wpc_general_settings[categories_for_shipping][]" multiple>
+							<?php if ( ! empty( $products_categories ) ) { ?>
+								<?php
+								foreach ( $products_categories as $products_category ) {
 
-								$selected = '';
-								if ( isset( $general_settings['categories_for_shipping'] ) && in_array( $products_category->term_id, $general_settings['categories_for_shipping'] ) ) {
-									$selected = 'selected';
-								}
-								?>
-								<option value="<?php echo esc_attr( $products_category->term_id ); ?>" <?php echo $selected; ?>><?php echo esc_html( $products_category->name ); ?></option>
+									$selected = '';
+									if ( isset( $general_settings['categories_for_shipping'] ) && in_array( $products_category->term_id, $general_settings['categories_for_shipping'] ) ) {
+										$selected = 'selected';
+									}
+									?>
+									<option value="<?php echo esc_attr( $products_category->term_id ); ?>" <?php echo $selected; ?>><?php echo esc_html( $products_category->name ); ?></option>
+								<?php } ?>
 							<?php } ?>
-						<?php } ?>
-					</select>
-				</td>
-			</tr>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Pincode Availability Check Position', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label>
+							<select id="wpc_pincode_position" name="wpc_general_settings[pincode_position]" >
+								<option value="woocommerce_before_add_to_cart_button"<?php selected( $general_settings['pincode_position'], 'woocommerce_before_add_to_cart_button' ); ?>><?php esc_html_e( 'Before Add to Cart button', 'woo-pincode-checker' ); ?></option>
+								<option value="woocommerce_after_add_to_cart_button"<?php selected( $general_settings['pincode_position'], 'woocommerce_after_add_to_cart_button' ); ?>><?php esc_html_e( 'After Add to Cart Button', 'woo-pincode-checker' ); ?></option>
+								<option value="woocommerce_after_add_to_cart_quantity"<?php selected( $general_settings['pincode_position'], 'woocommerce_after_add_to_cart_quantity' ); ?>><?php esc_html_e( 'After Add to Cart Quantity', 'woo-pincode-checker' ); ?></option>
+							</select>
+						</label>
+					</td>
+				</tr>
 				<tr>
 					<th scope="row">
 						<label><?php esc_html_e( 'Select Pincode Label Text Color', 'woo-pincode-checker' ); ?></label>

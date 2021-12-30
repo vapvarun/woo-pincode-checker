@@ -71,7 +71,7 @@ class Woo_Pincode_Checker_Form {
 	/**
 	 * Display Pincode check form on product page.
 	 */
-	public function pincode_field() {
+	public function wpc_display_pincode_field() {
 		global $table_prefix, $wpdb,$woocommerce, $product;
 		$wpc_exclude_category    = wpc_get_products_to_pincode_checker_by_category();
 		$product_id              = $this->wpc_access_protected( $product, 'id' );
@@ -189,7 +189,7 @@ class Woo_Pincode_Checker_Form {
 	/**
 	 * Set pincode in cookie.
 	 */
-	public function picodecheck_ajax_submit() {
+	public function wpc_picode_check_ajax_submit() {
 		global $wpdb;
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( $_POST['pin_code'] ) : '';
 		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `{$wpdb->prefix}pincode_checker` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
@@ -207,7 +207,7 @@ class Woo_Pincode_Checker_Form {
 	/**
 	 * CSS of general setting option value.
 	 */
-	public function hook_css() {
+	public function wpc_add_custom_css() {
 		$wpc_general_settings = get_option( 'wpc_general_settings' );
 		$wpc_label_color      = isset( $wpc_general_settings['textcolor'] ) ? $wpc_general_settings['textcolor'] : '';
 		$wpc_btn_color        = isset( $wpc_general_settings['buttoncolor'] ) ? $wpc_general_settings['buttoncolor'] : '';
