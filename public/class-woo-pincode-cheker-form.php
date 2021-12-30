@@ -106,6 +106,7 @@ class Woo_Pincode_Checker_Form {
 		$wpc_delivery_date_label = wpc_get_delivery_date_label();
 		$wpc_availability_label  = wpc_get_availability_label();
 		$wpc_cod_label           = wpc_get_cod_label();
+		$wpc_display_cod_option  = wpc_display_cod_option();
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 
@@ -191,7 +192,7 @@ class Woo_Pincode_Checker_Form {
 							<?php
 					}
 
-					if ( $cash_on_delivery == 1 ) {
+					if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
 						?>
 								<div class="cash_on_delivery">
 									<?php

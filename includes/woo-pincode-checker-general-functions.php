@@ -91,3 +91,15 @@ function wpc_get_cod_label() {
 	$wpc_cod_label        = ( isset( $wpc_general_settings['cod_label_text'] ) && ! empty( $wpc_general_settings['cod_label_text'] ) ) ? $wpc_general_settings['cod_label_text'] : 'Cash On Delivery Available';
 	return apply_filters( 'alter_wpc_get_cod_label', $wpc_cod_label );
 }
+
+/**
+ * Function for display cod option.
+ *
+ * @return Array
+ */
+function wpc_display_cod_option() {
+	$wpc_general_settings   = get_option( 'wpc_general_settings' );
+	$wpc_display_cod_option = ( isset( $wpc_general_settings['cod_display'] ) && 'on' === $wpc_general_settings['cod_display'] ) ? true : false;
+
+	return apply_filters( 'alter_wpc_display_cod_option', $wpc_display_cod_option );
+}
