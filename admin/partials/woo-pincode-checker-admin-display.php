@@ -97,6 +97,7 @@ if ( false == $general_settings['date_display'] ) {
 								<option value="woocommerce_before_add_to_cart_button"<?php selected( $general_settings['pincode_position'], 'woocommerce_before_add_to_cart_button' ); ?>><?php esc_html_e( 'Before Add to Cart button', 'woo-pincode-checker' ); ?></option>
 								<option value="woocommerce_after_add_to_cart_button"<?php selected( $general_settings['pincode_position'], 'woocommerce_after_add_to_cart_button' ); ?>><?php esc_html_e( 'After Add to Cart Button', 'woo-pincode-checker' ); ?></option>
 								<option value="woocommerce_after_add_to_cart_quantity"<?php selected( $general_settings['pincode_position'], 'woocommerce_after_add_to_cart_quantity' ); ?>><?php esc_html_e( 'After Add to Cart Quantity', 'woo-pincode-checker' ); ?></option>
+								<option value="wpc_pincode_checker"<?php selected( $general_settings['pincode_position'], 'wpc_pincode_checker' ); ?>><?php esc_html_e( 'Use Shortcode', 'woo-pincode-checker' ); ?></option>
 							</select>
 						</label>
 					</td>

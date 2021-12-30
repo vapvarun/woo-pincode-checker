@@ -317,7 +317,6 @@ class Woo_Pincode_Checker_Admin {
 		global $wpdb;
 
 		$wpc_message = $message_type = '';
-
 		if ( isset( $_POST['wpc-pincode-submit'] ) && $_POST['wpc-pincode-submit'] != '' ) {
 			$wpc_pincode          = sanitize_text_field( $_POST['wpc-pincode'] );
 			$wpc_city             = sanitize_text_field( $_POST['wpc-city'] );

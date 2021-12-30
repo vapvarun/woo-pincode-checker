@@ -207,6 +207,9 @@ class Woo_Pincode_Checker {
 		} elseif ( 'woocommerce_after_add_to_cart_quantity' === $wpc_pincode_btn_position ) {
 			/* add pincode checker form single product page */
 			$this->loader->add_action( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_pincode_field' );
+		} elseif ( 'wpc_pincode_checker' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_shortcode( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_shortcode_pincode_form' );
 		}
 
 		/* admin setting css */

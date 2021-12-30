@@ -62,10 +62,12 @@ class Woo_Pincode_Checker_Form {
 	 * @return string|int    based on $prop
 	 */
 	public function wpc_access_protected( $obj, $prop ) {
-		$reflection = new ReflectionClass( $obj );
-		$property   = $reflection->getProperty( $prop );
-		$property->setAccessible( true );
-		return $property->getValue( $obj );
+		if ( ! empty( $obj ) ) {
+			$reflection = new ReflectionClass( $obj );
+			$property   = $reflection->getProperty( $prop );
+			$property->setAccessible( true );
+			return $property->getValue( $obj );
+		}
 	}
 
 	/**
@@ -245,5 +247,19 @@ class Woo_Pincode_Checker_Form {
 
 		</style>
 		<?php
+	}
+
+
+	/**
+	 * Display shortcode content.
+	 *
+	 * @param  Array  $atts An associative array of attributes, or an empty string if no attributes are given.
+	 * @param  string $content the enclosed content (if the shortcode is used in its enclosing form).
+	 */
+	public function wpc_display_shortcode_pincode_form( $atts, $content = null ) {
+		ob_start();
+		$this->wpc_display_pincode_field();
+		$content = ob_get_clean();
+		return $content;
 	}
 }
