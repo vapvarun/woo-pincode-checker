@@ -17,8 +17,8 @@ wp_enqueue_style( 'wp-color-picker' );
 
 global $wpc_globals;
 global $wp_roles;
-$general_settings = $wpc_globals->wpc_general_settings;
-
+$general_settings                  = $wpc_globals->wpc_general_settings;
+$products_categories               = wpc_get_wc_categories();
 $general_settings['date_display']  = isset( $general_settings['date_display'] ) ? $general_settings['date_display'] : '';
 $general_settings['delivery_date'] = isset( $general_settings['delivery_date'] ) ? $general_settings['delivery_date'] : '';
 $general_settings['textcolor']     = isset( $general_settings['textcolor'] ) ? $general_settings['textcolor'] : '';
@@ -68,6 +68,25 @@ if ( false == $general_settings['date_display'] ) {
 						</label>
 					</td>
 				</tr>
+				<tr class="wcpq-pro-products">
+				<th scope="row"><label for="blogname"><?php esc_html_e( 'Exclude category for shipping availbility', 'woo-pincode-checker' ); ?></label></th>
+				<td>
+					<select id="products-to-quote"  name="wpc_general_settings[categories_for_shipping][]" multiple>
+						<?php if ( ! empty( $products_categories ) ) { ?>
+							<?php
+							foreach ( $products_categories as $products_category ) {
+
+								$selected = '';
+								if ( isset( $general_settings['categories_for_shipping'] ) && in_array( $products_category->term_id, $general_settings['categories_for_shipping'] ) ) {
+									$selected = 'selected';
+								}
+								?>
+								<option value="<?php echo esc_attr( $products_category->term_id ); ?>" <?php echo $selected; ?>><?php echo esc_html( $products_category->name ); ?></option>
+							<?php } ?>
+						<?php } ?>
+					</select>
+				</td>
+			</tr>
 				<tr>
 					<th scope="row">
 						<label><?php esc_html_e( 'Select Pincode Label Text Color', 'woo-pincode-checker' ); ?></label>

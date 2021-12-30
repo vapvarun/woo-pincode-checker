@@ -81,8 +81,10 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', array(), $this->version, 'all' );
+		if ( isset( $_GET['page'] ) && 'woo-pincode-checker' === $_GET['page'] ) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'wpc-selectize', plugin_dir_url( __FILE__ ) . 'css/selectize.css', array(), $this->version, 'all' );
+		}
 
 	}
 
@@ -103,9 +105,10 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', array( 'jquery' ), $this->version, false );
-
+		if ( isset( $_GET['page'] ) && 'woo-pincode-checker' === $_GET['page'] ) {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'wpc-selectize-min', plugin_dir_url( __FILE__ ) . 'js/selectize.min.js', array( 'jquery' ), $this->version, false );
+		}
 	}
 
 	/**

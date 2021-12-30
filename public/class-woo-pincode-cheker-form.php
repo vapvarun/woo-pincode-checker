@@ -52,15 +52,45 @@ class Woo_Pincode_Checker_Form {
 		$this->version     = $version;
 
 	}
+
+	/**
+	 * Get product id from product object.
+	 *
+	 * @param  object $obj  product object.
+	 * @param  string $prop get property from boject.
+	 *
+	 * @return string|int    based on $prop
+	 */
+	public function wpc_access_protected( $obj, $prop ) {
+		$reflection = new ReflectionClass( $obj );
+		$property   = $reflection->getProperty( $prop );
+		$property->setAccessible( true );
+		return $property->getValue( $obj );
+	}
+
 	/**
 	 * Display Pincode check form on product page.
 	 */
 	public function pincode_field() {
-		global $table_prefix, $wpdb,$woocommerce;
-
+		global $table_prefix, $wpdb,$woocommerce, $product;
+		$wpc_exclude_category    = wpc_get_products_to_pincode_checker_by_category();
+		$product_id              = $this->wpc_access_protected( $product, 'id' );
+		$wpc_woo_terms           = get_the_terms( $product_id, 'product_cat' );
+		$wpc_add_pincode_checker = true;
+		if ( $wpc_woo_terms ) {
+			foreach ( $wpc_woo_terms as $wpc_woo_term ) {
+				if ( ! empty( $wpc_exclude_category ) ) {
+					if ( in_array( $wpc_woo_term->term_id, $wpc_exclude_category ) ) {
+						$wpc_add_pincode_checker = false;
+					}
+				}
+			}
+		}
+		if ( false === $wpc_add_pincode_checker ) {
+			return false;
+		}
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
-
-		$num_rows = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
+		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
 
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';

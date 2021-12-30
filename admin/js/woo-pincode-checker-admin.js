@@ -56,6 +56,12 @@
 			}
 		}
 
+
+		$('#products-to-quote').selectize({
+			placeholder: "Select Category",
+			plugins: ['remove_button'],
+		});
+
 	});
 
 })(jQuery);
