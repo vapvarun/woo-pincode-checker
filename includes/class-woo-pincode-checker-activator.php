@@ -50,5 +50,23 @@ class Woo_Pincode_Checker_Activator {
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $edd_sql );
 		}
+
+		$wpc_general_settings = get_option( 'wpc_general_settings' );
+
+		$wpc_added_default_option = array(
+			'date_display'             => 'on',
+			'delivery_date'            => 'M jS',
+			'cod_display'              => 'on',
+			'check_btn_text'           => 'Check',
+			'change_btn_text'          => 'Change',
+			'delivery_date_label_text' => 'Delivered By',
+			'cod_label_text'           => 'Cash On Delivery Available',
+			'availability_label_text'  => 'Available at',
+			'textcolor'                => '#00000',
+			'buttoncolor'              => '#FFFFFF',
+			'buttontcolor'             => '#2D2B50',
+			'pincode_position'         => 'woocommerce_before_add_to_cart_button',
+		);
+		update_option( 'wpc_general_settings', $wpc_added_default_option );
 	}
 }

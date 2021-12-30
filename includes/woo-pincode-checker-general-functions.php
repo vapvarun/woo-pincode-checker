@@ -46,3 +46,48 @@ function wpc_single_product_button_position() {
 
 	return apply_filters( 'alter_wpc_single_product_button_position', $wpc_single_button_position );
 }
+
+/**
+ * Function for add check button label.
+ */
+function wpc_get_check_btn_label() {
+	$wpc_general_settings = get_option( 'wpc_general_settings' );
+	$wpc_check_btn_label  = ( isset( $wpc_general_settings['check_btn_text'] ) && ! empty( $wpc_general_settings['check_btn_text'] ) ) ? $wpc_general_settings['check_btn_text'] : 'Check';
+	return apply_filters( 'alter_wpc_get_check_btn_label', $wpc_check_btn_label );
+}
+
+/**
+ * Function for add change button label.
+ */
+function wpc_get_change_btn_label() {
+	$wpc_general_settings = get_option( 'wpc_general_settings' );
+	$wpc_change_btn_label = ( isset( $wpc_general_settings['change_btn_text'] ) && ! empty( $wpc_general_settings['change_btn_text'] ) ) ? $wpc_general_settings['change_btn_text'] : 'Change';
+	return apply_filters( 'alter_wpc_get_change_btn_label', $wpc_change_btn_label );
+}
+
+/**
+ * Function for add delivered by label.
+ */
+function wpc_get_delivery_date_label() {
+	$wpc_general_settings    = get_option( 'wpc_general_settings' );
+	$wpc_delivery_date_label = ( isset( $wpc_general_settings['delivery_date_label_text'] ) && ! empty( $wpc_general_settings['delivery_date_label_text'] ) ) ? $wpc_general_settings['delivery_date_label_text'] : 'Delivered By';
+	return apply_filters( 'alter_wpc_get_delivery_date_label', $wpc_delivery_date_label );
+}
+
+/**
+ * Function for add available at label.
+ */
+function wpc_get_availability_label() {
+	$wpc_general_settings   = get_option( 'wpc_general_settings' );
+	$wpc_availability_label = ( isset( $wpc_general_settings['availability_label_text'] ) && ! empty( $wpc_general_settings['availability_label_text'] ) ) ? $wpc_general_settings['availability_label_text'] : 'Available at';
+	return apply_filters( 'alter_wpc_get_availability_label', $wpc_availability_label );
+}
+
+/**
+ * Function for add cod at label.
+ */
+function wpc_get_cod_label() {
+	$wpc_general_settings = get_option( 'wpc_general_settings' );
+	$wpc_cod_label        = ( isset( $wpc_general_settings['cod_label_text'] ) && ! empty( $wpc_general_settings['cod_label_text'] ) ) ? $wpc_general_settings['cod_label_text'] : 'Cash On Delivery Available';
+	return apply_filters( 'alter_wpc_get_cod_label', $wpc_cod_label );
+}

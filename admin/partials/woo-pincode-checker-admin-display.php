@@ -104,6 +104,67 @@ if ( false == $general_settings['date_display'] ) {
 				</tr>
 				<tr>
 					<th scope="row">
+						<label><?php esc_html_e( 'Show Cash On Delivery Option', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label class="wb-switch">
+							<input type="checkbox"  name="wpc_general_settings[cod_display]" <?php checked( esc_attr( $general_settings['cod_display'] ), 'on' ); ?> value="on">
+							<div class="wb-slider wb-round"></div>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Check Button Text', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label>
+							<input type="text"  name="wpc_general_settings[check_btn_text]" value="<?php echo ( isset( $general_settings['check_btn_text'] ) ) ? $general_settings['check_btn_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?>">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Change Button Text', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label>
+							<input type="text"  name="wpc_general_settings[change_btn_text]" value="<?php echo ( isset( $general_settings['change_btn_text'] ) ) ? $general_settings['change_btn_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Change', 'woo-pincode-checker' ); ?>">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Delivery Date Text', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label>
+							<input type="text"  name="wpc_general_settings[delivery_date_label_text]" value="<?php echo ( isset( $general_settings['delivery_date_label_text'] ) ) ? $general_settings['delivery_date_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Delivered By', 'woo-pincode-checker' ); ?>">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Cash On Delivery label text', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label>
+							<input type="text"  name="wpc_general_settings[cod_label_text]" value="<?php echo ( isset( $general_settings['cod_label_text'] ) ) ? $general_settings['cod_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Cash On Delivery Available', 'woo-pincode-checker' ); ?>">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Check Availability At label Text', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label>
+							<input type="text"  name="wpc_general_settings[availability_label_text]" value="<?php echo ( isset( $general_settings['availability_label_text'] ) ) ? $general_settings['availability_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?>">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
 						<label><?php esc_html_e( 'Select Pincode Label Text Color', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td><input type="text" name="wpc_general_settings[textcolor]" class="regular-text" id="textcolor" value="<?php echo esc_attr( $general_settings['textcolor'] ); ?>"></td>

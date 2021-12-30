@@ -82,11 +82,16 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 					$new_general_settings['date_display']  = isset( $wpc_general_settings['date_display'] ) ? $wpc_general_settings['date_display'] : '';
 					$new_general_settings['delivery_date'] = $wpc_general_settings['delivery_date'];
 				}
-					$new_general_settings['textcolor']               = $wpc_general_settings['textcolor'];
-					$new_general_settings['buttoncolor']             = $wpc_general_settings['buttoncolor'];
-					$new_general_settings['buttontcolor']            = $wpc_general_settings['buttontcolor'];
-					$new_general_settings['categories_for_shipping'] = ( isset( $wpc_general_settings['categories_for_shipping'] ) ) ? $wpc_general_settings['categories_for_shipping'] : array();
-					$new_general_settings['pincode_position']        = ( isset( $wpc_general_settings['pincode_position'] ) && ! empty( $wpc_general_settings['pincode_position'] ) ) ? $wpc_general_settings['pincode_position'] : '';
+					$new_general_settings['cod_display']              = isset( $wpc_general_settings['cod_display'] ) ? $wpc_general_settings['cod_display'] : '';
+					$new_general_settings['textcolor']                = $wpc_general_settings['textcolor'];
+					$new_general_settings['buttoncolor']              = $wpc_general_settings['buttoncolor'];
+					$new_general_settings['check_btn_text']           = $wpc_general_settings['check_btn_text'];
+					$new_general_settings['change_btn_text']          = $wpc_general_settings['change_btn_text'];
+					$new_general_settings['delivery_date_label_text'] = $wpc_general_settings['delivery_date_label_text'];
+					$new_general_settings['cod_label_text']           = $wpc_general_settings['cod_label_text'];
+					$new_general_settings['availability_label_text']  = $wpc_general_settings['availability_label_text'];
+					$new_general_settings['categories_for_shipping']  = ( isset( $wpc_general_settings['categories_for_shipping'] ) ) ? $wpc_general_settings['categories_for_shipping'] : array();
+					$new_general_settings['pincode_position']         = ( isset( $wpc_general_settings['pincode_position'] ) && ! empty( $wpc_general_settings['pincode_position'] ) ) ? $wpc_general_settings['pincode_position'] : '';
 			}
 			$this->wpc_general_settings = $new_general_settings;
 
