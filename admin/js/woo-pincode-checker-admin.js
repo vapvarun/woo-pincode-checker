@@ -84,6 +84,17 @@
 
 		});
 
+		$('#wpc_pincode_position').change(function () {
+			$(this).find("option:selected").each(function () {
+				var optionValue = $(this).attr("value");
+				if (optionValue == 'wpc_pincode_checker') {
+					$(".wpc-display-shortcode-note").show();
+				} else {
+					$(".wpc-display-shortcode-note").hide();
+				}
+			});
+		}).change();
+
 	});
 
 })(jQuery);

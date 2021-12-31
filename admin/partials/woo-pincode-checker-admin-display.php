@@ -100,6 +100,13 @@ if ( false == $general_settings['date_display'] ) {
 								<option value="wpc_pincode_checker"<?php selected( $general_settings['pincode_position'], 'wpc_pincode_checker' ); ?>><?php esc_html_e( 'Use Shortcode', 'woo-pincode-checker' ); ?></option>
 							</select>
 						</label>
+						<?php  if( 'wpc_pincode_checker' === $general_settings['pincode_position'] ) : ?>
+							<p class="wpc-display-shortcode-note">
+								<label><?php esc_html_e( 'Note :', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'You can use shortcode [wpcc_check_pincode] to place it anywhere you like to use in website and select "Use Shortcode" in above select option.', 'woo-pincode-checker' ); ?>
+								</label>
+							</p>
+						<?php endif; ?>
 					</td>
 				</tr>
 				<tr>
