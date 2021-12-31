@@ -130,6 +130,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				</div>
 			</div>
+			<div class="wpc-admin-row border">
+				<div class="wpc-admin-col-12">
+					<button class="wpc-accordion">
+						<?php esc_html_e( 'Does this plugin provide any shortcode?', 'woo-pincode-checker' ); ?>
+					</button>
+					<div class="wpc-panel">
+						<p> 
+							<?php esc_html_e( 'Yes! It provides a shortcode [wpc_pincode_checker]. Using this shortcode, you can check the Pincode anywhere on the website.', 'woo-pincode-checker' ); ?>    
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
