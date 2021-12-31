@@ -159,3 +159,19 @@ div#error_pin {
     margin-top: 10px;
     border: 2px dotted #ddd;
 }
+
+
+@media only screen and (max-width: 640px) {
+
+    .delivery-info-wrap .delivery-info .header {
+        display: block;
+    }
+    .delivery-info .delivery-info-list {
+        margin:5px 0;
+    }
+    a#checkpin.button.wpc-check-button,
+    .wc-delivery-time-response a#change_pin {
+        width: auto;
+    }
+
+}
