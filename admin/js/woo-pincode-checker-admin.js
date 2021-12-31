@@ -70,6 +70,20 @@
 			plugins: ['remove_button'],
 		});
 
+		$("div.wpc-actions  .wpc-bulk-delete").click(function(){
+			event.preventDefault();
+			alert('Are you sure you want to delete all pincodes?');
+			var data = {
+				action: 'wpc_bulk_delete_action',
+				nonce: wpc_bulk_action.nonce,
+				url: wpc_bulk_action.ajaxurl,
+			}
+			$.post(ajaxurl, data, function (response) {
+				location.reload();
+			});
+
+		});
+
 	});
 
 })(jQuery);

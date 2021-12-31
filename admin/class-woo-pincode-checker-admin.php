@@ -81,7 +81,7 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['page'] ) && 'woo-pincode-checker' === $_GET['page'] ) {
+		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'wpc-selectize', plugin_dir_url( __FILE__ ) . 'css/selectize.css', array(), $this->version, 'all' );
 		}
@@ -105,9 +105,17 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['page'] ) && 'woo-pincode-checker' === $_GET['page'] ) {
+		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) {
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( 'wpc-selectize-min', plugin_dir_url( __FILE__ ) . 'js/selectize.min.js', array( 'jquery' ), $this->version, false );
+			wp_localize_script(
+				$this->plugin_name,
+				'wpc_bulk_action',
+				array(
+					'url'   => admin_url( 'admin-ajax.php' ),
+					'nonce' => wp_create_nonce( 'wpc-bulk-delete-nonce' ),
+				)
+			);
 		}
 	}
 
@@ -279,7 +287,7 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function wpc_pincode_lists_func() {
 		?>
-		<div class="wrap">
+		<div class="wpc-actions wrap">
 		<h2>
 		<?php esc_html_e( 'Pincode Lists', 'woo-pincode-checker' ); ?>
 				<a class="add-new-h2" href="
@@ -287,6 +295,12 @@ class Woo_Pincode_Checker_Admin {
 				echo esc_url( admin_url( 'admin.php?page=add_wpc_pincode' ) );
 				?>
 		"><?php esc_html_e( 'Add New', 'woo-pincode-checker' ); ?></a>
+		<a class="add-new-h2" href="
+				<?php
+				echo esc_url( admin_url( 'admin.php?page=woo-pincode-checker&tab=wpc-upload-pincodes' ) );
+				?>
+		"><?php esc_html_e( 'Import Bulk Post/Zip codes', 'woo-pincode-checker' ); ?></a>
+		<a class="add-new-h2 wpc-bulk-delete" ><?php esc_html_e( 'Bulk Delete', 'woo-pincode-checker' ); ?></a>
 			</h2>
 			<div class="pincode-listing">
 				<form id="nds-user-list-form" method="get">
@@ -638,6 +652,24 @@ class Woo_Pincode_Checker_Admin {
 			update_post_meta( $post_id, 'wpc_hide_pincode_checker', 'no' );
 		}
 
+	}
+
+	/**
+	 * This Function is handle the Bulk delete ajax callback.
+	 */
+	public function wpc_bulk_delete_action_ajax_callback() {
+		// Check if our nonce is set.
+		if ( ! isset( $_POST['nonce'] ) ) {
+			return $post_id;
+		}
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpc-bulk-delete-nonce' ) ) {
+			die( 'Busted!' );
+		}
+		global $wpdb;
+		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
+		$sql = "DELETE FROM $pincode_checker_table_name";
+		$wpdb->query($sql);
+		die;
 	}
 
 }
