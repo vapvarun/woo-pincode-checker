@@ -146,7 +146,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label>
-							<input type="text"  name="wpc_general_settings[delivery_date_label_text]" value="<?php echo ( isset( $general_settings['delivery_date_label_text'] ) ) ? $general_settings['delivery_date_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Delivered By', 'woo-pincode-checker' ); ?>">
+							<input type="text"  name="wpc_general_settings[delivery_date_label_text]" value="<?php echo ( isset( $general_settings['delivery_date_label_text'] ) ) ? $general_settings['delivery_date_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Delivery Date', 'woo-pincode-checker' ); ?>">
 						</label>
 					</td>
 				</tr>

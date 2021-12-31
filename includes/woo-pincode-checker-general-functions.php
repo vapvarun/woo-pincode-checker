@@ -70,7 +70,7 @@ function wpc_get_change_btn_label() {
  */
 function wpc_get_delivery_date_label() {
 	$wpc_general_settings    = get_option( 'wpc_general_settings' );
-	$wpc_delivery_date_label = ( isset( $wpc_general_settings['delivery_date_label_text'] ) && ! empty( $wpc_general_settings['delivery_date_label_text'] ) ) ? $wpc_general_settings['delivery_date_label_text'] : 'Delivered By';
+	$wpc_delivery_date_label = ( isset( $wpc_general_settings['delivery_date_label_text'] ) && ! empty( $wpc_general_settings['delivery_date_label_text'] ) ) ? $wpc_general_settings['delivery_date_label_text'] : 'Delivery Date';
 	return apply_filters( 'alter_wpc_get_delivery_date_label', $wpc_delivery_date_label );
 }
 

@@ -59,7 +59,7 @@ class Woo_Pincode_Checker_Activator {
 			'cod_display'              => 'on',
 			'check_btn_text'           => 'Check',
 			'change_btn_text'          => 'Change',
-			'delivery_date_label_text' => 'Delivered By',
+			'delivery_date_label_text' => 'Delivery Date',
 			'cod_label_text'           => 'Cash On Delivery Available',
 			'availability_label_text'  => 'Available at',
 			'pincode_position'         => 'woocommerce_before_add_to_cart_button',
