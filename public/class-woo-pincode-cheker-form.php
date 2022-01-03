@@ -191,13 +191,13 @@ class Woo_Pincode_Checker_Form {
 									<span><?php echo esc_html( $delivery_date ); ?></span>
 								</div>
 							</div>
-							<div class="delivery-info-list cash_delivery">
-							<img src="<?php echo WPCP_PLUGIN_URL. 'public/image/hand-holding-usd.svg' ;?>">
 							<?php
 							}
 							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
 								?>
-								<div class="cash_on_delivery">
+								<div class="delivery-info-list cash_delivery">
+									<img src="<?php echo WPCP_PLUGIN_URL. 'public/image/hand-holding-usd.svg' ;?>">
+									<div class="cash_on_delivery">
 									<?php
 									/* Translators: %1$s: Cash On Delivery Available Label   */
 									echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
