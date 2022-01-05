@@ -192,32 +192,31 @@ class Woo_Pincode_Checker_Form {
 						</h4>					
 						<div class="header">
 							<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>		
-						<div class="delivery-info-list">
-							<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">									
-								<div class="delivery-date">
-									<strong>
+							<div class="delivery-info-list">
+								<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">									
+									<div class="delivery-date">
+										<strong>
+										<?php
+											/* Translators: %1$s: Delivered By Label   */
+											echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_delivery_date_label ) );
+										?>
+										</strong>
+										<span><?php echo esc_html( $delivery_date ); ?></span>
+									</div>
 									<?php
-										/* Translators: %1$s: Delivered By Label   */
-										echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_delivery_date_label ) );
-									?>
-									</strong>
-									<span><?php echo esc_html( $delivery_date ); ?></span>
-								</div>
-							</div>
-								<?php
 							}
 							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
 								?>
-								<div class="delivery-info-list cash_delivery">
-									<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
-									<div class="cash_on_delivery">
+									<div class="delivery-info-list cash_delivery">
+										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
+										<div class="cash_on_delivery">
 									<?php
 									/* Translators: %1$s: Cash On Delivery Available Label   */
 									echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
 									?>
-								</div>
-							<?php } ?>
-						</div>
+									</div>
+								<?php } ?>
+							</div>
 						</div>
 					</div>
 				</div>
