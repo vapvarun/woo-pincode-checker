@@ -6,22 +6,25 @@
 /* date 21-11-19 */
 
 .woocommerce div.product form.cart .button {
-    float: none !important;
+  float: none !important;
 }
 
 #pincode_field_idp .woocommerce form #pincode_field_idp.form-row textarea {
-    border-width: 0 0 2px;
-    border-color: #000;
+  border-width: 0 0 2px;
+  border-color: #000;
 }
 
 #pincode_field_idp input[type="text"] {
-    background: transparent;
-    padding: 10px 10px 5px 0px;
-    width: 78.5%;
-    font-size: 15px;
+  background: transparent;
+  padding: 10px 10px 5px 0px;
+  width: 78.5%;
+  font-size: 15px;
 }
 .wpc_shortcode #pincode_field_idp input[type="text"] {
-    padding:10px;
+  border: none;
+  margin: 0;
+  padding: 0 10px;
+  padding-left: 25px;
 }
 
 .woocommerce #respond input#submit,
@@ -29,161 +32,161 @@
 .woocommerce #avlpin a.button,
 .woocommerce button.button,
 .woocommerce input.button {
-    font-size: 15px;
-    margin: 5px 0;
-    padding: 10px 15px;
+  font-size: 15px;
+  margin: 5px 0;
+  padding: 10px 15px;
 }
 
 .wc-delivery-time-response p {
-    line-height: 1.5;
-    margin:0;
-    font-size: 18px;
-    font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .entry-content .delivery-info h6,
 .delivery-info h6 {
-    margin:0;
-    display: inline-block;
+  margin: 0;
+  display: inline-block;
 }
 
-.delivery-info ul, ol {
-    margin: 0;
-    list-style: none;
-    padding: 0px;
-    margin-left: 0px !important;
+.delivery-info ul,
+ol {
+  margin: 0;
+  list-style: none;
+  padding: 0px;
+  margin-left: 0px !important;
 }
 
 .delivery-info ul li {
-    line-height: 1.5;
-    margin: 0;
-    font-size: 15px;
-    font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .delivery-info .cash_on_delivery {
-    font-size: 14px;
-    padding-top: 0;
-    font-weight: 600;
+  font-size: 14px;
+  padding-top: 0;
+  font-weight: 600;
 }
 
 .wc-delivery-time-response {
-    padding-bottom: 15px;
+  padding-bottom: 15px;
 }
 
 div#my_custom_checkout_field,
 .wc-delivery-time-response {
-    background: #F6F6F9;
-    padding: 10px;
-    margin:15px 0;
-    border-radius: 5px;
+  background: #f6f6f9;
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 5px;
 }
 p#pincode_field_idp {
-    margin: 0;
-    border-radius: 6px;
-    background: #fff;
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-    padding: 5px;
-    border: 1px solid #eee;
+  margin: 0;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  padding: 5px;
+  border: 1px solid #eee;
 }
 #pincode_field_idp::before {
-    position: absolute;
-    background: url(../image/map-marker-alt.svg) no-repeat;
-    width: 16px;
-    height: 16px;
-    left: 10px;
-    top: 17px;
+  position: absolute;
+  background: url(../image/map-marker-alt.svg) no-repeat;
+  width: 16px;
+  height: 16px;
+  left: 10px;
+  top: 17px;
+  content: "";
 }
-.woocommerce form #pincode_field_idp.form-row input.input-text {
-    border: none;
-    margin: 0;
-    padding: 0 10px;
-    padding-left: 25px;
+form #pincode_field_idp.form-row input.input-text {
+  border: none;
+  margin: 0;
+  padding: 0 10px;
+  padding-left: 25px;
 }
 a#checkpin.button.wpc-check-button {
-    display: block;
-    width: 20%;
-    font-weight: 600;
-    text-transform: uppercase;
-    text-align: center;
-    border-radius: 5px;
-    margin: 0 !important;
-    padding: 8px 10px;
-    line-height: 1.5;
-    cursor: pointer;
+  display: block;
+  width: 20%;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 5px;
+  margin: 0 !important;
+  padding: 8px 10px;
+  line-height: 1.5;
+  cursor: pointer;
 }
 div#error_pin {
-    color: red;
-    margin-bottom: 5px;
-    line-height: 1;
+  color: red;
+  margin-bottom: 5px;
+  line-height: 1;
 }
 .wc-delivery-time-response {
-    padding: 15px !important;
+  padding: 15px !important;
 }
 .wc-delivery-time-response a#change_pin {
-    border-radius: 5px;
-    text-align: center;
-    font-size: 15px;
-    margin: 5px 0;
-    cursor: pointer;
-    display: inline-block;
-    padding: 10px 30px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 15px;
+  margin: 5px 0;
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 30px;
 }
 .delivery-info-wrap .delivery-info .header {
-    display: flex;
-    padding-top:5px;
-    align-items: center;
+  display: flex;
+  padding-top: 5px;
+  align-items: center;
 }
 .delivery-info-wrap .delivery-info h6 {
-    margin: 0;
-    font-size: 14px;
-    margin-right: 5px;
-    color: #6e6e6e;
-    line-height: 16px;
+  margin: 0;
+  font-size: 14px;
+  margin-right: 5px;
+  color: #6e6e6e;
+  line-height: 16px;
 }
 .delivery-info .delivery-info-list {
-    display: flex;
-    margin-right: 20px;
-    align-items: center;
-    width: 100%;
-    line-height: 1.3;
+  display: flex;
+  margin-right: 20px;
+  align-items: center;
+  width: 100%;
+  line-height: 1.3;
 }
 .delivery-info .delivery-info-list img {
-    width: 25px;
-    margin-right: 10px;
+  width: 25px;
+  margin-right: 10px;
 }
 .delivery-info .delivery-date strong {
-    display: block;
-    line-height: 1.3;
+  display: block;
+  line-height: 1.3;
 }
 .delivery-info h4 {
-    margin: 0 0 2px;
-    color: #2db12d;
+  margin: 0 0 2px;
+  color: #2db12d;
 }
 .delivery-info-wrap {
-    padding: 10px 15px 15px;
-    background: #fff;
-    margin-top: 10px;
-    border: 2px dotted #ddd;
+  padding: 10px 15px 15px;
+  background: #fff;
+  margin-top: 10px;
+  border: 2px dotted #ddd;
 }
 .wc-delivery-time-response.wpc_after_add_to_cart_quantity {
-    float: left;
-    margin-top: 0;
+  float: left;
+  width: 100%;
 }
 
 @media only screen and (max-width: 640px) {
-
-    .delivery-info-wrap .delivery-info .header {
-        display: block;
-    }
-    .delivery-info .delivery-info-list {
-        margin:5px 0;
-    }
-    a#checkpin.button.wpc-check-button,
-    .wc-delivery-time-response a#change_pin {
-        width: auto;
-    }
-
+  .delivery-info-wrap .delivery-info .header {
+    display: block;
+  }
+  .delivery-info .delivery-info-list {
+    margin: 5px 0;
+  }
+  a#checkpin.button.wpc-check-button,
+  .wc-delivery-time-response a#change_pin {
+    width: auto;
+  }
 }
