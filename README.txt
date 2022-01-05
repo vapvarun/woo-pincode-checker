@@ -1,5 +1,5 @@
 === Woo Pincode Checker ===
-Contributors: wbcomdesigns
+Contributors: wbcomdesigns,vapvarun
 Donate link: https://wbcomdesigns.com/
 Tags: WooCommerce
 Requires at least: 3.0.1
