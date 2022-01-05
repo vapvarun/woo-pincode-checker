@@ -62,6 +62,9 @@ class Woo_Pincode_Checker_Activator {
 			'delivery_date_label_text' => 'Delivery Date',
 			'cod_label_text'           => 'Cash On Delivery Available',
 			'availability_label_text'  => 'Available at',
+			'textcolor'                => '#141414',
+			'buttoncolor'              => '#dd3333',
+			'buttontcolor'             => '#ffffff',
 			'pincode_position'         => 'woocommerce_before_add_to_cart_button',
 		);
 		update_option( 'wpc_general_settings', $wpc_added_default_option );
