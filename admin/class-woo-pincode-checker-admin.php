@@ -81,8 +81,10 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', array(), $this->version, 'all' );
+		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'wpc-selectize', plugin_dir_url( __FILE__ ) . 'css/selectize.css', array(), $this->version, 'all' );
+		}
 
 	}
 
@@ -103,9 +105,18 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', array( 'jquery' ), $this->version, false );
-
+		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'wpc-selectize-min', plugin_dir_url( __FILE__ ) . 'js/selectize.min.js', array( 'jquery' ), $this->version, false );
+			wp_localize_script(
+				$this->plugin_name,
+				'wpc_bulk_action',
+				array(
+					'url'   => admin_url( 'admin-ajax.php' ),
+					'nonce' => wp_create_nonce( 'wpc-bulk-delete-nonce' ),
+				)
+			);
+		}
 	}
 
 	/**
@@ -116,11 +127,11 @@ class Woo_Pincode_Checker_Admin {
 	public function wpc_admin_menu() {
 		add_menu_page( esc_html__( 'Pincodes', 'woo-pincode-checker' ), esc_html__( 'Pincodes', 'woo-pincode-checker' ), 'manage_options', 'pincode_lists', array( $this, 'wpc_pincode_lists_func' ), '', '50' );
 
-		$page_hook = add_submenu_page( 'pincode_lists', esc_html__( 'Pincode List', 'woo-pincode-checker' ), esc_html__( 'Pincode List', 'woo-pincode-checker' ), 'manage_options', 'pincode_lists', array( $this, 'wpc_pincode_lists_func' ) );
+		$page_hook = add_submenu_page( 'pincode_lists', esc_html__( 'All Pincodes', 'woo-pincode-checker' ), esc_html__( 'All Pincodes', 'woo-pincode-checker' ), 'manage_options', 'pincode_lists', array( $this, 'wpc_pincode_lists_func' ) );
 
-		add_submenu_page( 'pincode_lists', esc_html__( 'Add Pincode', 'woo-pincode-checker' ), esc_html__( 'Add Pincode', 'woo-pincode-checker' ), 'manage_options', 'add_wpc_pincode', array( $this, 'wpc_add_pincode_func' ) );
+		add_submenu_page( 'pincode_lists', esc_html__( 'Add New Pincode', 'woo-pincode-checker' ), esc_html__( 'Add New Pincode', 'woo-pincode-checker' ), 'manage_options', 'add_wpc_pincode', array( $this, 'wpc_add_pincode_func' ) );
 
-		add_submenu_page( 'pincode_lists', esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), 'manage_options', 'wpc_upload_pincodes', array( $this, 'wpc_upload_pincodes_func' ) );
+		// add_submenu_page( 'pincode_lists', esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), 'manage_options', 'wpc_upload_pincodes', array( $this, 'wpc_upload_pincodes_func' ) );
 		if ( class_exists( 'WooCommerce' ) ) {
 			/* add sub menu in wnplugin setting page */
 			if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
@@ -147,21 +158,21 @@ class Woo_Pincode_Checker_Admin {
 						<hr class="wp-header-end">
 						<div class="wbcom-wrap">
 								<div class="ess-admin-header">
-										<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+									<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 										<h1 class="wbcom-plugin-heading">
-												<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
+											<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
 										</h1>
 								</div>
 								<div class="wbcom-admin-settings-page">
-										<?php
-										$this->wpc_plugin_settings_tabs();
-										settings_fields( $current );
-										do_settings_sections( $current );
-										?>
+									<?php
+									$this->wpc_plugin_settings_tabs();
+									settings_fields( $current );
+									do_settings_sections( $current );
+									?>
 								</div>
 						</div>
 				</div>
-		<?php
+			<?php
 	}
 
 	/**
@@ -173,9 +184,21 @@ class Woo_Pincode_Checker_Admin {
 		$tab_html = '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 
 		foreach ( $this->plugin_settings_tabs as $edd_tab => $tab_name ) {
-			$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
-			$page      = 'woo-pincode-checker';
-			$tab_html .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a></li>';
+			if ( 'wpc-pincodes' === $edd_tab ) {
+				$class         = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
+				$pincode_lists = 'pincode_lists';
+				$tab_html     .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $pincode_lists . '">' . $tab_name . '</a></li>';
+			} elseif ( 'wpc-add-pincodes' === $edd_tab ) {
+				$class        = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
+				$add_pincodes = 'add_wpc_pincode';
+				$tab_html    .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $add_pincodes . '">' . $tab_name . '</a></li>';
+
+			} else {
+				$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
+				$page      = 'woo-pincode-checker';
+				$tab_html .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a></li>';
+
+			}
 		}
 		$tab_html .= '</div></ul></div>';
 		echo ( $tab_html ); // WPCS: XSS ok.
@@ -207,12 +230,22 @@ class Woo_Pincode_Checker_Admin {
 	 * Register all settings.
 	 */
 	public function wpc_add_admin_register_setting() {
-				$this->plugin_settings_tabs['wpc-welcome'] = esc_html__( 'Welcome', 'woo-pincode-checker' );
+		$this->plugin_settings_tabs['wpc-welcome'] = esc_html__( 'Welcome', 'woo-pincode-checker' );
 		add_settings_section( 'wpc-welcome', ' ', array( $this, 'wpc_welcome_content' ), 'wpc-welcome' );
 
 		$this->plugin_settings_tabs['wpc-general'] = esc_html__( 'General', 'woo-pincode-checker' );
 		register_setting( 'wpc_general_settings', 'wpc_general_settings' );
 		add_settings_section( 'wpc-general', ' ', array( $this, 'wpc_general_settings_content' ), 'wpc-general' );
+
+		$this->plugin_settings_tabs['wpc-pincodes'] = esc_html__( 'All Pincodes', 'woo-pincode-checker' );
+		register_setting( 'wpc_pincodes_settings', 'wpc_pincodes_settings' );
+
+		$this->plugin_settings_tabs['wpc-add-pincodes'] = esc_html__( 'Add Pincodes', 'woo-pincode-checker' );
+		register_setting( 'wpc_add_pincodes_settings', 'wpc_add_pincodes_settings' );
+
+		$this->plugin_settings_tabs['wpc-upload-pincodes'] = esc_html__( 'Upload Pincodes', 'woo-pincode-checker' );
+		register_setting( 'wpc_upload_pincodes_settings', 'wpc_upload_pincodes_settings' );
+		add_settings_section( 'wpc-upload-pincodes', ' ', array( $this, 'wpc_upload_pincodes_func' ), 'wpc-upload-pincodes' );
 
 		$this->plugin_settings_tabs['wpc-faq'] = esc_html__( 'FAQ', 'woo-pincode-checker' );
 		register_setting( 'wpc_faq_settings', 'wpc_faq_settings' );
@@ -254,10 +287,20 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function wpc_pincode_lists_func() {
 		?>
-		<div class="wrap">
+		<div class="wpc-actions wrap">
 		<h2>
 		<?php esc_html_e( 'Pincode Lists', 'woo-pincode-checker' ); ?>
-				<a class="add-new-h2" href="<?php echo esc_url( admin_url( 'admin.php?page=add_wpc_pincode' ) ); ?>"><?php esc_html_e( 'Add New', 'woo-pincode-checker' ); ?></a>
+				<a class="add-new-h2" href="
+				<?php
+				echo esc_url( admin_url( 'admin.php?page=add_wpc_pincode' ) );
+				?>
+		"><?php esc_html_e( 'Add New', 'woo-pincode-checker' ); ?></a>
+		<a class="add-new-h2" href="
+				<?php
+				echo esc_url( admin_url( 'admin.php?page=woo-pincode-checker&tab=wpc-upload-pincodes' ) );
+				?>
+		"><?php esc_html_e( 'Import Bulk Post/Zip codes', 'woo-pincode-checker' ); ?></a>
+		<a class="add-new-h2 wpc-bulk-delete" ><?php esc_html_e( 'Bulk Delete', 'woo-pincode-checker' ); ?></a>
 			</h2>
 			<div class="pincode-listing">
 				<form id="nds-user-list-form" method="get">
@@ -288,7 +331,6 @@ class Woo_Pincode_Checker_Admin {
 		global $wpdb;
 
 		$wpc_message = $message_type = '';
-
 		if ( isset( $_POST['wpc-pincode-submit'] ) && $_POST['wpc-pincode-submit'] != '' ) {
 			$wpc_pincode          = sanitize_text_field( $_POST['wpc-pincode'] );
 			$wpc_city             = sanitize_text_field( $_POST['wpc-city'] );
@@ -443,8 +485,8 @@ class Woo_Pincode_Checker_Admin {
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 		$bytes                      = apply_filters( 'import_upload_size_limit', wp_max_upload_size() );
 		$size                       = size_format( $bytes );
-
 		if ( isset( $_POST['upload_pincodes'] ) ) {
+			set_time_limit( 0 );
 			$is_import = true;
 			$filetype  = wp_check_filetype(
 				wc_clean( wp_unslash( $_FILES['import']['name'] ) ),
@@ -457,18 +499,13 @@ class Woo_Pincode_Checker_Admin {
 				$wpc_message  = esc_html__( 'Invalid file type. The importer supports CSV file formats.', 'woo-pincode-checker' );
 				$is_import    = false;
 			}
-
 			if ( $is_import == true ) {
-
 				if ( $_FILES['import']['size'] > 0 ) {
-
 					$file = fopen( $_FILES['import']['tmp_name'], 'r' );
 					$i    = 0;
-
 					while ( ( $getData = fgetcsv( $file, 100000, ',' ) ) !== false ) {
 						if ( $i != 0 ) {
 							$num_rows = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $pincode_checker_table_name . ' where `pincode` = %s', $getData[0] ) );
-
 							if ( $num_rows == 0 ) {
 								$wpdb->insert(
 									$pincode_checker_table_name,
@@ -483,7 +520,6 @@ class Woo_Pincode_Checker_Admin {
 								);
 							}
 						}
-
 						$i++;
 					}
 					fclose( $file );
@@ -493,17 +529,21 @@ class Woo_Pincode_Checker_Admin {
 			}
 		}
 
-		if ( $wpc_message != '' ) {
-			?>
+		?>
+		<div class="wbcom-tab-content  wpc-upload-pincode-wrap">
+			<?php
+			if ( $wpc_message != '' ) {
+				?>
 			<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
 				<p><?php echo wp_kses_post( $wpc_message ); ?></p>
 			</div>
-			<?php
-		}
-		?>
-		<div class="wrap wpc-upload-pincode-wrap">
+				<?php
+			}
+			?>
 			<h2>
-		<?php esc_html_e( 'Upload pincodes from a CSV file', 'woo-pincode-checker' ); ?>
+			<?php
+			esc_html_e( 'Upload pincodes from a CSV file', 'woo-pincode-checker' );
+			?>
 			</h2>
 			<div class="wpc-upload-pincode-section">
 				<form enctype="multipart/form-data" method="post">
@@ -532,13 +572,21 @@ class Woo_Pincode_Checker_Admin {
 										</small>
 									</td>
 								</tr>
-
+								<tr>
+									<th scope="row">
+										<label for="upload">
+											<?php esc_html_e( 'Download Sample CSV File:', 'woo-pincode-checker' ); ?>
+										</label>
+									</th>
+									<td>
+										<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>"><?php esc_html_e( 'Click Here', 'woo-pincode-checker' ); ?></a>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</section>
-					<div class="wc-actions">
+					<div class="wc-actions submit">
 						<button type="submit" class="button button-primary button-next" value="<?php esc_attr_e( 'Import CSV File', 'woo-pincode-checker' ); ?>" name="upload_pincodes"><?php esc_html_e( 'Import CSV File', 'woo-pincode-checker' ); ?></button>
-
 					</div>
 				</form>
 			</div>
@@ -546,65 +594,82 @@ class Woo_Pincode_Checker_Admin {
 		<?php
 	}
 
-}
-
-/**
- * Adds a meta box to the post editing screen
- */
-function wcpc_featured_meta() {
-	add_meta_box( 'prfx_meta', __( 'Woocommerce Pincode Checker', 'woo-pincode-checker' ), 'wcpc_meta_callback', 'product', 'normal', 'high' );
-}
-add_action( 'add_meta_boxes', 'wcpc_featured_meta' );
-
-/**
- * Outputs the content of the meta box.
- *
- * @param array $post Get a Post Object.
- */
-function wcpc_meta_callback( $post ) {
-	wp_nonce_field( basename( __FILE__ ), 'prfx_nonce' );
-	$prfx_stored_meta = get_post_meta( $post->ID );
-	?>
-
-<p>
-	<div class="prfx-row-content">
-		<label for="featured-checkbox">
-			<input type="checkbox" name="hide_pincode_checker" id="featured-checkboxs" value="yes"
-			<?php
-			if ( isset( $prfx_stored_meta['hide_pincode_checker'] ) ) {
-				checked( $prfx_stored_meta['hide_pincode_checker'][0], 'yes' );}
-			?>
-				/>
-			<?php esc_html_e( 'Check if Hide for this Product:', 'woo-pincode-checker' ); ?>
-		</label>
-
-	</div>
-</p>
-
-	<?php
-}
-
-/**
- * Saves the custom meta input
- */
-function wcpc_meta_save( $post_id ) {
-
-	// Checks save status - overcome autosave, etc.
-	$is_autosave    = wp_is_post_autosave( $post_id );
-	$is_revision    = wp_is_post_revision( $post_id );
-	$is_valid_nonce = ( isset( $_POST['prfx_nonce'] ) && wp_verify_nonce( $_POST['prfx_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
-
-	// Exits script depending on save status.
-	if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
-		return;
+	/**
+	 * Adds a meta box to the post editing screen
+	 */
+	public function wcpc_featured_meta() {
+		add_meta_box( 'wpc-hide-pincode-checker', __( 'Pincode/Zipcode for Shipping Availability', 'woo-pincode-checker' ), array( $this, 'wcpc_meta_callback' ), 'product', 'normal', 'high' );
 	}
 
-	// Checks for input and saves - save checked as yes and unchecked at no.
-	if ( isset( $_POST['hide_pincode_checker'] ) ) {
-		update_post_meta( $post_id, 'hide_pincode_checker', 'yes' );
-	} else {
-		update_post_meta( $post_id, 'hide_pincode_checker', 'no' );
+	/**
+	 * Outputs the content of the meta box.
+	 *
+	 * @param array $post Get a Post Object.
+	 */
+	public function wcpc_meta_callback( $post ) {
+		wp_nonce_field( basename( __FILE__ ), 'wpc_hide_pincode_nonce' );
+		$wpc_hide_pincode_checker = get_post_meta( $post->ID );
+		?>
+			<p>
+				<div class="prfx-row-content">
+					<label for="featured-checkbox">
+						<input type="checkbox" name="wpc_hide_pincode_checker" id="featured-checkboxs" value="yes"
+						<?php
+						if ( isset( $wpc_hide_pincode_checker['wpc_hide_pincode_checker'] ) ) {
+							checked( $wpc_hide_pincode_checker['wpc_hide_pincode_checker'][0], 'yes' );}
+						?>
+							/>
+						<?php esc_html_e( 'Enable if you want to hide shipping availability:', 'woo-pincode-checker' ); ?>
+					</label>
+
+				</div>
+			</p>
+
+		<?php
+	}
+
+	/**
+	 * Saves the custom meta input
+	 *
+	 * @param INT $post_id Post ID.
+	 */
+	public function wcpc_meta_save( $post_id ) {
+
+		// Checks save status - overcome autosave, etc.
+		$is_autosave    = wp_is_post_autosave( $post_id );
+		$is_revision    = wp_is_post_revision( $post_id );
+		$is_valid_nonce = ( isset( $_POST['wpc_hide_pincode_nonce'] ) && wp_verify_nonce( $_POST['wpc_hide_pincode_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
+
+		// Exits script depending on save status.
+		if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+			return;
+		}
+
+		// Checks for input and saves - save checked as yes and unchecked at no.
+		if ( isset( $_POST['wpc_hide_pincode_checker'] ) ) {
+			update_post_meta( $post_id, 'wpc_hide_pincode_checker', 'yes' );
+		} else {
+			update_post_meta( $post_id, 'wpc_hide_pincode_checker', 'no' );
+		}
+
+	}
+
+	/**
+	 * This Function is handle the Bulk delete ajax callback.
+	 */
+	public function wpc_bulk_delete_action_ajax_callback() {
+		// Check if our nonce is set.
+		if ( ! isset( $_POST['nonce'] ) ) {
+			return $post_id;
+		}
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpc-bulk-delete-nonce' ) ) {
+			die( 'Busted!' );
+		}
+		global $wpdb;
+		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
+		$sql = "DELETE FROM $pincode_checker_table_name";
+		$wpdb->query($sql);
+		die;
 	}
 
 }
-add_action( 'save_post', 'wcpc_meta_save' );

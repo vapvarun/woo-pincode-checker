@@ -52,22 +52,70 @@ class Woo_Pincode_Checker_Form {
 		$this->version     = $version;
 
 	}
+
+	/**
+	 * Get product id from product object.
+	 *
+	 * @param  object $obj  product object.
+	 * @param  string $prop get property from boject.
+	 *
+	 * @return string|int    based on $prop
+	 */
+	public function wpc_access_protected( $obj, $prop ) {
+		if ( ! empty( $obj ) ) {
+			$reflection = new ReflectionClass( $obj );
+			$property   = $reflection->getProperty( $prop );
+			$property->setAccessible( true );
+			return $property->getValue( $obj );
+		}
+	}
+
 	/**
 	 * Display Pincode check form on product page.
 	 */
-	public function pincode_field() {
-		global $table_prefix, $wpdb,$woocommerce;
-
+	public function wpc_display_pincode_field() {
+		global $table_prefix, $wpdb,$woocommerce, $product;
+		$wpc_exclude_category    = wpc_get_products_to_pincode_checker_by_category();
+		$product_id              = $this->wpc_access_protected( $product, 'id' );
+		$wpc_woo_terms           = get_the_terms( $product_id, 'product_cat' );
+		$wpc_add_pincode_checker = true;
+		if ( $wpc_woo_terms ) {
+			foreach ( $wpc_woo_terms as $wpc_woo_term ) {
+				if ( ! empty( $wpc_exclude_category ) ) {
+					if ( in_array( $wpc_woo_term->term_id, $wpc_exclude_category ) ) {
+						$wpc_add_pincode_checker = false;
+					}
+				}
+			}
+		}
+		if ( false === $wpc_add_pincode_checker ) {
+			return false;
+		}
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
-
-		$num_rows = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
+		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
 
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}
-		$wpc_hide_form = get_post_meta( get_the_ID(), 'hide_pincode_checker', true );
+		$wpc_hide_form = get_post_meta( get_the_ID(), 'wpc_hide_pincode_checker', true );
 		if ( 'yes' === $wpc_hide_form ) {
 			return;
+		}
+		$wpc_check_btn_label      = wpc_get_check_btn_label();
+		$wpc_change_btn_label     = wpc_get_change_btn_label();
+		$wpc_delivery_date_label  = wpc_get_delivery_date_label();
+		$wpc_availability_label   = wpc_get_availability_label();
+		$wpc_cod_label            = wpc_get_cod_label();
+		$wpc_display_cod_option   = wpc_display_cod_option();
+		$wpc_pincode_btn_position = wpc_single_product_button_position();
+		if ( 'woocommerce_before_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_before_add_to_cart';
+		} elseif ( 'woocommerce_after_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_after_add_to_cart';
+		} elseif ( 'woocommerce_after_add_to_cart_quantity' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_after_add_to_cart_quantity';
+		} elseif ( 'wpc_pincode_checker' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_shortcode';
 		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
@@ -100,9 +148,21 @@ class Woo_Pincode_Checker_Form {
 			}
 
 			?>
-			<div style="clear:both;font-size:18px; font-weight:600" class="wc-delivery-time-response">
+			<div class="wc-delivery-time-response <?php echo esc_attr( $wpc_position_class ); ?>">
 
-				<span class='avlpin' id='avlpin'><p><?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?> <?php echo esc_html( $cookie_pin ); ?></p><a class="button wpc-check-button" id='change_pin'><?php esc_html_e( 'change', 'woo-pincode-checker' ); ?></a></span>
+				<span class='avlpin' id='avlpin'><p>
+					<?php
+						/* Translators: %1$s: Availability Label   */
+						echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_availability_label ) );
+					?>
+					<?php echo esc_html( $cookie_pin ); ?></p>
+					<a class="button wpc-check-button" id='change_pin'>
+						<?php
+						/* Translators: %1$s: Change Button Text   */
+						echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_change_btn_label ) );
+						?>
+					</a>
+				</span>
 
 				<div class="pin_div pincode_check_btn" id="my_custom_checkout_field2" style="display:none;">
 
@@ -112,30 +172,51 @@ class Woo_Pincode_Checker_Form {
 
 						<input type="text" required="required" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
 
-						<a class="button wpc-check-button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
+						<a class="button wpc-check-button" id="checkpin">
+							<?php
+							/* Translators: %1$s: Check Button Text   */
+							echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_check_btn_label ) );
+							?>
+						</a>
 					</p>
 				</div>
 
 
 				<div class="delivery-info-wrap">
 					<div class="delivery-info">
-						<div class="header">
-					<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>
-								<h6><?php esc_html_e( 'Delivered By : ', 'woo-pincode-checker' ); ?></h6>
-								<div class="delivery">
-									<ul class="ul-disc">
-										<li>
-											<?php echo esc_html( $delivery_date ); ?>
-										</li>
-									</ul>
-								</div>
-							<?php
-					}
-
-					if ( $cash_on_delivery == 1 ) {
+						<h4>
+						<?php
+						/* Translators: %1$s: We are available and servicing at your location.   */
+						esc_html_e( 'We are available and servicing at your location.' );
 						?>
-								<div class="cash_on_delivery"><?php esc_html_e( 'Cash On Delivery Available', 'woo-pincode-checker' ); ?></div>
-							<?php } ?>
+						</h4>					
+						<div class="header">
+							<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>		
+							<div class="delivery-info-list">
+								<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">									
+									<div class="delivery-date">
+										<strong>
+										<?php
+											/* Translators: %1$s: Delivered By Label   */
+											echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_delivery_date_label ) );
+										?>
+										</strong>
+										<span><?php echo esc_html( $delivery_date ); ?></span>
+									</div>
+									<?php
+							}
+							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
+								?>
+									<div class="delivery-info-list cash_delivery">
+										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
+										<div class="cash_on_delivery">
+									<?php
+									/* Translators: %1$s: Cash On Delivery Available Label   */
+									echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
+									?>
+									</div>
+								<?php } ?>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -145,12 +226,17 @@ class Woo_Pincode_Checker_Form {
 
 		} else {
 			?>
-			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field">
+			<div class="wc-delivery-time-response  pin_div pincode_check_btn  <?php echo esc_attr( $wpc_position_class ); ?>" id="my_custom_checkout_field">
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 					<input type="text" required="required" value="" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
-					<a class="button wpc-check-button" id="checkpin"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></a>
+					<a class="button wpc-check-button" id="checkpin">
+						<?php
+							/* Translators: %1$s: Check Button Text   */
+							echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_check_btn_label ) );
+						?>
+					</a>
 				</p>
 			</div>
 			<?php
@@ -159,7 +245,7 @@ class Woo_Pincode_Checker_Form {
 	/**
 	 * Set pincode in cookie.
 	 */
-	public function picodecheck_ajax_submit() {
+	public function wpc_picode_check_ajax_submit() {
 		global $wpdb;
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( $_POST['pin_code'] ) : '';
 		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `{$wpdb->prefix}pincode_checker` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
@@ -177,7 +263,7 @@ class Woo_Pincode_Checker_Form {
 	/**
 	 * CSS of general setting option value.
 	 */
-	public function hook_css() {
+	public function wpc_add_custom_css() {
 		$wpc_general_settings = get_option( 'wpc_general_settings' );
 		$wpc_label_color      = isset( $wpc_general_settings['textcolor'] ) ? $wpc_general_settings['textcolor'] : '';
 		$wpc_btn_color        = isset( $wpc_general_settings['buttoncolor'] ) ? $wpc_general_settings['buttoncolor'] : '';
@@ -195,25 +281,38 @@ class Woo_Pincode_Checker_Form {
 			?>
 			}
 
-			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
+			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
-			if ( $wpc_btn_color == '' ) {
-				echo 'background-color:#a46497;';
-			} else {
-				echo "background-color:$wpc_btn_color" . ';'; }
+			if ( ! empty( $wpc_btn_color ) ) {
+				echo "background-color:$wpc_btn_color" . ';';
+				echo "border-color:$wpc_btn_color" . ';';
+			}
 			?>
 			}
 
-			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
+			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
-			if ( $wpc_btn_text_color == '' ) {
-				echo 'color:#fff;';
-			} else {
-				echo "color:$wpc_btn_text_color" . ';'; }
+			if ( ! empty( $wpc_btn_text_color ) ) {
+				echo "color:$wpc_btn_text_color" . ';';
+			}
 			?>
 			}
 
 		</style>
 		<?php
+	}
+
+
+	/**
+	 * Display shortcode content.
+	 *
+	 * @param  Array  $atts An associative array of attributes, or an empty string if no attributes are given.
+	 * @param  string $content the enclosed content (if the shortcode is used in its enclosing form).
+	 */
+	public function wpc_display_shortcode_pincode_form( $atts, $content = null ) {
+		ob_start();
+		$this->wpc_display_pincode_field();
+		$content = ob_get_clean();
+		return $content;
 	}
 }

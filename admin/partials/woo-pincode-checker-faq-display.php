@@ -28,11 +28,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="wpc-admin-row border">
 				<div class="wpc-admin-col-12">
 					<button class="wpc-accordion">
-						<?php esc_html_e( 'Does This plugin requires Woocommerce?', 'woo-pincode-checker' ); ?>
+						<?php esc_html_e( 'Does this plugin require WooCommerce?', 'woo-pincode-checker' ); ?>
 					</button>
 					<div class="wpc-panel">
 						<p> 
-							<?php esc_html_e( 'Yes, It needs you to have Woocommerce installed and activated.', 'woo-pincode-checker' ); ?>
+							<?php esc_html_e( 'Yes, It needs you to have WooCommerce installed and activated.', 'woo-pincode-checker' ); ?>
 						</p>
 					</div>
 				</div>
@@ -40,11 +40,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="wpc-admin-row border">
 				<div class="wpc-admin-col-12">
 					<button class="wpc-accordion">
-						<?php esc_html_e( 'What to do after activated the plugin?', 'woo-pincode-checker' ); ?>
+						<?php esc_html_e( 'What to do after activating the plugin?', 'woo-pincode-checker' ); ?>
 					</button>
 					<div class="wpc-panel">
 						<p> 
-							<?php esc_html_e( 'You Need to add or upload pincodes.', 'woo-pincode-checker' ); ?>     
+							<?php esc_html_e( 'You need to add or upload pincodes.', 'woo-pincode-checker' ); ?>     
 						</p>
 					</div>
 				</div>
@@ -56,13 +56,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</button>
 					<div class="wpc-panel">
 						<p> 
-							<?php esc_html_e( 'If you want to manually upload the pin code from the backend then navigate to the Dashboard > Pincodes > Add Pincode. Now you can add the Pincode by providing Pincode, city, state, delivery within days, and payment option ( cash on delivery). Enable cash on delivery option if you want to provide this payment option for the particular pincode.', 'woo-pincode-checker' ); ?>     
+							<?php esc_html_e( 'If you want to manually upload the pincode from the backend then navigate to the WP Dashboard > Pincodes > Add Pincode. Now you can add the Pincode by providing pincode, city, state, delivery within days, and payment option ( cash on delivery ). Enable cash on delivery option if you want to provide this payment option for the particular pincode.', 'woo-pincode-checker' ); ?>     
 						</p>
 						<p> 
-							<?php esc_html_e( 'If you want to bulk upload the pin code from a CSV file then Navigate to the WP Dashboard > upload Pincodes tab and import the CSV file to add the Pin codes in bulk.', 'woo-pincode-checker' ); ?>     
+							<?php esc_html_e( 'If you want to bulk upload the pincodes from a CSV file then Navigate to the WP Dashboard > Pincodes > upload Pincodes tab and import the CSV file to add the pincodes in bulk.', 'woo-pincode-checker' ); ?>     
 						</p>
 						<p> 
-							<?php esc_html_e( 'you need to add csv file column as Pincode, city, state, delivery within days, Cash on delivery.', 'woo-pincode-checker' ); ?>     
+							<?php esc_html_e( 'you need to add csv file column as pincode, city, state, delivery within days, cash on delivery.', 'woo-pincode-checker' ); ?>     
+						</p>
+						<p> 
+							<label for="upload">
+								<?php esc_html_e( 'Download Sample CSV File:', 'woo-pincode-checker' ); ?>
+							</label>
+							<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>"><?php esc_html_e( 'Click Here', 'woo-pincode-checker' ); ?></a>
 						</p>
 					</div>
 				</div>
@@ -101,10 +107,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</button>
 					<div class="wpc-panel">
 						<p> 
-							<?php esc_html_e( 'Yes, This plugin allows you to hide pincode checker form for the specific product.', 'woo-pincode-checker' ); ?>    
+							<?php esc_html_e( 'Yes, This plugin allows you to hide the pincode checker form for the specific product.', 'woo-pincode-checker' ); ?>    
 						</p>
 						<p> 
-							<?php esc_html_e( 'To hide the pincode checker form Navigate to the WP Dashboard > Products > Add New Product or Edit any product page and you will find the checkbox ( Check if Hide for this Product ). you can check this checkbox to hide pincode checker form for the specific product.', 'woo-pincode-checker' ); ?>    
+							<?php esc_html_e( 'To hide the pincode checker form Navigate to the WP Dashboard > Products > Add New Product or Edit any product page and you will find the checkbox ( Check if Hide for this Product ). you can check this checkbox to hide the pincode checker form for the specific product.', 'woo-pincode-checker' ); ?>    
 						</p>
 					</div>
 				</div>
@@ -120,6 +126,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 						<p> 
 							<?php esc_html_e( 'Now it will display the message if the product is available or not in a particular Pincode. It will also display the delivery date so that customers can know the timeline of their available orders before placing the order. It also displays that cash on delivery is available or not at a particular Pincode.', 'woo-pincode-checker' ); ?>    
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="wpc-admin-row border">
+				<div class="wpc-admin-col-12">
+					<button class="wpc-accordion">
+						<?php esc_html_e( 'Does this plugin provide any shortcode?', 'woo-pincode-checker' ); ?>
+					</button>
+					<div class="wpc-panel">
+						<p> 
+							<?php esc_html_e( 'Yes! It provides a shortcode [wpc_pincode_checker]. Using this shortcode, you can check the Pincode anywhere on the website.', 'woo-pincode-checker' ); ?>    
 						</p>
 					</div>
 				</div>

@@ -56,6 +56,45 @@
 			}
 		}
 
+
+		$('#wpc_delivery_date').selectize({
+			placeholder: "Select Delivery Date",
+			plugins: ['remove_button'],
+		});
+		$('#wpc-exclude-category').selectize({
+			placeholder: "Exclude Category",
+			plugins: ['remove_button'],
+		});
+		$('#wpc_pincode_position').selectize({
+			placeholder: "Select Pincode Position",
+			plugins: ['remove_button'],
+		});
+
+		$("div.wpc-actions  .wpc-bulk-delete").click(function(){
+			event.preventDefault();
+			alert('Are you sure you want to delete all pincodes?');
+			var data = {
+				action: 'wpc_bulk_delete_action',
+				nonce: wpc_bulk_action.nonce,
+				url: wpc_bulk_action.ajaxurl,
+			}
+			$.post(ajaxurl, data, function (response) {
+				location.reload();
+			});
+
+		});
+
+		$('#wpc_pincode_position').change(function () {
+			$(this).find("option:selected").each(function () {
+				var optionValue = $(this).attr("value");
+				if (optionValue == 'wpc_pincode_checker') {
+					$(".wpc-display-shortcode-note").show();
+				} else {
+					$(".wpc-display-shortcode-note").hide();
+				}
+			});
+		}).change();
+
 	});
 
 })(jQuery);

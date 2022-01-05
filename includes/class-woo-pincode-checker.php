@@ -130,6 +130,10 @@ class Woo_Pincode_Checker {
 		 * Include plugin Update Checker file.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wpc-update-checker/plugin-update-checker.php';
+		/**
+		 * Include plugin General Functions file.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/woo-pincode-checker-general-functions.php';
 
 		$this->loader = new Woo_Pincode_Checker_Loader();
 
@@ -165,10 +169,11 @@ class Woo_Pincode_Checker {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		
+
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'wpc_admin_menu', 100 );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wpc_add_admin_register_setting' );
-	
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'wcpc_featured_meta' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'wcpc_meta_save' );
 		/* screen option */
 		$this->loader->add_filter( 'set-screen-option', $plugin_admin, 'pincode_per_page_set_option', 10, 3 );
 
@@ -190,14 +195,25 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		/* add ajax for pincode checker */
-		$this->loader->add_action( 'wp_ajax_nopriv_picodecheck_ajax_submit', $pincode_form, 'picodecheck_ajax_submit' );
-		$this->loader->add_action( 'wp_ajax_picodecheck_ajax_submit', $pincode_form, 'picodecheck_ajax_submit' );
-
-		/* add pincode checker form shop page */
-		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $pincode_form, 'pincode_field' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
+		$this->loader->add_action( 'wp_ajax_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
+		$wpc_pincode_btn_position = wpc_single_product_button_position();
+		if ( 'woocommerce_before_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_action( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_pincode_field' );
+		} elseif ( 'woocommerce_after_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_action( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_pincode_field' );
+		} elseif ( 'woocommerce_after_add_to_cart_quantity' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_action( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_pincode_field' );
+		} elseif ( 'wpc_pincode_checker' === $wpc_pincode_btn_position ) {
+			/* add pincode checker form single product page */
+			$this->loader->add_shortcode( $wpc_pincode_btn_position, $pincode_form, 'wpc_display_shortcode_pincode_form' );
+		}
 
 		/* admin setting css */
-		$this->loader->add_action( 'wp_head', $pincode_form, 'hook_css' );
+		$this->loader->add_action( 'wp_head', $pincode_form, 'wpc_add_custom_css' );
 	}
 
 	/**
