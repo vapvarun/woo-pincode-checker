@@ -282,15 +282,16 @@ class Woo_Pincode_Checker_Form {
 			?>
 			}
 
-			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
+			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( ! empty( $wpc_btn_color ) ) {
 				echo "background-color:$wpc_btn_color" . ';';
+				echo "border-color:$wpc_btn_color" . ';';
 			}
 			?>
 			}
 
-			.woocommerce #respond input#submit, .woocommerce #pincode_field_idp a.button.wpc-check-button, .woocommerce #avlpin a.button.wpc-check-button  { 
+			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( ! empty( $wpc_btn_text_color ) ) {
 				echo "color:$wpc_btn_text_color" . ';';

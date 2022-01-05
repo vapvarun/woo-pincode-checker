@@ -17,8 +17,11 @@
 #pincode_field_idp input[type="text"] {
     background: transparent;
     padding: 10px 10px 5px 0px;
-    width: 80%;
+    width: 78.5%;
     font-size: 15px;
+}
+.wpc_shortcode #pincode_field_idp input[type="text"] {
+    padding:10px;
 }
 
 .woocommerce #respond input#submit,
@@ -72,7 +75,7 @@ div#my_custom_checkout_field,
 .wc-delivery-time-response {
     background: #F6F6F9;
     padding: 10px;
-    margin-bottom: 15px;
+    margin:15px 0;
     border-radius: 5px;
 }
 p#pincode_field_idp {
@@ -101,7 +104,7 @@ p#pincode_field_idp {
 }
 a#checkpin.button.wpc-check-button {
     display: block;
-    width: 25%;
+    width: 20%;
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
@@ -109,6 +112,7 @@ a#checkpin.button.wpc-check-button {
     margin: 0 !important;
     padding: 8px 10px;
     line-height: 1.5;
+    cursor: pointer;
 }
 div#error_pin {
     color: red;
@@ -116,11 +120,16 @@ div#error_pin {
     line-height: 1;
 }
 .wc-delivery-time-response {
-    padding: 15px;
+    padding: 15px !important;
 }
-.wc-delivery-time-response a#change_pin{
-    width: 25%;
+.wc-delivery-time-response a#change_pin {
     border-radius: 5px;
+    text-align: center;
+    font-size: 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 30px;
 }
 .delivery-info-wrap .delivery-info .header {
     display: flex;
@@ -159,7 +168,10 @@ div#error_pin {
     margin-top: 10px;
     border: 2px dotted #ddd;
 }
-
+.wc-delivery-time-response.wpc_after_add_to_cart_quantity {
+    float: left;
+    margin-top: 0;
+}
 
 @media only screen and (max-width: 640px) {
 
