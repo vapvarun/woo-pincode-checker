@@ -667,8 +667,8 @@ class Woo_Pincode_Checker_Admin {
 		}
 		global $wpdb;
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
-		$sql = "DELETE FROM $pincode_checker_table_name";
-		$wpdb->query($sql);
+		$sql                        = "DELETE FROM $pincode_checker_table_name";
+		$wpdb->query( $sql );
 		die;
 	}
 

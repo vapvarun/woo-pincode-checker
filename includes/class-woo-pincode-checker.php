@@ -176,6 +176,7 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'save_post', $plugin_admin, 'wcpc_meta_save' );
 		/* screen option */
 		$this->loader->add_filter( 'set-screen-option', $plugin_admin, 'pincode_per_page_set_option', 10, 3 );
+		$this->loader->add_action( 'wp_ajax_wpc_bulk_delete_action', $plugin_admin, 'wpc_bulk_delete_action_ajax_callback', 10, 3 );
 
 	}
 
