@@ -101,12 +101,22 @@ class Woo_Pincode_Checker_Form {
 		if ( 'yes' === $wpc_hide_form ) {
 			return;
 		}
-		$wpc_check_btn_label     = wpc_get_check_btn_label();
-		$wpc_change_btn_label    = wpc_get_change_btn_label();
-		$wpc_delivery_date_label = wpc_get_delivery_date_label();
-		$wpc_availability_label  = wpc_get_availability_label();
-		$wpc_cod_label           = wpc_get_cod_label();
-		$wpc_display_cod_option  = wpc_display_cod_option();
+		$wpc_check_btn_label      = wpc_get_check_btn_label();
+		$wpc_change_btn_label     = wpc_get_change_btn_label();
+		$wpc_delivery_date_label  = wpc_get_delivery_date_label();
+		$wpc_availability_label   = wpc_get_availability_label();
+		$wpc_cod_label            = wpc_get_cod_label();
+		$wpc_display_cod_option   = wpc_display_cod_option();
+		$wpc_pincode_btn_position = wpc_single_product_button_position();
+		if ( 'woocommerce_before_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_before_add_to_cart';
+		} elseif ( 'woocommerce_after_add_to_cart_button' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_after_add_to_cart';
+		} elseif ( 'woocommerce_after_add_to_cart_quantity' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_after_add_to_cart_quantity';
+		} elseif ( 'wpc_pincode_checker' === $wpc_pincode_btn_position ) {
+			$wpc_position_class = 'wpc_shortcode';
+		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 
@@ -138,7 +148,7 @@ class Woo_Pincode_Checker_Form {
 			}
 
 			?>
-			<div class="wc-delivery-time-response">
+			<div class="wc-delivery-time-response <?php echo esc_attr( $wpc_position_class ); ?>">
 
 				<span class='avlpin' id='avlpin'><p>
 					<?php
@@ -174,29 +184,32 @@ class Woo_Pincode_Checker_Form {
 
 				<div class="delivery-info-wrap">
 					<div class="delivery-info">
-						<h4><?php
+						<h4>
+						<?php
 						/* Translators: %1$s: We are available and servicing at your location.   */
 						esc_html_e( 'We are available and servicing at your location.' );
-						?></h4>					
+						?>
+						</h4>					
 						<div class="header">
 							<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>		
 						<div class="delivery-info-list">
-							<img src="<?php echo WPCP_PLUGIN_URL. 'public/image/shipping-fast.svg' ;?>">									
+							<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">									
 								<div class="delivery-date">
-									<strong><?php
+									<strong>
+									<?php
 										/* Translators: %1$s: Delivered By Label   */
 										echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_delivery_date_label ) );
-										?>
+									?>
 									</strong>
 									<span><?php echo esc_html( $delivery_date ); ?></span>
 								</div>
 							</div>
-							<?php
+								<?php
 							}
 							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
 								?>
 								<div class="delivery-info-list cash_delivery">
-									<img src="<?php echo WPCP_PLUGIN_URL. 'public/image/hand-holding-usd.svg' ;?>">
+									<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
 									<div class="cash_on_delivery">
 									<?php
 									/* Translators: %1$s: Cash On Delivery Available Label   */
@@ -214,7 +227,7 @@ class Woo_Pincode_Checker_Form {
 
 		} else {
 			?>
-			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field">
+			<div class="pin_div pincode_check_btn  <?php echo esc_attr( $wpc_position_class ); ?>" id="my_custom_checkout_field">
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
