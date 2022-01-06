@@ -166,7 +166,7 @@ class Woo_Pincode_Checker_Form {
 
 				<div class="pin_div pincode_check_btn" id="my_custom_checkout_field2" style="display:none;">
 
-					<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
+					<div class="wpc_delivery-info-wrap error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 					<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 
@@ -228,7 +228,7 @@ class Woo_Pincode_Checker_Form {
 		} else {
 			?>
 			<div class="wc-delivery-time-response  pin_div pincode_check_btn  <?php echo esc_attr( $wpc_position_class ); ?>" id="my_custom_checkout_field">
-				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
+				<div class="wpc_delivery-info-wrap error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 					<input type="text" required="required" value="" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
@@ -277,7 +277,7 @@ class Woo_Pincode_Checker_Form {
 			if ( $wpc_label_color == '' ) {
 				echo 'color:#000;';
 			} else {
-				echo "color:$wpc_label_color !important" . ';';
+				echo "color:$wpc_label_color " . ';';
 			}
 			?>
 			}
