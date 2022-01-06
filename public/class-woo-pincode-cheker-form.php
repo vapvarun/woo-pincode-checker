@@ -150,23 +150,74 @@ class Woo_Pincode_Checker_Form {
 			?>
 			<div class="wc-delivery-time-response <?php echo esc_attr( $wpc_position_class ); ?>">
 
-				<span class='avlpin' id='avlpin'><p>
-					<?php
-						/* Translators: %1$s: Availability Label   */
-						echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_availability_label ) );
-					?>
-					<?php echo esc_html( $cookie_pin ); ?></p>
-					<a class="button wpc-check-button" id='change_pin'>
+				<span class='avlpin' id='avlpin'>
+					<p>
 						<?php
-						/* Translators: %1$s: Change Button Text   */
-						echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_change_btn_label ) );
+							/* Translators: %1$s: Availability Label   */
+							echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_availability_label ) );
 						?>
-					</a>
+						<?php echo esc_html( $cookie_pin ); ?>
+					</p>
+
+					<div class="wpc_delivery-info-wrap">
+					<div class="wpc-delivery-info">
+						<h4>
+						<?php
+						/* Translators: %1$s: We are available and servicing at your location.   */
+						esc_html_e( 'We are available and servicing at your location.' );
+						?>
+						</h4>					
+						<div class="header">
+							<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>		
+							<div class="wpc-delivery-info-list">																	
+									<div class="wpc-delivery-date">
+										<div class="wpc-delivery-checked">
+											<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/check.svg'; ?>">
+										</div>
+										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">
+										<div class="wpc-delivery-date-label">
+										<strong>
+										<?php
+											/* Translators: %1$s: Delivered By Label   */
+											echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_delivery_date_label ) );
+										?>
+										</strong>
+										<span><?php echo esc_html( $delivery_date ); ?></span>
+										</div>
+									</div>
+									<?php
+							}
+							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
+								?>
+									<div class="wpc-delivery-info-list wpc_cash_delivery">
+										<div class="wpc-delivery-checked">
+											<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/check.svg'; ?>">
+										</div>
+										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
+										<div class="wpc_cash_on_delivery">
+										<?php
+											/* Translators: %1$s: Cash On Delivery Available Label   */
+											echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
+										?>
+										</div>
+									</div>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<a class="button wpc-check-button" id='change_pin'>
+					<?php
+					/* Translators: %1$s: Change Button Text   */
+					echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_change_btn_label ) );
+					?>
+				</a>
 				</span>
 
 				<div class="pin_div pincode_check_btn" id="my_custom_checkout_field2" style="display:none;">
 
-					<div class="wpc_delivery-info-wrap error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
+					<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 					<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 
@@ -179,48 +230,7 @@ class Woo_Pincode_Checker_Form {
 							?>
 						</a>
 					</p>
-				</div>
-
-
-				<div class="wpc_delivery-info-wrap">
-					<div class="delivery-info">
-						<h4>
-						<?php
-						/* Translators: %1$s: We are available and servicing at your location.   */
-						esc_html_e( 'We are available and servicing at your location.' );
-						?>
-						</h4>					
-						<div class="header">
-							<?php if ( isset( $wpc_general_settings['date_display'] ) && $wpc_general_settings['date_display'] == 'on' ) { ?>		
-							<div class="delivery-info-list">
-								<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">									
-									<div class="delivery-date">
-										<strong>
-										<?php
-											/* Translators: %1$s: Delivered By Label   */
-											echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_delivery_date_label ) );
-										?>
-										</strong>
-										<span><?php echo esc_html( $delivery_date ); ?></span>
-									</div>
-									<?php
-							}
-							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
-								?>
-									<div class="delivery-info-list cash_delivery">
-										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
-										<div class="cash_on_delivery">
-									<?php
-									/* Translators: %1$s: Cash On Delivery Available Label   */
-									echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
-									?>
-										</div>
-									</div>
-								<?php } ?>
-							</div>
-						</div>
-					</div>
-				</div>
+				</div>				
 			</div>
 
 				<?php
@@ -228,7 +238,7 @@ class Woo_Pincode_Checker_Form {
 		} else {
 			?>
 			<div class="wc-delivery-time-response  pin_div pincode_check_btn  <?php echo esc_attr( $wpc_position_class ); ?>" id="my_custom_checkout_field">
-				<div class="wpc_delivery-info-wrap error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
+				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 					<input type="text" required="required" value="" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
@@ -277,7 +287,7 @@ class Woo_Pincode_Checker_Form {
 			if ( $wpc_label_color == '' ) {
 				echo 'color:#000;';
 			} else {
-				echo "color:$wpc_label_color " . ';';
+				echo "color:$wpc_label_color !important" . ';';
 			}
 			?>
 			}
