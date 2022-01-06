@@ -60,7 +60,7 @@ class Woo_Pincode_Checker_Activator {
 			'check_btn_text'           => 'Check',
 			'change_btn_text'          => 'Change',
 			'delivery_date_label_text' => 'Delivery Date',
-			'cod_label_text'           => 'Cash On Delivery Available',
+			'cod_label_text'           => 'Cash On Delivery',
 			'availability_label_text'  => 'Available at',
 			'textcolor'                => '#141414',
 			'buttoncolor'              => '#dd3333',

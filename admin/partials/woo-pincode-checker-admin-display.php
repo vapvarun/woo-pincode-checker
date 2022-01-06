@@ -100,7 +100,12 @@ if ( false == $general_settings['date_display'] ) {
 								<option value="wpc_pincode_checker"<?php selected( $general_settings['pincode_position'], 'wpc_pincode_checker' ); ?>><?php esc_html_e( 'Use Shortcode', 'woo-pincode-checker' ); ?></option>
 							</select>
 						</label>
-						<p class="wpc-display-shortcode-note" style="<?php  if( 'wpc_pincode_checker' === $general_settings['pincode_position'] ) { echo 'display:none;'; } ?>">
+						<p class="wpc-display-shortcode-note" style="
+						<?php
+						if ( 'wpc_pincode_checker' === $general_settings['pincode_position'] ) {
+							echo 'display:none;'; }
+						?>
+						">
 							<label><?php esc_html_e( 'Note :', 'woo-pincode-checker' ); ?>
 								<?php esc_html_e( 'You can use shortcode [wpc_pincode_checker] to place it anywhere you like to use in website and select "Use Shortcode" in above select option.', 'woo-pincode-checker' ); ?>
 							</label>
@@ -154,7 +159,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label>
-							<input type="text"  name="wpc_general_settings[cod_label_text]" value="<?php echo ( isset( $general_settings['cod_label_text'] ) ) ? $general_settings['cod_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Cash On Delivery Available', 'woo-pincode-checker' ); ?>">
+							<input type="text"  name="wpc_general_settings[cod_label_text]" value="<?php echo ( isset( $general_settings['cod_label_text'] ) ) ? $general_settings['cod_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Cash On Delivery', 'woo-pincode-checker' ); ?>">
 						</label>
 					</td>
 				</tr>

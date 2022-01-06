@@ -195,10 +195,13 @@ class Woo_Pincode_Checker_Form {
 										</div>
 										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
 										<div class="wpc_cash_on_delivery">
-										<?php
-											/* Translators: %1$s: Cash On Delivery Available Label   */
-											echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
-										?>
+											<strong>
+												<?php
+													/* Translators: %1$s: Cash On Delivery Available Label   */
+													echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
+												?>
+											</strong>
+											<span><?php esc_html_e( 'Available', 'woo-pincode-checker' ); ?></span>
 										</div>
 									</div>
 								<?php } ?>

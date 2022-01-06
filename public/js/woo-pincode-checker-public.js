@@ -32,7 +32,6 @@
     /* default pincode form button */
     $("#checkpin").click(function () {
       var pin_code = $("#pincode_field_id").val();
-      console.log(pin_code);
       if (pin_code != "") {
         $.ajax({
           url: pincode_check.ajaxurl,

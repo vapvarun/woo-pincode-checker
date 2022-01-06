@@ -27,7 +27,6 @@
   padding-left: 25px;
 }
 
-
 .wc-delivery-time-response p {
   line-height: 1.5;
   margin: 0;
@@ -69,7 +68,7 @@ ol {
 div#my_custom_checkout_field,
 .wc-delivery-time-response {
   background: #f6f6f9;
-  padding:15px;
+  padding: 15px;
   margin: 15px 0;
   border: 1px solid #e9e9e9;
   border-radius: 6px;
@@ -114,9 +113,9 @@ a#checkpin.button.wpc-check-button {
 }
 div#error_pin {
   color: red;
-  padding: 10px 15px 15px;
+  padding: 10px;
   background: #fff;
-  margin:0 0 10px;
+  margin: 0 0 10px;
   font-weight: bold;
   border: 2px dotted #ddd;
   line-height: 1;
@@ -151,7 +150,7 @@ div#error_pin {
 }
 .wpc-delivery-info .wpc-delivery-info-list img {
   width: 30px;
-  margin-right:15px;
+  margin-right: 15px;
 }
 .wpc-delivery-info .wpc-delivery-date strong {
   display: block;
@@ -166,7 +165,7 @@ div#error_pin {
 .wpc_delivery-info-wrap {
   padding: 10px 15px 15px;
   background: #fff;
-  margin:10px 0;
+  margin: 10px 0;
   border: 2px dotted #ddd;
 }
 .wc-delivery-time-response.wpc_after_add_to_cart_quantity {
@@ -174,7 +173,8 @@ div#error_pin {
   /* margin-top: 0; */
   width: 100%;
 }
-.wc-delivery-time-response.wpc_after_add_to_cart_quantity a#checkpin.button.wpc-check-button {
+.wc-delivery-time-response.wpc_after_add_to_cart_quantity
+  a#checkpin.button.wpc-check-button {
   padding: 8px 20px;
   width: auto;
 }
@@ -193,10 +193,17 @@ div#error_pin {
   padding: 6px;
 }
 .wpc-delivery-checked img {
-  margin-right:0;
+  margin-right: 0;
   filter: brightness(0) invert(1);
 }
-
+.wpc-delivery-info .wpc_cash_delivery strong {
+  display: block;
+  line-height: 1.3;
+  font-size: 16px;
+}
+.wc-delivery-time-response.wpc_shortcode {
+  padding: 20px;
+}
 @media only screen and (max-width: 640px) {
   .wpc_delivery-info-wrap .delivery-info .header {
     display: block;
@@ -209,6 +216,6 @@ div#error_pin {
     width: auto;
   }
   .wpc-delivery-info .wpc-delivery-date strong {
-      font-size: 15px;
+    font-size: 15px;
   }
 }
