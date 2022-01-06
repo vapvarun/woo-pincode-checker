@@ -136,12 +136,12 @@ div#error_pin {
   display: inline-block;
   padding: 10px 30px;
 }
-.delivery-info-wrap .delivery-info .header {
+.wpc_delivery-info-wrap .delivery-info .header {
   display: flex;
   padding-top: 5px;
   align-items: center;
 }
-.delivery-info-wrap .delivery-info h6 {
+.wpc_delivery-info-wrap .delivery-info h6 {
   margin: 0;
   font-size: 14px;
   margin-right: 5px;
@@ -167,7 +167,7 @@ div#error_pin {
   margin: 0 0 2px;
   color: #2db12d;
 }
-.delivery-info-wrap {
+.wpc_delivery-info-wrap {
   padding: 10px 15px 15px;
   background: #fff;
   margin-top: 10px;
@@ -179,7 +179,7 @@ div#error_pin {
 }
 
 @media only screen and (max-width: 640px) {
-  .delivery-info-wrap .delivery-info .header {
+  .wpc_delivery-info-wrap .delivery-info .header {
     display: block;
   }
   .delivery-info .delivery-info-list {

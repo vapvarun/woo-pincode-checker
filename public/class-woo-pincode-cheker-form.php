@@ -182,7 +182,7 @@ class Woo_Pincode_Checker_Form {
 				</div>
 
 
-				<div class="delivery-info-wrap">
+				<div class="wpc_delivery-info-wrap">
 					<div class="delivery-info">
 						<h4>
 						<?php
@@ -214,6 +214,7 @@ class Woo_Pincode_Checker_Form {
 									/* Translators: %1$s: Cash On Delivery Available Label   */
 									echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
 									?>
+										</div>
 									</div>
 								<?php } ?>
 							</div>
@@ -270,7 +271,7 @@ class Woo_Pincode_Checker_Form {
 		$wpc_btn_text_color   = isset( $wpc_general_settings['buttontcolor'] ) ? $wpc_general_settings['buttontcolor'] : '';
 		?>
 		<style>
-			.delivery-info-wrap,
+			.wpc_delivery-info-wrap,
 			.avlpin p { 
 			<?php
 			if ( $wpc_label_color == '' ) {
