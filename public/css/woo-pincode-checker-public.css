@@ -204,6 +204,7 @@ div#error_pin {
 .wc-delivery-time-response.wpc_shortcode {
   padding: 20px;
 }
+
 @media only screen and (max-width: 640px) {
   .wpc_delivery-info-wrap .delivery-info .header {
     display: block;
