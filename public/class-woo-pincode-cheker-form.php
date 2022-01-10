@@ -91,6 +91,7 @@ class Woo_Pincode_Checker_Form {
 		if ( false === $wpc_add_pincode_checker ) {
 			return false;
 		}
+
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
 		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
 
@@ -127,7 +128,8 @@ class Woo_Pincode_Checker_Form {
 
 				$delivery_day     = $data->delivery_days;
 				$cash_on_delivery = $data->case_on_delivery;
-
+				$city             = $data->city;
+				$state            = $data->state;
 			}
 
 			/* set delivery date */
@@ -143,6 +145,7 @@ class Woo_Pincode_Checker_Form {
 			$user_ID = get_current_user_id();
 
 			if ( isset( $user_ID ) && $user_ID != 0 ) {
+
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
 			}
 
@@ -157,7 +160,18 @@ class Woo_Pincode_Checker_Form {
 						?>
 						<?php echo esc_html( $cookie_pin ); ?>
 					</p>
-
+					<p>
+						<?php
+							/* Translators: %1$s: Availability City Name   */
+							echo sprintf( esc_html__( 'City: %1$s', 'woo-pincode-checker' ), esc_html( $city ) );
+						?>
+					</p>
+					<p>
+						<?php
+							/* Translators: %1$s: Availability State Name   */
+							echo sprintf( esc_html__( 'State: %1$s', 'woo-pincode-checker' ), esc_html( $state ) );
+						?>
+					</p>
 					<div class="wpc_delivery-info-wrap">
 					<div class="wpc-delivery-info">
 						<h4>
