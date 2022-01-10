@@ -143,7 +143,6 @@ class Woo_Pincode_Checker_Form {
 			$user_ID = get_current_user_id();
 
 			if ( isset( $user_ID ) && $user_ID != 0 ) {
-
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
 			}
 

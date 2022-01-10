@@ -57,6 +57,7 @@ class Woo_Pincode_Checker_Activator {
 			'date_display'             => 'on',
 			'delivery_date'            => 'M jS',
 			'cod_display'              => 'on',
+			'hide_shop_btn'            => 'on',
 			'check_btn_text'           => 'Check',
 			'change_btn_text'          => 'Change',
 			'delivery_date_label_text' => 'Delivery Date',

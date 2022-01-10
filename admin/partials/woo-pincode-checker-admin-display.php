@@ -125,6 +125,28 @@ if ( false == $general_settings['date_display'] ) {
 				</tr>
 				<tr>
 					<th scope="row">
+						<label><?php esc_html_e( 'Hide Add to cart button on Shop Page', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label class="wb-switch">
+							<input type="checkbox"  name="wpc_general_settings[hide_shop_btn]" <?php checked( esc_attr( $general_settings['hide_shop_btn'] ), 'on' ); ?> value="on">
+							<div class="wb-slider wb-round"></div>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Hide Add to cart Button on Single Product Page', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label class="wb-switch">
+							<input type="checkbox"  name="wpc_general_settings[hide_product_page_btn]" <?php checked( esc_attr( $general_settings['hide_product_page_btn'] ), 'on' ); ?> value="on">
+							<div class="wb-slider wb-round"></div>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
 						<label><?php esc_html_e( 'Check Button Text', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td>

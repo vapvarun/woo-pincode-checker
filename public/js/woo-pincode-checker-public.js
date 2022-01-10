@@ -46,7 +46,9 @@
             } else {
               $("#error_pin").show();
               $(".delivery_msg").hide();
-              $(".add_to_cart_button, .single_add_to_cart_button").remove();
+              if (pincode_check.hide_product_page_cart_btn) {
+                jQuery(".single_add_to_cart_button").prop("disabled", true);
+              }
             }
           },
         });
