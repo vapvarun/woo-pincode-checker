@@ -139,8 +139,8 @@ class Woo_Pincode_Checker_Form {
 
 			/* set pincode */
 			$customer = new WC_Customer();
-
 			$customer->set_shipping_postcode( $cookie_pin );
+			$customer->set_billing_postcode( $cookie_pin );
 
 			$user_ID = get_current_user_id();
 
@@ -342,4 +342,20 @@ class Woo_Pincode_Checker_Form {
 		$content = ob_get_clean();
 		return $content;
 	}
+
+	/**
+	 * Set Available Pincodes into shipping and billing postcode.
+	 */
+	public function wpc_set_wc_billing_and_shipping_zipcode() {
+		global $table_prefix, $wpdb,$woocommerce, $product;
+		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
+		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
+		if ( $num_rows == 0 ) {
+			$cookie_pin = '';
+		}
+		WC()->customer->set_shipping_postcode( wc_clean( $cookie_pin ) );
+		WC()->customer->set_billing_postcode( wc_clean( $cookie_pin ) );
+	}
+
+
 }
