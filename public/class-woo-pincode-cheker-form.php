@@ -353,6 +353,9 @@ class Woo_Pincode_Checker_Form {
 	 * Set Available Pincodes into shipping and billing postcode.
 	 */
 	public function wpc_set_wc_billing_and_shipping_zipcode() {
+		if ( is_admin() ) {
+			return false;
+		}
 		global $table_prefix, $wpdb,$woocommerce, $product;
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
 		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
