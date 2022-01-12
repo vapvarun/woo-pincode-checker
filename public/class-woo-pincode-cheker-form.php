@@ -118,6 +118,19 @@ class Woo_Pincode_Checker_Form {
 		} elseif ( 'wpc_pincode_checker' === $wpc_pincode_btn_position ) {
 			$wpc_position_class = 'wpc_shortcode';
 		}
+		/* set pincode */
+		$customer = new WC_Customer();
+		$customer->set_shipping_postcode( $cookie_pin );
+		$customer->set_billing_postcode( $cookie_pin );
+		$get_shipping_zipcode = WC()->customer->get_shipping_postcode( wc_clean( $cookie_pin ) );
+		$get_billing_zipcode  = WC()->customer->get_billing_postcode( wc_clean( $cookie_pin ) );
+		$user_ID              = get_current_user_id();
+		$wpc_zipcode          = '';
+		if ( ! empty( $get_shipping_zipcode ) ) {
+			$wpc_zipcode = $get_shipping_zipcode;
+		} else {
+			$wpc_zipcode = $get_billing_zipcode;
+		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 
@@ -136,13 +149,6 @@ class Woo_Pincode_Checker_Form {
 			$wpc_general_settings = get_option( 'wpc_general_settings' );
 			$delivery_date_format = $wpc_general_settings['delivery_date'];
 			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) );
-
-			/* set pincode */
-			$customer = new WC_Customer();
-			$customer->set_shipping_postcode( $cookie_pin );
-			$customer->set_billing_postcode( $cookie_pin );
-
-			$user_ID = get_current_user_id();
 
 			if ( isset( $user_ID ) && $user_ID != 0 ) {
 
@@ -257,7 +263,7 @@ class Woo_Pincode_Checker_Form {
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-					<input type="text" required="required" value="" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
+					<input type="text" required="required" value="<?php echo esc_attr( $wpc_zipcode ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
 					<a class="button wpc-check-button" id="checkpin">
 						<?php
 							/* Translators: %1$s: Check Button Text   */
@@ -353,8 +359,10 @@ class Woo_Pincode_Checker_Form {
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}
-		WC()->customer->set_shipping_postcode( wc_clean( $cookie_pin ) );
-		WC()->customer->set_billing_postcode( wc_clean( $cookie_pin ) );
+		if ( ! empty( $cookie_pin ) ) {
+			WC()->customer->set_shipping_postcode( wc_clean( $cookie_pin ) );
+			WC()->customer->set_billing_postcode( wc_clean( $cookie_pin ) );
+		}
 	}
 
 
