@@ -44,7 +44,9 @@ class Woo_Pincode_Checker_Activator {
 						city  varchar(255) NOT NULL, 
 						state  varchar(255) NOT NULL,
 						delivery_days int(11)   NOT NULL,
+						shipping_amount tinyint(2) NULL default '0' ,
 						case_on_delivery tinyint(2) NULL default '0' ,
+						cod_amount tinyint(2) NULL default '0' ,
 						UNIQUE KEY id (id)
 			) $charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -57,6 +59,8 @@ class Woo_Pincode_Checker_Activator {
 			'date_display'             => 'on',
 			'delivery_date'            => 'M jS',
 			'cod_display'              => 'on',
+			'shipping_cost'            => 'on',
+			'cod_cost'                 => 'on',
 			'hide_shop_btn'            => 'on',
 			'check_btn_text'           => 'Check',
 			'change_btn_text'          => 'Change',

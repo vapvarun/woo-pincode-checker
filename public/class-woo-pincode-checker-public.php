@@ -123,4 +123,67 @@ class Woo_Pincode_Checker_Public {
 		}
 	}
 
+	/**
+	 * Trigger an action so 3rd parties can add custom fees.
+	 *
+	 * @since 2.0.0
+	 */
+	public function wpc_added_wc_shipping_and_cod_amount() {
+		global $table_prefix, $wpdb,$woocommerce, $product, $wpc_globals;
+		$wpc_general_settings   = $wpc_globals->wpc_general_settings;
+		$wpc_hide_shipping_cost = isset( $wpc_general_settings['shipping_cost'] ) ? $wpc_general_settings['shipping_cost'] : '';
+		$wpc_hide_cod_cost      = isset( $wpc_general_settings['cod_cost'] ) ? $wpc_general_settings['cod_cost'] : '';
+		$wpc_cod_text           = $wpc_general_settings['cod_label_text'];
+		$tablename              = $wpdb->prefix . 'pincode_checker';
+		$cookie_pin             = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
+		$wpc_pincode            = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
+		$wpc_records            = $wpdb->get_results( $wpc_pincode, OBJECT );
+		if ( isset( $cookie_pin ) ) {
+			if ( 'on' === $wpc_hide_shipping_cost ) {
+				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
+					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woocommerce' ), $wpc_records[0]->shipping_amount );
+					add_filter( 'woocommerce_cart_ready_to_calc_shipping', array( $this, 'wpc_disable_shipping_calc_on_cart_page' ), 10, 1 );
+				}
+			}
+			if ( 'on' === $wpc_hide_cod_cost ) {
+				if ( $wpc_records[0]->cod_amount != 0 && ! empty( $wpc_records[0]->cod_amount ) ) {
+					$wc_selected_payment_method = WC()->session->get( 'chosen_payment_method' );
+					if ( empty( $wc_selected_payment_method ) ) {
+						return;
+					} else {
+						if ( 'cod' === $wc_selected_payment_method ) {
+							$woocommerce->cart->add_fee( esc_html__( $wpc_cod_text, 'woocommerce' ), $wpc_records[0]->cod_amount );
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sees if the customer has entered enough data to calc the shipping yet.
+	 *
+	 * @param bool $show_shipping Display Shipping.
+	 * @return bool
+	 */
+	public function wpc_disable_shipping_calc_on_cart_page( $show_shipping ) {
+		if ( is_cart() ) {
+			add_filter( 'woocommerce_shipping_calculator_enable_state', '__return_false' );
+			add_filter( 'woocommerce_shipping_calculator_enable_city', '__return_false' );
+			add_filter( 'woocommerce_shipping_calculator_enable_country', '__return_false' );
+			add_filter( 'woocommerce_shipping_calculator_enable_postcode', '__return_false' );
+			add_filter(
+				'woocommerce_product_needs_shipping',
+				function() {
+					return false;
+				}
+			);
+			return false;
+		}
+		if ( is_checkout() ) {
+			return false;
+		}
+		return $show_shipping;
+	}
+
 }

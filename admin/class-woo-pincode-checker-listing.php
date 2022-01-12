@@ -50,7 +50,9 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			'city'             => __( 'City', 'woo-pincode-checker' ),
 			'state'            => __( 'State', 'woo-pincode-checker' ),
 			'delivery_days'    => __( 'Delivery Days', 'woo-pincode-checker' ),
+			'shipping_amount'  => __( 'Shipping Amount', 'woo-pincode-checker' ),
 			'case_on_delivery' => __( 'Cash on Delivery', 'woo-pincode-checker' ),
+			'cod_amount'       => __( 'COD Amount', 'woo-pincode-checker' ),
 		);
 		return $table_columns;
 	}
@@ -150,7 +152,9 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			case 'city':
 			case 'state':
 			case 'delivery_days':
+			case 'shipping_amount':
 			case 'case_on_delivery':
+			case 'cod_amount':
 				return '<strong>' . $item[ $column_name ] . '</strong>';
 			default:
 				return print_r( $item, true );
@@ -242,7 +246,6 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array( 'bulk-delete' => 'Delete' );
-
 		return $actions;
 	}
 }

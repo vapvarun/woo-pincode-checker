@@ -114,6 +114,28 @@ if ( false == $general_settings['date_display'] ) {
 				</tr>
 				<tr>
 					<th scope="row">
+						<label><?php esc_html_e( 'Hide Shipping Cost', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label class="wb-switch">
+							<input type="checkbox"  name="wpc_general_settings[shipping_cost]" <?php checked( esc_attr( $general_settings['shipping_cost'] ), 'on' ); ?> value="on">
+							<div class="wb-slider wb-round"></div>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label><?php esc_html_e( 'Hide COD Cost', 'woo-pincode-checker' ); ?></label>
+					</th>
+					<td>
+						<label class="wb-switch">
+							<input type="checkbox"  name="wpc_general_settings[cod_cost]" <?php checked( esc_attr( $general_settings['cod_cost'] ), 'on' ); ?> value="on">
+							<div class="wb-slider wb-round"></div>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
 						<label><?php esc_html_e( 'Show Cash On Delivery Option', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td>
