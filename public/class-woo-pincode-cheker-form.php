@@ -183,7 +183,7 @@ class Woo_Pincode_Checker_Form {
 						<h4>
 						<?php
 						/* Translators: %1$s: We are available and servicing at your location.   */
-						esc_html_e( 'We are available and servicing at your location.' );
+						esc_html_e( 'We are available and servicing at your location.', 'woo-pincode-checker' );
 						?>
 						</h4>					
 						<div class="header">

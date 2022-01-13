@@ -141,7 +141,7 @@ class Woo_Pincode_Checker_Public {
 		if ( isset( $cookie_pin ) ) {
 			if ( 'on' === $wpc_hide_shipping_cost ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
-					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woocommerce' ), $wpc_records[0]->shipping_amount );
+					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woo-pincode-checker' ), $wpc_records[0]->shipping_amount );
 					add_filter( 'woocommerce_cart_ready_to_calc_shipping', array( $this, 'wpc_disable_shipping_calc_on_cart_page' ), 10, 1 );
 				}
 			}
@@ -152,7 +152,7 @@ class Woo_Pincode_Checker_Public {
 						return;
 					} else {
 						if ( 'cod' === $wc_selected_payment_method ) {
-							$woocommerce->cart->add_fee( esc_html__( $wpc_cod_text, 'woocommerce' ), $wpc_records[0]->cod_amount );
+							$woocommerce->cart->add_fee( esc_html__( $wpc_cod_text, 'woo-pincode-checker' ), $wpc_records[0]->cod_amount );
 						}
 					}
 				}
