@@ -186,4 +186,18 @@ class Woo_Pincode_Checker_Public {
 		return $show_shipping;
 	}
 
+	/**
+	 * Action is ran once when the class is first constructed.
+	 */
+	public function wpc_refresh_checkout_form_on_payment_method_switched() {
+			wc_enqueue_js(
+				"jQuery( function($){
+          
+        $('form.checkout').on('change', 'input[name=payment_method],#billing_postcode,#shipping_postcode', function(){
+            $(document.body).trigger('update_checkout');
+        });
+    });"
+			);
+	}
+
 }

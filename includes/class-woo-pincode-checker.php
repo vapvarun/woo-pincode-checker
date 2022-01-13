@@ -196,6 +196,7 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public, 'wpc_hide_shop_page_cart_button' );
 		$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'wpc_added_wc_shipping_and_cod_amount' );
+		$this->loader->add_action( 'woocommerce_checkout_init', $plugin_public, 'wpc_refresh_checkout_form_on_payment_method_switched' );
 		/* add ajax for pincode checker */
 		$this->loader->add_action( 'wp_ajax_nopriv_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
 		$this->loader->add_action( 'wp_ajax_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
