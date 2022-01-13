@@ -114,7 +114,7 @@ if ( false == $general_settings['date_display'] ) {
 				</tr>
 				<tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Hide Shipping Cost', 'woo-pincode-checker' ); ?></label>
+						<label><?php esc_html_e( 'Show Shipping Cost', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td>
 						<label class="wb-switch">
@@ -125,7 +125,7 @@ if ( false == $general_settings['date_display'] ) {
 				</tr>
 				<tr>
 					<th scope="row">
-						<label><?php esc_html_e( 'Hide COD Cost', 'woo-pincode-checker' ); ?></label>
+						<label><?php esc_html_e( 'Show COD Cost', 'woo-pincode-checker' ); ?></label>
 					</th>
 					<td>
 						<label class="wb-switch">
