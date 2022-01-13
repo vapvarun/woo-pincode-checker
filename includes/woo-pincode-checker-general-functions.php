@@ -115,3 +115,15 @@ function wpc_hide_shop_page_cart_btn_option() {
 
 	return apply_filters( 'alter_wpc_hide_shop_page_cart_btn_option', $wpc_hide_cart_btn );
 }
+
+/**
+ * Function for hide product page add to cart option.
+ *
+ * @return Array
+ */
+function wpc_hide_product_page_cart_btn_option() {
+	$wpc_general_settings           = get_option( 'wpc_general_settings' );
+	$wpc_hide_product_page_cart_btn = ( isset( $wpc_general_settings['hide_product_page_btn'] ) && 'on' === $wpc_general_settings['hide_product_page_btn'] ) ? true : false;
+
+	return apply_filters( 'alter_wpc_hide_product_page_cart_btn_option', $wpc_hide_product_page_cart_btn );
+}
