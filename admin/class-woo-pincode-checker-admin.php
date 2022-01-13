@@ -455,7 +455,7 @@ class Woo_Pincode_Checker_Admin {
 									<label for="wpc-case-on-shipping-amount"><?php esc_html_e( 'Shipping Amount', 'woo-pincode-checker' ); ?></label>
 								</th>
 
-								<td><input type="number" min="1" step="1" class="regular-text" id="wpc-shipping-amount" name="wpc_shipping_amount" value="<?php echo isset( $query_results[0]['shipping_amount'] ) ? esc_attr( $query_results[0]['shipping_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e( 'Note : Enable shipping cost in setting to calculate the setting amount.', 'woo-pincode-checker' ); ?></td>
+								<td><input type="number" min="1" step="1" class="regular-text" id="wpc-shipping-amount" name="wpc_shipping_amount" value="<?php echo isset( $query_results[0]['shipping_amount'] ) ? esc_attr( $query_results[0]['shipping_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e( 'Note : Enable shipping cost in setting to calculate the shipping amount.', 'woo-pincode-checker' ); ?></td>
 							</tr>
 							<tr>
 								<th>
