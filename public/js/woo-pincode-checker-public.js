@@ -60,5 +60,68 @@
       $("#avlpin").hide();
       $(".wpc_delivery-info-wrap").hide();
     });
+    jQuery("body").on("blur", "#billing_postcode", function () {
+      if (jQuery("#ship-to-different-address-checkbox").prop("checked")) {
+        var pincode = jQuery("#shipping_postcode").val();
+      } else {
+        var pincode = jQuery(this).val();
+      }
+      if (pincode !== "") {
+        jQuery.ajax({
+          type: "POST",
+          url: pincode_check.ajaxurl,
+          data: {
+            action: "wpc_check_checkout_page_pincode",
+            pincode: pincode,
+          },
+          success: function (response) {
+            jQuery("body").trigger("update_checkout");
+          },
+        });
+      }
+    });
+    jQuery("body").on("blur", "#shipping_postcode", function () {
+      var pincode = jQuery(this).val();
+
+      if (pincode !== "") {
+        jQuery.ajax({
+          type: "POST",
+          url: pincode_check.ajaxurl,
+          data: {
+            action: "wpc_check_checkout_page_pincode",
+            pincode: pincode,
+          },
+          success: function (response) {
+            jQuery("body").trigger("update_checkout");
+          },
+        });
+      }
+    });
+    jQuery("body").on(
+      "click",
+      "#ship-to-different-address-checkbox",
+      function () {
+        if (jQuery(this).prop("checked")) {
+          var pincode = jQuery("#shipping_postcode").val();
+        } else {
+          var pincode = jQuery("#billing_postcode").val();
+        }
+
+        if (pincode != "") {
+          jQuery.ajax({
+            type: "POST",
+            url: wpcc_ajax_postajax.ajaxurl,
+            dataType: "json",
+            data: {
+              action: "wpc_check_checkout_page_pincode",
+              pincode: pincode,
+            },
+            success: function (response) {
+              jQuery("body").trigger("update_checkout");
+            },
+          });
+        }
+      }
+    );
   });
 })(jQuery);
