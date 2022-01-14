@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 12:24:38+00:00\n"
+"POT-Creation-Date: 2022-01-14 08:18:10+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -129,7 +129,8 @@ msgstr ""
 
 #: admin/class-woo-pincode-checker-admin.php:455
 #: admin/class-woo-pincode-checker-listing.php:53
-#: public/class-woo-pincode-checker-public.php:144
+#: public/class-woo-pincode-checker-public.php:146
+#: public/class-woo-pincode-checker-public.php:167
 msgid "Shipping Amount"
 msgstr ""
 
@@ -370,9 +371,10 @@ msgstr ""
 msgid ""
 "If you want to manually upload the pincode from the backend then navigate "
 "to the WP Dashboard > Pincodes > Add Pincode. Now you can add the Pincode "
-"by providing pincode, city, state, delivery within days, and payment option "
-"( cash on delivery ). Enable cash on delivery option if you want to provide "
-"this payment option for the particular pincode."
+"by providing pincode, city, state, shipping amount,  delivery within days, "
+"payment option ( cash on delivery ) and cash on delivery amount. Enable "
+"cash on delivery option if you want to provide this payment option for the "
+"particular pincode."
 msgstr ""
 
 #: admin/partials/woo-pincode-checker-faq-display.php:62
@@ -384,8 +386,8 @@ msgstr ""
 
 #: admin/partials/woo-pincode-checker-faq-display.php:65
 msgid ""
-"you need to add csv file column as pincode, city, state, delivery within "
-"days, cash on delivery."
+"you need to add csv file column as pincode, city, state, delivery_days, "
+"shipping_amount, cash_on_delivery, cod_amount."
 msgstr ""
 
 #: admin/partials/woo-pincode-checker-faq-display.php:79
@@ -1098,6 +1100,12 @@ msgid ""
 "This plugin gives you the power to extend BuddyPress Profiles with repeater "
 "fields and groups. You can easily add multiple field groups and display "
 "them at member’s profile."
+msgstr ""
+
+#: public/class-woo-pincode-checker-public.php:267
+#: public/class-woo-pincode-checker-public.php:274
+#. translators: %1$s: Zipcode
+msgid "Delivery to %1$s is currently not available for this item."
 msgstr ""
 
 #: public/class-woo-pincode-cheker-form.php:165
