@@ -137,7 +137,7 @@ class Woo_Pincode_Checker_Public {
 		$tablename              = $wpdb->prefix . 'pincode_checker';
 		$cookie_pin             = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
 		$checkout_pin           = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( $_COOKIE['pincode'] ) : '';
-		if ( $cookie_pin !== $checkout_pin ) {
+		if ( ! empty( $checkout_pin ) && ( $checkout_pin !== $cookie_pin ) ) {
 			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$checkout_pin' ";
 			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
 			if ( 'on' === $wpc_hide_shipping_cost ) {
