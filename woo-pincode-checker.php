@@ -27,7 +27,6 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -130,3 +129,48 @@ function woo_pincode_checker_activation_redirect_settings( $plugin ) {
 if ( class_exists( 'WooCommerce' ) ) {
 	add_action( 'activated_plugin', 'woo_pincode_checker_activation_redirect_settings' );
 }
+
+/**
+ * Function updates MySql table.
+ *
+ * @return void
+ */
+function wpc_update_mysql_db() {
+	global $wpdb;
+	$wpc_checker_version = '1.2';
+	$installed_ver       = get_option( 'wpc-db-version' );
+	if ( ! empty( $installed_ver ) === $wpc_checker_version ) {
+		$charset_collate = $wpdb->get_charset_collate();
+		/* Create EDD Sell Message table */
+		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
+		if ( $wpdb->get_var( "show tables like '$pincode_checker_table_name'" ) === $pincode_checker_table_name ) {
+			$edd_sql = "CREATE TABLE $pincode_checker_table_name (
+						id mediumint(11) NOT NULL AUTO_INCREMENT,
+						pincode varchar(255) NOT NULL,
+						city  varchar(255) NOT NULL, 
+						state  varchar(255) NOT NULL,
+						delivery_days int(11)   NOT NULL,
+						shipping_amount int(11) NOT NULL,
+						case_on_delivery tinyint(2) NULL default '0' ,
+						cod_amount int(11) NOT NULL,
+						UNIQUE KEY id (id)
+			) $charset_collate;";
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+			dbDelta( $edd_sql );
+			update_option( 'wpc-db-version', $wpc_checker_version );
+		}
+	}
+}
+
+/**
+ * Function checks the update Mysql table.
+ *
+ * @return void
+ */
+function wpc_check_update_mysql_db() {
+	$installed_ver = get_option( 'wpc-db-version' );
+	if ( ! empty( $installed_ver ) ) {
+		wpc_update_mysql_db();
+	}
+}
+add_action( 'plugins_loaded', 'wpc_check_update_mysql_db' );

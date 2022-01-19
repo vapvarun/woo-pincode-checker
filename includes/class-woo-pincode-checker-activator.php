@@ -31,7 +31,7 @@ class Woo_Pincode_Checker_Activator {
 	 */
 	public static function activate() {
 		global $wpdb;
-
+		$wpc_db_version  = '1.0';
 		$charset_collate = $wpdb->get_charset_collate();
 
 		/* Create EDD Sell Message table */
@@ -52,7 +52,7 @@ class Woo_Pincode_Checker_Activator {
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $edd_sql );
 		}
-
+		add_option( 'wpc-db-version', $wpc_db_version );
 		$wpc_general_settings = get_option( 'wpc_general_settings' );
 
 		$wpc_added_default_option = array(
