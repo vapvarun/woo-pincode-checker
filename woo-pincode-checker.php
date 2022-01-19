@@ -139,7 +139,7 @@ function wpc_update_mysql_db() {
 	global $wpdb;
 	$wpc_checker_version = '1.2';
 	$installed_ver       = get_option( 'wpc-db-version' );
-	if ( ! empty( $installed_ver ) === $wpc_checker_version ) {
+	if ( ! empty( $installed_ver ) !== $wpc_checker_version ) {
 		$charset_collate = $wpdb->get_charset_collate();
 		/* Create EDD Sell Message table */
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
