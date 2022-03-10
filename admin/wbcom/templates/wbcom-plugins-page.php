@@ -40,19 +40,6 @@
 			<div class="reign-demos-inner-wrapper wbcom-plugins-inner-wrapper">
 				<?php
 				foreach ( $free_plugins as $key => $plugin_details ) {
-					if ( 'not_installed' == $plugin_details['status'] ) {
-						$plugin_btn_text = esc_html__( 'Install', 'woo-pincode-checker' );
-						$toggle_class    = 'fa fa-toggle-off';
-						$plugin_action   = 'install_plugin';
-					} elseif ( 'installed' == $plugin_details['status'] ) {
-						$plugin_btn_text = esc_html__( 'Activate', 'woo-pincode-checker' );
-						$toggle_class    = 'fa fa-toggle-off';
-						$plugin_action   = 'activate_plugin';
-					} else {
-						$plugin_btn_text = esc_html__( 'Deactivate', 'woo-pincode-checker' );
-						$toggle_class    = 'fa fa-toggle-on';
-						$plugin_action   = 'deactivate_plugin';
-					}
 					?>
 					<div class="wbcom-req-plugin-card">
 						<div class="wbcom_single_left">
@@ -61,16 +48,13 @@
 							</div>
 						</div>
 						<div class="wbcom_single_right">
-							<h3><a href="<?php echo esc_url( $plugin_details['wp_url'] ); ?>"><?php echo esc_html( $plugin_details['name'] ); ?></a></h3>
+							<h3><?php echo esc_html( $plugin_details['name'] ); ?></h3>
 							<div class="wbcom_single_right-wrap">
 								<p class="plugin-description"><?php echo esc_html( $plugin_details['description'] ); ?></p>
-								<input type="hidden" class="plugin-slug" name="plugin-slug" value="<?php echo esc_attr( $plugin_details['slug'] ); ?>">
-								<input type="hidden" class="plugin-action" name="plugin-action" value="<?php echo esc_attr( $plugin_action ); ?>">
 								<div class="activation_button_wrap">
-									<a href="" class="wbcom-plugin-action-button wb_btn wb_btn_default" >
-										<i class="<?php echo esc_attr( $toggle_class ); ?>"></i>
-										<?php echo esc_html( $plugin_btn_text ); ?>
-										<i class="fa fa-spinner fa-spin" style="display:none"></i>
+									<a href="<?php echo esc_url( $plugin_details['wp_url'] ); ?>" class="wb_btn wb_btn_default" target="blank">
+										<i class="fa fa-eye"></i>
+										<?php esc_html_e( 'View', 'woo-pincode-checker' ); ?>
 									</a>
 								</div>
 							</div>
