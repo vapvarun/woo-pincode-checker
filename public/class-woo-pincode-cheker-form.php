@@ -92,7 +92,7 @@ class Woo_Pincode_Checker_Form {
 			return false;
 		}
 
-		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
+		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
 
 		if ( $num_rows == 0 ) {
@@ -191,9 +191,9 @@ class Woo_Pincode_Checker_Form {
 							<div class="wpc-delivery-info-list">																	
 									<div class="wpc-delivery-date">
 										<div class="wpc-delivery-checked">
-											<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/check.svg'; ?>">
+											<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/check.svg'; ?>">
 										</div>
-										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">
+										<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/shipping-fast.svg'; ?>">
 										<div class="wpc-delivery-date-label">
 										<strong>
 										<?php
@@ -210,9 +210,9 @@ class Woo_Pincode_Checker_Form {
 								?>
 									<div class="wpc-delivery-info-list wpc_cash_delivery">
 										<div class="wpc-delivery-checked">
-											<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/check.svg'; ?>">
+											<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/check.svg'; ?>">
 										</div>
-										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
+										<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/hand-holding-usd.svg'; ?>">
 										<div class="wpc_cash_on_delivery">
 											<strong>
 												<?php
@@ -280,7 +280,10 @@ class Woo_Pincode_Checker_Form {
 	 */
 	public function wpc_picode_check_ajax_submit() {
 		global $wpdb;
-		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( $_POST['pin_code'] ) : '';
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		}
+		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
 		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `{$wpdb->prefix}pincode_checker` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
 		$result             = $wpdb->get_var( $sql );
 
@@ -309,7 +312,7 @@ class Woo_Pincode_Checker_Form {
 			if ( $wpc_label_color == '' ) {
 				echo 'color:#000;';
 			} else {
-				echo "color:$wpc_label_color !important" . ';';
+				echo "color:$wpc_label_color !important" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 			}
@@ -317,8 +320,8 @@ class Woo_Pincode_Checker_Form {
 			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( ! empty( $wpc_btn_color ) ) {
-				echo "background-color:$wpc_btn_color" . ';';
-				echo "border-color:$wpc_btn_color" . ';';
+				echo "background-color:$wpc_btn_color" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo "border-color:$wpc_btn_color" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 			}
@@ -326,7 +329,7 @@ class Woo_Pincode_Checker_Form {
 			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( ! empty( $wpc_btn_text_color ) ) {
-				echo "color:$wpc_btn_text_color" . ';';
+				echo "color:$wpc_btn_text_color" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 			}
@@ -357,7 +360,7 @@ class Woo_Pincode_Checker_Form {
 			return false;
 		}
 		global $table_prefix, $wpdb,$woocommerce, $product;
-		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
+		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';

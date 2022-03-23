@@ -81,7 +81,7 @@ if ( false == $general_settings['date_display'] ) {
 										$selected = 'selected';
 									}
 									?>
-									<option value="<?php echo esc_attr( $products_category->term_id ); ?>" <?php echo $selected; ?>><?php echo esc_html( $products_category->name ); ?></option>
+									<option value="<?php echo esc_attr( $products_category->term_id ); ?>" <?php echo esc_html( $selected ); ?>><?php echo esc_html( $products_category->name ); ?></option>
 								<?php } ?>
 							<?php } ?>
 						</select>
@@ -173,7 +173,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label>
-							<input type="text"  name="wpc_general_settings[check_btn_text]" value="<?php echo ( isset( $general_settings['check_btn_text'] ) ) ? $general_settings['check_btn_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?>">
+							<input type="text"  name="wpc_general_settings[check_btn_text]" value="<?php echo ( isset( $general_settings['check_btn_text'] ) ) ? esc_html( $general_settings['check_btn_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?>">
 						</label>
 					</td>
 				</tr>
@@ -183,7 +183,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label>
-							<input type="text"  name="wpc_general_settings[change_btn_text]" value="<?php echo ( isset( $general_settings['change_btn_text'] ) ) ? $general_settings['change_btn_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Change', 'woo-pincode-checker' ); ?>">
+							<input type="text"  name="wpc_general_settings[change_btn_text]" value="<?php echo ( isset( $general_settings['change_btn_text'] ) ) ? esc_html( $general_settings['change_btn_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Change', 'woo-pincode-checker' ); ?>">
 						</label>
 					</td>
 				</tr>
@@ -193,7 +193,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label>
-							<input type="text"  name="wpc_general_settings[delivery_date_label_text]" value="<?php echo ( isset( $general_settings['delivery_date_label_text'] ) ) ? $general_settings['delivery_date_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Delivery Date', 'woo-pincode-checker' ); ?>">
+							<input type="text"  name="wpc_general_settings[delivery_date_label_text]" value="<?php echo ( isset( $general_settings['delivery_date_label_text'] ) ) ? esc_html( $general_settings['delivery_date_label_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Delivery Date', 'woo-pincode-checker' ); ?>">
 						</label>
 					</td>
 				</tr>
@@ -203,7 +203,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label>
-							<input type="text"  name="wpc_general_settings[cod_label_text]" value="<?php echo ( isset( $general_settings['cod_label_text'] ) ) ? $general_settings['cod_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Cash On Delivery', 'woo-pincode-checker' ); ?>">
+							<input type="text"  name="wpc_general_settings[cod_label_text]" value="<?php echo ( isset( $general_settings['cod_label_text'] ) ) ? esc_html( $general_settings['cod_label_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Cash On Delivery', 'woo-pincode-checker' ); ?>">
 						</label>
 					</td>
 				</tr>
@@ -213,7 +213,7 @@ if ( false == $general_settings['date_display'] ) {
 					</th>
 					<td>
 						<label>
-							<input type="text"  name="wpc_general_settings[availability_label_text]" value="<?php echo ( isset( $general_settings['availability_label_text'] ) ) ? $general_settings['availability_label_text'] : ''; ?>" placeholder="<?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?>">
+							<input type="text"  name="wpc_general_settings[availability_label_text]" value="<?php echo ( isset( $general_settings['availability_label_text'] ) ) ? esc_html( $general_settings['availability_label_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Available at', 'woo-pincode-checker' ); ?>">
 						</label>
 					</td>
 				</tr>

@@ -103,6 +103,7 @@ class Woo_Pincode_Checker_Public {
 			array(
 				'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
 				'hide_product_page_cart_btn' => $wpc_hide_product_page_cart_btn,
+				'wpc_nonce'                  => wp_create_nonce( 'ajax-nonce' ),
 			)
 		);
 	}
@@ -135,8 +136,8 @@ class Woo_Pincode_Checker_Public {
 		$wpc_hide_cod_cost      = isset( $wpc_general_settings['cod_cost'] ) ? $wpc_general_settings['cod_cost'] : '';
 		$wpc_cod_text           = $wpc_general_settings['cod_label_text'];
 		$tablename              = $wpdb->prefix . 'pincode_checker';
-		$cookie_pin             = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
-		$checkout_pin           = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( $_COOKIE['pincode'] ) : '';
+		$cookie_pin             = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
+		$checkout_pin           = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['pincode'] ) ) : '';
 		if ( ! empty( $checkout_pin ) && ( $checkout_pin !== $cookie_pin ) ) {
 			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$checkout_pin' ";
 			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
@@ -229,8 +230,11 @@ class Woo_Pincode_Checker_Public {
 	 */
 	public function wpc_check_checkout_page_pincode() {
 		global $table_prefix, $wpdb,$woocommerce, $product, $wpc_globals;
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		}
 		if ( isset( $_REQUEST['pincode'] ) && $_REQUEST['pincode'] != '' ) {
-			$pincode = sanitize_text_field( $_REQUEST['pincode'] );
+			$pincode = sanitize_text_field( wp_unslash( $_REQUEST['pincode'] ) );
 			$expiry  = strtotime( '+7 day' );
 			setcookie( 'pincode', $pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN );
 			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$pincode' ";
@@ -254,8 +258,8 @@ class Woo_Pincode_Checker_Public {
 	public function wpc_add_pincode_checker_validation_on_checkout_page( $data, $errors ) {
 		global $table_prefix, $wpdb,$woocommerce, $product, $wpc_globals;
 		$tablename    = $wpdb->prefix . 'pincode_checker';
-		$cookie_pin   = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
-		$checkout_pin = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( $_COOKIE['pincode'] ) : '';
+		$cookie_pin   = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
+		$checkout_pin = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['pincode'] ) ) : '';
 		$wpc_pincode  = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
 		$wpc_records  = $wpdb->get_results( $wpc_pincode, OBJECT );
 		if ( $cookie_pin == $checkout_pin ) {

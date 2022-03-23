@@ -39,6 +39,7 @@
           data: {
             action: "wpc_picode_check_ajax_submit",
             pin_code: pin_code,
+            nonce: pincode_check.wpc_nonce,
           },
           success: function (response) {
             if (response == 1) {
@@ -73,6 +74,7 @@
           data: {
             action: "wpc_check_checkout_page_pincode",
             pincode: pincode,
+            nonce: pincode_check.wpc_nonce,
           },
           success: function (response) {
             jQuery("body").trigger("update_checkout");
@@ -90,6 +92,7 @@
           data: {
             action: "wpc_check_checkout_page_pincode",
             pincode: pincode,
+            nonce: pincode_check.wpc_nonce,
           },
           success: function (response) {
             jQuery("body").trigger("update_checkout");
@@ -115,6 +118,7 @@
             data: {
               action: "wpc_check_checkout_page_pincode",
               pincode: pincode,
+              nonce: pincode_check.wpc_nonce,
             },
             success: function (response) {
               jQuery("body").trigger("update_checkout");

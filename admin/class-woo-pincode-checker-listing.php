@@ -103,8 +103,8 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		global $wpdb;
 
 		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
-		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) {
-			$sql .= " WHERE `pincode` LIKE '%" . $_REQUEST['s'] . "%' ";
+		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$sql .= " WHERE `pincode` LIKE '%" . sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) . "%' "; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		return $wpdb->get_var( $sql );
@@ -122,16 +122,16 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		/* -- Preparing your query -- */
 		$pincode_query = "SELECT * FROM {$wpdb->prefix}pincode_checker";
 
-		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) {
-			$pincode_query .= " WHERE `pincode` LIKE '%" . $_REQUEST['s'] . "%' ";
+		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$pincode_query .= " WHERE `pincode` LIKE '%" . sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) . "%' "; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
-		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			$pincode_query .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
-			$pincode_query .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
+		if ( ! empty( $_REQUEST['orderby'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$pincode_query .= ' ORDER BY ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$pincode_query .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) ) : ' ASC'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
-		if ( ! isset( $_REQUEST['s'] ) ) {
+		if ( ! isset( $_REQUEST['s'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$pincode_query .= " LIMIT $pincode_per_page";
 			$pincode_query .= ' OFFSET ' . ( $page_number - 1 ) * $pincode_per_page;
 		}
@@ -183,7 +183,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 		$actions = array(
 			'edit'   => sprintf( '<a href="?page=%s&action=%s&id=%s">Edit</a>', 'add_wpc_pincode', 'edit', $item['id'] ),
-			'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['id'] ),
+			'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s">Delete</a>', sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ), 'delete', $item['id'] ), //phpcs:ignore
 		);
 		return sprintf( '%1$s %2$s', $item['pincode'], $this->row_actions( $actions ) );
 	}
@@ -208,14 +208,13 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		global $wpdb;
 
 		/* delete action */
-		if ( ( isset( $_REQUEST['action'] ) && 'delete' === $_REQUEST['action'] ) ) {
-			self::delete_pincode( absint( $_GET['id'] ) );
+		if ( ( isset( $_REQUEST['action'] ) && 'delete' === $_REQUEST['action'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			self::delete_pincode( absint( $_GET['id'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		/* bulk delete */
-		if ( ( isset( $_REQUEST['action'] ) && 'bulk-delete' === $_REQUEST['action'] ) ) {
-			$delete_ids = esc_sql( $_REQUEST['bulk-delete'] );
-
+		if ( ( isset( $_REQUEST['action'] ) && 'bulk-delete' === $_REQUEST['action'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$delete_ids = isset( $_REQUEST['bulk-delete'] ) ? map_deep( wp_unslash( $_REQUEST['bulk-delete'] ), 'sanitize_text_field' ) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( '' !== $delete_ids ) {
 				// loop over the array of record IDs and delete them.
 				foreach ( $delete_ids as $id ) {
