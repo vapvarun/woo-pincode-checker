@@ -130,3 +130,17 @@ function woo_pincode_checker_activation_redirect_settings( $plugin ) {
 if ( class_exists( 'WooCommerce' ) ) {
 	add_action( 'activated_plugin', 'woo_pincode_checker_activation_redirect_settings' );
 }
+
+/**
+ * Wpc_insert_mysql_db
+ *
+ * @return void
+ */
+function wpc_insert_mysql_db() {
+	$wpc_db_version  = '1.0';
+	$get_db_version = get_option( 'wpc_db_version' );
+	if ( false === $get_db_version ) {
+		update_option( 'wpc_db_version', $wpc_db_version );
+	}
+}
+add_action( 'init', 'wpc_insert_mysql_db' );
