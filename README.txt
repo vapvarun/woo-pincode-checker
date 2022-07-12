@@ -29,6 +29,9 @@ e.g.
 If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
 
 == Changelog ==
+= 1.3.2 =
+* Fixed: Added Database version
+
 = 1.3.1 =
 * Fixed: Fixed bulk delete issue
 * Fixed: Removed Extra closed div
