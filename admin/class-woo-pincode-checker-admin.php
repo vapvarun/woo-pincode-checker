@@ -154,24 +154,33 @@ class Woo_Pincode_Checker_Admin {
 		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? filter_input( INPUT_GET, 'tab' ) : 'wpc-welcome';
 
 		?>
-				<div class="wrap">
-						<hr class="wp-header-end">
-						<div class="wbcom-wrap">
-								<div class="ess-admin-header">
-									<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
-										<h1 class="wbcom-plugin-heading">
-											<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
-										</h1>
-								</div>
-								<div class="wbcom-admin-settings-page">
-									<?php
-									$this->wpc_plugin_settings_tabs();
-									settings_fields( $current );
-									do_settings_sections( $current );
-									?>
-								</div>
-						</div>
+		<div class="wrap">
+			<div class="wbcom-bb-plugins-offer-wrapper">
+				<div id="wb_admin_logo">
+					<a href="https://wbcomdesigns.com/downloads/buddypress-community-bundle/" target="_blank">
+						<img src="<?php echo esc_url( WPCP_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/wbcom-offer-notice.png'; ?>">
+					</a>
 				</div>
+			</div>
+			<div class="wbcom-wrap">
+				<div class="blpro-header">
+					<div class="wbcom_admin_header-wrapper">
+						<div id="wb_admin_plugin_name">
+							<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
+							<span><?php printf( __( 'Version %s', 'woo-pincode-checker' ), WOO_PINCODE_CHECKER_VERSION ); ?></span>
+						</div>
+						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
+					</div>
+				</div>
+				<div class="wbcom-admin-settings-page">
+					<?php
+					$this->wpc_plugin_settings_tabs();
+					settings_fields( $current );
+					do_settings_sections( $current );
+					?>
+				</div>
+			</div>
+		</div>
 			<?php
 	}
 
@@ -531,32 +540,30 @@ class Woo_Pincode_Checker_Admin {
 
 		?>
 		<div class="wbcom-tab-content  wpc-upload-pincode-wrap">
-			<?php
-			if ( $wpc_message != '' ) {
-				?>
-			<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
-				<p><?php echo wp_kses_post( $wpc_message ); ?></p>
-			</div>
+			<div class="wbcom-wrapper-admin">
 				<?php
-			}
-			?>
-			<h2>
-			<?php
-			esc_html_e( 'Upload pincodes from a CSV file', 'woo-pincode-checker' );
-			?>
-			</h2>
-			<div class="wpc-upload-pincode-section">
-				<form enctype="multipart/form-data" method="post">
-					<section>
-						<table class="form-table wpc-pincode-submit-importer-options">
-							<tbody>
-								<tr>
-									<th scope="row">
+				if ( $wpc_message != '' ) {
+					?>
+				<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
+					<p><?php echo wp_kses_post( $wpc_message ); ?></p>
+				</div>
+					<?php
+				}
+				?>
+				<div class="wbcom-admin-title-section">
+					<h3><?php esc_html_e( 'Upload pincodes from a CSV file', 'woo-pincode-checker' ); ?> </h3>
+				</div>
+				<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view wpc-upload-pincode-section">
+					<form enctype="multipart/form-data" method="post">
+						<section>
+							<div class="form-table wpc-pincode-submit-importer-options">
+								<div class="wbcom-settings-section-wrap">
+									<div class="wbcom-settings-section-options-heading">
 										<label for="upload">
 											<?php esc_html_e( 'Choose a CSV file from your computer:', 'woo-pincode-checker' ); ?>
 										</label>
-									</th>
-									<td>
+									</div>
+									<div class="wbcom-settings-section-options">
 										<input type="file" id="upload" name="import" size="25" />
 										<input type="hidden" name="action" value="save" />
 										<input type="hidden" name="max_file_size" value="<?php echo esc_attr( $bytes ); ?>" />
@@ -570,25 +577,25 @@ class Woo_Pincode_Checker_Admin {
 											);
 											?>
 										</small>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">
+									</div>
+								</div>
+								<div class="wbcom-settings-section-wrap">
+									<div class="wbcom-settings-section-options-heading">
 										<label for="upload">
 											<?php esc_html_e( 'Download Sample CSV File:', 'woo-pincode-checker' ); ?>
 										</label>
-									</th>
-									<td>
+									</div>
+									<div class="wbcom-settings-section-options">
 										<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>"><?php esc_html_e( 'Click Here', 'woo-pincode-checker' ); ?></a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</section>
-					<div class="wc-actions submit">
-						<button type="submit" class="button button-primary button-next" value="<?php esc_attr_e( 'Import CSV File', 'woo-pincode-checker' ); ?>" name="upload_pincodes"><?php esc_html_e( 'Import CSV File', 'woo-pincode-checker' ); ?></button>
-					</div>
-				</form>
+									</div>
+								</div>
+							</div>
+						</section>
+						<div class="wc-actions submit">
+							<button type="submit" class="button button-primary button-next" value="<?php esc_attr_e( 'Import CSV File', 'woo-pincode-checker' ); ?>" name="upload_pincodes"><?php esc_html_e( 'Import CSV File', 'woo-pincode-checker' ); ?></button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 		<?php
