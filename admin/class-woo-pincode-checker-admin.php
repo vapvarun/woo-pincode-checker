@@ -212,16 +212,16 @@ class Woo_Pincode_Checker_Admin {
 			if ( 'wpc-pincodes' === $edd_tab ) {
 				$class         = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
 				$pincode_lists = 'pincode_lists';
-				$tab_html     .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $pincode_lists . '">' . $tab_name . '</a></li>';
+				$tab_html     .= '<li class="' . esc_attr( $edd_tab ) . '"><a id="' . esc_attr( $edd_tab ) . '" class="nav-tab ' . esc_attr( $class ) . '" href="admin.php?page=' . esc_attr( $pincode_lists ) . '">' . esc_html( $tab_name ) . '</a></li>';
 			} elseif ( 'wpc-add-pincodes' === $edd_tab ) {
 				$class        = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
 				$add_pincodes = 'add_wpc_pincode';
-				$tab_html    .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $add_pincodes . '">' . $tab_name . '</a></li>';
+				$tab_html    .= '<li class="' . esc_attr( $edd_tab ) . '"><a id="' . esc_attr( $edd_tab ) . '" class="nav-tab ' . esc_attr( $class ) . '" href="admin.php?page=' . esc_attr( $add_pincodes ) . '">' . esc_html( $tab_name ) . '</a></li>';
 
 			} else {
 				$class     = ( $edd_tab === $current ) ? 'nav-tab-active' : '';
 				$page      = 'woo-pincode-checker';
-				$tab_html .= '<li><a id="' . $edd_tab . '" class="nav-tab ' . $class . '" href="admin.php?page=' . $page . '&tab=' . $edd_tab . '">' . $tab_name . '</a></li>';
+				$tab_html .= '<li class="' . esc_attr( $edd_tab ) . '"><a id="' . esc_attr( $edd_tab ) . '" class="nav-tab ' . esc_attr( $class ) . '" href="admin.php?page=' . esc_attr( $page ) . '&tab=' . esc_attr( $edd_tab ) . '">' . esc_html( $tab_name ) . '</a></li>';
 
 			}
 		}

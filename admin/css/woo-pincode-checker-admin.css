@@ -78,3 +78,19 @@ button.wpc-accordion.active::after {
 .wpc-tab-content .form-table td {
     padding: 0;
 }
+
+.nav-tab-wrapper ul .wpc-general a:before {
+    content: "\f111" !important;
+}
+.nav-tab-wrapper ul .wpc-pincodes a:before {
+    content: "\f15e" !important;
+}
+.nav-tab-wrapper ul .wpc-add-pincodes a:before {
+    content: "\f132" !important;
+}
+.nav-tab-wrapper ul .wpc-upload-pincodes a:before {
+    content: "\f13b" !important;
+}
+.nav-tab-wrapper ul .wpc-faq a:before {
+    content: "\f101" !important;
+}
