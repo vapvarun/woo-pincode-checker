@@ -5,32 +5,11 @@
 				<img src="<?php echo esc_url( WPCP_PLUGIN_URL ) . 'admin/wbcom/assets/imgs/wbcom-offer-notice.png'; ?>">
 			</a>
 		</div>
-		<h4 class="wbcom-plugin-heading"><?php esc_html_e( 'Free Addons', 'woo-pincode-checker' ); ?></h4>
-		<div class="reign-demos-wrapper reign-importer-section">
-			<div class="reign-demos-inner-wrapper wbcom-plugins-inner-wrapper">
-				<?php
-				foreach ( $free_plugins as $key => $plugin_details ) {
-					?>
-					<div class="wbcom-req-plugin-card">
-						<div class="wbcom_single_left">
-							<div class="wbcom_single_icon_wrapper">
-								<i class="<?php echo esc_attr( $plugin_details['icon'] ); ?>" aria-hidden="true"></i>
-							</div>
-						</div>
-						<div class="wbcom_single_right">
-							<h3><?php echo esc_html( $plugin_details['name'] ); ?></h3>
-							<div class="wbcom_single_right-wrap">
-								<p class="plugin-description"><?php echo esc_html( $plugin_details['description'] ); ?></p>
-								<div class="activation_button_wrap">
-									<a href="<?php echo esc_url( $plugin_details['wp_url'] ); ?>" class="wb_btn wb_btn_default" target="blank">
-										<i class="fa fa-eye"></i>
-										<?php esc_html_e( 'View', 'woo-pincode-checker' ); ?>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				<?php } ?>
+	</div>
+	<div class="wbcom-wrap wbcom-plugin-wrapper">    	
+		<div class="wbcom_admin_header-wrapper">
+			<div id="wb_admin_plugin_name">
+				<?php esc_html_e( 'Themes & Extension', 'woo-pincode-checker' ); ?>
 			</div>
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 		</div>

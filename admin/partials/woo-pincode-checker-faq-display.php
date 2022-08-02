@@ -47,28 +47,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="wpc-admin-row border">
-				<div class="wpc-admin-col-12">
-					<button class="wpc-accordion">
-						<?php esc_html_e( 'How to upload the Pincodes?', 'woo-pincode-checker' ); ?>
-					</button>
-					<div class="wpc-panel">
-						<p> 
-							<?php esc_html_e( 'If you want to manually upload the pincode from the backend then navigate to the WP Dashboard > Pincodes > Add Pincode. Now you can add the Pincode by providing pincode, city, state, shipping amount,  delivery within days, payment option ( cash on delivery ) and cash on delivery amount. Enable cash on delivery option if you want to provide this payment option for the particular pincode.', 'woo-pincode-checker' ); ?>     
-						</p>
-						<p> 
-							<?php esc_html_e( 'If you want to bulk upload the pincodes from a CSV file then Navigate to the WP Dashboard > Pincodes > upload Pincodes tab and import the CSV file to add the pincodes in bulk.', 'woo-pincode-checker' ); ?>     
-						</p>
-						<p> 
-							<?php esc_html_e( 'you need to add csv file column as pincode, city, state, delivery_days, shipping_amount, cash_on_delivery, cod_amount.', 'woo-pincode-checker' ); ?>     
-						</p>
-						<p> 
-							<label for="upload">
-								<?php esc_html_e( 'Download Sample CSV File:', 'woo-pincode-checker' ); ?>
-							</label>
-							<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>"><?php esc_html_e( 'Click Here', 'woo-pincode-checker' ); ?></a>
-						</p>
+				<div class="wbcom-faq-section-row">
+					<div class="wbcom-faq-admin-row">
+						<button class="wbcom-faq-accordion">
+							<?php esc_html_e( 'How to upload the Pincodes?', 'woo-pincode-checker' ); ?>
+						</button>
+						<div class="wbcom-faq-panel">
+							<p> 
+								<?php esc_html_e( 'If you want to manually upload the pincode from the backend then navigate to the WP Dashboard > Pincodes > Add Pincode. Now you can add the Pincode by providing pincode, city, state, delivery within days, and payment option ( cash on delivery ). Enable cash on delivery option if you want to provide this payment option for the particular pincode.', 'woo-pincode-checker' ); ?>     
+							</p>
+							<p> 
+								<?php esc_html_e( 'If you want to bulk upload the pincodes from a CSV file then Navigate to the WP Dashboard > Pincodes > upload Pincodes tab and import the CSV file to add the pincodes in bulk.', 'woo-pincode-checker' ); ?>     
+							</p>
+							<p> 
+								<?php esc_html_e( 'you need to add csv file column as pincode, city, state, delivery within days, cash on delivery.', 'woo-pincode-checker' ); ?>     
+							</p>
+							<p> 
+								<label for="upload">
+									<?php esc_html_e( 'Download Sample CSV File:', 'woo-pincode-checker' ); ?>
+								</label>
+								<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>"><?php esc_html_e( 'Click Here', 'woo-pincode-checker' ); ?></a>
+							</p>
+						</div>
 					</div>
 				</div>
 				<div class="wbcom-faq-section-row">
@@ -144,3 +144,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 </div>
+

@@ -10,7 +10,12 @@
 		<div class="wbcom_admin_header-wrapper">
 			<div id="wb_admin_plugin_name">
 				<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
-				<span><?php printf( __( 'Version %s', 'woo-pincode-checker' ), WOO_PINCODE_CHECKER_VERSION ); ?></span>
+				<span>
+					<?php
+					/* translators: %s: */
+					printf( esc_html__( 'Version %s', 'woo-pincode-checker' ), esc_html( WOO_PINCODE_CHECKER_VERSION ) );
+					?>
+					</span>
 			</div>
 			<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 		</div>

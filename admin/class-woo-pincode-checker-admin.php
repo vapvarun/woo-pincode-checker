@@ -183,7 +183,12 @@ class Woo_Pincode_Checker_Admin {
 					<div class="wbcom_admin_header-wrapper">
 						<div id="wb_admin_plugin_name">
 							<?php esc_html_e( 'Woo Pincode Checker', 'woo-pincode-checker' ); ?>
-							<span><?php printf( __( 'Version %s', 'woo-pincode-checker' ), WOO_PINCODE_CHECKER_VERSION ); ?></span>
+							<span>
+								<?php
+								/* translators: %s: */
+								printf( esc_html__( 'Version %s', 'woo-pincode-checker' ), esc_html( WOO_PINCODE_CHECKER_VERSION ) );
+								?>
+							</span>
 						</div>
 						<?php echo do_shortcode( '[wbcom_admin_setting_header]' ); ?>
 					</div>
@@ -530,7 +535,7 @@ class Woo_Pincode_Checker_Admin {
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 		$bytes                      = apply_filters( 'import_upload_size_limit', wp_max_upload_size() );
 		$size                       = size_format( $bytes );
-		if ( isset( $_POST['upload_pincodes'] ) && isset( $_POST['wpc-pincode-submit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc-pincode-submit'] ) ), 'wpc-pincode-submit' ) ) {			
+		if ( isset( $_POST['upload_pincodes'] ) && isset( $_POST['wpc-pincode-submit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc-pincode-submit'] ) ), 'wpc-pincode-submit' ) ) {
 			set_time_limit( 0 );
 			$is_import = true;
 			$filetype  = wp_check_filetype(

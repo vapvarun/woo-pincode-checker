@@ -209,7 +209,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 		/* delete action */
 		if ( ( isset( $_REQUEST['action'] ) && 'delete' === $_REQUEST['action'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			self::delete_pincode( absint( $_GET['id'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			self::delete_pincode( absint( $_GET['id'] ) ); //phpcs:ignore
 		}
 
 		/* bulk delete */
