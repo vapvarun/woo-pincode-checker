@@ -91,7 +91,8 @@ class Woo_Pincode_Checker_Form {
 		if ( false === $wpc_add_pincode_checker ) {
 			return false;
 		}
-		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( $_COOKIE['valid_pincode'] ) : '';
+
+		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
 
 		if ( $num_rows == 0 ) {
@@ -117,6 +118,19 @@ class Woo_Pincode_Checker_Form {
 		} elseif ( 'wpc_pincode_checker' === $wpc_pincode_btn_position ) {
 			$wpc_position_class = 'wpc_shortcode';
 		}
+		/* set pincode */
+		$customer = new WC_Customer();
+		$customer->set_shipping_postcode( $cookie_pin );
+		$customer->set_billing_postcode( $cookie_pin );
+		$get_shipping_zipcode = WC()->customer->get_shipping_postcode( wc_clean( $cookie_pin ) );
+		$get_billing_zipcode  = WC()->customer->get_billing_postcode( wc_clean( $cookie_pin ) );
+		$user_ID              = get_current_user_id();
+		$wpc_zipcode          = '';
+		if ( ! empty( $get_shipping_zipcode ) ) {
+			$wpc_zipcode = $get_shipping_zipcode;
+		} else {
+			$wpc_zipcode = $get_billing_zipcode;
+		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 
@@ -127,20 +141,14 @@ class Woo_Pincode_Checker_Form {
 
 				$delivery_day     = $data->delivery_days;
 				$cash_on_delivery = $data->case_on_delivery;
-
+				$city             = $data->city;
+				$state            = $data->state;
 			}
 
 			/* set delivery date */
 			$wpc_general_settings = get_option( 'wpc_general_settings' );
 			$delivery_date_format = $wpc_general_settings['delivery_date'];
 			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) );
-
-			/* set pincode */
-			$customer = new WC_Customer();
-
-			$customer->set_shipping_postcode( $cookie_pin );
-
-			$user_ID = get_current_user_id();
 
 			if ( isset( $user_ID ) && $user_ID != 0 ) {
 
@@ -158,7 +166,18 @@ class Woo_Pincode_Checker_Form {
 						?>
 						<?php echo esc_html( $cookie_pin ); ?>
 					</p>
-
+					<p>
+						<?php
+							/* Translators: %1$s: Availability City Name   */
+							echo sprintf( esc_html__( 'City: %1$s', 'woo-pincode-checker' ), esc_html( $city ) );
+						?>
+					</p>
+					<p>
+						<?php
+							/* Translators: %1$s: Availability State Name   */
+							echo sprintf( esc_html__( 'State: %1$s', 'woo-pincode-checker' ), esc_html( $state ) );
+						?>
+					</p>
 					<div class="wpc_delivery-info-wrap">
 					<div class="wpc-delivery-info">
 						<h4>
@@ -172,9 +191,9 @@ class Woo_Pincode_Checker_Form {
 							<div class="wpc-delivery-info-list">																	
 									<div class="wpc-delivery-date">
 										<div class="wpc-delivery-checked">
-											<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/check.svg'; ?>">
+											<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/check.svg'; ?>">
 										</div>
-										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/shipping-fast.svg'; ?>">
+										<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/shipping-fast.svg'; ?>">
 										<div class="wpc-delivery-date-label">
 										<strong>
 										<?php
@@ -191,9 +210,9 @@ class Woo_Pincode_Checker_Form {
 								?>
 									<div class="wpc-delivery-info-list wpc_cash_delivery">
 										<div class="wpc-delivery-checked">
-											<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/check.svg'; ?>">
+											<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/check.svg'; ?>">
 										</div>
-										<img src="<?php echo WPCP_PLUGIN_URL . 'public/image/hand-holding-usd.svg'; ?>">
+										<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/hand-holding-usd.svg'; ?>">
 										<div class="wpc_cash_on_delivery">
 											<strong>
 												<?php
@@ -244,7 +263,7 @@ class Woo_Pincode_Checker_Form {
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-					<input type="text" required="required" value="" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
+					<input type="text" required="required" value="<?php echo esc_attr( $wpc_zipcode ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
 					<a class="button wpc-check-button" id="checkpin">
 						<?php
 							/* Translators: %1$s: Check Button Text   */
@@ -261,7 +280,10 @@ class Woo_Pincode_Checker_Form {
 	 */
 	public function wpc_picode_check_ajax_submit() {
 		global $wpdb;
-		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( $_POST['pin_code'] ) : '';
+		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			exit();
+		}
+		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
 		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `{$wpdb->prefix}pincode_checker` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
 		$result             = $wpdb->get_var( $sql );
 
@@ -290,7 +312,7 @@ class Woo_Pincode_Checker_Form {
 			if ( $wpc_label_color == '' ) {
 				echo 'color:#000;';
 			} else {
-				echo "color:$wpc_label_color !important" . ';';
+				echo "color:$wpc_label_color !important" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 			}
@@ -298,8 +320,8 @@ class Woo_Pincode_Checker_Form {
 			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( ! empty( $wpc_btn_color ) ) {
-				echo "background-color:$wpc_btn_color" . ';';
-				echo "border-color:$wpc_btn_color" . ';';
+				echo "background-color:$wpc_btn_color" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo "border-color:$wpc_btn_color" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 			}
@@ -307,7 +329,7 @@ class Woo_Pincode_Checker_Form {
 			#respond input#submit, #pincode_field_idp a.button.wpc-check-button, #avlpin a.button.wpc-check-button  { 
 			<?php
 			if ( ! empty( $wpc_btn_text_color ) ) {
-				echo "color:$wpc_btn_text_color" . ';';
+				echo "color:$wpc_btn_text_color" . ';'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 			}
@@ -329,4 +351,25 @@ class Woo_Pincode_Checker_Form {
 		$content = ob_get_clean();
 		return $content;
 	}
+
+	/**
+	 * Set Available Pincodes into shipping and billing postcode.
+	 */
+	public function wpc_set_wc_billing_and_shipping_zipcode() {
+		if ( is_admin() ) {
+			return false;
+		}
+		global $table_prefix, $wpdb,$woocommerce, $product;
+		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
+		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
+		if ( $num_rows == 0 ) {
+			$cookie_pin = '';
+		}
+		if ( ! empty( $cookie_pin ) ) {
+			WC()->customer->set_shipping_postcode( wc_clean( $cookie_pin ) );
+			WC()->customer->set_billing_postcode( wc_clean( $cookie_pin ) );
+		}
+	}
+
+
 }

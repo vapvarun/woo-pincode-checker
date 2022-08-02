@@ -31,7 +31,7 @@ class Woo_Pincode_Checker_Activator {
 	 */
 	public static function activate() {
 		global $wpdb;
-
+		$wpc_db_version  = '1.0';
 		$charset_collate = $wpdb->get_charset_collate();
 
 		/* Create EDD Sell Message table */
@@ -44,19 +44,24 @@ class Woo_Pincode_Checker_Activator {
 						city  varchar(255) NOT NULL, 
 						state  varchar(255) NOT NULL,
 						delivery_days int(11)   NOT NULL,
+						shipping_amount int(11) NOT NULL,
 						case_on_delivery tinyint(2) NULL default '0' ,
+						cod_amount int(11) NOT NULL,
 						UNIQUE KEY id (id)
 			) $charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $edd_sql );
 		}
-
+		add_option( 'wpc-db-version', $wpc_db_version );
 		$wpc_general_settings = get_option( 'wpc_general_settings' );
 
 		$wpc_added_default_option = array(
 			'date_display'             => 'on',
 			'delivery_date'            => 'M jS',
 			'cod_display'              => 'on',
+			'shipping_cost'            => 'on',
+			'cod_cost'                 => 'on',
+			'hide_shop_btn'            => 'on',
 			'check_btn_text'           => 'Check',
 			'change_btn_text'          => 'Change',
 			'delivery_date_label_text' => 'Delivery Date',

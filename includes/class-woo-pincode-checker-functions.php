@@ -91,6 +91,10 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 					$new_general_settings['delivery_date_label_text'] = $wpc_general_settings['delivery_date_label_text'];
 					$new_general_settings['cod_label_text']           = $wpc_general_settings['cod_label_text'];
 					$new_general_settings['availability_label_text']  = $wpc_general_settings['availability_label_text'];
+					$new_general_settings['shipping_cost']            = ( isset( $wpc_general_settings['shipping_cost'] ) ) ? $wpc_general_settings['shipping_cost'] : '';
+					$new_general_settings['cod_cost']                 = ( isset( $wpc_general_settings['cod_cost'] ) ) ? $wpc_general_settings['cod_cost'] : '';
+					$new_general_settings['hide_shop_btn']            = ( isset( $wpc_general_settings['hide_shop_btn'] ) ) ? $wpc_general_settings['hide_shop_btn'] : '';
+					$new_general_settings['hide_product_page_btn']    = ( isset( $wpc_general_settings['hide_product_page_btn'] ) ) ? $wpc_general_settings['hide_product_page_btn'] : '';
 					$new_general_settings['categories_for_shipping']  = ( isset( $wpc_general_settings['categories_for_shipping'] ) ) ? $wpc_general_settings['categories_for_shipping'] : array();
 					$new_general_settings['pincode_position']         = ( isset( $wpc_general_settings['pincode_position'] ) && ! empty( $wpc_general_settings['pincode_position'] ) ) ? $wpc_general_settings['pincode_position'] : '';
 			}

@@ -195,7 +195,12 @@ class Woo_Pincode_Checker {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'woocommerce_before_main_content', $plugin_public, 'wpc_hide_shop_page_cart_button' );
+		$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'wpc_added_wc_shipping_and_cod_amount' );
+		$this->loader->add_action( 'woocommerce_checkout_init', $plugin_public, 'wpc_refresh_checkout_form_on_payment_method_switched' );
+		$this->loader->add_action( 'wp_ajax_wpc_check_checkout_page_pincode', $plugin_public, 'wpc_check_checkout_page_pincode' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wpc_check_checkout_page_pincode', $plugin_public, 'wpc_check_checkout_page_pincode' );
+		$this->loader->add_action( 'woocommerce_after_checkout_validation', $plugin_public, 'wpc_add_pincode_checker_validation_on_checkout_page', 10, 2 );
 		/* add ajax for pincode checker */
 		$this->loader->add_action( 'wp_ajax_nopriv_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
 		$this->loader->add_action( 'wp_ajax_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
@@ -216,6 +221,8 @@ class Woo_Pincode_Checker {
 
 		/* admin setting css */
 		$this->loader->add_action( 'wp_head', $pincode_form, 'wpc_add_custom_css' );
+		$this->loader->add_action( 'init', $pincode_form, 'wpc_set_wc_billing_and_shipping_zipcode' );
+
 	}
 
 	/**

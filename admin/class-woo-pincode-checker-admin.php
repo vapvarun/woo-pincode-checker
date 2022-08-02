@@ -81,7 +81,7 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) {
+		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'wpc-selectize', plugin_dir_url( __FILE__ ) . 'css/selectize.css', array(), $this->version, 'all' );
 		}
@@ -105,7 +105,7 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) {
+		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( 'wpc-selectize-min', plugin_dir_url( __FILE__ ) . 'js/selectize.min.js', array( 'jquery' ), $this->version, false );
 			wp_localize_script(
@@ -328,13 +328,13 @@ class Woo_Pincode_Checker_Admin {
 		<a class="add-new-h2 wpc-bulk-delete" ><?php esc_html_e( 'Bulk Delete', 'woo-pincode-checker' ); ?></a>
 			</h2>
 			<div class="pincode-listing">
-				<form id="nds-user-list-form" method="get">
-					<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
+				<form id="nds-user-list-form" method="get">				
+					<input type="hidden" name="page" value="<?php echo esc_attr( isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '' ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" />
 		<?php
 		$pincode_list = new Woo_Pincode_Checker_Listing();
 
-		if ( isset( $_GET['s'] ) ) {
-			$pincode_list->prepare_items( $_GET['s'] );
+		if ( isset( $_GET['s'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$pincode_list->prepare_items( sanitize_text_field( wp_unslash( $_GET['s'] ) ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		} else {
 			$pincode_list->prepare_items();
 		}
@@ -356,13 +356,14 @@ class Woo_Pincode_Checker_Admin {
 		global $wpdb;
 
 		$wpc_message = $message_type = '';
-		if ( isset( $_POST['wpc-pincode-submit'] ) && $_POST['wpc-pincode-submit'] != '' ) {
-			$wpc_pincode          = sanitize_text_field( $_POST['wpc-pincode'] );
-			$wpc_city             = sanitize_text_field( $_POST['wpc-city'] );
-			$wpc_state            = sanitize_text_field( $_POST['wpc-state'] );
-			$wpc_delivery_days    = sanitize_text_field( $_POST['wpc-delivery-days'] );
-			$wpc_case_on_delivery = sanitize_text_field( isset( $_POST['wpc-case-on-delivery'] ) ? $_POST['wpc-case-on-delivery'] : '' );
-
+		if ( isset( $_POST['wpc-pincode-submit'] ) && $_POST['wpc-pincode-submit'] != '' && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc-pincode-submit'] ) ), 'wpc-pincode-submit' ) ) {
+			$wpc_pincode          = isset( $_POST['wpc-pincode'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-pincode'] ) ) : '';
+			$wpc_city             = isset( $_POST['wpc-city'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-city'] ) ) : '';
+			$wpc_state            = isset( $_POST['wpc-state'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-state'] ) ) : '';
+			$wpc_shipping_amount  = isset( $_POST['wpc_shipping_amount'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc_shipping_amount'] ) ) : '';
+			$wpc_delivery_days    = isset( $_POST['wpc-delivery-days'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-delivery-days'] ) ) : '';
+			$wpc_case_on_delivery = isset( $_POST['wpc-case-on-delivery'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-case-on-delivery'] ) ) : '';
+			$wpc_cod_amount       = isset( $_POST['wpc_case_on_delivery_amount'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc_case_on_delivery_amount'] ) ) : '';
 			if ( $wpc_pincode != '' ) {
 
 				$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
@@ -377,16 +378,20 @@ class Woo_Pincode_Checker_Admin {
 							'city'             => $wpc_city,
 							'state'            => $wpc_state,
 							'delivery_days'    => $wpc_delivery_days,
+							'shipping_amount'  => $wpc_shipping_amount,
 							'case_on_delivery' => $wpc_case_on_delivery,
+							'cod_amount'       => $wpc_cod_amount,
 						),
-						array( '%s', '%s', '%s', '%d', '%d' )
+						array( '%s', '%s', '%s', '%s', '%d', '%d', '%s' )
 					);
 					$message_type = 'updated';
 					$wpc_message  = esc_html__( 'Added Pincode Successfully.', 'woo-pincode-checker' );
 				} else {
+
 					/* update Record */
-					if ( $_REQUEST['action'] == 'edit' ) {
-						$id = $_REQUEST['id'];
+					if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
+
+						$id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';
 						$wpdb->update(
 							$pincode_checker_table_name,
 							array(
@@ -394,7 +399,9 @@ class Woo_Pincode_Checker_Admin {
 								'city'             => $wpc_city,
 								'state'            => $wpc_state,
 								'delivery_days'    => $wpc_delivery_days,
+								'shipping_amount'  => $wpc_shipping_amount,
 								'case_on_delivery' => $wpc_case_on_delivery,
+								'cod_amount'       => $wpc_cod_amount,
 							),
 							array( 'id' => $id )
 						);
@@ -418,7 +425,7 @@ class Woo_Pincode_Checker_Admin {
 
 		/* if edit action then display record */
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
-			$id                         = $_REQUEST['id'];
+			$id                         = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';
 			$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 			$sql                        = 'SELECT * FROM ' . $pincode_checker_table_name . ' Where `id` =' . $id;
 			$query_results              = $wpdb->get_results( $sql, ARRAY_A );
@@ -468,7 +475,13 @@ class Woo_Pincode_Checker_Admin {
 								</td>
 
 							</tr>
+							<tr>
+								<th>
+									<label for="wpc-case-on-shipping-amount"><?php esc_html_e( 'Shipping Amount', 'woo-pincode-checker' ); ?></label>
+								</th>
 
+								<td><input type="number" min="1" step="1" class="regular-text" id="wpc-shipping-amount" name="wpc_shipping_amount" value="<?php echo isset( $query_results[0]['shipping_amount'] ) ? esc_attr( $query_results[0]['shipping_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e( 'Note : Enable shipping cost in setting to calculate the shipping amount.', 'woo-pincode-checker' ); ?></td>
+							</tr>
 							<tr>
 								<th>
 									<label for="wpc-delivery-days"><?php esc_html_e( 'Delivery within days', 'woo-pincode-checker' ); ?></label>
@@ -482,6 +495,13 @@ class Woo_Pincode_Checker_Admin {
 								</th>
 
 								<td><input type="checkbox" value="1" class="regular-text" id="wpc-case-on-delivery" name="wpc-case-on-delivery" <?php checked( '1', ( isset( $query_results[0]['case_on_delivery'] ) ) ? $query_results[0]['case_on_delivery'] : '' ); ?>> &nbsp; <?php esc_html_e( 'Enable Cash on deliver for this pincode', 'woo-pincode-checker' ); ?></td>
+							</tr>
+							<tr>
+								<th>
+									<label for="wpc-case-on-delivery-amount"><?php esc_html_e( 'Cash on Delivery Amount', 'woo-pincode-checker' ); ?></label>
+								</th>
+
+								<td><input type="number" min="1" step="1" class="regular-text" id="wpc-case-on-delivery-amount" name="wpc_case_on_delivery_amount" value="<?php echo ( isset( $query_results[0]['cod_amount'] ) ) ? esc_attr( $query_results[0]['cod_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e( 'Note : If COD option is enable then COD amount will count on cart and checkout page', 'woo-pincode-checker' ); ?></td>
 							</tr>
 						</tbody>
 					</table>
@@ -510,11 +530,11 @@ class Woo_Pincode_Checker_Admin {
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 		$bytes                      = apply_filters( 'import_upload_size_limit', wp_max_upload_size() );
 		$size                       = size_format( $bytes );
-		if ( isset( $_POST['upload_pincodes'] ) ) {
+		if ( isset( $_POST['upload_pincodes'] ) && isset( $_POST['wpc-pincode-submit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc-pincode-submit'] ) ), 'wpc-pincode-submit' ) ) {			
 			set_time_limit( 0 );
 			$is_import = true;
 			$filetype  = wp_check_filetype(
-				wc_clean( wp_unslash( $_FILES['import']['name'] ) ),
+				wc_clean( sanitize_text_field( wp_unslash( $_FILES['import']['name'] ) ) ), //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 				array(
 					'csv' => 'text/csv',
 				)
@@ -525,8 +545,8 @@ class Woo_Pincode_Checker_Admin {
 				$is_import    = false;
 			}
 			if ( $is_import == true ) {
-				if ( $_FILES['import']['size'] > 0 ) {
-					$file = fopen( $_FILES['import']['tmp_name'], 'r' );
+				if ( isset( $_FILES['import']['size'] ) && $_FILES['import']['size'] > 0 ) {
+					$file = fopen( $_FILES['import']['tmp_name'], 'r' ); //phpcs:ignore
 					$i    = 0;
 					while ( ( $getData = fgetcsv( $file, 100000, ',' ) ) !== false ) {
 						if ( $i != 0 ) {
@@ -539,9 +559,11 @@ class Woo_Pincode_Checker_Admin {
 										'city'             => $getData[1],
 										'state'            => $getData[2],
 										'delivery_days'    => $getData[3],
-										'case_on_delivery' => $getData[4],
+										'shipping_amount'  => $getData[4],
+										'case_on_delivery' => $getData[5],
+										'cod_amount'       => $getData[6],
 									),
-									array( '%s', '%s', '%s', '%d', '%d' )
+									array( '%s', '%s', '%s', '%s', '%d', '%d', '%s' )
 								);
 							}
 						}
@@ -603,15 +625,16 @@ class Woo_Pincode_Checker_Admin {
 									</div>
 									<div class="wbcom-settings-section-options">
 										<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>"><?php esc_html_e( 'Click Here', 'woo-pincode-checker' ); ?></a>
-									</div>
-								</div>
-							</div>
-						</section>
-						<div class="wc-actions submit">
-							<button type="submit" class="button button-primary button-next" value="<?php esc_attr_e( 'Import CSV File', 'woo-pincode-checker' ); ?>" name="upload_pincodes"><?php esc_html_e( 'Import CSV File', 'woo-pincode-checker' ); ?></button>
-						</div>
-					</form>
-				</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+					<div class="wc-actions submit">
+						<button type="submit" class="button button-primary button-next" value="<?php esc_attr_e( 'Import CSV File', 'woo-pincode-checker' ); ?>" name="upload_pincodes"><?php esc_html_e( 'Import CSV File', 'woo-pincode-checker' ); ?></button>
+					</div>
+					<?php wp_nonce_field( 'wpc-pincode-submit', 'wpc-pincode-submit' ); ?>
+				</form>
 			</div>
 		</div>
 		<?php
@@ -661,7 +684,7 @@ class Woo_Pincode_Checker_Admin {
 		// Checks save status - overcome autosave, etc.
 		$is_autosave    = wp_is_post_autosave( $post_id );
 		$is_revision    = wp_is_post_revision( $post_id );
-		$is_valid_nonce = ( isset( $_POST['wpc_hide_pincode_nonce'] ) && wp_verify_nonce( $_POST['wpc_hide_pincode_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
+		$is_valid_nonce = ( isset( $_POST['wpc_hide_pincode_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc_hide_pincode_nonce'] ) ), basename( __FILE__ ) ) ) ? 'true' : 'false';
 
 		// Exits script depending on save status.
 		if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {

@@ -27,7 +27,6 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -132,15 +131,20 @@ if ( class_exists( 'WooCommerce' ) ) {
 }
 
 /**
- * Wpc_insert_mysql_db
+ * Function checks the update Mysql table.
  *
  * @return void
  */
-function wpc_insert_mysql_db() {
-	$wpc_db_version  = '1.0';
-	$get_db_version = get_option( 'wpc_db_version' );
-	if ( false === $get_db_version ) {
-		update_option( 'wpc_db_version', $wpc_db_version );
+function wpc_check_update_mysql_db() {
+	global $wpdb;
+	$installed_ver = get_option( 'wpc_db_version' );
+	$wpc_checker_version = '1.2';
+	if ( ! empty( $installed_ver ) && '1.0' === $installed_ver ) {		
+		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
+		$sql = $wpdb->query("ALTER TABLE wp_pincode_checker ADD shipping_amount INT(11) NOT NULL, ADD cod_amount INT(11) NOT NULL");
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+		update_option( 'wpc_db_version', $wpc_checker_version );
 	}
 }
-add_action( 'init', 'wpc_insert_mysql_db' );
+add_action( 'plugins_loaded', 'wpc_check_update_mysql_db' );
