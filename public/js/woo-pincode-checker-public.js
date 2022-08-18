@@ -59,6 +59,7 @@
     $("#change_pin").click(function () {
       $("#my_custom_checkout_field2").show();
       $("#avlpin").hide();
+      $(".single_add_to_cart_button").hide();
       $(".wpc_delivery-info-wrap").hide();
     });
     jQuery("body").on("blur", "#billing_postcode", function () {
