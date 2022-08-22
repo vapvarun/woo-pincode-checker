@@ -220,3 +220,10 @@ div#error_pin {
     font-size: 15px;
   }
 }
+
+/*BoddyBoss*/
+.buddyboss-theme a#checkpin {
+    width: 40% !important;
+    padding-left: 2em !important;
+    padding-right: 2em !important;
+}
