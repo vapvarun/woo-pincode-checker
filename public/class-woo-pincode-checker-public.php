@@ -168,7 +168,7 @@ class Woo_Pincode_Checker_Public {
 					add_filter( 'woocommerce_cart_ready_to_calc_shipping', array( $this, 'wpc_disable_shipping_calc_on_cart_page' ), 10, 1 );
 				}
 			}
-			if ( 'on' === $wpc_hide_cod_cost ) {
+			if ( 'on' === $wpc_hide_cod_cost && is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records[0]->cod_amount != 0 && ! empty( $wpc_records[0]->cod_amount ) ) {
 					$wc_selected_payment_method = WC()->session->get( 'chosen_payment_method' );
 					if ( empty( $wc_selected_payment_method ) ) {
