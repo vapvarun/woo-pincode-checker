@@ -31,6 +31,7 @@
   $(document).ready(function () {
     /* default pincode form button */
     $("#checkpin").click(function () {
+      $(".pincode_loader").css('display' , 'block');
       var pin_code = $("#pincode_field_id").val();
       if (pin_code != "") {
         $.ajax({
@@ -43,8 +44,10 @@
           },
           success: function (response) {
             if (response == 1) {
+               $(".pincode_loader").css('display' , 'none');
               location.reload();
             } else {
+              $(".pincode_loader").css('display' , 'none');
               $("#error_pin").show();
               $(".delivery_msg").hide();
               if (pincode_check.hide_product_page_cart_btn) {

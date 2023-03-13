@@ -131,9 +131,14 @@ class Woo_Pincode_Checker_Form {
 		} else {
 			$wpc_zipcode = $get_billing_zipcode;
 		}
+		$wpc_general_settings 	= get_option( 'wpc_general_settings' );
+		$wpc_pincode_field 		= isset( $wpc_general_settings['pincode_field'] ) ? $wpc_general_settings['pincode_field'] : '';
+		$wpc_required 			= '';
+		if( 'on' == $wpc_pincode_field ){
+			$wpc_required = 'required';
+		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
-
 			$query = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
 
 			$getdata = $wpdb->get_results( $query );
@@ -236,14 +241,15 @@ class Woo_Pincode_Checker_Form {
 					?>
 				</a>
 				</span>
-
+				<div class="pincode_loader" style="display:none">
+					<img src="<?php echo esc_url( WPCP_PLUGIN_URL . 'public/image/loading-load.gif' ) ;  ?>"/>
+				</div>
 				<div class="pin_div pincode_check_btn" id="my_custom_checkout_field2" style="display:none;">
 
 					<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 					<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-
-						<input type="text" required="required" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
+						<input type="text" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required );?>/>
 
 						<a class="button wpc-check-button" id="checkpin">
 							<?php
@@ -259,11 +265,14 @@ class Woo_Pincode_Checker_Form {
 
 		} else {
 			?>
+			<div class="pincode_loader" style="display:none">
+				<img src="<?php echo esc_url( WPCP_PLUGIN_URL . 'public/image/loading-load.gif' ) ;  ?>"/>
+			</div>
 			<div class="wc-delivery-time-response  pin_div pincode_check_btn  <?php echo esc_attr( $wpc_position_class ); ?>" id="my_custom_checkout_field">
 				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-					<input type="text" required="required" value="<?php echo esc_attr( $wpc_zipcode ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" />
+					<input type="text" value="<?php echo esc_attr( $wpc_zipcode ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required );?>/>
 					<a class="button wpc-check-button" id="checkpin">
 						<?php
 							/* Translators: %1$s: Check Button Text   */

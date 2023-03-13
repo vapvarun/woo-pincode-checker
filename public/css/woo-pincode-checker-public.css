@@ -227,3 +227,18 @@ div#error_pin {
     padding-left: 2em !important;
     padding-right: 2em !important;
 }
+
+/*loader*/
+.pincode_loader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*height: 100%;*/
+}
+.pincode_loader img{
+    width: 20px;
+    height: 20px;   
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}

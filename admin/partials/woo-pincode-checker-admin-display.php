@@ -17,14 +17,15 @@ wp_enqueue_style( 'wp-color-picker' );
 
 global $wpc_globals;
 global $wp_roles;
-$general_settings                  = $wpc_globals->wpc_general_settings;
-$products_categories               = wpc_get_wc_categories();
-$general_settings['date_display']  = isset( $general_settings['date_display'] ) ? $general_settings['date_display'] : '';
-$general_settings['delivery_date'] = isset( $general_settings['delivery_date'] ) ? $general_settings['delivery_date'] : '';
-$general_settings['textcolor']     = isset( $general_settings['textcolor'] ) ? $general_settings['textcolor'] : '';
-$general_settings['buttoncolor']   = isset( $general_settings['buttoncolor'] ) ? $general_settings['buttoncolor'] : '';
-$general_settings['buttontcolor']  = isset( $general_settings['buttontcolor'] ) ? $general_settings['buttontcolor'] : '';
-$class                             = '';
+$general_settings                  	= $wpc_globals->wpc_general_settings;
+$products_categories               	= wpc_get_wc_categories();
+$general_settings['date_display']  	= isset( $general_settings['date_display'] ) ? $general_settings['date_display'] : '';
+$general_settings['pincode_field']  = isset( $general_settings['pincode_field'] ) ? $general_settings['pincode_field'] : '';
+$general_settings['delivery_date'] 	= isset( $general_settings['delivery_date'] ) ? $general_settings['delivery_date'] : '';
+$general_settings['textcolor']     	= isset( $general_settings['textcolor'] ) ? $general_settings['textcolor'] : '';
+$general_settings['buttoncolor']   	= isset( $general_settings['buttoncolor'] ) ? $general_settings['buttoncolor'] : '';
+$general_settings['buttontcolor']  	= isset( $general_settings['buttontcolor'] ) ? $general_settings['buttontcolor'] : '';
+$class                             	= '';
 if ( false == $general_settings['date_display'] ) {
 	$class = 'hide';
 }
@@ -50,6 +51,19 @@ if ( false == $general_settings['date_display'] ) {
 							<div class="wbcom-settings-section-options">
 								<label class="wb-switch">
 									<input type="checkbox" id="wpc_date_display" name="wpc_general_settings[date_display]" <?php checked( esc_attr( $general_settings['date_display'] ), 'on' ); ?> value="on">
+									<div class="wb-slider wb-round"></div>
+								</label>
+							</div>
+						</div>
+						<div class="wbcom-settings-section-wrap">
+							<div class="wbcom-settings-section-options-heading">
+								<label>
+									<?php esc_html_e( 'Make Pincode Field Required', 'woo-pincode-checker' ); ?>
+								</label>
+							</div>
+							<div class="wbcom-settings-section-options">
+								<label class="wb-switch">
+									<input type="checkbox" id="wpc_pincode_field" name="wpc_general_settings[pincode_field]" <?php checked( esc_attr( $general_settings['pincode_field'] ), 'on' ); ?> value="on">
 									<div class="wb-slider wb-round"></div>
 								</label>
 							</div>
