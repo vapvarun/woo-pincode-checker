@@ -119,17 +119,20 @@ class Woo_Pincode_Checker_Form {
 			$wpc_position_class = 'wpc_shortcode';
 		}
 		/* set pincode */
-		$customer = new WC_Customer();
-		$customer->set_shipping_postcode( $cookie_pin );
-		$customer->set_billing_postcode( $cookie_pin );
-		$get_shipping_zipcode = WC()->customer->get_shipping_postcode( wc_clean( $cookie_pin ) );
-		$get_billing_zipcode  = WC()->customer->get_billing_postcode( wc_clean( $cookie_pin ) );
-		$user_ID              = get_current_user_id();
-		$wpc_zipcode          = '';
-		if ( ! empty( $get_shipping_zipcode ) ) {
-			$wpc_zipcode = $get_shipping_zipcode;
-		} else {
-			$wpc_zipcode = $get_billing_zipcode;
+		$wpc_pincode_btn_position = wpc_single_product_button_position();
+		if( 'wpc_pincode_checker' !== $wpc_pincode_btn_position ){
+			$customer = new WC_Customer();
+			$customer->set_shipping_postcode( $cookie_pin );
+			$customer->set_billing_postcode( $cookie_pin );
+			$get_shipping_zipcode = WC()->customer->get_shipping_postcode( wc_clean( $cookie_pin ) );
+			$get_billing_zipcode  = WC()->customer->get_billing_postcode( wc_clean( $cookie_pin ) );
+			$user_ID              = get_current_user_id();
+			$wpc_zipcode          = '';
+			if ( ! empty( $get_shipping_zipcode ) ) {
+				$wpc_zipcode = $get_shipping_zipcode;
+			} else {
+				$wpc_zipcode = $get_billing_zipcode;
+			}
 		}
 		$wpc_general_settings 	= get_option( 'wpc_general_settings' );
 		$wpc_pincode_field 		= isset( $wpc_general_settings['pincode_field'] ) ? $wpc_general_settings['pincode_field'] : '';
@@ -154,7 +157,11 @@ class Woo_Pincode_Checker_Form {
 			$wpc_general_settings = get_option( 'wpc_general_settings' );
 			$delivery_date_format = $wpc_general_settings['delivery_date'];
 			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) );
-
+			if( 'wpc_pincode_checker' === $wpc_pincode_btn_position ){
+				$customer = new WC_Customer();
+				$customer->set_shipping_postcode( $cookie_pin );
+				$user_ID = get_current_user_id();
+			}
 			if ( isset( $user_ID ) && $user_ID != 0 ) {
 
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );

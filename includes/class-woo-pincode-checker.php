@@ -221,7 +221,9 @@ class Woo_Pincode_Checker {
 
 		/* admin setting css */
 		$this->loader->add_action( 'wp_head', $pincode_form, 'wpc_add_custom_css' );
-		$this->loader->add_action( 'init', $pincode_form, 'wpc_set_wc_billing_and_shipping_zipcode' );
+		if( 'wpc_pincode_checker' !== $wpc_pincode_btn_position ){
+			$this->loader->add_action( 'init', $pincode_form, 'wpc_set_wc_billing_and_shipping_zipcode' );
+		}
 
 	}
 
