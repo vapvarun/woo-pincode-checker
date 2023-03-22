@@ -79,6 +79,7 @@ class Woo_Pincode_Checker_Form {
 		$product_id              = $this->wpc_access_protected( $product, 'id' );
 		$wpc_woo_terms           = get_the_terms( $product_id, 'product_cat' );
 		$wpc_add_pincode_checker = true;
+		$wpc_zipcode          = '';
 		if ( $wpc_woo_terms ) {
 			foreach ( $wpc_woo_terms as $wpc_woo_term ) {
 				if ( ! empty( $wpc_exclude_category ) ) {
@@ -127,7 +128,6 @@ class Woo_Pincode_Checker_Form {
 			$get_shipping_zipcode = WC()->customer->get_shipping_postcode( wc_clean( $cookie_pin ) );
 			$get_billing_zipcode  = WC()->customer->get_billing_postcode( wc_clean( $cookie_pin ) );
 			$user_ID              = get_current_user_id();
-			$wpc_zipcode          = '';
 			if ( ! empty( $get_shipping_zipcode ) ) {
 				$wpc_zipcode = $get_shipping_zipcode;
 			} else {
