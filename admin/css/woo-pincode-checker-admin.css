@@ -97,3 +97,6 @@ button.wpc-accordion.active::after {
 div.wbcom-settings-section-wrap {
     overflow: inherit;
 }
+.notice.notice-error{
+    display: none !important;
+}
