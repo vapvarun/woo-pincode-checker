@@ -56,6 +56,7 @@
 										<span><?php echo esc_html( $delivery_date ); ?></span>
 										</div>
 									</div>
+									</div>
 									<?php
 							}
 							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
@@ -76,7 +77,6 @@
 										</div>
 									</div>
 								<?php } ?>
-							</div>
 						</div>
 					</div>
 				</div>
