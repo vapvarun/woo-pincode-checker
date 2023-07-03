@@ -335,8 +335,9 @@ class Woo_Pincode_Checker_Form {
 			$cookie_pin = '';
 		}
 		if ( ! empty( $cookie_pin ) ) {
-			WC()->customer->set_shipping_postcode( wc_clean( $cookie_pin ) );
-			WC()->customer->set_billing_postcode( wc_clean( $cookie_pin ) );
+			$customer = new WC_Customer();
+			$customer->set_shipping_postcode( wc_clean( $cookie_pin ) );
+			$customer->set_billing_postcode( wc_clean( $cookie_pin ) );
 		}
 	}
 
