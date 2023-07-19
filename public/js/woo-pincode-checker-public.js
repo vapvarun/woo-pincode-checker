@@ -53,8 +53,10 @@
                             $(".pincode_loader").css('display', 'none');
                             $("#error_pin").show();
                             $(".delivery_msg").hide();
-                            if (pincode_check.hide_product_page_cart_btn) {
+                            if ( "add_to_cart_disable" == pincode_check.hide_disable_product_page_cart_btn ) {
                                 jQuery(".single_add_to_cart_button").prop("disabled", true);
+                            }else if( "add_to_cart_hide" == pincode_check.hide_disable_product_page_cart_btn ){
+                                  jQuery(".single_add_to_cart_button").hide();
                             }
                         }
                     },

@@ -66,6 +66,10 @@
       placeholder: "Select Pincode Position",
       plugins: ["remove_button"],
     });
+    $("#wpc_add_to_cart_option").selectize({
+      placeholder: "",
+    });
+
 
     $("div.wpc-actions  .wpc-bulk-delete").click(function () {
       event.preventDefault();

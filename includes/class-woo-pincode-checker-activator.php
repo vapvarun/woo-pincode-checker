@@ -71,6 +71,7 @@ class Woo_Pincode_Checker_Activator {
 			'buttoncolor'              => '#dd3333',
 			'buttontcolor'             => '#ffffff',
 			'pincode_position'         => 'woocommerce_before_add_to_cart_button',
+			'add_to_cart_option'       => 'add_to_cart_disable',
 		);
 		update_option( 'wpc_general_settings', $wpc_added_default_option );
 	}

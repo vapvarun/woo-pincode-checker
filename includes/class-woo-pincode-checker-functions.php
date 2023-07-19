@@ -98,6 +98,7 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 					$new_general_settings['hide_product_page_btn']    = ( isset( $wpc_general_settings['hide_product_page_btn'] ) ) ? $wpc_general_settings['hide_product_page_btn'] : '';
 					$new_general_settings['categories_for_shipping']  = ( isset( $wpc_general_settings['categories_for_shipping'] ) ) ? $wpc_general_settings['categories_for_shipping'] : array();
 					$new_general_settings['pincode_position']         = ( isset( $wpc_general_settings['pincode_position'] ) && ! empty( $wpc_general_settings['pincode_position'] ) ) ? $wpc_general_settings['pincode_position'] : '';
+					$new_general_settings['add_to_cart_option']         = ( isset( $wpc_general_settings['add_to_cart_option'] ) && ! empty( $wpc_general_settings['add_to_cart_option'] ) ) ? $wpc_general_settings['add_to_cart_option'] : '';
 			}
 			$this->wpc_general_settings = $new_general_settings;
 

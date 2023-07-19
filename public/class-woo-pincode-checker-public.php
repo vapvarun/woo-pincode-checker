@@ -95,15 +95,16 @@ class Woo_Pincode_Checker_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		$wpc_hide_product_page_cart_btn = wpc_hide_product_page_cart_btn_option();
+		$wpc_general_settings           = get_option( 'wpc_general_settings' );
+		$wpc_hide_disabled_add_cart_btn = ( isset( $wpc_general_settings['add_to_cart_option'] ) && ! empty( $wpc_general_settings['add_to_cart_option'] ) ) ? $wpc_general_settings['add_to_cart_option'] : '';
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-public.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script(
 			$this->plugin_name,
 			'pincode_check',
 			array(
-				'ajaxurl'                    => admin_url( 'admin-ajax.php' ),
-				'hide_product_page_cart_btn' => $wpc_hide_product_page_cart_btn,
-				'wpc_nonce'                  => wp_create_nonce( 'ajax-nonce' ),
+				'ajaxurl'                               => admin_url( 'admin-ajax.php' ),
+				'hide_disable_product_page_cart_btn'    => $wpc_hide_disabled_add_cart_btn,
+				'wpc_nonce'                             => wp_create_nonce( 'ajax-nonce' ),
 			)
 		);
 	}
