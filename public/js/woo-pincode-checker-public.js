@@ -138,5 +138,11 @@
                 }
             }
         );
+        // Delivery message on grouped product
+        var wpc_del_msg_div = $(".wc-delivery-time-response");
+        if (wpc_del_msg_div.length > 1) {
+          var wpc_lastDiv = wpc_del_msg_div.last();
+          wpc_del_msg_div.not(wpc_lastDiv).hide();
+        }        
     });
 })(jQuery);
