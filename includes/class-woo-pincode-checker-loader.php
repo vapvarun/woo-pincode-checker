@@ -41,6 +41,15 @@ class Woo_Pincode_Checker_Loader {
 	protected $filters;
 
 	/**
+	 * The array of shortcodes registered with WordPress.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var array     $    The settings Tabs.
+	 */
+	public $shortcodes;
+
+	/**
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
 	 * @since    1.0.0

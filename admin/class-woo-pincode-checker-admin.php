@@ -50,6 +50,15 @@ class Woo_Pincode_Checker_Admin {
 	 * @var    string    $plugin_settings_tabs    Plugin Setting Tab.
 	 */
 	private $plugin_settings_tabs;
+		
+	/**
+	 * Woo_Pincode_Checker_Listing
+	 * 
+	 * @since  1.0.0
+	 * @access private
+	 * @var mixed          $Woo_Pincode_Checker_Listing   Dynamic property creation.
+	 */
+	private $Woo_Pincode_Checker_Listing;
 
 	/**
 	 * Initialize the class and set its properties.
