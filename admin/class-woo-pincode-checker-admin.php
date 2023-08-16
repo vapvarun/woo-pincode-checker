@@ -240,7 +240,7 @@ class Woo_Pincode_Checker_Admin {
 			}
 		}
 		$tab_html .= '</div></ul></div>';
-		echo ( $tab_html ); // WPCS: XSS ok.
+		echo wp_kses_post ( $tab_html ); // WPCS: XSS ok.
 
 	}
 

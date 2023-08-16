@@ -155,7 +155,7 @@ class Woo_Pincode_Checker_Public {
 						return;
 					} else {
 						if ( 'cod' === $wc_selected_payment_method ) {
-							$woocommerce->cart->add_fee( esc_html__( $wpc_cod_text, 'woo-pincode-checker' ), $wpc_records[0]->cod_amount );
+							$woocommerce->cart->add_fee( esc_html_e( $wpc_cod_text, 'woo-pincode-checker' ), $wpc_records[0]->cod_amount );
 						}
 					}
 				}
