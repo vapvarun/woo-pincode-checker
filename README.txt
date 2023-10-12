@@ -3,8 +3,8 @@ Contributors: wbcomdesigns,vapvarun
 Donate link: https://wbcomdesigns.com/
 Tags: WooCommerce
 Requires at least: 3.0.1
-Tested up to: 6.0.1
-Stable tag: 1.3.3
+Tested up to: 6.3.1
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,19 @@ e.g.
 If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
 
 == Changelog ==
+= 1.3.4 =
+* Fix: PHPCS fixes
+* Fix: (#88) Issue with php 8.2
+* Fix: (#85) Issue with multiple pincode on group product
+* Fix: (#87) Disable add to cart button option missing
+* Fix: (#80) Check box is repeating
+* Fix: (#75) Shortcode not working
+* Fix: (#76) Pincode checker is required field
+* Fix: Plugin redirect issue when multiple plugins activate at the same time
+* Fix: (#74) Issue with search Pincode
+* Fix: (#55) BB theme pincode button UI managed
+* Fix: (#67) On adding new pincode shipping and COD amount compulsory
+
 = 1.3.3 =
 * Fixed: update wrapper html
 
