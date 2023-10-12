@@ -1,14 +1,14 @@
-# Copyright (C) 2022
+# Copyright (C) 2023
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 12:34:20+00:00\n"
+"POT-Creation-Date: 2023-10-12 08:35:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Varun Dubey\n"
 "Language-Team: Wbcom Designs\n"
 "Language: en\n"
@@ -24,189 +24,189 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: admin/class-woo-pincode-checker-admin.php:144
+#: admin/class-woo-pincode-checker-admin.php:153
 #: admin/class-woo-pincode-checker-listing.php:34
 msgid "Pincodes"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:146
-#: admin/class-woo-pincode-checker-admin.php:270
+#: admin/class-woo-pincode-checker-admin.php:155
+#: admin/class-woo-pincode-checker-admin.php:279
 msgid "All Pincodes"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:148
+#: admin/class-woo-pincode-checker-admin.php:157
 msgid "Add New Pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:154
+#: admin/class-woo-pincode-checker-admin.php:163
 msgid "WB Plugins"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:155
-#: admin/class-woo-pincode-checker-admin.php:266
+#: admin/class-woo-pincode-checker-admin.php:164
+#: admin/class-woo-pincode-checker-admin.php:275
 msgid "General"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:157
-#: admin/class-woo-pincode-checker-admin.php:185
+#: admin/class-woo-pincode-checker-admin.php:166
+#: admin/class-woo-pincode-checker-admin.php:194
 #: admin/wbcom/templates/wbcom-license-page.php:12 woo-pincode-checker.php:69
 msgid "Woo Pincode Checker"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:189
+#: admin/class-woo-pincode-checker-admin.php:198
 #: admin/wbcom/templates/wbcom-license-page.php:16
 #. translators: %s:
 msgid "Version %s"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:263
+#: admin/class-woo-pincode-checker-admin.php:272
 msgid "Welcome"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:273
+#: admin/class-woo-pincode-checker-admin.php:282
 msgid "Add Pincodes"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:276
+#: admin/class-woo-pincode-checker-admin.php:285
 msgid "Upload Pincodes"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:280
+#: admin/class-woo-pincode-checker-admin.php:289
 msgid "FAQ"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:291
+#: admin/class-woo-pincode-checker-admin.php:300
 msgid "Pincode Per Page"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:322
+#: admin/class-woo-pincode-checker-admin.php:331
 msgid "Pincode Lists"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:327
+#: admin/class-woo-pincode-checker-admin.php:336
 msgid "Add New"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:332
+#: admin/class-woo-pincode-checker-admin.php:341
 msgid "Import Bulk Post/Zip codes"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:333
+#: admin/class-woo-pincode-checker-admin.php:342
 msgid "Bulk Delete"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:393
+#: admin/class-woo-pincode-checker-admin.php:402
 msgid "Added Pincode Successfully."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:414
+#: admin/class-woo-pincode-checker-admin.php:423
 msgid "Update Pincode Successfully ."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:419
+#: admin/class-woo-pincode-checker-admin.php:428
 msgid "Please fill valid pincode info."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:443
-#: admin/class-woo-pincode-checker-admin.php:515
+#: admin/class-woo-pincode-checker-admin.php:452
+#: admin/class-woo-pincode-checker-admin.php:524
 msgid "Edit Pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:445
-#: admin/class-woo-pincode-checker-admin.php:517
+#: admin/class-woo-pincode-checker-admin.php:454
+#: admin/class-woo-pincode-checker-admin.php:526
 msgid "Add Pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:455
+#: admin/class-woo-pincode-checker-admin.php:464
 #: admin/class-woo-pincode-checker-listing.php:33
 #: admin/class-woo-pincode-checker-listing.php:49
 msgid "Pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:464
+#: admin/class-woo-pincode-checker-admin.php:473
 #: admin/class-woo-pincode-checker-listing.php:50
 msgid "City"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:475
+#: admin/class-woo-pincode-checker-admin.php:484
 #: admin/class-woo-pincode-checker-listing.php:51
 msgid "State"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:485
+#: admin/class-woo-pincode-checker-admin.php:494
 #: admin/class-woo-pincode-checker-listing.php:53
-#: public/class-woo-pincode-checker-public.php:146
-#: public/class-woo-pincode-checker-public.php:167
+#: public/class-woo-pincode-checker-public.php:147
+#: public/class-woo-pincode-checker-public.php:168
 msgid "Shipping Amount"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:488
+#: admin/class-woo-pincode-checker-admin.php:497
 msgid "Note : Enable shipping cost in setting to calculate the shipping amount."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:492
+#: admin/class-woo-pincode-checker-admin.php:501
 msgid "Delivery within days"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:499
+#: admin/class-woo-pincode-checker-admin.php:508
 #: admin/class-woo-pincode-checker-listing.php:54
 msgid "Cash on Delivery"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:502
+#: admin/class-woo-pincode-checker-admin.php:511
 msgid "Enable Cash on deliver for this pincode"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:506
+#: admin/class-woo-pincode-checker-admin.php:515
 msgid "Cash on Delivery Amount"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:509
+#: admin/class-woo-pincode-checker-admin.php:518
 msgid ""
 "Note : If COD option is enable then COD amount will count on cart and "
 "checkout page"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:549
+#: admin/class-woo-pincode-checker-admin.php:558
 msgid "Invalid file type. The importer supports CSV file formats."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:579
+#: admin/class-woo-pincode-checker-admin.php:588
 msgid "Import Pincodes CSV file Successfully."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:597
+#: admin/class-woo-pincode-checker-admin.php:606
 msgid "Upload pincodes from a CSV file"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:606
+#: admin/class-woo-pincode-checker-admin.php:615
 msgid "Choose a CSV file from your computer:"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:618
+#: admin/class-woo-pincode-checker-admin.php:627
 #. translators: %s: maximum upload size
 msgid "Maximum size: %s"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:628
+#: admin/class-woo-pincode-checker-admin.php:637
 #: admin/partials/woo-pincode-checker-faq-display.php:67
 msgid "Download Sample CSV File:"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:632
+#: admin/class-woo-pincode-checker-admin.php:641
 #: admin/partials/woo-pincode-checker-faq-display.php:69
 msgid "Click Here"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:639
+#: admin/class-woo-pincode-checker-admin.php:648
 msgid "Import CSV File"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:652
+#: admin/class-woo-pincode-checker-admin.php:661
 msgid "Pincode/Zipcode for Shipping Availability"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:673
+#: admin/class-woo-pincode-checker-admin.php:682
 msgid "Enable if you want to hide shipping availability:"
 msgstr ""
 
@@ -218,122 +218,138 @@ msgstr ""
 msgid "COD Amount"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:35
+#: admin/partials/woo-pincode-checker-admin-display.php:36
 msgid "General Settings"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:47
+#: admin/partials/woo-pincode-checker-admin-display.php:48
 msgid "Show Delivery Date"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:64
-#: admin/partials/woo-pincode-checker-admin-display.php:70
-msgid "Select Delivery Date Format"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:71
-msgid "M jS - July 1st"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:72
-msgid "D, jS M  – Mon, 25th Nov"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:73
-msgid "D, M d  – Sat, Nov 23"
+#: admin/partials/woo-pincode-checker-admin-display.php:61
+msgid "Make Pincode Field Required"
 msgstr ""
 
 #: admin/partials/woo-pincode-checker-admin-display.php:74
+msgid "Add to cart button state for unavailable pincodes"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:80
+msgid "Hide"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:81
+msgid "Disabled"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:93
+#: admin/partials/woo-pincode-checker-admin-display.php:99
+msgid "Select Delivery Date Format"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:100
+msgid "M jS - July 1st"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:101
+msgid "D, jS M  – Mon, 25th Nov"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:102
+msgid "D, M d  – Sat, Nov 23"
+msgstr ""
+
+#: admin/partials/woo-pincode-checker-admin-display.php:103
 msgid "M d  – Nov 23"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:82
+#: admin/partials/woo-pincode-checker-admin-display.php:111
 msgid "Exclude category for shipping availbility"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:105
+#: admin/partials/woo-pincode-checker-admin-display.php:134
 msgid "Pincode Availability Check Position"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:111
+#: admin/partials/woo-pincode-checker-admin-display.php:140
 msgid "Before Add to Cart button"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:112
+#: admin/partials/woo-pincode-checker-admin-display.php:141
 msgid "After Add to Cart Button"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:113
+#: admin/partials/woo-pincode-checker-admin-display.php:142
 msgid "After Add to Cart Quantity"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:114
+#: admin/partials/woo-pincode-checker-admin-display.php:143
 msgid "Use Shortcode"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:123
+#: admin/partials/woo-pincode-checker-admin-display.php:152
 msgid "Note :"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:124
+#: admin/partials/woo-pincode-checker-admin-display.php:153
 msgid ""
 "You can use shortcode [wpc_pincode_checker] to place it anywhere you like "
 "to use in website and select \"Use Shortcode\" in above select option."
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:132
+#: admin/partials/woo-pincode-checker-admin-display.php:161
 msgid "Show Cash On Delivery Option"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:145
+#: admin/partials/woo-pincode-checker-admin-display.php:174
 msgid "Check Button Text"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:150
+#: admin/partials/woo-pincode-checker-admin-display.php:179
 msgid "Check"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:157
+#: admin/partials/woo-pincode-checker-admin-display.php:186
 msgid "Change Button Text"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:162
+#: admin/partials/woo-pincode-checker-admin-display.php:191
 msgid "Change"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:169
+#: admin/partials/woo-pincode-checker-admin-display.php:198
 msgid "Delivery Date Text"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:174
+#: admin/partials/woo-pincode-checker-admin-display.php:203
 msgid "Delivery Date"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:181
+#: admin/partials/woo-pincode-checker-admin-display.php:210
 msgid "Cash On Delivery label text"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:186
+#: admin/partials/woo-pincode-checker-admin-display.php:215
 msgid "Cash On Delivery"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:193
+#: admin/partials/woo-pincode-checker-admin-display.php:222
 msgid "Check Availability At label Text"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:198
+#: admin/partials/woo-pincode-checker-admin-display.php:227
 msgid "Available at"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:205
+#: admin/partials/woo-pincode-checker-admin-display.php:234
 msgid "Select Pincode Label Text Color"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:213
+#: admin/partials/woo-pincode-checker-admin-display.php:242
 msgid "Select Button Color"
 msgstr ""
 
-#: admin/partials/woo-pincode-checker-admin-display.php:221
+#: admin/partials/woo-pincode-checker-admin-display.php:250
 msgid "Select Button Text Color"
 msgstr ""
 
@@ -1159,54 +1175,54 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:270
-#: public/class-woo-pincode-checker-public.php:277
+#: public/class-woo-pincode-checker-public.php:271
+#: public/class-woo-pincode-checker-public.php:278
 #. translators: %1$s: Zipcode
 msgid "Delivery to %1$s is currently not available for this item."
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:165
-#: public/class-woo-pincode-cheker-form.php:201
-#: public/class-woo-pincode-cheker-form.php:220
-#: public/class-woo-pincode-cheker-form.php:235
-#: public/class-woo-pincode-cheker-form.php:251
-#: public/class-woo-pincode-cheker-form.php:270
+#: public/class-woo-pincode-cheker-form.php:184
+#: public/woo-pincode-checker-delivery-message.php:94
+msgid "Oops! We are currently not servicing in your area."
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:187
+#: public/woo-pincode-checker-delivery-message.php:97
+msgid "Enter Your Pincode"
+msgstr ""
+
+#: public/class-woo-pincode-cheker-form.php:191
+#: public/woo-pincode-checker-delivery-message.php:17
+#: public/woo-pincode-checker-delivery-message.php:53
+#: public/woo-pincode-checker-delivery-message.php:73
+#: public/woo-pincode-checker-delivery-message.php:87
+#: public/woo-pincode-checker-delivery-message.php:102
+#. Translators: %1$s: Check Button Text
 #. Translators: %1$s: Availability Label
 #. Translators: %1$s: Delivered By Label
 #. Translators: %1$s: Cash On Delivery Available Label
 #. Translators: %1$s: Change Button Text
 #. Translators: %1$s: Check Button Text
-#. Translators: %1$s: Check Button Text
 msgid "%1$s"
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:172
+#: public/woo-pincode-checker-delivery-message.php:24
 #. Translators: %1$s: Availability City Name
 msgid "City: %1$s"
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:178
+#: public/woo-pincode-checker-delivery-message.php:30
 #. Translators: %1$s: Availability State Name
 msgid "State: %1$s"
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:186
+#: public/woo-pincode-checker-delivery-message.php:38
 #. Translators: %1$s: We are available and servicing at your location.
 msgid "We are available and servicing at your location."
 msgstr ""
 
-#: public/class-woo-pincode-cheker-form.php:223
+#: public/woo-pincode-checker-delivery-message.php:76
 msgid "Available"
-msgstr ""
-
-#: public/class-woo-pincode-cheker-form.php:242
-#: public/class-woo-pincode-cheker-form.php:263
-msgid "Oops! We are currently not servicing in your area."
-msgstr ""
-
-#: public/class-woo-pincode-cheker-form.php:246
-#: public/class-woo-pincode-cheker-form.php:266
-msgid "Enter Your Pincode"
 msgstr ""
 
 #: woo-pincode-checker.php:68
