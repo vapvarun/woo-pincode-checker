@@ -133,7 +133,7 @@ class Woo_Pincode_Checker_Admin {
 	 *
 	 * @return void
 	 */
-	public function wbcom_hide_all_admin_notices_from_setting_page() {
+	public function wpc_hide_all_admin_notices_from_setting_page() {
 		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'woo-pincode-checker' );
 		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
 
@@ -312,7 +312,7 @@ class Woo_Pincode_Checker_Admin {
 	 * @param string $option  Get a Screen option.
 	 * @param string $value Get a Screen value.
 	 */
-	public function pincode_per_page_set_option( $status, $option, $value ) {
+	public function wpc_pincode_per_page_set_option( $status, $option, $value ) {
 		if ( 'pincode_checker_per_page' == $option ) {
 			return $value;
 		}
@@ -657,7 +657,7 @@ class Woo_Pincode_Checker_Admin {
 	/**
 	 * Adds a meta box to the post editing screen
 	 */
-	public function wcpc_featured_meta() {
+	public function wpc_featured_meta() {
 		add_meta_box( 'wpc-hide-pincode-checker', __( 'Pincode/Zipcode for Shipping Availability', 'woo-pincode-checker' ), array( $this, 'wcpc_meta_callback' ), 'product', 'normal', 'high' );
 	}
 
@@ -693,7 +693,7 @@ class Woo_Pincode_Checker_Admin {
 	 *
 	 * @param INT $post_id Post ID.
 	 */
-	public function wcpc_meta_save( $post_id ) {
+	public function wpc_meta_save( $post_id ) {
 
 		// Checks save status - overcome autosave, etc.
 		$is_autosave    = wp_is_post_autosave( $post_id );
