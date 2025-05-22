@@ -28,6 +28,9 @@
      * Although scripts in the WordPress core, Plugins and Themes may be
      * practising this, we should strive to set a better example in our own work.
      */
+    if (typeof wp !== 'undefined' && wp.i18n) {
+        var { __ } = wp.i18n;
+    }
     $(document).ready(function() {
         /* default pincode form button */
         $(document).on("click", "#checkpin", function() {
@@ -61,6 +64,9 @@
                         }
                     },
                 });
+            }else{
+                $('#error_pin').html(__('Please enter a pin code.', 'woo-pincode-checker' ));
+                 $("#error_pin").show();
             }
         });
         /* already pincode checking form */
@@ -95,7 +101,23 @@
         });
         jQuery("body").on("blur", "#shipping_postcode", function() {
             var pincode = jQuery(this).val();
-
+            if (pincode !== "") {
+                jQuery.ajax({
+                    type: "POST",
+                    url: pincode_check.ajaxurl,
+                    data: {
+                        action: "wpc_check_checkout_page_pincode",
+                        pincode: pincode,
+                        nonce: pincode_check.wpc_nonce,
+                    },
+                    success: function(response) {
+                        jQuery("body").trigger("update_checkout");
+                    },
+                });
+            }
+        });
+        jQuery("body").on("blur", "#shipping-postcode", function() {
+            var pincode = jQuery(this).val();
             if (pincode !== "") {
                 jQuery.ajax({
                     type: "POST",
@@ -124,7 +146,7 @@
                 if (pincode != "") {
                     jQuery.ajax({
                         type: "POST",
-                        url: wpcc_ajax_postajax.ajaxurl,
+                        url: pincode_check.ajaxurl,
                         dataType: "json",
                         data: {
                             action: "wpc_check_checkout_page_pincode",

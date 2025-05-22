@@ -97,7 +97,7 @@ class Woo_Pincode_Checker_Public {
 		 */
 		$wpc_general_settings           = get_option( 'wpc_general_settings' );
 		$wpc_hide_disabled_add_cart_btn = ( isset( $wpc_general_settings['add_to_cart_option'] ) && ! empty( $wpc_general_settings['add_to_cart_option'] ) ) ? $wpc_general_settings['add_to_cart_option'] : '';
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-public.js', array( 'jquery','wp-i18n' ), $this->version, false );
 		wp_localize_script(
 			$this->plugin_name,
 			'pincode_check',
@@ -105,6 +105,7 @@ class Woo_Pincode_Checker_Public {
 				'ajaxurl'                               => admin_url( 'admin-ajax.php' ),
 				'hide_disable_product_page_cart_btn'    => $wpc_hide_disabled_add_cart_btn,
 				'wpc_nonce'                             => wp_create_nonce( 'ajax-nonce' ),
+				// 'Please_enter_a_pin_code'              => 'Please enter a pin code.',
 			)
 		);
 	}
@@ -133,29 +134,25 @@ class Woo_Pincode_Checker_Public {
 	public function wpc_added_wc_shipping_and_cod_amount() {
 		global $table_prefix, $wpdb,$woocommerce, $product, $wpc_globals;
 		$wpc_general_settings   = $wpc_globals->wpc_general_settings;
-		$wpc_hide_shipping_cost = isset( $wpc_general_settings['shipping_cost'] ) ? $wpc_general_settings['shipping_cost'] : '';
-		$wpc_hide_cod_cost      = isset( $wpc_general_settings['cod_cost'] ) ? $wpc_general_settings['cod_cost'] : '';
 		$wpc_cod_text           = $wpc_general_settings['cod_label_text'];
 		$tablename              = $wpdb->prefix . 'pincode_checker';
 		$cookie_pin             = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$checkout_pin           = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['pincode'] ) ) : '';
+		$wc_selected_payment_method = WC()->session->get( 'chosen_payment_method' );
 		if ( ! empty( $checkout_pin ) && ( $checkout_pin !== $cookie_pin ) ) {
 			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$checkout_pin' ";
 			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
-			if ( 'on' === $wpc_hide_shipping_cost ) {
+			if ( is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
 					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woo-pincode-checker' ), $wpc_records[0]->shipping_amount );
 					add_filter( 'woocommerce_cart_ready_to_calc_shipping', array( $this, 'wpc_disable_shipping_calc_on_cart_page' ), 10, 1 );
 				}
-			}
-			if ( 'on' === $wpc_hide_cod_cost ) {
 				if ( $wpc_records[0]->cod_amount != 0 && ! empty( $wpc_records[0]->cod_amount ) ) {
-					$wc_selected_payment_method = WC()->session->get( 'chosen_payment_method' );
 					if ( empty( $wc_selected_payment_method ) ) {
 						return;
 					} else {
 						if ( 'cod' === $wc_selected_payment_method ) {
-							$woocommerce->cart->add_fee( esc_html_e( $wpc_cod_text, 'woo-pincode-checker' ), $wpc_records[0]->cod_amount );
+							$woocommerce->cart->add_fee( esc_html__( $wpc_cod_text, 'woo-pincode-checker' ), $wpc_records[0]->cod_amount );
 						}
 					}
 				}
@@ -163,15 +160,12 @@ class Woo_Pincode_Checker_Public {
 		} else {
 			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
 			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
-			if ( 'on' === $wpc_hide_shipping_cost ) {
+			if ( is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
 					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woo-pincode-checker' ), $wpc_records[0]->shipping_amount );
 					add_filter( 'woocommerce_cart_ready_to_calc_shipping', array( $this, 'wpc_disable_shipping_calc_on_cart_page' ), 10, 1 );
-				}
-			}
-			if ( 'on' === $wpc_hide_cod_cost && is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
+				}			
 				if ( $wpc_records[0]->cod_amount != 0 && ! empty( $wpc_records[0]->cod_amount ) ) {
-					$wc_selected_payment_method = WC()->session->get( 'chosen_payment_method' );
 					if ( empty( $wc_selected_payment_method ) ) {
 						return;
 					} else {
