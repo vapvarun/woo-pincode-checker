@@ -94,8 +94,9 @@ class Woo_Pincode_Checker_Form {
 		}
 
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
-		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
-
+		$wpc_table = $wpdb->prefix.'pincode_checker';
+		$sql        =  $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` where `pincode` = %s", $cookie_pin );
+		$num_rows   = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}
@@ -142,9 +143,14 @@ class Woo_Pincode_Checker_Form {
 		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
-			$query = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
+			$wpc_table = $wpdb->prefix . 'pincode_checker';
+			$query = $wpdb->prepare(
+				"SELECT * FROM `$wpc_table` WHERE `pincode` = %s",
+				$cookie_pin
+			);
 
-			$getdata = $wpdb->get_results( $query );
+			$getdata = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
 			foreach ( $getdata as $data ) {
 
 				$delivery_day     = $data->delivery_days;
@@ -156,7 +162,7 @@ class Woo_Pincode_Checker_Form {
 			/* set delivery date */
 			$wpc_general_settings = get_option( 'wpc_general_settings' );
 			$delivery_date_format = $wpc_general_settings['delivery_date'];
-			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) );
+			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 			if( 'wpc_pincode_checker' === $wpc_pincode_btn_position ){
 				$customer = new WC_Customer();
 				$customer->set_shipping_postcode( $cookie_pin );
@@ -223,17 +229,19 @@ class Woo_Pincode_Checker_Form {
 		if( 'on' == $wpc_pincode_field ){
 			$wpc_required = 'required';
 		}
+		
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
+			wp_send_json_error();
 		}
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
-		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `{$wpdb->prefix}pincode_checker` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
-		$result             = $wpdb->get_var( $sql );
-
+		$wpc_table = $wpdb->prefix.'pincode_checker';
+		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
+		$result             = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( ! empty( $result ) ) {
 			$set_cookie = setcookie( 'valid_pincode', $user_input_pincode, time() + ( 10 * 365 * 24 * 60 * 60 ), '/' );
-			$query = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$user_input_pincode' ";
-			$getdata = $wpdb->get_results( $query );
+			$query = $wpdb->prepare("SELECT * FROM  `$wpc_table`  Where `pincode` =%d", $user_input_pincode);
+			
+			$getdata = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			foreach ( $getdata as $data ) {
 				$delivery_day     = $data->delivery_days;
 				$cash_on_delivery = $data->case_on_delivery;
@@ -244,14 +252,14 @@ class Woo_Pincode_Checker_Form {
 			/* set delivery date */
 			$wpc_general_settings = get_option( 'wpc_general_settings' );
 			$delivery_date_format = $wpc_general_settings['delivery_date'];
-			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) );
-
+			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+			$cookie_pin = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';		
 			if ( isset( $user_ID ) && $user_ID != 0 ) {
 
 				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
 			}
 			ob_start();
-			$cookie_pin = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
+			
 			include WPCP_PLUGIN_PATH . 'public/woo-pincode-checker-delivery-message.php';
 			$pincode_del_msg = ob_get_contents();
 			ob_get_clean();
@@ -330,7 +338,15 @@ class Woo_Pincode_Checker_Form {
 		}
 		global $table_prefix, $wpdb,$woocommerce, $product;
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
-		$num_rows   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `' . $table_prefix . 'pincode_checker` where `pincode` = %s', $cookie_pin ) );
+		$table_name = esc_sql( $wpdb->prefix . 'pincode_checker' );
+		$num_rows = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM `$table_name` WHERE `pincode` = %s",
+				$cookie_pin
+			)
+		);
+
+
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}

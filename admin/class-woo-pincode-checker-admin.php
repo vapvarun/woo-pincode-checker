@@ -156,7 +156,7 @@ class Woo_Pincode_Checker_Admin {
 
 		add_submenu_page( 'pincode_lists', esc_html__( 'Add New Pincode', 'woo-pincode-checker' ), esc_html__( 'Add New Pincode', 'woo-pincode-checker' ), 'manage_options', 'add_wpc_pincode', array( $this, 'wpc_add_pincode_func' ) );
 
-		// add_submenu_page( 'pincode_lists', esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), esc_html__( 'Upload pincodes', 'woo-pincode-checker' ), 'manage_options', 'wpc_upload_pincodes', array( $this, 'wpc_upload_pincodes_func' ) );
+		
 		if ( class_exists( 'WooCommerce' ) ) {
 			/* add sub menu in wnplugin setting page */
 			if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
@@ -381,7 +381,14 @@ class Woo_Pincode_Checker_Admin {
 			if ( $wpc_pincode != '' ) {
 
 				$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
-				$num_rows                   = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $pincode_checker_table_name . ' where `pincode` = %s', $wpc_pincode ) );
+				$pincode_checker_table_name = esc_sql( $pincode_checker_table_name );
+
+				$sql = $wpdb->prepare(
+					"SELECT COUNT(*) FROM `$pincode_checker_table_name` WHERE `pincode` = %s",
+					$wpc_pincode
+				);
+				$num_rows = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
 
 				if ( $num_rows == 0 ) {
 					/* insert Record */
@@ -440,9 +447,10 @@ class Woo_Pincode_Checker_Admin {
 		/* if edit action then display record */
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
 			$id                         = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';
-			$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
-			$sql                        = 'SELECT * FROM ' . $pincode_checker_table_name . ' Where `id` =' . $id;
-			$query_results              = $wpdb->get_results( $sql, ARRAY_A );
+			$pincode_checker_table_name = esc_sql($wpdb->prefix . 'pincode_checker');
+			$sql                        = $wpdb->prepare("SELECT * FROM  `$pincode_checker_table_name`  Where `id` =%d", $id);
+			$query_results              = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
 		}
 		?>
 		<div class="wrap wpc-add-pincode-wrap">
@@ -542,10 +550,12 @@ class Woo_Pincode_Checker_Admin {
 		global $wpdb;
 		$wpc_message                = '';
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
+		$pincode_checker_table_name = esc_sql( $pincode_checker_table_name );
 		$bytes                      = apply_filters( 'import_upload_size_limit', wp_max_upload_size() );
 		$size                       = size_format( $bytes );
 		if ( isset( $_POST['upload_pincodes'] ) && isset( $_POST['wpc-pincode-submit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc-pincode-submit'] ) ), 'wpc-pincode-submit' ) ) {
-			set_time_limit( 0 );
+			// phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
+			set_time_limit(0);
 			$is_import = true;
 			$filetype  = wp_check_filetype(
 				wc_clean( sanitize_text_field( wp_unslash( $_FILES['import']['name'] ) ) ), //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
@@ -564,7 +574,8 @@ class Woo_Pincode_Checker_Admin {
 					$i    = 0;
 					while ( ( $getData = fgetcsv( $file, 100000, ',' ) ) !== false ) {
 						if ( $i != 0 ) {
-							$num_rows = $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $pincode_checker_table_name . ' where `pincode` = %s', $getData[0] ) );
+							$num_rows =  $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $pincode_checker_table_name . ' where `pincode` = %s', $getData[0] ) ; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+							$num_rows = $wpdb->get_var($num_rows ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 							if ( $num_rows == 0 ) {
 								$wpdb->insert(
 									$pincode_checker_table_name,
@@ -727,8 +738,11 @@ class Woo_Pincode_Checker_Admin {
 		}
 		global $wpdb;
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
-		$sql                        = "DELETE FROM $pincode_checker_table_name";
-		$wpdb->query( $sql );
+		$pincode_checker_table_name = esc_sql( $pincode_checker_table_name );
+
+		$sql = "DELETE FROM `$pincode_checker_table_name`";
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
 		die;
 	}
 

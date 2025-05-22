@@ -143,7 +143,7 @@ function wpc_check_update_mysql_db() {
 	$wpc_checker_version = '1.2';
 	if ( ! empty( $installed_ver ) && '1.0' === $installed_ver ) {		
 		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
-		$sql = $wpdb->query("ALTER TABLE wp_pincode_checker ADD shipping_amount INT(11) NOT NULL, ADD cod_amount INT(11) NOT NULL");
+		$sql = $wpdb->query("ALTER TABLE $pincode_checker_table_name  ADD shipping_amount INT(11) NOT NULL, ADD cod_amount INT(11) NOT NULL"); 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 		update_option( 'wpc_db_version', $wpc_checker_version );

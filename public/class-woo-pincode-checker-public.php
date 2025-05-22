@@ -133,15 +133,35 @@ class Woo_Pincode_Checker_Public {
 	 */
 	public function wpc_added_wc_shipping_and_cod_amount() {
 		global $table_prefix, $wpdb,$woocommerce, $product, $wpc_globals;
+		$wpc_table_name = esc_sql( $wpdb->prefix . 'pincode_checker' );
 		$wpc_general_settings   = $wpc_globals->wpc_general_settings;
 		$wpc_cod_text           = $wpc_general_settings['cod_label_text'];
 		$tablename              = $wpdb->prefix . 'pincode_checker';
 		$cookie_pin             = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$checkout_pin           = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['pincode'] ) ) : '';
-		$wc_selected_payment_method = WC()->session->get( 'chosen_payment_method' );
+		$wc_selected_payment_method = WC()->session->get('chosen_payment_method');
 		if ( ! empty( $checkout_pin ) && ( $checkout_pin !== $cookie_pin ) ) {
-			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$checkout_pin' ";
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
+			$cache_key = 'pincode_data';
+			$cache_group = 'pincode_group';
+
+			$cached = wp_cache_get($cache_key, $cache_group);
+
+			if ($cached && isset($cached['pincode']) && $cached['pincode'] === $checkout_pin) {
+				$wpc_records =  $cached['data'];
+			}else{
+
+				$sql = $wpdb->prepare( 
+					"SELECT * FROM {$wpc_table_name} WHERE `pincode` = %s", 
+					$checkout_pin
+				);
+
+				$wpc_records = $wpdb->get_results( $sql, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
+				wp_cache_set($cache_key, [
+					'pincode' => $checkout_pin,
+					'data' => $wpc_records
+				], $cache_group, 3600); 
+			}
 			if ( is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
 					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woo-pincode-checker' ), $wpc_records[0]->shipping_amount );
@@ -152,14 +172,15 @@ class Woo_Pincode_Checker_Public {
 						return;
 					} else {
 						if ( 'cod' === $wc_selected_payment_method ) {
-							$woocommerce->cart->add_fee( esc_html__( $wpc_cod_text, 'woo-pincode-checker' ), $wpc_records[0]->cod_amount );
+							$woocommerce->cart->add_fee( esc_html( $wpc_cod_text), $wpc_records[0]->cod_amount );
 						}
 					}
 				}
 			}
 		} else {
-			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
+			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $cookie_pin);
+			
+			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
 					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woo-pincode-checker' ), $wpc_records[0]->shipping_amount );
@@ -170,7 +191,7 @@ class Woo_Pincode_Checker_Public {
 						return;
 					} else {
 						if ( 'cod' === $wc_selected_payment_method ) {
-							$woocommerce->cart->add_fee( esc_html__( $wpc_cod_text, 'woo-pincode-checker' ), $wpc_records[0]->cod_amount );
+							$woocommerce->cart->add_fee( esc_html($wpc_cod_text), $wpc_records[0]->cod_amount );
 						}
 					}
 				}
@@ -225,6 +246,7 @@ class Woo_Pincode_Checker_Public {
 	 */
 	public function wpc_check_checkout_page_pincode() {
 		global $table_prefix, $wpdb,$woocommerce, $product, $wpc_globals;
+		$tablename    = $wpdb->prefix . 'pincode_checker';
 		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
 			exit();
 		}
@@ -232,8 +254,8 @@ class Woo_Pincode_Checker_Public {
 			$pincode = sanitize_text_field( wp_unslash( $_REQUEST['pincode'] ) );
 			$expiry  = strtotime( '+7 day' );
 			setcookie( 'pincode', $pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN );
-			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$pincode' ";
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
+			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $pincode);
+			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( ! empty( $wpc_records[0]->pincode ) ) {
 				echo '1';
 			} else {
@@ -255,18 +277,18 @@ class Woo_Pincode_Checker_Public {
 		$tablename    = $wpdb->prefix . 'pincode_checker';
 		$cookie_pin   = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$checkout_pin = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['pincode'] ) ) : '';
-		$wpc_pincode  = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
-		$wpc_records  = $wpdb->get_results( $wpc_pincode, OBJECT );
+		$wpc_pincode  = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $cookie_pin);
+		$wpc_records  = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $cookie_pin == $checkout_pin ) {
-			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$cookie_pin' ";
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
+			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $cookie_pin);
+			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( $wpc_records[0]->pincode != $cookie_pin ) {
 				/* translators: %1$s: Zipcode */
 				$errors->add( 'validation', sprintf( esc_html__( 'Delivery to %1$s is currently not available for this item.', 'woo-pincode-checker' ), '<strong>' . $cookie_pin . '</strong>' ) );
 			}
 		} else {
-			$wpc_pincode = 'SELECT * FROM `' . $table_prefix . "pincode_checker` where `pincode` = '$checkout_pin' ";
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT );
+			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $checkout_pin);
+			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( $wpc_records[0]->pincode != $checkout_pin ) {
 				/* translators: %1$s: Zipcode */
 				$errors->add( 'validation', sprintf( esc_html__( 'Delivery to %1$s is currently not available for this item.', 'woo-pincode-checker' ), '<strong>' . $checkout_pin . '</strong>' ) );

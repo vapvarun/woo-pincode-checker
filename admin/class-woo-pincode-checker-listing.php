@@ -103,11 +103,13 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		global $wpdb;
 
 		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
+
 		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$sql .= " WHERE `pincode` LIKE '%" . sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) . "%' "; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		return $wpdb->get_var( $sql );
+
 	}
 
 	/**
@@ -136,7 +138,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			$pincode_query .= ' OFFSET ' . ( $page_number - 1 ) * $pincode_per_page;
 		}
 
-		$query_results = $wpdb->get_results( $pincode_query, ARRAY_A );
+		$query_results = $wpdb->get_results( $pincode_query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		return $query_results;
 	}
 
@@ -158,6 +160,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 				return '<strong>' . $item[ $column_name ] . '</strong>';
 			default:
 				return print_r( $item, true );
+
 		}
 	}
 
