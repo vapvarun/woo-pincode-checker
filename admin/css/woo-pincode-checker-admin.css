@@ -97,3 +97,10 @@ button.wpc-accordion.active::after {
 div.wbcom-settings-section-wrap {
     overflow: inherit;
 }
+
+.wbcom-settings-section-options select#wpc_add_to_cart_option+.selectize-control .selectize-input,
+.wbcom-settings-section-options select#wpc_delivery_date+.selectize-control .selectize-input,
+.wbcom-settings-section-options select#wpc_pincode_position+.selectize-control .selectize-input {
+    min-height: 38px;
+    line-height: 38px;
+}
