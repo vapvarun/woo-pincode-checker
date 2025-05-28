@@ -70,8 +70,7 @@
       placeholder: "",
     });
 
-
-    $("div.wpc-actions  .wpc-bulk-delete").click(function () {
+    $("div.wpc-actions .wpc-bulk-delete").on("click", function (event) {
       event.preventDefault();
       alert("Are you sure you want to delete all pincodes?");
       var data = {
@@ -85,7 +84,7 @@
     });
 
     $("#wpc_pincode_position")
-      .change(function () {
+      .on("change", function () {
         $(this)
           .find("option:selected")
           .each(function () {
@@ -97,6 +96,6 @@
             }
           });
       })
-      .change();
+      .trigger("change"); // replaces `.change()` call to trigger manually
   });
 })(jQuery);
