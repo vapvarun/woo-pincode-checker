@@ -56,8 +56,12 @@ ol {
 }
 
 .wc-delivery-time-response {
-    padding-bottom: 15px;
     clear: both;
+}
+
+.quantity+.single_add_to_cart_button+.pincode_loader+.wc-delivery-time-response {
+    top: 15px;
+    position: relative;
 }
 
 div#my_custom_checkout_field,
