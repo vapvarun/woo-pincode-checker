@@ -61,11 +61,13 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 * Code for fetch data and display listing.
 	 */
 	public function prepare_items() {
+		
 		$columns               = $this->get_columns();
 		$hidden                = array();
 		$sortable              = array();
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
+	
 
 		/*Process bulk action */
 		$this->get_bulk_action();
@@ -139,6 +141,16 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		}
 
 		$query_results = $wpdb->get_results( $pincode_query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		foreach($query_results as &$val){
+			if(isset($val['case_on_delivery']) && $val['case_on_delivery'] == 1){
+				$val['case_on_delivery'] = 'Available';
+			}else{
+				$val['case_on_delivery'] = 'Unavailable';
+			}
+
+			
+		}
+		unset($val);
 		return $query_results;
 	}
 
