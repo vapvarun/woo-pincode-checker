@@ -247,23 +247,36 @@ class Woo_Pincode_Checker_Public {
 	public function wpc_check_checkout_page_pincode() {
 		global $table_prefix, $wpdb,$woocommerce, $product, $wpc_globals;
 		$tablename    = $wpdb->prefix . 'pincode_checker';
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			exit();
+		if ( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'woo-pincode-checker' ) ) );
+        	return;
 		}
-		if ( isset( $_REQUEST['pincode'] ) && $_REQUEST['pincode'] != '' ) {
-			$pincode = sanitize_text_field( wp_unslash( $_REQUEST['pincode'] ) );
-			$expiry  = strtotime( '+7 day' );
-			setcookie( 'pincode', $pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN );
-			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $pincode);
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			if ( ! empty( $wpc_records[0]->pincode ) ) {
-				echo '1';
-			} else {
-				echo '0';
-			}
-			wp_die();
+
+		// Validate input
+		if ( ! isset( $_REQUEST['pincode'] ) || empty( $_REQUEST['pincode'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'Pincode is required.', 'woo-pincode-checker' ) ) );
+			return;
 		}
-	}
+		
+		$pincode = sanitize_text_field( wp_unslash( $_REQUEST['pincode'] ) );
+		
+		// Validate pincode format
+		if ( ! preg_match( '/^[A-Za-z0-9\s]{3,10}$/', $pincode ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid pincode format.', 'woo-pincode-checker' ) ) );
+			return;
+		}
+		
+		$expiry  = strtotime( '+7 day' );
+		setcookie( 'pincode', $pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN );
+		$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $pincode);
+		$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		if ( ! empty( $wpc_records[0]->pincode ) ) {
+			wp_send_json_success( array( 'available' => true ) );
+		} else {
+			wp_send_json_success( array( 'available' => false ) );
+		}
+		wp_die();
+		}
 
 	/**
 	 * Validates that the checkout has enough info to proceed.
