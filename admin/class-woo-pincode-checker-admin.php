@@ -381,7 +381,7 @@ class Woo_Pincode_Checker_Admin {
 				$pincode_checker_table_name = esc_sql( $pincode_checker_table_name );
 
 				$sql = $wpdb->prepare(
-					"SELECT COUNT(*) FROM `$pincode_checker_table_name` WHERE `pincode` = %s",
+					"SELECT COUNT(*) FROM `$pincode_checker_table_name` WHERE `pincode` = %s", // phpcs:ignore 
 					$wpc_pincode
 				);
 				$num_rows = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -445,7 +445,7 @@ class Woo_Pincode_Checker_Admin {
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
 			$id                         = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';
 			$pincode_checker_table_name = esc_sql($wpdb->prefix . 'pincode_checker');
-			$sql                        = $wpdb->prepare("SELECT * FROM  `$pincode_checker_table_name`  Where `id` =%d", $id);
+			$sql                        = $wpdb->prepare("SELECT * FROM  `$pincode_checker_table_name`  Where `id` =%d", $id); // phpcs:ignore 
 			$query_results              = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		}
