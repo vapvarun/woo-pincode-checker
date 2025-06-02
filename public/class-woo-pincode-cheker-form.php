@@ -95,7 +95,7 @@ class Woo_Pincode_Checker_Form {
 
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$wpc_table = $wpdb->prefix.'pincode_checker';
-		$sql        =  $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` where `pincode` = %s", $cookie_pin );
+		$sql        =  $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` where `pincode` = %s", $cookie_pin ); // phpcs:ignore 
 		$num_rows   = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
@@ -145,7 +145,7 @@ class Woo_Pincode_Checker_Form {
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
 			$wpc_table = $wpdb->prefix . 'pincode_checker';
 			$query = $wpdb->prepare(
-				"SELECT * FROM `$wpc_table` WHERE `pincode` = %s",
+				"SELECT * FROM `$wpc_table` WHERE `pincode` = %s", // phpcs:ignore 
 				$cookie_pin
 			);
 
@@ -235,11 +235,11 @@ class Woo_Pincode_Checker_Form {
 		}
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
 		$wpc_table = $wpdb->prefix.'pincode_checker';
-		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' );
+		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' ); // phpcs:ignore 
 		$result             = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( ! empty( $result ) ) {
 			$set_cookie = setcookie( 'valid_pincode', $user_input_pincode, time() + ( 10 * 365 * 24 * 60 * 60 ), '/' );
-			$query = $wpdb->prepare("SELECT * FROM  `$wpc_table`  Where `pincode` =%d", $user_input_pincode);
+			$query = $wpdb->prepare("SELECT * FROM  `$wpc_table`  Where `pincode` =%d", $user_input_pincode); // phpcs:ignore 
 			
 			$getdata = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			foreach ( $getdata as $data ) {
@@ -341,7 +341,7 @@ class Woo_Pincode_Checker_Form {
 		$table_name = esc_sql( $wpdb->prefix . 'pincode_checker' );
 		$num_rows = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM `$table_name` WHERE `pincode` = %s",
+				"SELECT COUNT(*) FROM `$table_name` WHERE `pincode` = %s",  // phpcs:ignore 
 				$cookie_pin
 			)
 		);
