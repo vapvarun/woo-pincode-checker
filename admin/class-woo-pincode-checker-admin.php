@@ -90,11 +90,34 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] || 'wbcomplugins' === $_GET['page'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', array(), $this->version, 'all' );
-			wp_enqueue_style( 'wpc-selectize', plugin_dir_url( __FILE__ ) . 'css/selectize.css', array(), $this->version, 'all' );
+
+		 $screen = get_current_screen();
+		$allowed_pages = array(
+			'wb-plugins_page_woo-pincode-checker',
+			'toplevel_page_pincode_lists',
+			'pincodes_page_add_wpc_pincode',
+			'toplevel_page_wbcomplugins',
+		);
+		 if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
+			// Load main admin CSS
+			wp_enqueue_style( 
+				$this->plugin_name, 
+				plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', 
+				array(), 
+				$this->version, 
+				'all' 
+			);
 		}
 
+		if ( in_array( $screen->id, array( 'pincodes_page_woo-pincode-checker', 'wb-plugins_page_woo-pincode-checker' ) ) ) {
+            wp_enqueue_style( 
+                'wpc-selectize', 
+                plugin_dir_url( __FILE__ ) . 'css/selectize.css', 
+                array(), 
+                $this->version, 
+                'all' 
+            );
+        }
 	}
 
 	/**
@@ -114,15 +137,40 @@ class Woo_Pincode_Checker_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( isset( $_GET['page'] ) && ( 'woo-pincode-checker' === $_GET['page'] || 'pincode_lists' === $_GET['page'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', array( 'jquery' ), $this->version, false );
-			wp_enqueue_script( 'wpc-selectize-min', plugin_dir_url( __FILE__ ) . 'js/selectize.min.js', array( 'jquery' ), $this->version, false );
+		$screen = get_current_screen();
+		$allowed_pages = array(
+			'pincodes_page_woo-pincode-checker',
+			'toplevel_page_pincode_lists',
+			'pincodes_page_add_wpc_pincode',
+			'wb-plugins_page_woo-pincode-checker'
+		);
+		if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
+			// Load main admin JS
+			wp_enqueue_script( 
+				$this->plugin_name, 
+				plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', 
+				array( 'jquery' ), 
+				$this->version, 
+				true 
+			);
+			// Load selectize JS only on pages that need it
+			if ( in_array( $screen->id, array( 'pincodes_page_woo-pincode-checker', 'wb-plugins_page_woo-pincode-checker' ) ) ) {
+				wp_enqueue_script( 
+					'wpc-selectize-min', 
+					plugin_dir_url( __FILE__ ) . 'js/selectize.min.js', 
+					array( 'jquery' ), 
+					$this->version, 
+					true 
+				);
+			}
+
+			// Localize script with nonce
 			wp_localize_script(
 				$this->plugin_name,
-				'wpc_bulk_action',
+				'wpc_admin_ajax',
 				array(
 					'url'   => admin_url( 'admin-ajax.php' ),
-					'nonce' => wp_create_nonce( 'wpc-bulk-delete-nonce' ),
+					'nonce' => wp_create_nonce( 'wpc-admin-nonce' ),
 				)
 			);
 		}
