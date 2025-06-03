@@ -423,6 +423,11 @@ class Woo_Pincode_Checker_Admin {
 			$wpc_delivery_days    = isset( $_POST['wpc-delivery-days'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-delivery-days'] ) ) : '';
 			$wpc_case_on_delivery = isset( $_POST['wpc-case-on-delivery'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-case-on-delivery'] ) ) : '';
 			$wpc_cod_amount       = isset( $_POST['wpc_case_on_delivery_amount'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc_case_on_delivery_amount'] ) ) : '';
+			 // Validate pincode format (alphanumeric, 3-10 characters)
+			if ( ! preg_match( '/^[A-Za-z0-9\s]{3,10}$/', $wpc_pincode ) ) {
+				$message_type = 'error';
+				$wpc_message = __( 'Please enter a valid pincode (3-10 alphanumeric characters).', 'woo-pincode-checker' );
+			}
 			if ( $wpc_pincode != '' ) {
 
 				$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
@@ -437,7 +442,7 @@ class Woo_Pincode_Checker_Admin {
 
 				if ( $num_rows == 0 ) {
 					/* insert Record */
-					$wpdb->insert(
+					$result = $wpdb->insert(
 						$pincode_checker_table_name,
 						array(
 							'pincode'          => $wpc_pincode,
@@ -448,31 +453,45 @@ class Woo_Pincode_Checker_Admin {
 							'case_on_delivery' => $wpc_case_on_delivery,
 							'cod_amount'       => $wpc_cod_amount,
 						),
-						array( '%s', '%s', '%s', '%s', '%d', '%d', '%s' )
+						array( '%s', '%s', '%s', '%d', '%d', '%d', '%d' )
 					);
-					$message_type = 'updated';
-					$wpc_message  = esc_html__( 'Added Pincode Successfully.', 'woo-pincode-checker' );
+					if ( false !== $result ) {
+						$message_type = 'updated';
+						$wpc_message = __( 'Pincode added successfully.', 'woo-pincode-checker' );
+					} else {
+						$message_type = 'error';
+						$wpc_message = __( 'Error adding pincode. Please try again.', 'woo-pincode-checker' );
+					}
 				} else {
 
 					/* update Record */
 					if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
 
 						$id = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';
-						$wpdb->update(
-							$pincode_checker_table_name,
-							array(
-								'pincode'          => $wpc_pincode,
-								'city'             => $wpc_city,
-								'state'            => $wpc_state,
-								'delivery_days'    => $wpc_delivery_days,
-								'shipping_amount'  => $wpc_shipping_amount,
-								'case_on_delivery' => $wpc_case_on_delivery,
-								'cod_amount'       => $wpc_cod_amount,
-							),
-							array( 'id' => $id )
-						);
-						$message_type = 'updated';
-						$wpc_message  = esc_html__( 'Update Pincode Successfully .', 'woo-pincode-checker' );
+						if ( $id > 0 ) {
+							$result = $wpdb->update(
+								$pincode_checker_table_name,
+								array(
+									'pincode'          => $wpc_pincode,
+									'city'             => $wpc_city,
+									'state'            => $wpc_state,
+									'delivery_days'    => $wpc_delivery_days,
+									'shipping_amount'  => $wpc_shipping_amount,
+									'case_on_delivery' => $wpc_case_on_delivery,
+									'cod_amount'       => $wpc_cod_amount,
+								),
+								array( 'id' => $id ),
+                            array( '%s', '%s', '%s', '%d', '%d', '%d', '%d' ),
+                            array( '%d' )
+							);
+							if ( false !== $result ) {
+                            $message_type = 'updated';
+                            $wpc_message = __( 'Pincode updated successfully.', 'woo-pincode-checker' );
+							} else {
+								$message_type = 'error';
+								$wpc_message = __( 'Error updating pincode. Please try again.', 'woo-pincode-checker' );
+							}
+						}
 					}
 				}
 			} else {
@@ -492,9 +511,11 @@ class Woo_Pincode_Checker_Admin {
 		/* if edit action then display record */
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
 			$id                         = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';
-			$pincode_checker_table_name = esc_sql($wpdb->prefix . 'pincode_checker');
-			$sql                        = $wpdb->prepare("SELECT * FROM  `$pincode_checker_table_name`  Where `id` =%d", $id); // phpcs:ignore 
-			$query_results              = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			if($id > 0 ){
+				$pincode_checker_table_name = esc_sql($wpdb->prefix . 'pincode_checker');
+				$sql                        = $wpdb->prepare("SELECT * FROM  `$pincode_checker_table_name`  Where `id` =%d", $id); // phpcs:ignore 
+				$query_results              = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			}
 
 		}
 		?>

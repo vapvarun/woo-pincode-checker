@@ -141,27 +141,12 @@ class Woo_Pincode_Checker_Public {
 		$checkout_pin           = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['pincode'] ) ) : '';
 		$wc_selected_payment_method = WC()->session->get('chosen_payment_method');
 		if ( ! empty( $checkout_pin ) && ( $checkout_pin !== $cookie_pin ) ) {
-			$cache_key = 'pincode_data';
-			$cache_group = 'pincode_group';
 
-			$cached = wp_cache_get($cache_key, $cache_group);
-
-			if ($cached && isset($cached['pincode']) && $cached['pincode'] === $checkout_pin) {
-				$wpc_records =  $cached['data'];
-			}else{
-
-				$sql = $wpdb->prepare( 
+				$wpc_records = $wpdb->get_results($wpdb->prepare( 
 					"SELECT * FROM {$wpc_table_name} WHERE `pincode` = %s", 
 					$checkout_pin
-				);
+				),OBJECT );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-				$wpc_records = $wpdb->get_results( $sql, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-
-				wp_cache_set($cache_key, [
-					'pincode' => $checkout_pin,
-					'data' => $wpc_records
-				], $cache_group, 3600); 
-			}
 			if ( is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
 					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woo-pincode-checker' ), $wpc_records[0]->shipping_amount );

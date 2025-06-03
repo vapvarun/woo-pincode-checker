@@ -104,11 +104,14 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	public static function record_count() {
 		global $wpdb;
 
-		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
+		$base_sql = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
 
 		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$sql .= " WHERE `pincode` LIKE '%" . sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) . "%' "; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		}
+			$search_term = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
+        	$sql = $wpdb->prepare( $base_sql . " WHERE `pincode` LIKE %s", '%' . $wpdb->esc_like( $search_term ) . '%' );
+		}else {
+        	$sql = $base_sql;
+    	}
 
 		return $wpdb->get_var( $sql );
 
@@ -124,23 +127,37 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		global $wpdb;
 
 		/* -- Preparing your query -- */
-		$pincode_query = "SELECT * FROM {$wpdb->prefix}pincode_checker";
+		$base_query = "SELECT * FROM {$wpdb->prefix}pincode_checker";
+		$where_clause = '';
+		$order_clause = '';
+		$limit_clause = '';
+		$params = array();
 
 		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$pincode_query .= " WHERE `pincode` LIKE '%" . sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) . "%' "; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        	$search_term = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+       		$where_clause = " WHERE `pincode` LIKE %s";
+			$params[] = '%' . $wpdb->esc_like( $search_term ) . '%';
 		}
 
-		if ( ! empty( $_REQUEST['orderby'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$pincode_query .= ' ORDER BY ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$pincode_query .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) ) : ' ASC'; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// Ordering
+		if ( ! empty( $_REQUEST['orderby'] ) && in_array( $_REQUEST['orderby'], array( 'pincode', 'city', 'state' ) ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$orderby = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$order = ( ! empty( $_REQUEST['order'] ) && 'desc' === strtolower( $_REQUEST['order'] ) ) ? 'DESC' : 'ASC';
+			$order_clause = " ORDER BY `{$orderby}` {$order}";
 		}
 
+		// Pagination
 		if ( ! isset( $_REQUEST['s'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$pincode_query .= " LIMIT $pincode_per_page";
-			$pincode_query .= ' OFFSET ' . ( $page_number - 1 ) * $pincode_per_page;
+			$offset = ( $page_number - 1 ) * $pincode_per_page;
+			$limit_clause = $wpdb->prepare( " LIMIT %d OFFSET %d", $pincode_per_page, $offset );
 		}
+		 $final_query = $base_query . $where_clause . $order_clause . $limit_clause;
+		if ( ! empty( $params ) ) {
+			$final_query = $wpdb->prepare( $final_query, $params );
+			
+		}
+		$query_results = $wpdb->get_results( $final_query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-		$query_results = $wpdb->get_results( $pincode_query, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		foreach($query_results as &$val){
 			if(isset($val['case_on_delivery']) && $val['case_on_delivery'] == 1){
 				$val['case_on_delivery'] = 'Available';
