@@ -206,7 +206,26 @@ class Woo_Pincode_Checker_Form {
 	 * Set pincode in cookie.
 	 */
 	public function wpc_picode_check_ajax_submit() {
-		global $wpdb,$table_prefix;
+
+		if ( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
+			wp_send_json_error(array( 'message' => __( 'Security check failed.', 'woo-pincode-checker' ) ));
+		}
+
+		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
+		// Remove extra spaces and validate format
+    	$user_input_pincode = preg_replace( '/\s+/', ' ', trim( $user_input_pincode ) );
+		// Validate pincode format (alphanumeric, 3-10 characters)
+		if ( empty( $user_input_pincode ) ) {
+			wp_send_json_error( array( 'message' => __( 'Please enter a pincode.', 'woo-pincode-checker' ) ) );
+			return;
+		}
+		
+		if ( ! preg_match( '/^[A-Za-z0-9\s]{3,10}$/', $user_input_pincode ) ) {
+			wp_send_json_error( array( 'message' => __( 'Please enter a valid pincode (3-10 alphanumeric characters).', 'woo-pincode-checker' ) ) );
+			return;
+		}
+		global $wpdb;
+		
 		$wpc_check_btn_label      = wpc_get_check_btn_label();
 		$wpc_change_btn_label     = wpc_get_change_btn_label();
 		$wpc_delivery_date_label  = wpc_get_delivery_date_label();
@@ -230,29 +249,29 @@ class Woo_Pincode_Checker_Form {
 			$wpc_required = 'required';
 		}
 		
-		if ( isset( $_POST['nonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error();
-		}
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
 		$wpc_table = $wpdb->prefix.'pincode_checker';
 		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' ); // phpcs:ignore 
 		$result             = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		if ( ! empty( $result ) ) {
-			$set_cookie = setcookie( 'valid_pincode', $user_input_pincode, time() + ( 10 * 365 * 24 * 60 * 60 ), '/' );
+		if ($result > 0) {
+			$expiry = time() + (10 * 365 * 24 * 60 * 60); // 10 years
+			$set_cookie = setcookie( 'valid_pincode', $user_input_pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
 			$query = $wpdb->prepare("SELECT * FROM  `$wpc_table`  Where `pincode` =%d", $user_input_pincode); // phpcs:ignore 
 			
-			$getdata = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			foreach ( $getdata as $data ) {
-				$delivery_day     = $data->delivery_days;
-				$cash_on_delivery = $data->case_on_delivery;
-				$city             = $data->city;
-				$state            = $data->state;
+			$pincode_getdata = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			if($pincode_getdata){
+				foreach ( $pincode_getdata as $data ) {
+					$delivery_day     = intval($data->delivery_days);
+					$cash_on_delivery = $data->case_on_delivery;
+					$city             = esc_html($data->city);
+					$state            = esc_html($data->state);
+				}
 			}
 
 			/* set delivery date */
 			$wpc_general_settings = get_option( 'wpc_general_settings' );
-			$delivery_date_format = $wpc_general_settings['delivery_date'];
-			$delivery_date        = date( "$delivery_date_format", strtotime( "+ $delivery_day day" ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+			$delivery_date_format = $wpc_general_settings['delivery_date'] ?? 'M jS';
+			$delivery_date        = date( $delivery_date_format, strtotime( "+{$delivery_day} day" ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 			$cookie_pin = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';		
 			if ( isset( $user_ID ) && $user_ID != 0 ) {
 
@@ -268,9 +287,9 @@ class Woo_Pincode_Checker_Form {
 					'html' => $pincode_del_msg,
 				)
 			);
-			}else{
-				wp_send_json_error();
-			}
+		}else{
+			wp_send_json_error(array( 'message' => __( 'Error retrieving pincode details.', 'woo-pincode-checker' ) ));
+		}
 	}
 
 	/**
