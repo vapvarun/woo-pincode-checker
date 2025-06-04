@@ -433,11 +433,10 @@ class Woo_Pincode_Checker_Admin {
 				$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
 				$pincode_checker_table_name = esc_sql( $pincode_checker_table_name );
 
-				$sql = $wpdb->prepare(
-					"SELECT COUNT(*) FROM `$pincode_checker_table_name` WHERE `pincode` = %s", // phpcs:ignore 
+				$num_rows = $wpdb->get_var( $wpdb->prepare(
+					"SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s", 
 					$wpc_pincode
-				);
-				$num_rows = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				));
 
 
 				if ( $num_rows == 0 ) {
@@ -512,9 +511,8 @@ class Woo_Pincode_Checker_Admin {
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
 			$id                         = isset( $_REQUEST['id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['id'] ) ) : '';
 			if($id > 0 ){
-				$pincode_checker_table_name = esc_sql($wpdb->prefix . 'pincode_checker');
-				$sql                        = $wpdb->prepare("SELECT * FROM  `$pincode_checker_table_name`  Where `id` =%d", $id); // phpcs:ignore 
-				$query_results              = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$query_results = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}pincode_checker WHERE id = %d", $id), ARRAY_A);
+
 			}
 
 		}
