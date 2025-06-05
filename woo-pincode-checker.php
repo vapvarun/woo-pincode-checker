@@ -142,8 +142,15 @@ function wpc_check_update_mysql_db() {
 	$installed_ver = get_option( 'wpc_db_version' );
 	$wpc_checker_version = '1.2';
 	if ( ! empty( $installed_ver ) && '1.0' === $installed_ver ) {		
-		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker';
-		$sql = $wpdb->query("ALTER TABLE $pincode_checker_table_name  ADD shipping_amount INT(11) NOT NULL, ADD cod_amount INT(11) NOT NULL"); 
+		$pincode_checker_table_name = $wpdb->prefix . 'pincode_checker'; 
+		$table_name_escaped = $wpdb->esc_like($pincode_checker_table_name);
+		$table_name_escaped = "`" . str_replace("`", "``", $pincode_checker_table_name) . "`";
+
+		$sql = "ALTER TABLE $table_name_escaped 
+				ADD shipping_amount INT(11) NOT NULL, 
+				ADD cod_amount INT(11) NOT NULL";
+
+		$wpdb->query($sql); // phpcs:ignore
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 		update_option( 'wpc_db_version', $wpc_checker_version );
