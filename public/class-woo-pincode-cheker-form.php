@@ -95,8 +95,7 @@ class Woo_Pincode_Checker_Form {
 
 		$cookie_pin = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$wpc_table = $wpdb->prefix.'pincode_checker';
-		$sql        =  $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` where `pincode` = %s", $cookie_pin ); // phpcs:ignore 
-		$num_rows   = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$num_rows        = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker where `pincode` = %s", $cookie_pin )); 
 		if ( $num_rows == 0 ) {
 			$cookie_pin = '';
 		}
@@ -143,13 +142,10 @@ class Woo_Pincode_Checker_Form {
 		}
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
-			$wpc_table = $wpdb->prefix . 'pincode_checker';
-			$query = $wpdb->prepare(
-				"SELECT * FROM `$wpc_table` WHERE `pincode` = %s", // phpcs:ignore 
+			$getdata = $wpdb->get_results($wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s",
 				$cookie_pin
-			);
-
-			$getdata = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			));
 
 			foreach ( $getdata as $data ) {
 
@@ -250,15 +246,12 @@ class Woo_Pincode_Checker_Form {
 		}
 		
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
-		$wpc_table = $wpdb->prefix.'pincode_checker';
-		$sql                = $wpdb->prepare( "SELECT COUNT(*) FROM `$wpc_table` WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' ); // phpcs:ignore 
-		$result             = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$result                = $wpdb->get_var($wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' ));
 		if ($result > 0) {
 			$expiry = time() + (10 * 365 * 24 * 60 * 60); // 10 years
 			$set_cookie = setcookie( 'valid_pincode', $user_input_pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
-			$query = $wpdb->prepare("SELECT * FROM  `$wpc_table`  Where `pincode` =%d", $user_input_pincode); // phpcs:ignore 
+			$pincode_getdata = $wpdb->get_results($wpdb->prepare("SELECT * FROM  {$wpdb->prefix}pincode_checker  Where `pincode` =%d", $user_input_pincode)); 
 			
-			$pincode_getdata = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if($pincode_getdata){
 				foreach ( $pincode_getdata as $data ) {
 					$delivery_day     = intval($data->delivery_days);
@@ -360,7 +353,7 @@ class Woo_Pincode_Checker_Form {
 		$table_name = esc_sql( $wpdb->prefix . 'pincode_checker' );
 		$num_rows = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM `$table_name` WHERE `pincode` = %s",  // phpcs:ignore 
+				"SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s",
 				$cookie_pin
 			)
 		);
