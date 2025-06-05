@@ -259,27 +259,30 @@ class Woo_Pincode_Checker_Form {
 					$city             = esc_html($data->city);
 					$state            = esc_html($data->state);
 				}
-			}
-
-			/* set delivery date */
-			$wpc_general_settings = get_option( 'wpc_general_settings' );
-			$delivery_date_format = $wpc_general_settings['delivery_date'] ?? 'M jS';
-			$delivery_date        = date( $delivery_date_format, strtotime( "+{$delivery_day} day" ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-			$cookie_pin = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';		
-			if ( isset( $user_ID ) && $user_ID != 0 ) {
-
-				update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
-			}
-			ob_start();
 			
-			include WPCP_PLUGIN_PATH . 'public/woo-pincode-checker-delivery-message.php';
-			$pincode_del_msg = ob_get_contents();
-			ob_get_clean();
-			wp_send_json_success(
-				array(
-					'html' => $pincode_del_msg,
-				)
-			);
+
+				/* set delivery date */
+				$wpc_general_settings = get_option( 'wpc_general_settings' );
+				$delivery_date_format = $wpc_general_settings['delivery_date'] ?? 'M jS';
+				$delivery_date        = date( $delivery_date_format, strtotime( "+{$delivery_day} day" ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+				$cookie_pin = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';		
+				if ( isset( $user_ID ) && $user_ID != 0 ) {
+
+					update_user_meta( $user_ID, 'shipping_postcode', $cookie_pin );
+				}
+				ob_start();
+				
+				include WPCP_PLUGIN_PATH . 'public/woo-pincode-checker-delivery-message.php';
+				$pincode_del_msg = ob_get_contents();
+				ob_get_clean();
+				wp_send_json_success(
+					array(
+						'html' => $pincode_del_msg,
+					)
+				);
+			}else{
+				wp_send_json_error(array( 'message' => __( 'Error retrieving pincode details.', 'woo-pincode-checker' ) ));
+			}
 		}else{
 			wp_send_json_error(array( 'message' => __( 'Error retrieving pincode details.', 'woo-pincode-checker' ) ));
 		}
