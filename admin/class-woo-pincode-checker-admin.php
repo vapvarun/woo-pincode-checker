@@ -637,6 +637,8 @@ class Woo_Pincode_Checker_Admin {
 
 			set_time_limit(300);
 			$is_import = true;
+			$is_read = true;
+			$is_format = true;
 			 // Validate file type
 			$allowed_types = array( 'text/csv', 'application/csv', 'text/plain' );
 			$file_type = $_FILES['import']['type']; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
@@ -646,30 +648,34 @@ class Woo_Pincode_Checker_Admin {
 				$message_type = 'error';
 				$wpc_message = __( 'Invalid file type. Only CSV files are allowed.', 'woo-pincode-checker' );
 				$is_import    = false;
-				return;
+				// return;
 			}
 
-			 // Check file content (first few bytes to ensure it's actually a CSV)
-			$handle = fopen( $_FILES['import']['tmp_name'], 'r' );
-			if ( ! $handle ) {
-				$message_type = 'error';
-				$wpc_message = __( 'Cannot read uploaded file.', 'woo-pincode-checker' );
-				return;
-			}
+			if($is_import){
+				// Check file content (first few bytes to ensure it's actually a CSV)
+				$handle = fopen( $_FILES['import']['tmp_name'], 'r' );
+				if ( ! $handle ) {
+					$message_type = 'error';
+					$wpc_message = __( 'Cannot read uploaded file.', 'woo-pincode-checker' );
+					$is_read = false;
+					// return;
+				}
 
-			// Validate CSV structure
-			$first_line = fgetcsv( $handle );
-			if ( ! $first_line || count( $first_line ) < 3 ) {
-				fclose( $handle );
-				$message_type = 'error';
-				$wpc_message = __( 'Invalid CSV format. Expected columns: pincode, city, state, delivery_days, shipping_amount, case_on_delivery, cod_amount', 'woo-pincode-checker' );
-				return;
+				// Validate CSV structure
+				$first_line = fgetcsv( $handle );
+				if ( ! $first_line || count( $first_line ) < 3 ) {
+					fclose( $handle );
+					$message_type = 'error';
+					$wpc_message = __( 'Invalid CSV format. Expected columns: pincode, city, state, delivery_days, shipping_amount, case_on_delivery, cod_amount', 'woo-pincode-checker' );
+					$is_format = false;
+					// return;
+				}
 			}
-			
-			$imported_count = 0;
-			$skipped_count = 0;
-			$row_number = 0;
-			if ( $is_import == true ) {
+				
+				$imported_count = 0;
+				$skipped_count = 0;
+				$row_number = 0;
+			if ( $is_import && $is_read && $is_format) {
 				if ( isset( $_FILES['import']['size'] ) && $_FILES['import']['size'] > 0 ) {
 					while ( ( $getData = fgetcsv( $handle, 100000, ',' ) ) !== false ) {
 						$row_number++;
