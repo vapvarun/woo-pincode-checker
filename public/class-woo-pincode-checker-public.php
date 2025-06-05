@@ -143,9 +143,9 @@ class Woo_Pincode_Checker_Public {
 		if ( ! empty( $checkout_pin ) && ( $checkout_pin !== $cookie_pin ) ) {
 
 				$wpc_records = $wpdb->get_results($wpdb->prepare( 
-					"SELECT * FROM {$wpc_table_name} WHERE `pincode` = %s", 
+					"SELECT * FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s", 
 					$checkout_pin
-				),OBJECT );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				),OBJECT );
 
 			if ( is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
@@ -163,9 +163,8 @@ class Woo_Pincode_Checker_Public {
 				}
 			}
 		} else {
-			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $cookie_pin);
+			$wpc_records = $wpdb->get_results($wpdb->prepare("SELECT * FROM  {$wpdb->prefix}pincode_checker  Where `pincode` =%d", $cookie_pin),OBJECT);
 			
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( is_array( $wpc_records ) && ! empty( $wpc_records ) ) {
 				if ( $wpc_records && $wpc_records[0]->shipping_amount != 0 && ! empty( $wpc_records[0]->shipping_amount ) ) {
 					$woocommerce->cart->add_fee( __( 'Shipping Amount', 'woo-pincode-checker' ), $wpc_records[0]->shipping_amount );
@@ -253,8 +252,7 @@ class Woo_Pincode_Checker_Public {
 		
 		$expiry  = strtotime( '+7 day' );
 		setcookie( 'pincode', $pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN );
-		$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $pincode);
-		$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$wpc_records = $wpdb->get_results($wpdb->prepare("SELECT * FROM  {$wpdb->prefix}pincode_checker  Where `pincode` =%d", $pincode),OBJECT);
 		if ( ! empty( $wpc_records[0]->pincode ) ) {
 			wp_send_json_success( array( 'available' => true ) );
 		} else {
@@ -275,18 +273,15 @@ class Woo_Pincode_Checker_Public {
 		$tablename    = $wpdb->prefix . 'pincode_checker';
 		$cookie_pin   = ( isset( $_COOKIE['valid_pincode'] ) && $_COOKIE['valid_pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
 		$checkout_pin = ( isset( $_COOKIE['pincode'] ) && $_COOKIE['pincode'] != '' ) ? sanitize_text_field( wp_unslash( $_COOKIE['pincode'] ) ) : '';
-		$wpc_pincode  = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $cookie_pin);
-		$wpc_records  = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$wpc_records  = $wpdb->get_results($wpdb->prepare("SELECT * FROM  {$wpdb->prefix}pincode_checker  Where `pincode` =%d", $cookie_pin),OBJECT);
 		if ( $cookie_pin == $checkout_pin ) {
-			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $cookie_pin);
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$wpc_records = $wpdb->get_results($wpdb->prepare("SELECT * FROM  {$wpdb->prefix}pincode_checker  Where `pincode` =%d", $cookie_pin),OBJECT);
 			if ( $wpc_records[0]->pincode != $cookie_pin ) {
 				/* translators: %1$s: Zipcode */
 				$errors->add( 'validation', sprintf( esc_html__( 'Delivery to %1$s is currently not available for this item.', 'woo-pincode-checker' ), '<strong>' . $cookie_pin . '</strong>' ) );
 			}
 		} else {
-			$wpc_pincode = $wpdb->prepare("SELECT * FROM  `$tablename`  Where `pincode` =%d", $checkout_pin);
-			$wpc_records = $wpdb->get_results( $wpc_pincode, OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$wpc_records = $wpdb->get_results($wpdb->prepare("SELECT * FROM  {$wpdb->prefix}pincode_checker  Where `pincode` =%d", $checkout_pin),OBJECT);
 			if ( $wpc_records[0]->pincode != $checkout_pin ) {
 				/* translators: %1$s: Zipcode */
 				$errors->add( 'validation', sprintf( esc_html__( 'Delivery to %1$s is currently not available for this item.', 'woo-pincode-checker' ), '<strong>' . $checkout_pin . '</strong>' ) );
