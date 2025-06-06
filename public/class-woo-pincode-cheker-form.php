@@ -284,7 +284,7 @@ class Woo_Pincode_Checker_Form {
 				wp_send_json_error(array( 'message' => __( 'Error retrieving pincode details.', 'woo-pincode-checker' ) ));
 			}
 		}else{
-			wp_send_json_error(array( 'message' => __( 'Error retrieving pincode details.', 'woo-pincode-checker' ) ));
+			wp_send_json_error(array( 'message' => __( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ) ));
 		}
 	}
 

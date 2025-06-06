@@ -37,6 +37,7 @@
             $(".pincode_loader").css('display', 'block');
             var pin_code = $("#pincode_field_id").val();
             if (pin_code != "") {
+                $("#error_pin").html(' ').hide();
                 $.ajax({
                     url: pincode_check.ajaxurl,
                     type: "post",
@@ -54,7 +55,7 @@
                             jQuery(".single_add_to_cart_button").show();
                         } else {
                             $(".pincode_loader").css('display', 'none');
-                            $("#error_pin").show();
+                            $("#error_pin").html(response.data.message || "Something went wrong.").show();
                             $(".delivery_msg").hide();
                             if ( "add_to_cart_disable" == pincode_check.hide_disable_product_page_cart_btn ) {
                                 jQuery(".single_add_to_cart_button").prop("disabled", true);
@@ -66,7 +67,7 @@
                 });
             }else{
                 $('#error_pin').html(__('Please enter a pin code.', 'woo-pincode-checker' ));
-                 $("#error_pin").show();
+                $("#error_pin").show();
             }
         });
         /* already pincode checking form */
