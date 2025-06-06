@@ -620,46 +620,54 @@ class Woo_Pincode_Checker_Admin {
 		if ( isset( $_POST['upload_pincodes'] ) && isset( $_POST['wpc-pincode-submit'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc-pincode-submit'] ) ), 'wpc-pincode-submit' ) ) {
 			// phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
 
+			$should_continoue = true;
+			
 			// Validate file upload
 			if ( ! isset( $_FILES['import'] ) || $_FILES['import']['error'] !== UPLOAD_ERR_OK ) {
 				$message_type = 'error';
 				$wpc_message = __( 'File upload error. Please try again.', 'woo-pincode-checker' );
-				return;
+				$should_continoue = false;
 			}
 
-			 // Check file size (limit to 5MB)
-			$max_size = 5 * 1024 * 1024; // 5MB
-			if ( $_FILES['import']['size'] > $max_size ) {
-				$message_type = 'error';
-				$wpc_message = __( 'File too large. Maximum size is 5MB.', 'woo-pincode-checker' );
-				return;
+			if($should_continoue){
+				$is_file_nt_large = true;
+				// Check file size (limit to 5MB)
+				$max_size = 5 * 1024 * 1024; // 5MB
+				if ( $should_continoue && $_FILES['import']['size'] > $max_size ) {
+					$message_type = 'error';
+					$wpc_message = __( 'File too large. Maximum size is 5MB.', 'woo-pincode-checker' );
+					error_log('is_file_nt_large'.$is_file_nt_large);
+					$should_continoue = false;
+				}
 			}
 
-			set_time_limit(300);
-			$is_import = true;
-			$is_read = true;
-			$is_format = true;
-			 // Validate file type
-			$allowed_types = array( 'text/csv', 'application/csv', 'text/plain' );
-			$file_type = $_FILES['import']['type']; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-			$file_extension = strtolower( pathinfo( $_FILES['import']['name'], PATHINFO_EXTENSION ) );
-			
-			if ( ! in_array( $file_type, $allowed_types ) || $file_extension !== 'csv' ) {
-				$message_type = 'error';
-				$wpc_message = __( 'Invalid file type. Only CSV files are allowed.', 'woo-pincode-checker' );
-				$is_import    = false;
-				// return;
+			if($should_continoue){
+				set_time_limit(300);
+				$is_import = true;
+				$is_read = true;
+				$is_format = true;
+				// Validate file type
+				$allowed_types = array( 'text/csv', 'application/csv', 'text/plain' );
+				$file_type = $_FILES['import']['type']; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+				$file_extension = strtolower( pathinfo( $_FILES['import']['name'], PATHINFO_EXTENSION ) );
+				
+				if (! in_array( $file_type, $allowed_types ) || $file_extension !== 'csv' ) {
+					$message_type = 'error';
+					$wpc_message = __( 'Invalid file type. Only CSV files are allowed.', 'woo-pincode-checker' );
+					error_log('is_import'.$is_import);
+					$should_continoue    = false;
+				}
 			}
-
-			if($is_import){
+			if($should_continoue){
 				// Check file content (first few bytes to ensure it's actually a CSV)
 				$handle = fopen( $_FILES['import']['tmp_name'], 'r' );
 				if ( ! $handle ) {
 					$message_type = 'error';
 					$wpc_message = __( 'Cannot read uploaded file.', 'woo-pincode-checker' );
-					$is_read = false;
-					// return;
+					$should_continoue = false;
 				}
+			}
+			if($should_continoue){
 
 				// Validate CSV structure
 				$first_line = fgetcsv( $handle );
@@ -667,15 +675,14 @@ class Woo_Pincode_Checker_Admin {
 					fclose( $handle );
 					$message_type = 'error';
 					$wpc_message = __( 'Invalid CSV format. Expected columns: pincode, city, state, delivery_days, shipping_amount, case_on_delivery, cod_amount', 'woo-pincode-checker' );
-					$is_format = false;
-					// return;
+					$should_continoue = false;
 				}
 			}
 				
 				$imported_count = 0;
 				$skipped_count = 0;
 				$row_number = 0;
-			if ( $is_import && $is_read && $is_format) {
+			if ( $should_continoue) {
 				if ( isset( $_FILES['import']['size'] ) && $_FILES['import']['size'] > 0 ) {
 					while ( ( $getData = fgetcsv( $handle, 100000, ',' ) ) !== false ) {
 						$row_number++;
@@ -689,8 +696,7 @@ class Woo_Pincode_Checker_Admin {
 							continue;
 						}
 						
-						$num_rows =  $wpdb->prepare( 'SELECT COUNT(*) FROM ' . $pincode_checker_table_name . ' where `pincode` = %s', $getData[0] ) ; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-						$num_rows = $wpdb->get_var($num_rows ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+						$num_rows =  $wpdb->get_var($wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker where `pincode` = %s", $getData[0] )); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 						if ( !$num_rows ) {
 							$result = $wpdb->insert(
 								$pincode_checker_table_name,
