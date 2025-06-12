@@ -137,7 +137,8 @@ select#wpc_delivery_date+.select2-container--default .select2-selection--single 
 }
 
 /* Setting Updated */
-div#setting-error-settings_updated {
+div#setting-error-settings_updated,
+.wpc-upload-pincode-wrap div#message {
     position: absolute;
     right: 50px;
     z-index: 99;
@@ -150,8 +151,13 @@ div#setting-error-settings_updated {
     margin-top: -4px;
 }
 
+.wpc-upload-pincode-wrap div#message.error {
+    color: #d63638;
+}
+
 @media screen and (max-width: 1189px) {
-    div#setting-error-settings_updated {
+    div#setting-error-settings_updated,
+    .wpc-upload-pincode-wrap div#message.error {
         margin: 0;
         position: relative;
         right: auto;
@@ -159,6 +165,7 @@ div#setting-error-settings_updated {
     }
 }
 
-div#setting-error-settings_updated button.notice-dismiss:before {
+div#setting-error-settings_updated button.notice-dismiss:before,
+.wpc-upload-pincode-wrap div#message.error button.notice-dismiss:before {
     color: red !important;
 }
