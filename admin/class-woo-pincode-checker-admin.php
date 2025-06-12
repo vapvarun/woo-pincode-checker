@@ -491,6 +491,9 @@ class Woo_Pincode_Checker_Admin {
 								$wpc_message = __( 'Error updating pincode. Please try again.', 'woo-pincode-checker' );
 							}
 						}
+					}else{
+						$message_type = 'error';
+						$wpc_message  = esc_html__( 'This pincode already exist.', 'woo-pincode-checker' );
 					}
 				}
 			} else {
