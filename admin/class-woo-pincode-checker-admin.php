@@ -736,7 +736,7 @@ class Woo_Pincode_Checker_Admin {
 				<?php
 				if ( $wpc_message != '' ) {
 					?>
-				<div class="<?php echo esc_attr( $message_type ); ?> below-h2" id="message">
+				<div class="<?php echo esc_attr( $message_type ); ?> below-h2 error notice is-dismissible" id="message">
 					<p><?php echo wp_kses_post( $wpc_message ); ?></p>
 				</div>
 					<?php
