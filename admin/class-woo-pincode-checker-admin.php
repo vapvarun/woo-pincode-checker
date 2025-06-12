@@ -98,7 +98,7 @@ class Woo_Pincode_Checker_Admin {
 			'pincodes_page_add_wpc_pincode',
 			'toplevel_page_wbcomplugins',
 		);
-		if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
+		if ( in_array( $screen->id, array( 'pincodes_page_woo-pincode-checker', 'wb-plugins_page_woo-pincode-checker' ) ) ) {
             wp_enqueue_style( 
                 'wpc-select2', 
                 plugin_dir_url( __FILE__ ) . 'css/select2.min.css', 
@@ -106,12 +106,13 @@ class Woo_Pincode_Checker_Admin {
                 $this->version, 
                 'all' 
             );
-		
+        }
+		if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
 			// Load main admin CSS
 			wp_enqueue_style( 
 				$this->plugin_name, 
 				plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', 
-				array('select2'), 
+				array(), 
 				$this->version, 
 				'all' 
 			);
