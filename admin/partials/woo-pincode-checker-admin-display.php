@@ -32,7 +32,9 @@ if ( false == $general_settings['date_display'] ) {
 ?>
 <div class="wbcom-tab-content">
 	<div class="wbcom-wrapper-admin">
+		
 		<div class="wbcom-admin-title-section">
+			<?php settings_errors(); ?>
 			<h3><?php esc_html_e( 'General Settings', 'woo-pincode-checker' ); ?></h3>
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
@@ -253,7 +255,8 @@ if ( false == $general_settings['date_display'] ) {
 							<div class="wbcom-settings-section-options"><input type="text" class="regular-text" id="buttontcolor" name="wpc_general_settings[buttontcolor]" value="<?php echo esc_attr( $general_settings['buttontcolor'] ); ?>"></div>
 						</div>
 					</div>
-				<?php submit_button(); ?>
+				<?php submit_button();
+				?>
 			</form>
 		</div>
 		<script>

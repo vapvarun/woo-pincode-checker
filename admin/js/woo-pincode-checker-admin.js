@@ -70,7 +70,7 @@
       placeholder: "",
     });
 
-    console.log( $(".wpc-bulk-delete"));
+    // console.log( $(".wpc-bulk-delete"));
     $(".wpc-bulk-delete").on("click", function (event) {
       event.preventDefault();
       alert("Are you sure you want to delete all pincodes?");

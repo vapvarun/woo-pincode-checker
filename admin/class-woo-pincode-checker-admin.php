@@ -98,26 +98,26 @@ class Woo_Pincode_Checker_Admin {
 			'pincodes_page_add_wpc_pincode',
 			'toplevel_page_wbcomplugins',
 		);
-		 if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
+		if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
+            wp_enqueue_style( 
+                'wpc-select2', 
+                plugin_dir_url( __FILE__ ) . 'css/select2.min.css', 
+                array(), 
+                $this->version, 
+                'all' 
+            );
+		
 			// Load main admin CSS
 			wp_enqueue_style( 
 				$this->plugin_name, 
 				plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', 
-				array(), 
+				array('select2'), 
 				$this->version, 
 				'all' 
 			);
 		}
 
-		if ( in_array( $screen->id, array( 'pincodes_page_woo-pincode-checker', 'wb-plugins_page_woo-pincode-checker' ) ) ) {
-            wp_enqueue_style( 
-                'wpc-selectize', 
-                plugin_dir_url( __FILE__ ) . 'css/selectize.css', 
-                array(), 
-                $this->version, 
-                'all' 
-            );
-        }
+		
 	}
 
 	/**
@@ -145,31 +145,24 @@ class Woo_Pincode_Checker_Admin {
 			'wb-plugins_page_woo-pincode-checker'
 		);
 		if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
-			// Load main admin JS
-			wp_enqueue_script(
-				'select2', // Handle
-				'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
-				array( 'jquery' ), 
-				true 
-			);
-			wp_enqueue_script( 
-				$this->plugin_name, 
-				plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', 
-				array( 'jquery','select2' ), 
-				$this->version, 
-				true 
-			);
-			
-			// Load selectize JS only on pages that need it
-			if ( in_array( $screen->id, array( 'pincodes_page_woo-pincode-checker', 'wb-plugins_page_woo-pincode-checker' ) ) ) {
+				// Load selectize JS only on pages that need it
 				wp_enqueue_script( 
-					'wpc-selectize-min', 
-					plugin_dir_url( __FILE__ ) . 'js/selectize.min.js', 
+					'wpc-select2', 
+					plugin_dir_url( __FILE__ ) . 'js/select2.min.js', 
 					array( 'jquery' ), 
 					$this->version, 
 					true 
 				);
-			}
+			// Load main admin JS
+			wp_enqueue_script( 
+				$this->plugin_name, 
+				plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', 
+				array( 'jquery'), 
+				$this->version, 
+				true 
+			);
+			
+		
 
 			// Localize script with nonce
 			wp_localize_script(
