@@ -54,29 +54,29 @@
       };
     }
 
-    $("#wpc_delivery_date").selectize({
+    $("#wpc_delivery_date").select2({
       placeholder: "Select Delivery Date",
       plugins: ["remove_button"],
     });
-    $("#wpc-exclude-category").selectize({
+    $("#wpc-exclude-category").select2({
       placeholder: "Exclude Category",
       plugins: ["remove_button"],
     });
-    $("#wpc_pincode_position").selectize({
+    $("#wpc_pincode_position").select2({
       placeholder: "Select Pincode Position",
       plugins: ["remove_button"],
     });
-    $("#wpc_add_to_cart_option").selectize({
+    $("#wpc_add_to_cart_option").select2({
       placeholder: "",
     });
 
-    $("div.wpc-actions .wpc-bulk-delete").on("click", function (event) {
+    console.log( $(".wpc-bulk-delete"));
+    $(".wpc-bulk-delete").on("click", function (event) {
       event.preventDefault();
       alert("Are you sure you want to delete all pincodes?");
       var data = {
         action: "wpc_bulk_delete_action",
-        nonce: wpc_bulk_action.nonce,
-        url: wpc_bulk_action.ajaxurl,
+        nonce: wpc_admin_ajax.nonce,
       };
       $.post(ajaxurl, data, function (response) {
         location.reload();
