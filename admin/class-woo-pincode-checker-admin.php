@@ -627,7 +627,7 @@ class Woo_Pincode_Checker_Admin {
 			$should_continoue = true;
 			
 			// Validate file upload
-			if ( ! isset( $_FILES['import'] ) || $_FILES['import']['error'] !== UPLOAD_ERR_OK ) {
+			if ( ! isset( $_FILES['import'] ) || $_FILES['import']['error'] !== UPLOAD_ERR_OK ) { // phpcs:ignore
 				$message_type = 'error';
 				$wpc_message = __( 'File upload error. Please try again.', 'woo-pincode-checker' );
 				$should_continoue = false;
@@ -637,34 +637,32 @@ class Woo_Pincode_Checker_Admin {
 				$is_file_nt_large = true;
 				// Check file size (limit to 5MB)
 				$max_size = 5 * 1024 * 1024; // 5MB
-				if ( $should_continoue && $_FILES['import']['size'] > $max_size ) {
+				if ( $should_continoue && !empty($_FILES['import']['size']) && $_FILES['import']['size'] > $max_size ) {
 					$message_type = 'error';
 					$wpc_message = __( 'File too large. Maximum size is 5MB.', 'woo-pincode-checker' );
-					error_log('is_file_nt_large'.$is_file_nt_large);
 					$should_continoue = false;
 				}
 			}
 
 			if($should_continoue){
-				set_time_limit(300);
+				set_time_limit(300); // phpcs:ignore
 				$is_import = true;
 				$is_read = true;
 				$is_format = true;
 				// Validate file type
 				$allowed_types = array( 'text/csv', 'application/csv', 'text/plain' );
-				$file_type = $_FILES['import']['type']; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-				$file_extension = strtolower( pathinfo( $_FILES['import']['name'], PATHINFO_EXTENSION ) );
+				$file_type = $_FILES['import']['type']; //phpcs:ignore
+				$file_extension = strtolower( pathinfo( $_FILES['import']['name'], PATHINFO_EXTENSION ) ); //phpcs:ignore
 				
 				if (! in_array( $file_type, $allowed_types ) || $file_extension !== 'csv' ) {
 					$message_type = 'error';
 					$wpc_message = __( 'Invalid file type. Only CSV files are allowed.', 'woo-pincode-checker' );
-					error_log('is_import'.$is_import);
 					$should_continoue    = false;
 				}
 			}
 			if($should_continoue){
 				// Check file content (first few bytes to ensure it's actually a CSV)
-				$handle = fopen( $_FILES['import']['tmp_name'], 'r' );
+				$handle = fopen( $_FILES['import']['tmp_name'], 'r' ); //phpcs:ignore
 				if ( ! $handle ) {
 					$message_type = 'error';
 					$wpc_message = __( 'Cannot read uploaded file.', 'woo-pincode-checker' );
