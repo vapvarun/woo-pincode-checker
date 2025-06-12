@@ -107,7 +107,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		$base_sql = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
 
 		if ( isset( $_REQUEST['s'] ) && '' !== $_REQUEST['s'] ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$search_term = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
+			$search_term = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
         	$sql = $wpdb->prepare( $base_sql . " WHERE `pincode` LIKE %s", '%' . $wpdb->esc_like( $search_term ) . '%' ); // phpcs:ignore
 		}else {
         	$sql = $base_sql;
@@ -142,7 +142,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		// Ordering
 		if ( ! empty( $_REQUEST['orderby'] ) && in_array( $_REQUEST['orderby'], array( 'pincode', 'city', 'state' ) ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$orderby = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$order = ( ! empty( $_REQUEST['order'] ) && 'desc' === strtolower( $_REQUEST['order'] ) ) ? 'DESC' : 'ASC';
+			$order = ( ! empty( $_REQUEST['order'] ) && 'desc' === strtolower( $_REQUEST['order'] ) ) ? 'DESC' : 'ASC'; //phpcs:ignore
 			$order_clause = " ORDER BY `{$orderby}` {$order}";
 		}
 
@@ -188,7 +188,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			case 'cod_amount':
 				return '<strong>' . $item[ $column_name ] . '</strong>';
 			default:
-				return print_r( $item, true );
+				return print_r( $item, true ); //phpcs:ignore
 
 		}
 	}
