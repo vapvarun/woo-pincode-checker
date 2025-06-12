@@ -104,3 +104,61 @@ div.wbcom-settings-section-wrap {
     min-height: 38px;
     line-height: 38px;
 }
+
+/* Select2 Options UI */
+select#wpc_add_to_cart_option+.select2-container--default,
+select#wpc_pincode_position+.select2-container--default,
+select#wpc_delivery_date+.select2-container--default,
+select#wpc-exclude-category+.select2-container--default {
+    width: 100% !important;
+}
+
+select#wpc_add_to_cart_option+.select2-container--default .select2-selection--single,
+select#wpc_pincode_position+.select2-container--default .select2-selection--single,
+select#wpc_delivery_date+.select2-container--default .select2-selection--single {
+    min-height: 40px;
+    border-radius: 8px !important;
+    background-color: #F4F5F7;
+    border-color: #e2e2e2;
+    width: 100%;
+    box-shadow: none;
+}
+
+select#wpc_add_to_cart_option+.select2-container--default .select2-selection--single .select2-selection__rendered,
+select#wpc_pincode_position+.select2-container--default .select2-selection--single .select2-selection__rendered,
+select#wpc_delivery_date+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px;
+}
+
+select#wpc_add_to_cart_option+.select2-container--default .select2-selection--single .select2-selection__arrow,
+select#wpc_pincode_position+.select2-container--default .select2-selection--single .select2-selection__arrow,
+select#wpc_delivery_date+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+}
+
+/* Setting Updated */
+div#setting-error-settings_updated {
+    position: absolute;
+    right: 50px;
+    z-index: 99;
+    border-radius: 10px;
+    line-height: normal;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #10ab00;
+    margin-top: -4px;
+}
+
+@media screen and (max-width: 1189px) {
+    div#setting-error-settings_updated {
+        margin: 0;
+        position: relative;
+        right: auto;
+        left: auto;
+    }
+}
+
+div#setting-error-settings_updated button.notice-dismiss:before {
+    color: red !important;
+}
