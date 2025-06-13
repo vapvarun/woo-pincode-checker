@@ -79,7 +79,6 @@ class Woo_Pincode_Checker {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		// $this->woo_pincode_checker_plugin_updater();
 	}
 
 	/**
@@ -227,24 +226,6 @@ class Woo_Pincode_Checker {
 
 	}
 
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function woo_pincode_checker_plugin_updater() {
-		$Puc_v4p10_Factory          = new Puc_v4p10_Factory();
-		$bpep_export_impoer_updater = $Puc_v4p10_Factory->buildUpdateChecker(
-			'https://demos.wbcomdesigns.com/exporter/free-plugins/woo-pincode-checker.json',
-			WOO_PINCODE_CHECKER_PLUGIN_FILE,
-			'woo-pincode-checker'
-		);
-		// $bpep_export_impoer_updater = Puc_v4_Factory::buildUpdateChecker(
-		// 'https://demos.wbcomdesigns.com/exporter/free-plugins/woo-pincode-checker.json',
-		// WOO_PINCODE_CHECKER_PLUGIN_FILE,
-		// 'woo-pincode-checker'
-		// );
-	}
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
