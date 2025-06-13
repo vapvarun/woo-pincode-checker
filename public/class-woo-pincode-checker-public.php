@@ -97,6 +97,7 @@ class Woo_Pincode_Checker_Public {
 		 */
 		$wpc_general_settings           = get_option( 'wpc_general_settings' );
 		$wpc_hide_disabled_add_cart_btn = ( isset( $wpc_general_settings['add_to_cart_option'] ) && ! empty( $wpc_general_settings['add_to_cart_option'] ) ) ? $wpc_general_settings['add_to_cart_option'] : '';
+		$wpc_required_pincode_field_btn = ( isset( $wpc_general_settings['pincode_field'] ) && ! empty( $wpc_general_settings['pincode_field'] ) ) ? $wpc_general_settings['pincode_field'] : '';
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-public.js', array( 'jquery','wp-i18n' ), $this->version, false );
 		wp_localize_script(
 			$this->plugin_name,
@@ -104,6 +105,7 @@ class Woo_Pincode_Checker_Public {
 			array(
 				'ajaxurl'                               => admin_url( 'admin-ajax.php' ),
 				'hide_disable_product_page_cart_btn'    => $wpc_hide_disabled_add_cart_btn,
+				'required_pincode_field_btn'    => $wpc_required_pincode_field_btn,
 				'wpc_nonce'                             => wp_create_nonce( 'ajax-nonce' ),
 				// 'Please_enter_a_pin_code'              => 'Please enter a pin code.',
 			)

@@ -66,8 +66,34 @@
                     },
                 });
             }else{
+                $(".pincode_loader").css('display', 'none');
                 $('#error_pin').html(__('Please enter a pin code.', 'woo-pincode-checker' ));
                 $("#error_pin").show();
+            }
+        });
+        //  change the behaviour of add to cart button
+        $(document).on("click", function() {
+             if ( "on" == pincode_check.required_pincode_field_btn ) {
+                let field_value = $("#pincode_field_id").val();
+                if(field_value != ""){
+                    $(".single_add_to_cart_button").hide();
+                }else{
+                    $(".single_add_to_cart_button").show();
+                }
+            }
+
+        })
+        //  check the pincode value
+        $("#pincode_field_id").on("keyup", function() {
+            let value = $(this).val();
+            if ( "on" == pincode_check.required_pincode_field_btn ) {
+
+                console.log(value == "");
+                if (value == "") {
+                    $(".single_add_to_cart_button").show();
+                } else {
+                    $(".single_add_to_cart_button").hide();
+                }
             }
         });
         /* already pincode checking form */
@@ -75,7 +101,13 @@
             e.preventDefault();
             $("#my_custom_checkout_field2").css('display', 'block');
             $("#avlpin").hide();
-            $(".single_add_to_cart_button").hide();
+            console.log(pincode_check.required_pincode_field_btn)
+            if ( "on" == pincode_check.required_pincode_field_btn ) {
+                $(".single_add_to_cart_button").show();
+            }else{
+                $(".single_add_to_cart_button").hide();
+            }
+            
             $(".wpc_delivery-info-wrap").hide();
             $("#error_pin").hide();
         });
