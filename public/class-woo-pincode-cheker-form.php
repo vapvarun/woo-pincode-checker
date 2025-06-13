@@ -246,11 +246,17 @@ class Woo_Pincode_Checker_Form {
 		}
 		
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
-		$result                = $wpdb->get_var($wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` LIKE %s", '%' . $user_input_pincode . '%' ));
+		$result = $wpdb->get_var($wpdb->prepare( 
+    "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s", 
+    $user_input_pincode 
+));
 		if ($result > 0) {
 			$expiry = time() + (10 * 365 * 24 * 60 * 60); // 10 years
 			$set_cookie = setcookie( 'valid_pincode', $user_input_pincode, $expiry, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
-			$pincode_getdata = $wpdb->get_results($wpdb->prepare("SELECT * FROM  {$wpdb->prefix}pincode_checker  Where `pincode` =%d", $user_input_pincode)); 
+			$pincode_getdata = $wpdb->get_results($wpdb->prepare(
+    "SELECT * FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s", 
+    $user_input_pincode
+));
 			
 			if($pincode_getdata){
 				foreach ( $pincode_getdata as $data ) {
