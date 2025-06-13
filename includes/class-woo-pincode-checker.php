@@ -69,11 +69,9 @@ class Woo_Pincode_Checker {
 		if ( defined( 'WOO_PINCODE_CHECKER_VERSION' ) ) {
 			$this->version = WOO_PINCODE_CHECKER_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.3.4';
 		}
 		$this->plugin_name = 'woo-pincode-checker';
-
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wpc-update-checker/Puc/v4p10/Factory.php';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -111,31 +109,39 @@ class Woo_Pincode_Checker {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woo-pincode-checker-i18n.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woo-pincode-checker-functions.php';
+		
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-woo-pincode-checker-admin.php';
 
-		/* Enqueue wbcom plugin settings file. */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+		/* Enqueue wbcom plugin settings file if it exists. */
+		$wbcom_settings_file = plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wbcom/wbcom-admin-settings.php';
+		if ( file_exists( $wbcom_settings_file ) ) {
+			require_once $wbcom_settings_file;
+		}
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-pincode-checker-public.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-pincode-cheker-form.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-pincode-checker-form.php';
+		
 		/**
-		 * Include plugin Update Checker file.
+		 * Include plugin Update Checker file if it exists.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wpc-update-checker/plugin-update-checker.php';
+		$update_checker_file = plugin_dir_path( dirname( __FILE__ ) ) . 'wpc-update-checker/plugin-update-checker.php';
+		if ( file_exists( $update_checker_file ) ) {
+			require_once $update_checker_file;
+		}
+		
 		/**
 		 * Include plugin General Functions file.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/woo-pincode-checker-general-functions.php';
 
 		$this->loader = new Woo_Pincode_Checker_Loader();
-
 	}
 
 	/**
@@ -173,6 +179,7 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wpc_add_admin_register_setting' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'wpc_featured_meta' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'wpc_meta_save' );
+		
 		/* screen option */
 		$this->loader->add_filter( 'set-screen-option', $plugin_admin, 'wpc_pincode_per_page_set_option', 10, 3 );
 		$this->loader->add_action( 'wp_ajax_wpc_bulk_delete_action', $plugin_admin, 'wpc_bulk_delete_action_ajax_callback', 10, 3 );
@@ -200,9 +207,11 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'wp_ajax_wpc_check_checkout_page_pincode', $plugin_public, 'wpc_check_checkout_page_pincode' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wpc_check_checkout_page_pincode', $plugin_public, 'wpc_check_checkout_page_pincode' );
 		$this->loader->add_action( 'woocommerce_after_checkout_validation', $plugin_public, 'wpc_add_pincode_checker_validation_on_checkout_page', 10, 2 );
+		
 		/* add ajax for pincode checker */
 		$this->loader->add_action( 'wp_ajax_nopriv_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
 		$this->loader->add_action( 'wp_ajax_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
+		
 		$wpc_pincode_btn_position = wpc_single_product_button_position();
 		if ( 'woocommerce_before_add_to_cart_button' === $wpc_pincode_btn_position ) {
 			/* add pincode checker form single product page */
