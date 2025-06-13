@@ -33,9 +33,11 @@
     $("#wpc_date_display").on("click", function () {
       if ($(this).prop("checked") == true) {
         $("#wbwss-wpc-deliver-date").show(500);
+        $("#wbwss-wpc-deliver-date-text").show(500); 
       } else {
         $("#wbwss-wpc-deliver-date").hide(500);
-      }
+        $("#wbwss-wpc-deliver-date-text").hide(500);
+      }      
     });
 
     /*faq tab accordion*/

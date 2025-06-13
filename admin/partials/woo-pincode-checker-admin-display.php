@@ -57,6 +57,44 @@ if ( false == $general_settings['date_display'] ) {
 								</label>
 							</div>
 						</div>
+						<div id="wbwss-wpc-deliver-date" class="wbcom-settings-section-wrap <?php echo esc_attr( $class ); ?>"
+							<?php
+							if ( ! isset( $general_settings['date_display'] ) ) {
+							?>
+							style="display:none" <?php } ?>>
+							<div class="wbcom-settings-section-options-heading">
+								<label>
+									<?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?>
+								</label>
+							</div>
+							<div class="wbcom-settings-section-options"
+							<?php
+							if ( ! isset( $general_settings['date_display'] ) ) {
+							?>
+							style="display:none" <?php } ?>>
+								<label class="wpc-delivery_date">
+									<select id="wpc_delivery_date" name="wpc_general_settings[delivery_date]" >
+										<option value=""><?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?></option>
+										<option value="M jS" <?php selected( $general_settings['delivery_date'], 'M jS' ); ?>><?php esc_html_e( 'M jS - July 1st', 'woo-pincode-checker' ); ?></option>
+										<option value="D, jS M" <?php selected( $general_settings['delivery_date'], 'D, jS M' ); ?>><?php esc_html_e( 'D, jS M  – Mon, 25th Nov', 'woo-pincode-checker' ); ?></option>
+										<option value="D, M d" <?php selected( $general_settings['delivery_date'], 'D, M d' ); ?>><?php esc_html_e( 'D, M d  – Sat, Nov 23', 'woo-pincode-checker' ); ?></option>
+										<option value="M d" <?php selected( $general_settings['delivery_date'], 'M d' ); ?>><?php esc_html_e( 'M d  – Nov 23', 'woo-pincode-checker' ); ?></option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<div id="wbwss-wpc-deliver-date-text" class="wbcom-settings-section-wrap">
+							<div class="wbcom-settings-section-options-heading">
+								<label>
+									<?php esc_html_e( 'Delivery Date Text', 'woo-pincode-checker' ); ?>
+								</label>
+							</div>
+							<div class="wbcom-settings-section-options">
+								<label>
+									<input type="text"  name="wpc_general_settings[delivery_date_label_text]" value="<?php echo ( isset( $general_settings['delivery_date_label_text'] ) ) ? esc_attr( $general_settings['delivery_date_label_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Delivery Date', 'woo-pincode-checker' ); ?>">
+								</label>
+							</div>
+						</div>
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
@@ -85,28 +123,7 @@ if ( false == $general_settings['date_display'] ) {
 								</label>
 							</div>
 						</div>
-						<div id="wbwss-wpc-deliver-date" class="wbcom-settings-section-wrap <?php echo esc_attr( $class ); ?>"
-						<?php
-						if ( ! isset( $general_settings['date_display'] ) ) {
-							?>
-							style="display:none" <?php } ?>>
-							<div class="wbcom-settings-section-options-heading">
-								<label>
-									<?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?>
-								</label>
-							</div>
-							<div class="wbcom-settings-section-options">
-								<label class="wpc-delivery_date">
-									<select id="wpc_delivery_date" name="wpc_general_settings[delivery_date]" >
-										<option value=""><?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?></option>
-										<option value="M jS" <?php selected( $general_settings['delivery_date'], 'M jS' ); ?>><?php esc_html_e( 'M jS - July 1st', 'woo-pincode-checker' ); ?></option>
-										<option value="D, jS M" <?php selected( $general_settings['delivery_date'], 'D, jS M' ); ?>><?php esc_html_e( 'D, jS M  – Mon, 25th Nov', 'woo-pincode-checker' ); ?></option>
-										<option value="D, M d" <?php selected( $general_settings['delivery_date'], 'D, M d' ); ?>><?php esc_html_e( 'D, M d  – Sat, Nov 23', 'woo-pincode-checker' ); ?></option>
-										<option value="M d" <?php selected( $general_settings['delivery_date'], 'M d' ); ?>><?php esc_html_e( 'M d  – Nov 23', 'woo-pincode-checker' ); ?></option>
-									</select>
-								</label>
-							</div>
-						</div>
+						
 						<div class="wbcom-settings-section-wrap wcpq-pro-products">
 							<div class="wbcom-settings-section-options-heading">
 								<label for="blogname">
@@ -193,19 +210,7 @@ if ( false == $general_settings['date_display'] ) {
 									<input type="text"  name="wpc_general_settings[change_btn_text]" value="<?php echo ( isset( $general_settings['change_btn_text'] ) ) ? esc_attr( $general_settings['change_btn_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Change', 'woo-pincode-checker' ); ?>">
 								</label>
 							</div>
-						</div>
-						<div class="wbcom-settings-section-wrap">
-							<div class="wbcom-settings-section-options-heading">
-								<label>
-									<?php esc_html_e( 'Delivery Date Text', 'woo-pincode-checker' ); ?>
-								</label>
-							</div>
-							<div class="wbcom-settings-section-options">
-								<label>
-									<input type="text"  name="wpc_general_settings[delivery_date_label_text]" value="<?php echo ( isset( $general_settings['delivery_date_label_text'] ) ) ? esc_attr( $general_settings['delivery_date_label_text'] ) : ''; ?>" placeholder="<?php esc_html_e( 'Delivery Date', 'woo-pincode-checker' ); ?>">
-								</label>
-							</div>
-						</div>
+						</div>						
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
