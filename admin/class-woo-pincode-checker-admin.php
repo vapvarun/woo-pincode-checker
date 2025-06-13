@@ -78,20 +78,34 @@ class Woo_Pincode_Checker_Admin {
 	 * @return string|false Sanitized pincode or false if invalid
 	 */
 	private function validate_pincode( $pincode ) {
-		// Remove extra whitespace
+		// Remove extra whitespace and normalize
 		$pincode = trim( $pincode );
+		$pincode = preg_replace('/\s+/', ' ', $pincode);
+		
+		// Check if empty after cleaning
+		if ( empty( $pincode ) ) {
+			return false;
+		}
 		
 		// Check length (3-10 characters)
 		if ( strlen( $pincode ) < 3 || strlen( $pincode ) > 10 ) {
 			return false;
 		}
 		
-		// Check format (alphanumeric and spaces only)
-		if ( ! preg_match( '/^[A-Za-z0-9\s]+$/', $pincode ) ) {
+		// Check format - alphanumeric with optional single spaces, but not at start/end
+		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/', $pincode ) ) {
 			return false;
 		}
 		
-		return sanitize_text_field( $pincode );
+		// Additional security - prevent potential XSS
+		$pincode = sanitize_text_field( $pincode );
+		
+		// Final check - ensure no malicious patterns
+		if ( preg_match('/[<>"\']/', $pincode) ) {
+			return false;
+		}
+		
+		return $pincode;
 	}
 
 	/**
@@ -471,7 +485,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
-	 * Add Pincode.
+	 * Add Pincode - SECURE VERSION.
 	 *
 	 * @since 1.0.0
 	 */
@@ -491,13 +505,13 @@ class Woo_Pincode_Checker_Admin {
 				wp_die( esc_html__( 'Security check failed.', 'woo-pincode-checker' ) );
 			}
 
-			$wpc_pincode          = isset( $_POST['wpc-pincode'] ) ? $this->validate_pincode( wp_unslash( $_POST['wpc-pincode'] ) ) : '';
-			$wpc_city             = isset( $_POST['wpc-city'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-city'] ) ) : '';
-			$wpc_state            = isset( $_POST['wpc-state'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-state'] ) ) : '';
-			$wpc_shipping_amount  = isset( $_POST['wpc_shipping_amount'] ) ? floatval( wp_unslash( $_POST['wpc_shipping_amount'] ) ) : 0;
-			$wpc_delivery_days    = isset( $_POST['wpc-delivery-days'] ) ? intval( wp_unslash( $_POST['wpc-delivery-days'] ) ) : 1;
+			$wpc_pincode = isset( $_POST['wpc-pincode'] ) ? $this->validate_pincode( wp_unslash( $_POST['wpc-pincode'] ) ) : '';
+			$wpc_city = isset( $_POST['wpc-city'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-city'] ) ) : '';
+			$wpc_state = isset( $_POST['wpc-state'] ) ? sanitize_text_field( wp_unslash( $_POST['wpc-state'] ) ) : '';
+			$wpc_shipping_amount = isset( $_POST['wpc_shipping_amount'] ) ? floatval( wp_unslash( $_POST['wpc_shipping_amount'] ) ) : 0;
+			$wpc_delivery_days = isset( $_POST['wpc-delivery-days'] ) ? intval( wp_unslash( $_POST['wpc-delivery-days'] ) ) : 1;
 			$wpc_case_on_delivery = isset( $_POST['wpc-case-on-delivery'] ) ? 1 : 0;
-			$wpc_cod_amount       = isset( $_POST['wpc_case_on_delivery_amount'] ) ? floatval( wp_unslash( $_POST['wpc_case_on_delivery_amount'] ) ) : 0;
+			$wpc_cod_amount = isset( $_POST['wpc_case_on_delivery_amount'] ) ? floatval( wp_unslash( $_POST['wpc_case_on_delivery_amount'] ) ) : 0;
 
 			// Validate pincode format
 			if ( false === $wpc_pincode ) {
@@ -515,69 +529,76 @@ class Woo_Pincode_Checker_Admin {
 			} else {
 				$table_name = $wpdb->prefix . 'pincode_checker';
 
-				// Check if pincode already exists
-				$existing_pincode = $wpdb->get_var( $wpdb->prepare(
-					"SELECT COUNT(*) FROM {$table_name} WHERE pincode = %s", 
-					$wpc_pincode
-				));
+				// Check if this is an edit action
+				$is_edit = isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit';
+				$edit_id = $is_edit ? intval( $_REQUEST['id'] ?? 0 ) : 0;
+
+				// Check if pincode already exists (exclude current record if editing)
+				$existing_query = "SELECT COUNT(*) FROM {$table_name} WHERE pincode = %s";
+				$existing_params = array( $wpc_pincode );
+				
+				if ( $is_edit && $edit_id > 0 ) {
+					$existing_query .= " AND id != %d";
+					$existing_params[] = $edit_id;
+				}
+				
+				$existing_pincode = $wpdb->get_var( $wpdb->prepare( $existing_query, $existing_params ) );
 
 				if ( 0 == $existing_pincode ) {
-					// Insert new record
-					$result = $wpdb->insert(
-						$table_name,
-						array(
-							'pincode'          => $wpc_pincode,
-							'city'             => $wpc_city,
-							'state'            => $wpc_state,
-							'delivery_days'    => $wpc_delivery_days,
-							'shipping_amount'  => $wpc_shipping_amount,
-							'case_on_delivery' => $wpc_case_on_delivery,
-							'cod_amount'       => $wpc_cod_amount,
-						),
-						array( '%s', '%s', '%s', '%d', '%f', '%d', '%f' )
-					);
+					if ( $is_edit && $edit_id > 0 ) {
+						// Update existing record
+						$result = $wpdb->update(
+							$table_name,
+							array(
+								'pincode'          => $wpc_pincode,
+								'city'             => $wpc_city,
+								'state'            => $wpc_state,
+								'delivery_days'    => $wpc_delivery_days,
+								'shipping_amount'  => $wpc_shipping_amount,
+								'case_on_delivery' => $wpc_case_on_delivery,
+								'cod_amount'       => $wpc_cod_amount,
+							),
+							array( 'id' => $edit_id ),
+							array( '%s', '%s', '%s', '%d', '%f', '%d', '%f' ),
+							array( '%d' )
+						);
 
-					if ( false !== $result ) {
-						$message_type = 'updated';
-						$wpc_message = __( 'Pincode added successfully.', 'woo-pincode-checker' );
-					} else {
-						$message_type = 'error';
-						$wpc_message = __( 'Error adding pincode. Please try again.', 'woo-pincode-checker' );
-					}
-				} else {
-					// Update existing record if this is an edit action
-					if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit' ) {
-						$id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
-						
-						if ( $id > 0 ) {
-							$result = $wpdb->update(
-								$table_name,
-								array(
-									'pincode'          => $wpc_pincode,
-									'city'             => $wpc_city,
-									'state'            => $wpc_state,
-									'delivery_days'    => $wpc_delivery_days,
-									'shipping_amount'  => $wpc_shipping_amount,
-									'case_on_delivery' => $wpc_case_on_delivery,
-									'cod_amount'       => $wpc_cod_amount,
-								),
-								array( 'id' => $id ),
-								array( '%s', '%s', '%s', '%d', '%f', '%d', '%f' ),
-								array( '%d' )
-							);
-
-							if ( false !== $result ) {
-								$message_type = 'updated';
-								$wpc_message = __( 'Pincode updated successfully.', 'woo-pincode-checker' );
-							} else {
-								$message_type = 'error';
-								$wpc_message = __( 'Error updating pincode. Please try again.', 'woo-pincode-checker' );
-							}
+						if ( false !== $result ) {
+							$message_type = 'updated';
+							$wpc_message = __( 'Pincode updated successfully.', 'woo-pincode-checker' );
+							// Clear cache for this pincode
+							wp_cache_delete( 'wpc_pincode_' . md5( $wpc_pincode ), 'woo_pincode_checker' );
+						} else {
+							$message_type = 'error';
+							$wpc_message = __( 'Error updating pincode. Please try again.', 'woo-pincode-checker' );
 						}
 					} else {
-						$message_type = 'error';
-						$wpc_message  = esc_html__( 'This pincode already exists.', 'woo-pincode-checker' );
+						// Insert new record
+						$result = $wpdb->insert(
+							$table_name,
+							array(
+								'pincode'          => $wpc_pincode,
+								'city'             => $wpc_city,
+								'state'            => $wpc_state,
+								'delivery_days'    => $wpc_delivery_days,
+								'shipping_amount'  => $wpc_shipping_amount,
+								'case_on_delivery' => $wpc_case_on_delivery,
+								'cod_amount'       => $wpc_cod_amount,
+							),
+							array( '%s', '%s', '%s', '%d', '%f', '%d', '%f' )
+						);
+
+						if ( false !== $result ) {
+							$message_type = 'updated';
+							$wpc_message = __( 'Pincode added successfully.', 'woo-pincode-checker' );
+						} else {
+							$message_type = 'error';
+							$wpc_message = __( 'Error adding pincode. Please try again.', 'woo-pincode-checker' );
+						}
 					}
+				} else {
+					$message_type = 'error';
+					$wpc_message = esc_html__( 'This pincode already exists.', 'woo-pincode-checker' );
 				}
 			}
 		}
@@ -828,7 +849,11 @@ class Woo_Pincode_Checker_Admin {
 
 			if ( $should_continue ) {
 				// Enhanced file validation using WordPress functions
-				$file_info = wp_check_filetype_and_ext( $_FILES['import']['tmp_name'], $_FILES['import']['name'] );
+				$uploaded_file = $_FILES['import']['tmp_name'];
+				$original_filename = $_FILES['import']['name'];
+				
+				// Check file extension
+				$file_info = wp_check_filetype_and_ext( $uploaded_file, $original_filename );
 				$allowed_types = array( 'csv' );
 				
 				if ( ! in_array( $file_info['ext'], $allowed_types ) || 
@@ -836,6 +861,20 @@ class Woo_Pincode_Checker_Admin {
 					$message_type = 'error';
 					$wpc_message = __( 'Invalid file type. Please upload a CSV file only.', 'woo-pincode-checker' );
 					$should_continue = false;
+				}
+				
+				// Additional MIME type check
+				if ( $should_continue && function_exists( 'finfo_open' ) ) {
+					$finfo = finfo_open( FILEINFO_MIME_TYPE );
+					$detected_type = finfo_file( $finfo, $uploaded_file );
+					finfo_close( $finfo );
+					
+					$allowed_mime_types = array( 'text/csv', 'text/plain', 'application/csv' );
+					if ( ! in_array( $detected_type, $allowed_mime_types ) ) {
+						$message_type = 'error';
+						$wpc_message = __( 'File content does not match CSV format.', 'woo-pincode-checker' );
+						$should_continue = false;
+					}
 				}
 			}
 
@@ -1110,6 +1149,8 @@ class Woo_Pincode_Checker_Admin {
 		$result = $wpdb->query( "TRUNCATE TABLE `{$table_name}`" );
 
 		if ( false !== $result ) {
+			// Clear all pincode cache
+			wp_cache_flush_group( 'woo_pincode_checker' );
 			wp_send_json_success( 'Pincodes deleted successfully' );
 		} else {
 			wp_send_json_error( 'Failed to delete pincodes' );

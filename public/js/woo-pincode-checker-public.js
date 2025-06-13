@@ -165,6 +165,18 @@
         }
 
         async makeAjaxRequest(action, data, retryCount = 0) {
+            // Validate input data
+            if (data.pin_code) {
+                // Client-side validation to prevent obviously malicious input
+                const pincodePattern = /^[A-Za-z0-9\s]{3,10}$/;
+                if (!pincodePattern.test(data.pin_code.trim())) {
+                    throw new Error('Invalid pincode format');
+                }
+                
+                // Sanitize pincode
+                data.pin_code = data.pin_code.trim().replace(/\s+/g, ' ');
+            }
+            
             const requestData = {
                 action: action,
                 ...data
@@ -175,15 +187,19 @@
                     url: pincode_check.ajaxurl,
                     type: 'POST',
                     data: requestData,
-                    timeout: 15000
+                    timeout: 15000,
+                    beforeSend: function(xhr) {
+                        // Add additional headers for security
+                        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                    }
                 });
 
                 this.retryCount = 0; // Reset on success
                 return response;
             } catch (error) {
                 if (retryCount < this.maxRetries && (error.status === 0 || error.status >= 500)) {
-                    // Exponential backoff
-                    const delay = Math.pow(2, retryCount) * 1000;
+                    // Exponential backoff with jitter
+                    const delay = Math.pow(2, retryCount) * 1000 + Math.random() * 1000;
                     await this.sleep(delay);
                     return this.makeAjaxRequest(action, data, retryCount + 1);
                 }
@@ -297,7 +313,7 @@
             if (errorMessage.length) {
                 errorMessage.text(message);
             } else {
-                errorContainer.html(message);
+                errorContainer.html($('<div>').text(message));
             }
             
             errorContainer.show();
@@ -330,7 +346,7 @@
         }
 
         validatePincodeFormat(pincode) {
-            return /^[A-Za-z0-9\s]{3,10}$/.test(pincode.trim());
+            return /^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/.test(pincode.trim());
         }
 
         getPincodeValue() {
@@ -465,6 +481,7 @@
                 localStorage.setItem('wpc_last_check_time', Date.now().toString());
             } catch (error) {
                 // LocalStorage not available
+                console.warn('LocalStorage not available:', error);
             }
         }
 
@@ -482,6 +499,7 @@
                 }
             } catch (error) {
                 // LocalStorage not available
+                console.warn('LocalStorage not available:', error);
             }
         }
 
@@ -611,7 +629,7 @@
                         url: settings.url,
                         status: xhr.status,
                         statusText: xhr.statusText,
-                        responseText: xhr.responseText
+                        responseText: xhr.responseText?.substring(0, 200) // Limit response text
                     });
                 }
             });
@@ -770,6 +788,14 @@
                     pincode_check.messages?.invalid_format || 
                     __('Please enter a valid pincode format', 'woo-pincode-checker')
                 );
+            }
+        });
+
+        // Security enhancement: Clear sensitive data on page unload
+        $(window).on('beforeunload', function() {
+            // Clear any sensitive data from memory
+            if (window.WooPincodeChecker && window.WooPincodeChecker.cache) {
+                window.WooPincodeChecker.cache.clear();
             }
         });
     });

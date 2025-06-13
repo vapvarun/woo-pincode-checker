@@ -94,9 +94,37 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
+	 * Show success/error messages
+	 */
+	private function show_admin_notices() {
+		if ( isset( $_GET['deleted'] ) && $_GET['deleted'] == '1' ) {
+			add_action( 'admin_notices', function() {
+				echo '<div class="notice notice-success is-dismissible"><p>' . 
+					 esc_html__( 'Pincode deleted successfully.', 'woo-pincode-checker' ) . 
+					 '</p></div>';
+			});
+		}
+		
+		if ( isset( $_GET['bulk-deleted'] ) && intval( $_GET['bulk-deleted'] ) > 0 ) {
+			$count = intval( $_GET['bulk-deleted'] );
+			add_action( 'admin_notices', function() use ( $count ) {
+				echo '<div class="notice notice-success is-dismissible"><p>' . 
+					 sprintf( 
+						 esc_html( _n( '%d pincode deleted successfully.', '%d pincodes deleted successfully.', $count, 'woo-pincode-checker' ) ), 
+						 $count 
+					 ) . 
+					 '</p></div>';
+			});
+		}
+	}
+
+	/**
 	 * Code for fetch data and display listing.
 	 */
 	public function prepare_items() {
+		// Show admin notices
+		$this->show_admin_notices();
+		
 		$columns = $this->get_columns();
 		$hidden = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
@@ -321,14 +349,14 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * Display edit/delete option with improved security.
+	 * Display edit/delete option with improved security and nonces.
 	 *
 	 * @param array $item Display the pincodes.
 	 */
 	public function column_pincode( $item ) {
 		// Check user capabilities
 		if ( ! $this->check_admin_capabilities() ) {
-			return '<strong>' . $item['pincode'] . '</strong>';
+			return '<strong>' . esc_html( $item['pincode'] ) . '</strong>';
 		}
 
 		$actions = array();
@@ -342,13 +370,17 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			admin_url( 'admin.php' )
 		);
 		
-		$delete_url = add_query_arg(
-			array(
-				'page'   => sanitize_text_field( wp_unslash( $_REQUEST['page'] ?? '' ) ),
-				'action' => 'delete',
-				'id'     => intval( $item['id'] ),
+		// Add nonce to delete URL
+		$delete_url = wp_nonce_url(
+			add_query_arg(
+				array(
+					'page'   => sanitize_text_field( wp_unslash( $_REQUEST['page'] ?? '' ) ),
+					'action' => 'delete',
+					'id'     => intval( $item['id'] ),
+				),
+				admin_url( 'admin.php' )
 			),
-			admin_url( 'admin.php' )
+			'delete-pincode-' . intval( $item['id'] )
 		);
 
 		$actions['edit'] = sprintf(
@@ -368,7 +400,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 		return sprintf( 
 			'<strong>%1$s</strong> %2$s', 
-			$item['pincode'], 
+			esc_html( $item['pincode'] ), 
 			$this->row_actions( $actions ) 
 		);
 	}
@@ -389,7 +421,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * Handle table actions with improved security.
+	 * Handle table actions with improved security and proper nonce verification.
 	 */
 	public function handle_table_actions() {
 		// Check user capabilities
@@ -399,46 +431,46 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 		global $wpdb;
 
-		/* delete action */
+		// Delete single item action
 		if ( isset( $_REQUEST['action'] ) && 'delete' === $_REQUEST['action'] ) {
 			$id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
 			
 			if ( $id > 0 ) {
-				// Add nonce verification for delete action
+				// Verify nonce for delete action
 				if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete-pincode-' . $id ) ) {
-					// For now, we'll skip nonce check to maintain compatibility
-					// In a future version, this should be enforced
+					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'woo-pincode-checker' ) );
 				}
 				
 				self::delete_pincode( $id );
 				
 				// Redirect to avoid resubmission
 				$redirect_url = remove_query_arg( array( 'action', 'id', '_wpnonce' ) );
-				wp_redirect( $redirect_url );
+				wp_redirect( add_query_arg( 'deleted', '1', $redirect_url ) );
 				exit;
 			}
 		}
 
-		/* bulk delete */
+		// Bulk delete action
 		if ( isset( $_REQUEST['action'] ) && 'bulk-delete' === $_REQUEST['action'] ) {
 			$delete_ids = isset( $_REQUEST['bulk-delete'] ) ? array_map( 'intval', wp_unslash( $_REQUEST['bulk-delete'] ) ) : array();
 			
 			if ( ! empty( $delete_ids ) ) {
 				// Verify nonce for bulk actions
 				if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'bulk-' . $this->_args['plural'] ) ) {
-					wp_die( esc_html__( 'Security check failed.', 'woo-pincode-checker' ) );
+					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'woo-pincode-checker' ) );
 				}
 				
+				$deleted_count = 0;
 				foreach ( $delete_ids as $id ) {
-					if ( $id > 0 ) {
-						self::delete_pincode( $id );
+					if ( $id > 0 && self::delete_pincode( $id ) ) {
+						$deleted_count++;
 					}
 				}
+				
+				$redirect_url = remove_query_arg( array( 'action', 'bulk-delete', '_wpnonce' ) );
+				wp_redirect( add_query_arg( 'bulk-deleted', $deleted_count, $redirect_url ) );
+				exit;
 			}
-
-			$redirect_url = remove_query_arg( array( 'action', 'bulk-delete', '_wpnonce' ) );
-			wp_redirect( $redirect_url );
-			exit;
 		}
 	}
 
@@ -454,14 +486,22 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 		global $wpdb;
 
+		// Get pincode before deletion for cache clearing
+		$pincode_data = $wpdb->get_row( $wpdb->prepare(
+			"SELECT pincode FROM {$wpdb->prefix}pincode_checker WHERE id = %d",
+			$id
+		) );
+
 		$result = $wpdb->delete(
 			"{$wpdb->prefix}pincode_checker",
 			array( 'id' => $id ),
 			array( '%d' )
 		);
 
-		// Clear related cache
-		wp_cache_delete( 'wpc_pincode_' . md5( $id ), 'woo_pincode_checker' );
+		// Clear related cache if deletion was successful
+		if ( $result !== false && $pincode_data ) {
+			wp_cache_delete( 'wpc_pincode_' . md5( $pincode_data->pincode ), 'woo_pincode_checker' );
+		}
 
 		return $result !== false;
 	}

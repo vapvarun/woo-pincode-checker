@@ -58,20 +58,34 @@ class Woo_Pincode_Checker_Public {
 	 * @return string|false Sanitized pincode or false if invalid
 	 */
 	private function validate_pincode( $pincode ) {
-		// Remove extra whitespace
+		// Remove extra whitespace and normalize
 		$pincode = trim( $pincode );
+		$pincode = preg_replace('/\s+/', ' ', $pincode);
+		
+		// Check if empty after cleaning
+		if ( empty( $pincode ) ) {
+			return false;
+		}
 		
 		// Check length (3-10 characters)
 		if ( strlen( $pincode ) < 3 || strlen( $pincode ) > 10 ) {
 			return false;
 		}
 		
-		// Check format (alphanumeric and spaces only)
-		if ( ! preg_match( '/^[A-Za-z0-9\s]+$/', $pincode ) ) {
+		// Check format - alphanumeric with optional single spaces, but not at start/end
+		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/', $pincode ) ) {
 			return false;
 		}
 		
-		return sanitize_text_field( $pincode );
+		// Additional security - prevent potential XSS
+		$pincode = sanitize_text_field( $pincode );
+		
+		// Final check - ensure no malicious patterns
+		if ( preg_match('/[<>"\']/', $pincode) ) {
+			return false;
+		}
+		
+		return $pincode;
 	}
 
 	/**
@@ -92,6 +106,29 @@ class Woo_Pincode_Checker_Public {
 		
 		set_transient( $transient_key, ( $requests ? $requests + 1 : 1 ), 60 );
 		return true;
+	}
+
+	/**
+	 * Validate and get pincode from cookie
+	 *
+	 * @param string $cookie_name Cookie name to check
+	 * @return string Validated pincode or empty string
+	 */
+	private function validate_and_get_cookie_pincode( $cookie_name ) {
+		if ( ! isset( $_COOKIE[ $cookie_name ] ) || empty( $_COOKIE[ $cookie_name ] ) ) {
+			return '';
+		}
+		
+		$cookie_value = sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_name ] ) );
+		$validated_pincode = $this->validate_pincode( $cookie_value );
+		
+		if ( false === $validated_pincode ) {
+			// Invalid pincode in cookie, clear it
+			setcookie( $cookie_name, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+			return '';
+		}
+		
+		return $validated_pincode;
 	}
 
 	/**
@@ -197,17 +234,12 @@ class Woo_Pincode_Checker_Public {
 		
 		$wpc_general_settings = $wpc_globals->wpc_general_settings;
 		$wpc_cod_text = $wpc_general_settings['cod_label_text'];
-		$cookie_pin = isset( $_COOKIE['valid_pincode'] ) ? $this->validate_pincode( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
-		$checkout_pin = isset( $_COOKIE['pincode'] ) ? $this->validate_pincode( wp_unslash( $_COOKIE['pincode'] ) ) : '';
+		
+		// Use secure cookie validation
+		$cookie_pin = $this->validate_and_get_cookie_pincode( 'valid_pincode' );
+		$checkout_pin = $this->validate_and_get_cookie_pincode( 'pincode' );
+		
 		$wc_selected_payment_method = WC()->session->get( 'chosen_payment_method' );
-
-		// Validate pincode from cookies
-		if ( false === $cookie_pin ) {
-			$cookie_pin = '';
-		}
-		if ( false === $checkout_pin ) {
-			$checkout_pin = '';
-		}
 
 		$pincode_to_check = ! empty( $checkout_pin ) && ( $checkout_pin !== $cookie_pin ) ? $checkout_pin : $cookie_pin;
 
@@ -329,16 +361,9 @@ class Woo_Pincode_Checker_Public {
 	 * @param  WP_Error $errors Validation errors.
 	 */
 	public function wpc_add_pincode_checker_validation_on_checkout_page( $data, $errors ) {
-		$cookie_pin = isset( $_COOKIE['valid_pincode'] ) ? $this->validate_pincode( wp_unslash( $_COOKIE['valid_pincode'] ) ) : '';
-		$checkout_pin = isset( $_COOKIE['pincode'] ) ? $this->validate_pincode( wp_unslash( $_COOKIE['pincode'] ) ) : '';
-
-		// Validate pincode from cookies
-		if ( false === $cookie_pin ) {
-			$cookie_pin = '';
-		}
-		if ( false === $checkout_pin ) {
-			$checkout_pin = '';
-		}
+		// Use secure cookie validation
+		$cookie_pin = $this->validate_and_get_cookie_pincode( 'valid_pincode' );
+		$checkout_pin = $this->validate_and_get_cookie_pincode( 'pincode' );
 
 		$pincode_to_validate = $cookie_pin == $checkout_pin ? $cookie_pin : $checkout_pin;
 
@@ -356,3 +381,4 @@ class Woo_Pincode_Checker_Public {
 			}
 		}
 	}
+}
