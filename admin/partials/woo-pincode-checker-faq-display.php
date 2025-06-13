@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</button>
 						<div class="wbcom-faq-panel">
 							<p> 
-								<?php esc_html_e( 'Yes, It needs you to have WooCommerce installed and activated.', 'woo-pincode-checker' ); ?>
+								<?php esc_html_e( 'Yes, this plugin requires WooCommerce to be installed and activated in order to function properly.', 'woo-pincode-checker' ); ?>
 							</p>
 						</div>
 					</div>
@@ -38,11 +38,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="wbcom-faq-section-row">
 					<div class="wbcom-faq-admin-row">
 						<button class="wbcom-faq-accordion">
-							<?php esc_html_e( 'What to do after activating the plugin?', 'woo-pincode-checker' ); ?>
+							<?php esc_html_e( 'What should I do after activating the plugin?', 'woo-pincode-checker' ); ?>
 						</button>
 						<div class="wbcom-faq-panel">
 							<p> 
-								<?php esc_html_e( 'You need to add or upload pincodes.', 'woo-pincode-checker' ); ?>     
+								<?php esc_html_e( 'After activating the plugin, you need to add or upload pincodes to enable the delivery availability check.', 'woo-pincode-checker' ); ?>     
 							</p>
 						</div>
 					</div>
@@ -101,11 +101,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="wbcom-faq-section-row">
 					<div class="wbcom-faq-admin-row">
 						<button class="wbcom-faq-accordion">
-							<?php esc_html_e( 'Can I hide pincode checker form for the specific product?', 'woo-pincode-checker' ); ?>
+							<?php esc_html_e( 'Can I hide the pincode checker for specific products?', 'woo-pincode-checker' ); ?>
 						</button>
 						<div class="wbcom-faq-panel">
 							<p> 
-								<?php esc_html_e( 'Yes, This plugin allows you to hide the pincode checker form for the specific product.', 'woo-pincode-checker' ); ?>    
+								<?php esc_html_e( 'Yes, you can hide the pincode checker form for individual products.', 'woo-pincode-checker' ); ?>    
 							</p>
 							<p> 
 								<?php esc_html_e( 'To hide the pincode checker form Navigate to the WP Dashboard > Products > Add New Product or Edit any product page and you will find the checkbox ( Check if Hide for this Product ). you can check this checkbox to hide the pincode checker form for the specific product.', 'woo-pincode-checker' ); ?>    
@@ -116,14 +116,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="wbcom-faq-section-row">
 					<div class="wbcom-faq-admin-row">
 						<button class="wbcom-faq-accordion">
-							<?php esc_html_e( 'Where to find the pincode checker form in my website?', 'woo-pincode-checker' ); ?>
+							<?php esc_html_e( 'Where will the pincode checker appear on my website?', 'woo-pincode-checker' ); ?>
 						</button>
 						<div class="wbcom-faq-panel">
 							<p> 
-								<?php esc_html_e( 'Navigate to the shop page and click on any product in which you want to check that shipping is available or not in a particular postal code. Now here you will find the “Check button” to check the availability of the product. Fill in your area pin code and click on the button.', 'woo-pincode-checker' ); ?>    
+								<?php esc_html_e( 'The pincode checker form appears on individual product pages.', 'woo-pincode-checker' ); ?>    
 							</p>
 							<p> 
-								<?php esc_html_e( 'Now it will display the message if the product is available or not in a particular Pincode. It will also display the delivery date so that customers can know the timeline of their available orders before placing the order. It also displays that cash on delivery is available or not at a particular Pincode.', 'woo-pincode-checker' ); ?>    
+								<?php esc_html_e( 'To use it:', 'woo-pincode-checker' ); ?>    
+							</p>
+							<p> 
+								<?php esc_html_e( '1) Go to your Shop Page, select a product.', 'woo-pincode-checker' ); ?>    
+							</p>
+							<p> 
+								<?php esc_html_e( '2) Enter your area pincode and click "Check".', 'woo-pincode-checker' ); ?>    
+							</p>
+							<p> 
+								<?php esc_html_e( 'The plugin will display:', 'woo-pincode-checker' ); ?>    
+							</p>
+							<p> 
+								<?php esc_html_e( '1) Whether the product is deliverable to the entered pincode.', 'woo-pincode-checker' ); ?>    
+							</p>
+							<p> 
+								<?php esc_html_e( '2) The estimated delivery date.', 'woo-pincode-checker' ); ?>    
+							</p>
+							<p> 
+								<?php esc_html_e( '3) Whether Cash on Delivery is available at that location.', 'woo-pincode-checker' ); ?>    
 							</p>
 						</div>
 					</div>

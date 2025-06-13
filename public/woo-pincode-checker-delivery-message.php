@@ -34,8 +34,8 @@
 					<div class="wpc-delivery-info">
 						<h4>
 						<?php
-						/* Translators: %1$s: We are available and servicing at your location.   */
-						esc_html_e( 'We are available and servicing at your location.', 'woo-pincode-checker' );
+						/* Translators: %1$s: We deliver to your location.   */
+						esc_html_e( 'We deliver to your location.', 'woo-pincode-checker' );
 						?>
 						</h4>					
 						<div class="header">
@@ -69,7 +69,7 @@
 										<div class="wpc_cash_on_delivery">
 											<strong>
 												<?php
-													/* Translators: %1$s: Cash On Delivery Available Label   */
+													/* Translators: %1$s: Cash on Delivery Available Label   */
 													echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
 												?>
 											</strong>
@@ -91,10 +91,10 @@
 				
 			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field2" style="display:none;">
 
-					<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
+					<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Sorry! We are currently not servicing your area.', 'woo-pincode-checker' ); ?></div>
 
 					<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-						<input type="text" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required ); ?>/>
+						<input type="text" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter your pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required ); ?>/>
 
 						<a class="button wpc-check-button" id="checkpin">
 							<?php

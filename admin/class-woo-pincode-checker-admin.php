@@ -427,7 +427,7 @@ class Woo_Pincode_Checker_Admin {
 			 // Validate pincode format (alphanumeric, 3-10 characters)
 			if ( ! preg_match( '/^[A-Za-z0-9\s]{3,10}$/', $wpc_pincode ) ) {
 				$message_type = 'error';
-				$wpc_message = __( 'Please enter a valid pincode (3-10 alphanumeric characters).', 'woo-pincode-checker' );
+				$wpc_message = __( 'Please enter a valid pincode (3-10 alphanumeric characters only).', 'woo-pincode-checker' );
 			}
 			if ( $wpc_pincode != '' ) {
 
@@ -494,12 +494,12 @@ class Woo_Pincode_Checker_Admin {
 						}
 					}else{
 						$message_type = 'error';
-						$wpc_message  = esc_html__( 'This pincode already exist.', 'woo-pincode-checker' );
+						$wpc_message  = esc_html__( 'This pincode already exists.', 'woo-pincode-checker' );
 					}
 				}
 			} else {
 				$message_type = 'error';
-				$wpc_message  = esc_html__( 'Please fill valid pincode info.', 'woo-pincode-checker' );
+				$wpc_message  = esc_html__( 'Please enter valid pincode information.', 'woo-pincode-checker' );
 			}
 		}
 
@@ -570,7 +570,7 @@ class Woo_Pincode_Checker_Admin {
 									<label for="wpc-case-on-shipping-amount"><?php esc_html_e( 'Shipping Amount', 'woo-pincode-checker' ); ?></label>
 								</th>
 
-								<td><input type="number" step="1" class="regular-text" id="wpc-shipping-amount" name="wpc_shipping_amount" value="<?php echo isset( $query_results[0]['shipping_amount'] ) ? esc_attr( $query_results[0]['shipping_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e( 'Note : Enable shipping cost in setting to calculate the shipping amount.', 'woo-pincode-checker' ); ?></td>
+								<td><input type="number" step="1" class="regular-text" id="wpc-shipping-amount" name="wpc_shipping_amount" value="<?php echo isset( $query_results[0]['shipping_amount'] ) ? esc_attr( $query_results[0]['shipping_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e('Note:Enable shipping cost in settings to calculate the shipping amount.', 'woo-pincode-checker' ); ?></td>
 							</tr>
 							<tr>
 								<th>
@@ -584,14 +584,14 @@ class Woo_Pincode_Checker_Admin {
 									<label for="wpc-case-on-delivery"><?php esc_html_e( 'Cash on Delivery', 'woo-pincode-checker' ); ?></label>
 								</th>
 
-								<td><input type="checkbox" value="1" class="regular-text" id="wpc-case-on-delivery" name="wpc-case-on-delivery" <?php checked( '1', ( isset( $query_results[0]['case_on_delivery'] ) ) ? $query_results[0]['case_on_delivery'] : '' ); ?>> &nbsp; <?php esc_html_e( 'Enable Cash on deliver for this pincode', 'woo-pincode-checker' ); ?></td>
+								<td><input type="checkbox" value="1" class="regular-text" id="wpc-case-on-delivery" name="wpc-case-on-delivery" <?php checked( '1', ( isset( $query_results[0]['case_on_delivery'] ) ) ? $query_results[0]['case_on_delivery'] : '' ); ?>> &nbsp; <?php esc_html_e( 'Enable Cash on Delivery for this pincode', 'woo-pincode-checker' ); ?></td>
 							</tr>
 							<tr>
 								<th>
 									<label for="wpc-case-on-delivery-amount"><?php esc_html_e( 'Cash on Delivery Amount', 'woo-pincode-checker' ); ?></label>
 								</th>
 
-								<td><input type="number" step="1" class="regular-text" id="wpc-case-on-delivery-amount" name="wpc_case_on_delivery_amount" value="<?php echo ( isset( $query_results[0]['cod_amount'] ) ) ? esc_attr( $query_results[0]['cod_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e( 'Note : If COD option is enable then COD amount will count on cart and checkout page', 'woo-pincode-checker' ); ?></td>
+								<td><input type="number" step="1" class="regular-text" id="wpc-case-on-delivery-amount" name="wpc_case_on_delivery_amount" value="<?php echo ( isset( $query_results[0]['cod_amount'] ) ) ? esc_attr( $query_results[0]['cod_amount'] ) : '0'; ?>"> &nbsp; <?php esc_html_e('Note: If COD option is enabled,then COD amount will be counted on cart and checkout page.', 'woo-pincode-checker' ); ?></td>
 							</tr>
 						</tbody>
 					</table>
@@ -656,7 +656,7 @@ class Woo_Pincode_Checker_Admin {
 				
 				if (! in_array( $file_type, $allowed_types ) || $file_extension !== 'csv' ) {
 					$message_type = 'error';
-					$wpc_message = __( 'Invalid file type. Only CSV files are allowed.', 'woo-pincode-checker' );
+					$wpc_message = __( 'Invalid file type. Please upload a CSV file only.', 'woo-pincode-checker' );
 					$should_continoue    = false;
 				}
 			}
@@ -676,7 +676,7 @@ class Woo_Pincode_Checker_Admin {
 				if ( ! $first_line || count( $first_line ) < 3 ) {
 					fclose( $handle );
 					$message_type = 'error';
-					$wpc_message = __( 'Invalid CSV format. Expected columns: pincode, city, state, delivery_days, shipping_amount, case_on_delivery, cod_amount', 'woo-pincode-checker' );
+					$wpc_message = __( 'Invalid CSV format. Expected columns: pincode, city, state, delivery_days, shipping_amount, cash_on_delivery, cod_amount', 'woo-pincode-checker' );
 					$should_continoue = false;
 				}
 			}
@@ -743,7 +743,7 @@ class Woo_Pincode_Checker_Admin {
 				}
 				?>
 				<div class="wbcom-admin-title-section">
-					<h3><?php esc_html_e( 'Upload pincodes from a CSV file', 'woo-pincode-checker' ); ?> </h3>
+					<h3><?php esc_html_e( 'Upload Your CSV File', 'woo-pincode-checker' ); ?> </h3>
 				</div>
 				<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view wpc-upload-pincode-section">
 					<form enctype="multipart/form-data" method="post">
@@ -752,7 +752,7 @@ class Woo_Pincode_Checker_Admin {
 								<div class="wbcom-settings-section-wrap">
 									<div class="wbcom-settings-section-options-heading">
 										<label for="upload">
-											<?php esc_html_e( 'Choose a CSV file from your computer:', 'woo-pincode-checker' ); ?>
+											<?php esc_html_e( 'Select a CSV file to upload from your device.', 'woo-pincode-checker' ); ?>
 										</label>
 									</div>
 									<div class="wbcom-settings-section-options">
@@ -764,7 +764,7 @@ class Woo_Pincode_Checker_Admin {
 											<?php
 											printf(
 												/* translators: %s: maximum upload size */
-												esc_html__( 'Maximum size: %s', 'woo-pincode-checker' ),
+												esc_html__( 'Note: Maximum file size allowed is %s', 'woo-pincode-checker' ),
 												esc_html( $size )
 											);
 											?>

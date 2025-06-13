@@ -49,6 +49,7 @@ if ( false == $general_settings['date_display'] ) {
 								<label>
 									<?php esc_html_e( 'Show Delivery Date', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Enable this option to display the estimated delivery date on the product page.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label class="wb-switch">
@@ -56,6 +57,7 @@ if ( false == $general_settings['date_display'] ) {
 									<div class="wb-slider wb-round"></div>
 								</label>
 							</div>
+							
 						</div>
 						<div id="wbwss-wpc-deliver-date" class="wbcom-settings-section-wrap <?php echo esc_attr( $class ); ?>"
 							<?php
@@ -66,6 +68,7 @@ if ( false == $general_settings['date_display'] ) {
 								<label>
 									<?php esc_html_e( 'Select Delivery Date Format', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Choose the format in which the delivery date will be displayed to users.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options"
 							<?php
@@ -86,8 +89,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div id="wbwss-wpc-deliver-date-text" class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Delivery Date Text', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Delivery Date Label', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Customize the label shown before the estimated delivery date.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label>
@@ -98,8 +102,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Make Pincode Field Required', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Make pincode field required', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Make the pincode input field mandatory before the customer can proceed with adding the product to the cart.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label class="wb-switch">
@@ -111,8 +116,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Add to cart button state for unavailable pincodes', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Add to cart button behavior for unavailable pincodes', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Choose how the Add to Cart button should behave when the entered pincode is not serviceable.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label>
@@ -127,8 +133,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap wcpq-pro-products">
 							<div class="wbcom-settings-section-options-heading">
 								<label for="blogname">
-									<?php esc_html_e( 'Exclude category for shipping availbility', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Exclude category for shipping availability', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Choose how the Add to Cart button should behave when the entered pincode is not serviceable.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<select id="wpc-exclude-category"  name="wpc_general_settings[categories_for_shipping][]" multiple>
@@ -152,6 +159,7 @@ if ( false == $general_settings['date_display'] ) {
 								<label>
 									<?php esc_html_e( 'Pincode Availability Check Position', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Choose where the pincode availability check box should appear on the product page.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label>
@@ -177,8 +185,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Show Cash On Delivery Option', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Show Cash on Delivery Option', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Enable this setting to display the Cash on Delivery (COD) option if it’s available for the entered pincode.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label class="wb-switch">
@@ -190,8 +199,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Check Button Text', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Check Availability Button Text', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Enter the text to display on the button used to check delivery availability.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label>
@@ -202,8 +212,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Change Button Text', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Change Pincode Button Text', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Enter the text to display on the button that allows users to re-enter or change the pincode.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label>
@@ -214,8 +225,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Cash On Delivery label text', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Cash on Delivery label text', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Customize the label shown for the Cash on Delivery option', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label>
@@ -226,8 +238,9 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Check Availability At label Text', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Pincode Check Label', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Set the label text shown before the pincode input field.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options">
 								<label>
@@ -238,16 +251,18 @@ if ( false == $general_settings['date_display'] ) {
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Select Pincode Label Text Color', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Pincode Label Text Color', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Choose the text color for the pincode label displayed on the product page.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options"><input type="text" name="wpc_general_settings[textcolor]" class="regular-text" id="textcolor" value="<?php echo esc_attr( $general_settings['textcolor'] ); ?>"></div>
 						</div>
 						<div class="wbcom-settings-section-wrap">
 							<div class="wbcom-settings-section-options-heading">
 								<label>
-									<?php esc_html_e( 'Select Button Color', 'woo-pincode-checker' ); ?>
+									<?php esc_html_e( 'Check Button Background Color', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Select the background color of the "Check" button.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options"><input type="text" name="wpc_general_settings[buttoncolor]" class="regular-text" id="buttoncolor" value="<?php echo esc_attr( $general_settings['buttoncolor'] ); ?>"></div>
 						</div>
@@ -256,6 +271,7 @@ if ( false == $general_settings['date_display'] ) {
 								<label>
 									<?php esc_html_e( 'Select Button Text Color', 'woo-pincode-checker' ); ?>
 								</label>
+								<p class="description"><?php esc_html_e( 'Select the text color for the "Check" button.', 'woo-pincode-checker' ); ?></p>
 							</div>
 							<div class="wbcom-settings-section-options"><input type="text" class="regular-text" id="buttontcolor" name="wpc_general_settings[buttontcolor]" value="<?php echo esc_attr( $general_settings['buttontcolor'] ); ?>"></div>
 						</div>

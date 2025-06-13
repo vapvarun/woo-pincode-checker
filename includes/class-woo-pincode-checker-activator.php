@@ -75,7 +75,7 @@ class Woo_Pincode_Checker_Activator {
 			'check_btn_text'           => __( 'Check', 'woo-pincode-checker' ),
 			'change_btn_text'          => __( 'Change', 'woo-pincode-checker' ),
 			'delivery_date_label_text' => __( 'Delivery Date', 'woo-pincode-checker' ),
-			'cod_label_text'           => __( 'Cash On Delivery', 'woo-pincode-checker' ),
+			'cod_label_text'           => __( 'Cash on Delivery', 'woo-pincode-checker' ),
 			'availability_label_text'  => __( 'Available at', 'woo-pincode-checker' ),
 			'textcolor'                => '#141414',
 			'buttoncolor'              => '#dd3333',

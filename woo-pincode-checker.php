@@ -12,8 +12,8 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Woo Pincode Checker
- * Plugin URI:        https://wbcomdesigns.com
- * Description:       Allows the site admin to add the pincode availability feature on their sites with woo pincode checker plugin.
+ * Plugin URI:        https://wbcomdesigns.com/downloads/woo-pincode-checker/
+ * Description:       Woo Pincode Checker enables store owners to show product availability, delivery timelines, and COD options based on the customer’s entered pincode.
  * Version:           1.3.4
  * Author:            wbcomdesigns
  * Author URI:        https://wbcomdesigns.com/plugins

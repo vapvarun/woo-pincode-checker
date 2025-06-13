@@ -183,10 +183,10 @@ class Woo_Pincode_Checker_Form {
 				<img src="<?php echo esc_url( WPCP_PLUGIN_URL . 'public/image/loading-load.gif' ) ;  ?>"/>
 			</div>
 			<div class="wc-delivery-time-response  pin_div pincode_check_btn  <?php echo esc_attr( $wpc_position_class ); ?>" id="my_custom_checkout_field">
-				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ); ?></div>
+				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Sorry! We are currently not servicing your area.', 'woo-pincode-checker' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-					<input type="text" value="<?php echo esc_attr( $wpc_zipcode ); ?>" placeholder="<?php esc_html_e( 'Enter Your Pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required );?>/>
+					<input type="text" value="<?php echo esc_attr( $wpc_zipcode ); ?>" placeholder="<?php esc_html_e( 'Enter your pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required );?>/>
 					<a class="button wpc-check-button" id="checkpin">
 						<?php
 							/* Translators: %1$s: Check Button Text   */
@@ -217,7 +217,7 @@ class Woo_Pincode_Checker_Form {
 		}
 		
 		if ( ! preg_match( '/^[A-Za-z0-9\s]{3,10}$/', $user_input_pincode ) ) {
-			wp_send_json_error( array( 'message' => __( 'Please enter a valid pincode (3-10 alphanumeric characters).', 'woo-pincode-checker' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Please enter a valid pincode (3-10 alphanumeric characters only).', 'woo-pincode-checker' ) ) );
 			return;
 		}
 		global $wpdb;
@@ -281,10 +281,10 @@ class Woo_Pincode_Checker_Form {
 					)
 				);
 			}else{
-				wp_send_json_error(array( 'message' => __( 'Error retrieving pincode details.', 'woo-pincode-checker' ) ));
+				wp_send_json_error(array( 'message' => __( 'Unable to retrieve pincode details. Please try again.', 'woo-pincode-checker' ) ));
 			}
 		}else{
-			wp_send_json_error(array( 'message' => __( 'Oops! We are currently not servicing in your area.', 'woo-pincode-checker' ) ));
+			wp_send_json_error(array( 'message' => __( 'Sorry! We are currently not servicing your area.', 'woo-pincode-checker' ) ));
 		}
 	}
 
