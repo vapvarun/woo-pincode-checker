@@ -75,7 +75,10 @@
     // console.log( $(".wpc-bulk-delete"));
     $(".wpc-bulk-delete").on("click", function (event) {
       event.preventDefault();
-      alert("Are you sure you want to delete all pincodes?");
+      let user_cnfrm = confirm("Are you sure you want to delete all pincodes?");
+      if(!user_cnfrm ){
+        return;
+      }
       var data = {
         action: "wpc_bulk_delete_action",
         nonce: wpc_admin_ajax.nonce,

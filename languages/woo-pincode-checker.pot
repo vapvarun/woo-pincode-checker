@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-13 09:30:12+00:00\n"
+"POT-Creation-Date: 2025-06-13 10:32:03+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -152,13 +152,13 @@ msgstr ""
 
 #: admin/class-woo-pincode-checker-admin.php:570
 #: admin/class-woo-pincode-checker-listing.php:53
-#: public/class-woo-pincode-checker-public.php:154
-#: public/class-woo-pincode-checker-public.php:172
+#: public/class-woo-pincode-checker-public.php:153
+#: public/class-woo-pincode-checker-public.php:171
 msgid "Shipping Amount"
 msgstr ""
 
 #: admin/class-woo-pincode-checker-admin.php:573
-msgid "Note:Enable shipping cost in settings to calculate the shipping amount."
+msgid "Note: Enable shipping cost in settings to calculate the shipping amount."
 msgstr ""
 
 #: admin/class-woo-pincode-checker-admin.php:577
@@ -207,42 +207,42 @@ msgid ""
 "shipping_amount, cash_on_delivery, cod_amount"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:728
+#: admin/class-woo-pincode-checker-admin.php:723
 msgid "Import Pincodes CSV file Successfully."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:746
+#: admin/class-woo-pincode-checker-admin.php:741
 msgid "Upload Your CSV File"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:755
+#: admin/class-woo-pincode-checker-admin.php:750
 msgid "Select a CSV file to upload from your device."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:767
+#: admin/class-woo-pincode-checker-admin.php:762
 #. translators: %s: maximum upload size
 msgid "Note: Maximum file size allowed is %s"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:777
+#: admin/class-woo-pincode-checker-admin.php:772
 #: admin/partials/woo-pincode-checker-faq-display.php:67
 msgid "Download Sample CSV File:"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:781
+#: admin/class-woo-pincode-checker-admin.php:776
 #: admin/partials/woo-pincode-checker-faq-display.php:69
 msgid "Click Here"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:788
+#: admin/class-woo-pincode-checker-admin.php:783
 msgid "Import CSV File"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:801
+#: admin/class-woo-pincode-checker-admin.php:796
 msgid "Pincode/Zipcode for Shipping Availability"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:822
+#: admin/class-woo-pincode-checker-admin.php:817
 msgid "Enable if you want to hide shipping availability:"
 msgstr ""
 
@@ -1501,21 +1501,21 @@ msgstr ""
 msgid "Themes & Extension"
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:237
+#: public/class-woo-pincode-checker-public.php:236
 #: public/class-woo-pincode-cheker-form.php:207
 msgid "Security check failed."
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:243
+#: public/class-woo-pincode-checker-public.php:242
 msgid "Pincode is required."
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:251
+#: public/class-woo-pincode-checker-public.php:250
 msgid "Invalid pincode format."
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:283
-#: public/class-woo-pincode-checker-public.php:289
+#: public/class-woo-pincode-checker-public.php:282
+#: public/class-woo-pincode-checker-public.php:288
 #. translators: %1$s: Zipcode
 msgid "Delivery to %1$s is currently not available for this item."
 msgstr ""

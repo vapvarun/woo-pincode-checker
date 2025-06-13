@@ -107,7 +107,6 @@ class Woo_Pincode_Checker_Public {
 				'hide_disable_product_page_cart_btn'    => $wpc_hide_disabled_add_cart_btn,
 				'required_pincode_field_btn'    => $wpc_required_pincode_field_btn,
 				'wpc_nonce'                             => wp_create_nonce( 'ajax-nonce' ),
-				// 'Please_enter_a_pin_code'              => 'Please enter a pin code.',
 			)
 		);
 	}
