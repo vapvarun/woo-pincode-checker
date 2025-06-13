@@ -69,6 +69,44 @@ class Woo_Pincode_Checker_Admin {
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		
+		// Add table existence check
+		add_action( 'admin_init', array( $this, 'check_table_existence' ), 1 );
+	}
+
+	/**
+	 * Check if database table exists and show notice if missing
+	 */
+	public function check_table_existence() {
+		global $wpdb;
+		
+		$table_name = $wpdb->prefix . 'pincode_checker';
+		$table_exists = $wpdb->get_var( $wpdb->prepare( 
+			"SHOW TABLES LIKE %s", 
+			$table_name 
+		) ) == $table_name;
+		
+		if ( ! $table_exists ) {
+			// Check if we're on a plugin page to show appropriate notice
+			$current_screen = get_current_screen();
+			if ( $current_screen && strpos( $current_screen->id, 'pincode' ) !== false ) {
+				add_action( 'admin_notices', array( $this, 'show_table_missing_notice' ) );
+			}
+		}
+	}
+
+	/**
+	 * Show admin notice when table is missing
+	 */
+	public function show_table_missing_notice() {
+		echo '<div class="notice notice-error is-dismissible">';
+		echo '<p><strong>Woo Pincode Checker:</strong> Database table is missing!</p>';
+		echo '<p>The plugin cannot function without its database table.</p>';
+		echo '<p>';
+		echo '<a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '" class="button button-primary">Fix Database Issue</a> ';
+		echo '<a href="#" onclick="location.reload();" class="button">Retry</a>';
+		echo '</p>';
+		echo '</div>';
 	}
 
 	/**
@@ -126,6 +164,51 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	private function verify_nonce( $nonce_value, $nonce_action ) {
 		return wp_verify_nonce( $nonce_value, $nonce_action );
+	}
+
+	/**
+	 * Safe database operation wrapper
+	 *
+	 * @param string $query The SQL query
+	 * @param array $params Query parameters
+	 * @return mixed Query result or false on failure
+	 */
+	private function safe_db_operation( $query, $params = array() ) {
+		global $wpdb;
+		
+		$table_name = $wpdb->prefix . 'pincode_checker';
+		
+		// Check if table exists before operation
+		$table_exists = $wpdb->get_var( $wpdb->prepare( 
+			"SHOW TABLES LIKE %s", 
+			$table_name 
+		) ) == $table_name;
+		
+		if ( ! $table_exists ) {
+			error_log( 'WPC: Attempted database operation on non-existent table' );
+			
+			// Try to create table
+			if ( function_exists( 'activate_woo_pincode_checker' ) ) {
+				activate_woo_pincode_checker();
+				
+				// Check again
+				$table_exists = $wpdb->get_var( $wpdb->prepare( 
+					"SHOW TABLES LIKE %s", 
+					$table_name 
+				) ) == $table_name;
+			}
+			
+			if ( ! $table_exists ) {
+				return false;
+			}
+		}
+		
+		// Execute the query
+		if ( ! empty( $params ) ) {
+			return $wpdb->query( $wpdb->prepare( $query, $params ) );
+		} else {
+			return $wpdb->query( $query );
+		}
 	}
 
 	/**
@@ -439,7 +522,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
-	 * Display Pincode Lists table in admin.
+	 * Display Pincode Lists table in admin - Enhanced with table checks.
 	 *
 	 * @since 1.0.0
 	 */
@@ -447,6 +530,35 @@ class Woo_Pincode_Checker_Admin {
 		// Check user capabilities
 		if ( ! $this->check_admin_capabilities() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'woo-pincode-checker' ) );
+		}
+
+		// Check if table exists
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'pincode_checker';
+		$table_exists = $wpdb->get_var( $wpdb->prepare( 
+			"SHOW TABLES LIKE %s", 
+			$table_name 
+		) ) == $table_name;
+
+		if ( ! $table_exists ) {
+			?>
+			<div class="wrap">
+				<h2><?php esc_html_e( 'Pincode Lists', 'woo-pincode-checker' ); ?></h2>
+				<div class="notice notice-error">
+					<p><strong><?php esc_html_e( 'Database Error:', 'woo-pincode-checker' ); ?></strong></p>
+					<p><?php esc_html_e( 'The plugin database table is missing. This usually happens when the plugin activation failed.', 'woo-pincode-checker' ); ?></p>
+					<p>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ); ?>" class="button button-primary">
+							<?php esc_html_e( 'Fix Database Issue', 'woo-pincode-checker' ); ?>
+						</a>
+						<a href="#" onclick="location.reload();" class="button">
+							<?php esc_html_e( 'Retry', 'woo-pincode-checker' ); ?>
+						</a>
+					</p>
+				</div>
+			</div>
+			<?php
+			return;
 		}
 
 		?>
@@ -485,7 +597,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
-	 * Add Pincode - SECURE VERSION.
+	 * Add Pincode - Enhanced with better error handling and table checks.
 	 *
 	 * @since 1.0.0
 	 */
@@ -496,6 +608,31 @@ class Woo_Pincode_Checker_Admin {
 		}
 
 		global $wpdb;
+		$table_name = $wpdb->prefix . 'pincode_checker';
+
+		// Check if table exists
+		$table_exists = $wpdb->get_var( $wpdb->prepare( 
+			"SHOW TABLES LIKE %s", 
+			$table_name 
+		) ) == $table_name;
+
+		if ( ! $table_exists ) {
+			?>
+			<div class="wrap">
+				<h2><?php esc_html_e( 'Add Pincode', 'woo-pincode-checker' ); ?></h2>
+				<div class="notice notice-error">
+					<p><strong><?php esc_html_e( 'Database Error:', 'woo-pincode-checker' ); ?></strong></p>
+					<p><?php esc_html_e( 'The plugin database table is missing. Cannot add pincodes without the database table.', 'woo-pincode-checker' ); ?></p>
+					<p>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ); ?>" class="button button-primary">
+							<?php esc_html_e( 'Fix Database Issue', 'woo-pincode-checker' ); ?>
+						</a>
+					</p>
+				</div>
+			</div>
+			<?php
+			return;
+		}
 
 		$wpc_message = $message_type = '';
 		
@@ -527,8 +664,6 @@ class Woo_Pincode_Checker_Admin {
 				$message_type = 'error';
 				$wpc_message = __( 'Amounts cannot be negative.', 'woo-pincode-checker' );
 			} else {
-				$table_name = $wpdb->prefix . 'pincode_checker';
-
 				// Check if this is an edit action
 				$is_edit = isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'edit';
 				$edit_id = $is_edit ? intval( $_REQUEST['id'] ?? 0 ) : 0;
@@ -570,7 +705,7 @@ class Woo_Pincode_Checker_Admin {
 							wp_cache_delete( 'wpc_pincode_' . md5( $wpc_pincode ), 'woo_pincode_checker' );
 						} else {
 							$message_type = 'error';
-							$wpc_message = __( 'Error updating pincode. Please try again.', 'woo-pincode-checker' );
+							$wpc_message = __( 'Error updating pincode. Please try again.', 'woo-pincode-checker' ) . ' ' . $wpdb->last_error;
 						}
 					} else {
 						// Insert new record
@@ -593,7 +728,7 @@ class Woo_Pincode_Checker_Admin {
 							$wpc_message = __( 'Pincode added successfully.', 'woo-pincode-checker' );
 						} else {
 							$message_type = 'error';
-							$wpc_message = __( 'Error adding pincode. Please try again.', 'woo-pincode-checker' );
+							$wpc_message = __( 'Error adding pincode. Please try again.', 'woo-pincode-checker' ) . ' ' . $wpdb->last_error;
 						}
 					}
 				} else {
@@ -618,7 +753,7 @@ class Woo_Pincode_Checker_Admin {
 			
 			if ( $id > 0 ) {
 				$query_results = $wpdb->get_results( $wpdb->prepare(
-					"SELECT * FROM {$wpdb->prefix}pincode_checker WHERE id = %d", 
+					"SELECT * FROM {$table_name} WHERE id = %d", 
 					$id
 				), ARRAY_A );
 			}
@@ -806,7 +941,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
-	 * Upload Pincode with enhanced security.
+	 * Upload Pincode with enhanced security and table checks.
 	 *
 	 * @since 1.0.0
 	 */
@@ -817,6 +952,33 @@ class Woo_Pincode_Checker_Admin {
 		}
 
 		global $wpdb;
+		$table_name = $wpdb->prefix . 'pincode_checker';
+
+		// Check if table exists
+		$table_exists = $wpdb->get_var( $wpdb->prepare( 
+			"SHOW TABLES LIKE %s", 
+			$table_name 
+		) ) == $table_name;
+
+		if ( ! $table_exists ) {
+			?>
+			<div class="wbcom-tab-content wpc-upload-pincode-wrap">
+				<div class="wbcom-wrapper-admin">
+					<div class="notice notice-error">
+						<p><strong><?php esc_html_e( 'Database Error:', 'woo-pincode-checker' ); ?></strong></p>
+						<p><?php esc_html_e( 'The plugin database table is missing. Cannot upload pincodes without the database table.', 'woo-pincode-checker' ); ?></p>
+						<p>
+							<a href="<?php echo esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ); ?>" class="button button-primary">
+								<?php esc_html_e( 'Fix Database Issue', 'woo-pincode-checker' ); ?>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<?php
+			return;
+		}
+
 		$wpc_message = '';
 		$message_type = '';
 		$bytes = apply_filters( 'import_upload_size_limit', wp_max_upload_size() );
@@ -899,8 +1061,6 @@ class Woo_Pincode_Checker_Admin {
 				if ( $handle ) {
 					// Skip header row
 					fgetcsv( $handle );
-					
-					$table_name = $wpdb->prefix . 'pincode_checker';
 
 					while ( ( $data = fgetcsv( $handle, 100000, ',' ) ) !== false ) {
 						// Validate row data
@@ -959,6 +1119,7 @@ class Woo_Pincode_Checker_Admin {
 								$imported_count++;
 							} else {
 								$error_count++;
+								error_log( 'WPC CSV Import Error: ' . $wpdb->last_error );
 							}
 						} else {
 							$skipped_count++;
@@ -1127,7 +1288,7 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
-	 * This Function is handle the Bulk delete ajax callback.
+	 * Enhanced bulk delete with table checks.
 	 */
 	public function wpc_bulk_delete_action_ajax_callback() {
 		// Check user capabilities
@@ -1145,6 +1306,17 @@ class Woo_Pincode_Checker_Admin {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pincode_checker';
 
+		// Check if table exists
+		$table_exists = $wpdb->get_var( $wpdb->prepare( 
+			"SHOW TABLES LIKE %s", 
+			$table_name 
+		) ) == $table_name;
+
+		if ( ! $table_exists ) {
+			wp_send_json_error( 'Database table does not exist' );
+			exit;
+		}
+
 		// Use prepared statement for deletion
 		$result = $wpdb->query( "TRUNCATE TABLE `{$table_name}`" );
 
@@ -1153,7 +1325,7 @@ class Woo_Pincode_Checker_Admin {
 			wp_cache_flush_group( 'woo_pincode_checker' );
 			wp_send_json_success( 'Pincodes deleted successfully' );
 		} else {
-			wp_send_json_error( 'Failed to delete pincodes' );
+			wp_send_json_error( 'Failed to delete pincodes: ' . $wpdb->last_error );
 		}
 	}
 }

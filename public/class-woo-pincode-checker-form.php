@@ -52,6 +52,101 @@ class Woo_Pincode_Checker_Form {
 	}
 
 	/**
+	 * Check if database table exists
+	 *
+	 * @return bool
+	 */
+	private function check_table_exists() {
+		global $wpdb;
+		
+		$table_name = $wpdb->prefix . 'pincode_checker';
+		$table_exists = $wpdb->get_var( $wpdb->prepare( 
+			"SHOW TABLES LIKE %s", 
+			$table_name 
+		) ) == $table_name;
+		
+		if ( ! $table_exists ) {
+			error_log( 'WPC: Table missing in form class, attempting to create...' );
+			
+			// Try to create table
+			if ( function_exists( 'activate_woo_pincode_checker' ) ) {
+				activate_woo_pincode_checker();
+				
+				// Check again
+				$table_exists = $wpdb->get_var( $wpdb->prepare( 
+					"SHOW TABLES LIKE %s", 
+					$table_name 
+				) ) == $table_name;
+			}
+		}
+		
+		return $table_exists;
+	}
+
+	/**
+	 * Safe database query that ensures table exists
+	 *
+	 * @param string $query SQL query
+	 * @param array $params Query parameters
+	 * @return mixed Query result or false if table doesn't exist
+	 */
+	private function safe_db_query( $query, $params = array() ) {
+		if ( ! $this->check_table_exists() ) {
+			return false;
+		}
+		
+		global $wpdb;
+		
+		if ( ! empty( $params ) ) {
+			return $wpdb->get_results( $wpdb->prepare( $query, $params ) );
+		} else {
+			return $wpdb->get_results( $query );
+		}
+	}
+
+	/**
+	 * Safe database get_var that ensures table exists
+	 *
+	 * @param string $query SQL query
+	 * @param array $params Query parameters
+	 * @return mixed Query result or false if table doesn't exist
+	 */
+	private function safe_db_get_var( $query, $params = array() ) {
+		if ( ! $this->check_table_exists() ) {
+			return false;
+		}
+		
+		global $wpdb;
+		
+		if ( ! empty( $params ) ) {
+			return $wpdb->get_var( $wpdb->prepare( $query, $params ) );
+		} else {
+			return $wpdb->get_var( $query );
+		}
+	}
+
+	/**
+	 * Safe database get_row that ensures table exists
+	 *
+	 * @param string $query SQL query
+	 * @param array $params Query parameters
+	 * @return mixed Query result or false if table doesn't exist
+	 */
+	private function safe_db_get_row( $query, $params = array() ) {
+		if ( ! $this->check_table_exists() ) {
+			return false;
+		}
+		
+		global $wpdb;
+		
+		if ( ! empty( $params ) ) {
+			return $wpdb->get_row( $wpdb->prepare( $query, $params ) );
+		} else {
+			return $wpdb->get_row( $query );
+		}
+	}
+
+	/**
 	 * Validate and sanitize pincode input
 	 *
 	 * @param string $pincode The pincode to validate
@@ -142,10 +237,12 @@ class Woo_Pincode_Checker_Form {
 		
 		if ( false === $cached_data ) {
 			global $wpdb;
-			$cached_data = $wpdb->get_row( $wpdb->prepare(
-				"SELECT * FROM {$wpdb->prefix}pincode_checker WHERE pincode = %s",
-				$pincode
-			) );
+			$table_name = $wpdb->prefix . 'pincode_checker';
+			
+			$cached_data = $this->safe_db_get_row(
+				"SELECT * FROM {$table_name} WHERE pincode = %s",
+				array( $pincode )
+			);
 			
 			// Cache for 1 hour
 			wp_cache_set( $cache_key, $cached_data, 'woo_pincode_checker', 3600 );
@@ -172,10 +269,22 @@ class Woo_Pincode_Checker_Form {
 	}
 
 	/**
-	 * Display Pincode check form on product page.
+	 * Display Pincode check form on product page - Enhanced with table checks.
 	 */
 	public function wpc_display_pincode_field() {
 		global $table_prefix, $wpdb,$woocommerce, $product;
+		
+		// Check if table exists first
+		if ( ! $this->check_table_exists() ) {
+			// Show a user-friendly message or silently fail
+			if ( current_user_can( 'manage_options' ) ) {
+				echo '<div style="color: red; font-size: 12px; margin: 10px 0;">';
+				echo esc_html__( 'Pincode checker unavailable: Database table missing.', 'woo-pincode-checker' );
+				echo ' <a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '">' . esc_html__( 'Fix this issue', 'woo-pincode-checker' ) . '</a>';
+				echo '</div>';
+			}
+			return;
+		}
 		
 		$wpc_exclude_category = wpc_get_products_to_pincode_checker_by_category();
 		$product_id = $this->wpc_access_protected( $product, 'id' );
@@ -201,12 +310,13 @@ class Woo_Pincode_Checker_Form {
 		
 		// Double check pincode exists in database
 		if ( ! empty( $cookie_pin ) ) {
-			$pincode_exists = $wpdb->get_var( $wpdb->prepare( 
-				"SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s", 
-				$cookie_pin 
-			));
+			$table_name = $wpdb->prefix . 'pincode_checker';
+			$pincode_exists = $this->safe_db_get_var(
+				"SELECT COUNT(*) FROM {$table_name} WHERE `pincode` = %s",
+				array( $cookie_pin )
+			);
 			
-			if ( $pincode_exists == 0 ) {
+			if ( $pincode_exists === false || $pincode_exists == 0 ) {
 				$cookie_pin = '';
 				// Clear invalid cookie
 				setcookie( 'valid_pincode', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
@@ -256,10 +366,11 @@ class Woo_Pincode_Checker_Form {
 		
 		/* check pincode is set in cookie or not */
 		if ( isset( $cookie_pin ) && $cookie_pin != '' ) {
-			$getdata = $wpdb->get_results($wpdb->prepare(
-				"SELECT * FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s",
-				$cookie_pin
-			));
+			$table_name = $wpdb->prefix . 'pincode_checker';
+			$getdata = $this->safe_db_query(
+				"SELECT * FROM {$table_name} WHERE `pincode` = %s",
+				array( $cookie_pin )
+			);
 
 			if ( ! empty( $getdata ) ) {
 				foreach ( $getdata as $data ) {
@@ -331,9 +442,17 @@ class Woo_Pincode_Checker_Form {
 	}
 
 	/**
-	 * Set pincode in cookie - SECURE VERSION.
+	 * Set pincode in cookie - Enhanced with table checks and better error handling.
 	 */
 	public function wpc_picode_check_ajax_submit() {
+		// Check if table exists first
+		if ( ! $this->check_table_exists() ) {
+			wp_send_json_error( array( 
+				'message' => __( 'Service temporarily unavailable. Please try again later.', 'woo-pincode-checker' )
+			));
+			return;
+		}
+
 		// Verify nonce first
 		if ( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
 			wp_send_json_error(array( 'message' => __( 'Security check failed.', 'woo-pincode-checker' ) ));
@@ -496,10 +615,15 @@ class Woo_Pincode_Checker_Form {
 	}
 
 	/**
-	 * Set Available Pincodes into shipping and billing postcode.
+	 * Set Available Pincodes into shipping and billing postcode - Enhanced with table checks.
 	 */
 	public function wpc_set_wc_billing_and_shipping_zipcode() {
 		if ( is_admin() ) {
+			return false;
+		}
+		
+		// Check if table exists
+		if ( ! $this->check_table_exists() ) {
 			return false;
 		}
 		
@@ -508,14 +632,13 @@ class Woo_Pincode_Checker_Form {
 		
 		// Double check pincode exists in database
 		if ( ! empty( $cookie_pin ) ) {
-			$num_rows = $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker WHERE `pincode` = %s",
-					$cookie_pin
-				)
+			$table_name = $wpdb->prefix . 'pincode_checker';
+			$num_rows = $this->safe_db_get_var(
+				"SELECT COUNT(*) FROM {$table_name} WHERE `pincode` = %s",
+				array( $cookie_pin )
 			);
 
-			if ( $num_rows == 0 ) {
+			if ( $num_rows === false || $num_rows == 0 ) {
 				$cookie_pin = '';
 				// Clear invalid cookie
 				setcookie( 'valid_pincode', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
