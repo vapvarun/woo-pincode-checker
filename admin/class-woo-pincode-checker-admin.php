@@ -683,15 +683,10 @@ class Woo_Pincode_Checker_Admin {
 				
 				$imported_count = 0;
 				$skipped_count = 0;
-				$row_number = 0;
 			if ( $should_continoue) {
 				if ( isset( $_FILES['import']['size'] ) && $_FILES['import']['size'] > 0 ) {
 					while ( ( $getData = fgetcsv( $handle, 100000, ',' ) ) !== false ) {
-						$row_number++;
-						// Skip header row
-						if ( $row_number === 1 ) {
-							continue;
-						}
+						
 						// Validate row data
 						if ( count( $getData ) < 3 ) {
 							$skipped_count++;
