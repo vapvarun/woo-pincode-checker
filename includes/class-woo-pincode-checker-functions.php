@@ -71,7 +71,13 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 			$wpc_general_settings = '';
 			$new_general_settings = array();
 			
-			if ( is_multisite() && is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+			// Get plugin basename safely - never pass empty string to plugin_basename
+			$plugin_basename = 'woo-pincode-checker/woo-pincode-checker.php'; // Default
+			if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
+				$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
+			}
+			
+			if ( is_multisite() && is_plugin_active_for_network( $plugin_basename ) ) {
 				$wpc_general_settings = get_site_option( 'wpc_general_settings' );
 			} else {
 				$wpc_general_settings = get_option( 'wpc_general_settings' );

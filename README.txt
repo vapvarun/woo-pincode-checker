@@ -1,10 +1,13 @@
 === Woo Pincode Checker ===
 Contributors: wbcomdesigns,vapvarun
 Donate link: https://wbcomdesigns.com/
-Tags: WooCommerce
-Requires at least: 3.0.1
-Tested up to: 6.3.1
-Stable tag: 1.3.4
+Tags: WooCommerce, pincode, zip code, delivery, shipping
+Requires at least: 5.0
+Tested up to: 6.8.2
+Stable tag: 1.3.6
+Requires PHP: 7.4
+WC requires at least: 5.0
+WC tested up to: 10.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +32,25 @@ e.g.
 If you need additional help you can contact us for [Custom Development](https://wbcomdesigns.com/hire-us/).
 
 == Changelog ==
+= 1.3.6 =
+* Enhancement: Updated for WooCommerce 10.1.2 compatibility
+* Enhancement: Updated for WordPress 6.8.2 compatibility
+* Enhancement: Improved database table creation with better error handling
+* Enhancement: Added comprehensive system requirement checks
+* Enhancement: Enhanced security with proper input validation and sanitization
+* Enhancement: Added rate limiting for AJAX requests
+* Enhancement: Implemented caching for better performance
+* Enhancement: Added database permission checks during activation
+* Enhancement: Improved error logging and debugging
+* Enhancement: Added sample data for testing
+* Enhancement: Better handling of table structure updates
+* Fix: Resolved database table creation issues
+* Fix: Fixed PHP 8.x compatibility issues (strpos and str_replace deprecation warnings)
+* Fix: Fixed null value handling in filter_input and get_current_screen calls
+* Fix: Improved cookie handling and validation
+* Fix: Enhanced XSS protection
+* Fix: Fixed admin notices display conditions
+
 = 1.3.4 =
 * Fix: PHPCS fixes
 * Fix: (#88) Issue with php 8.2

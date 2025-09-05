@@ -58,22 +58,33 @@ class Woo_Pincode_Checker_Public {
 	 * @return string|false Sanitized pincode or false if invalid
 	 */
 	private function validate_pincode( $pincode ) {
+		// PHP 8.3+ compatibility: ensure we have a string
+		if ( ! is_string( $pincode ) ) {
+			$pincode = is_null( $pincode ) ? '' : (string) $pincode;
+		}
+		
 		// Remove extra whitespace and normalize
 		$pincode = trim( $pincode );
-		$pincode = preg_replace('/\s+/', ' ', $pincode);
 		
-		// Check if empty after cleaning
+		// Check if empty after trimming
 		if ( empty( $pincode ) ) {
 			return false;
 		}
 		
+		// Safely use preg_replace
+		$pincode = preg_replace('/\s+/', ' ', $pincode);
+		if ( $pincode === null ) {
+			return false; // preg_replace error
+		}
+		
 		// Check length (3-10 characters)
-		if ( strlen( $pincode ) < 3 || strlen( $pincode ) > 10 ) {
+		$length = mb_strlen( $pincode, 'UTF-8' );
+		if ( $length < 3 || $length > 10 ) {
 			return false;
 		}
 		
 		// Check format - alphanumeric with optional single spaces, but not at start/end
-		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/', $pincode ) ) {
+		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/u', $pincode ) ) {
 			return false;
 		}
 		
@@ -161,9 +172,12 @@ class Woo_Pincode_Checker_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
+		// Use the defined constant which is guaranteed to be set
+		$plugin_url = defined( 'WPCP_PLUGIN_URL' ) ? WPCP_PLUGIN_URL : plugins_url( '/woo-pincode-checker/' );
+		
 		wp_enqueue_style( 
 			$this->plugin_name, 
-			plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-public.css', 
+			$plugin_url . 'public/css/woo-pincode-checker-public.css', 
 			array(), 
 			$this->version, 
 			'all' 
@@ -180,9 +194,12 @@ class Woo_Pincode_Checker_Public {
 		$wpc_hide_disabled_add_cart_btn = ( isset( $wpc_general_settings['add_to_cart_option'] ) && ! empty( $wpc_general_settings['add_to_cart_option'] ) ) ? $wpc_general_settings['add_to_cart_option'] : '';
 		$wpc_required_pincode_field_btn = ( isset( $wpc_general_settings['pincode_field'] ) && ! empty( $wpc_general_settings['pincode_field'] ) ) ? $wpc_general_settings['pincode_field'] : '';
 		
+		// Use the defined constant which is guaranteed to be set
+		$plugin_url = defined( 'WPCP_PLUGIN_URL' ) ? WPCP_PLUGIN_URL : plugins_url( '/woo-pincode-checker/' );
+		
 		wp_enqueue_script( 
 			$this->plugin_name, 
-			plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-public.js', 
+			$plugin_url . 'public/js/woo-pincode-checker-public.js', 
 			array( 'jquery', 'wp-i18n' ), 
 			$this->version, 
 			false 

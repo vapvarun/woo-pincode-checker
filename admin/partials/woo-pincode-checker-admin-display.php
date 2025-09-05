@@ -41,7 +41,7 @@ if ( false == $general_settings['date_display'] ) {
 			<form method="post" action="options.php">
 				<?php
 				settings_fields( 'wpc_general_settings' );
-				do_settings_sections( 'wpc_general_settings' );
+				// Note: do_settings_sections is not needed here as this file is included as a settings section callback
 				?>
 				<div class="form-table">
 						<div class="wbcom-settings-section-wrap">

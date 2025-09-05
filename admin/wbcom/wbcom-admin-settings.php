@@ -274,7 +274,8 @@ if ( ! class_exists( 'Wbcom_Admin_Settings' ) ) {
 		 * @access public
 		 */
 		public function wbcom_admin_setting_header_html() {
-			$page          = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : 'wbcom-themes-page';
+			$page_input = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+			$page = ! empty( $page_input ) ? $page_input : 'wbcom-themes-page';
 			$plugin_active = $theme_active = $support_active = $settings_active = '';
 			switch ( $page ) {
 				case 'wbcom-plugins-page':

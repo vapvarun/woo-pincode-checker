@@ -89,7 +89,7 @@ class Woo_Pincode_Checker_Admin {
 		if ( ! $table_exists ) {
 			// Check if we're on a plugin page to show appropriate notice
 			$current_screen = get_current_screen();
-			if ( $current_screen && strpos( $current_screen->id, 'pincode' ) !== false ) {
+			if ( $current_screen && ! empty( $current_screen->id ) && is_string( $current_screen->id ) && strpos( $current_screen->id, 'pincode' ) !== false ) {
 				add_action( 'admin_notices', array( $this, 'show_table_missing_notice' ) );
 			}
 		}
@@ -116,22 +116,33 @@ class Woo_Pincode_Checker_Admin {
 	 * @return string|false Sanitized pincode or false if invalid
 	 */
 	private function validate_pincode( $pincode ) {
+		// PHP 8.3+ compatibility: ensure we have a string
+		if ( ! is_string( $pincode ) ) {
+			$pincode = is_null( $pincode ) ? '' : (string) $pincode;
+		}
+		
 		// Remove extra whitespace and normalize
 		$pincode = trim( $pincode );
-		$pincode = preg_replace('/\s+/', ' ', $pincode);
 		
-		// Check if empty after cleaning
+		// Check if empty after trimming
 		if ( empty( $pincode ) ) {
 			return false;
 		}
 		
+		// Safely use preg_replace
+		$pincode = preg_replace('/\s+/', ' ', $pincode);
+		if ( $pincode === null ) {
+			return false; // preg_replace error
+		}
+		
 		// Check length (3-10 characters)
-		if ( strlen( $pincode ) < 3 || strlen( $pincode ) > 10 ) {
+		$length = mb_strlen( $pincode, 'UTF-8' );
+		if ( $length < 3 || $length > 10 ) {
 			return false;
 		}
 		
 		// Check format - alphanumeric with optional single spaces, but not at start/end
-		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/', $pincode ) ) {
+		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/u', $pincode ) ) {
 			return false;
 		}
 		
@@ -218,27 +229,47 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function enqueue_styles() {
 		$screen = get_current_screen();
-		$allowed_pages = array(
-			'wb-plugins_page_woo-pincode-checker',
-			'toplevel_page_pincode_lists',
-			'pincodes_page_add_wpc_pincode',
-			'toplevel_page_wbcomplugins',
-		);
 		
-		if ( in_array( $screen->id, array( 'pincodes_page_woo-pincode-checker', 'wb-plugins_page_woo-pincode-checker' ) ) ) {
+		// Get current page from request
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		
+		// Get plugin URL safely - use the constant which is guaranteed to be set
+		$plugin_url = defined( 'WPCP_PLUGIN_URL' ) ? WPCP_PLUGIN_URL : plugins_url( '/woo-pincode-checker/' );
+		
+		// Check if we're on any of our plugin pages
+		$is_plugin_page = false;
+		if ( $screen && ! empty( $screen->id ) ) {
+			// Check if screen ID contains our plugin identifiers
+			$is_plugin_page = ( 
+				strpos( $screen->id, 'woo-pincode-checker' ) !== false || 
+				strpos( $screen->id, 'pincode_lists' ) !== false ||
+				strpos( $screen->id, 'add_wpc_pincode' ) !== false ||
+				strpos( $screen->id, 'wbcomplugins' ) !== false
+			);
+		}
+		
+		// Also check GET parameter as fallback
+		if ( ! $is_plugin_page && ! empty( $page ) ) {
+			$is_plugin_page = ( 
+				$page === 'woo-pincode-checker' || 
+				$page === 'pincode_lists' ||
+				$page === 'add_wpc_pincode'
+			);
+		}
+		
+		// Enqueue styles if we're on a plugin page
+		if ( $is_plugin_page ) {
 			wp_enqueue_style( 
 				'wpc-select2', 
-				plugin_dir_url( __FILE__ ) . 'css/select2.min.css', 
+				$plugin_url . 'admin/css/select2.min.css', 
 				array(), 
 				$this->version, 
 				'all' 
 			);
-		}
-		
-		if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
+			
 			wp_enqueue_style( 
 				$this->plugin_name, 
-				plugin_dir_url( __FILE__ ) . 'css/woo-pincode-checker-admin.css', 
+				$plugin_url . 'admin/css/woo-pincode-checker-admin.css', 
 				array(), 
 				$this->version, 
 				'all' 
@@ -253,17 +284,39 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function enqueue_scripts() {
 		$screen = get_current_screen();
-		$allowed_pages = array(
-			'pincodes_page_woo-pincode-checker',
-			'toplevel_page_pincode_lists',
-			'pincodes_page_add_wpc_pincode',
-			'wb-plugins_page_woo-pincode-checker'
-		);
 		
-		if ( $screen && in_array( $screen->id, $allowed_pages ) ) {
+		// Get current page from request
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		
+		// Get plugin URL safely - use the constant which is guaranteed to be set
+		$plugin_url = defined( 'WPCP_PLUGIN_URL' ) ? WPCP_PLUGIN_URL : plugins_url( '/woo-pincode-checker/' );
+		
+		// Check if we're on any of our plugin pages
+		$is_plugin_page = false;
+		if ( $screen && ! empty( $screen->id ) ) {
+			// Check if screen ID contains our plugin identifiers
+			$is_plugin_page = ( 
+				strpos( $screen->id, 'woo-pincode-checker' ) !== false || 
+				strpos( $screen->id, 'pincode_lists' ) !== false ||
+				strpos( $screen->id, 'add_wpc_pincode' ) !== false ||
+				strpos( $screen->id, 'wbcomplugins' ) !== false
+			);
+		}
+		
+		// Also check GET parameter as fallback
+		if ( ! $is_plugin_page && ! empty( $page ) ) {
+			$is_plugin_page = ( 
+				$page === 'woo-pincode-checker' || 
+				$page === 'pincode_lists' ||
+				$page === 'add_wpc_pincode'
+			);
+		}
+		
+		// Enqueue scripts if we're on a plugin page
+		if ( $is_plugin_page ) {
 			wp_enqueue_script( 
 				'wpc-select2', 
-				plugin_dir_url( __FILE__ ) . 'js/select2.min.js', 
+				$plugin_url . 'admin/js/select2.min.js', 
 				array( 'jquery' ), 
 				$this->version, 
 				true 
@@ -271,8 +324,8 @@ class Woo_Pincode_Checker_Admin {
 			
 			wp_enqueue_script( 
 				$this->plugin_name, 
-				plugin_dir_url( __FILE__ ) . 'js/woo-pincode-checker-admin.js', 
-				array( 'jquery'), 
+				$plugin_url . 'admin/js/woo-pincode-checker-admin.js', 
+				array( 'jquery', 'wp-color-picker'), 
 				$this->version, 
 				true 
 			);
@@ -296,7 +349,8 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function wpc_hide_all_admin_notices_from_setting_page() {
 		$wbcom_pages_array  = array( 'wbcomplugins', 'wbcom-plugins-page', 'wbcom-support-page', 'woo-pincode-checker' );
-		$wbcom_setting_page = filter_input( INPUT_GET, 'page' ) ? filter_input( INPUT_GET, 'page' ) : '';
+		$page_input = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		$wbcom_setting_page = ! empty( $page_input ) ? $page_input : '';
 
 		if ( in_array( $wbcom_setting_page, $wbcom_pages_array, true ) ) {
 			remove_all_actions( 'admin_notices' );
@@ -383,7 +437,8 @@ class Woo_Pincode_Checker_Admin {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'woo-pincode-checker' ) );
 		}
 
-		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? sanitize_text_field( filter_input( INPUT_GET, 'tab' ) ) : 'wpc-welcome';
+		$tab_input = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+		$current = ! empty( $tab_input ) ? sanitize_text_field( $tab_input ) : 'wpc-welcome';
 
 		?>
 		<div class="wrap">
@@ -409,11 +464,13 @@ class Woo_Pincode_Checker_Admin {
 					</div>
 				</div>
 				<div class="wbcom-admin-settings-page">
-					<?php
-					$this->wpc_plugin_settings_tabs();
-					settings_fields( $current );
-					do_settings_sections( $current );
-					?>
+					<?php $this->wpc_plugin_settings_tabs(); ?>
+					<div class="wbcom-tab-content">
+						<?php
+						settings_fields( $current );
+						do_settings_sections( $current );
+						?>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -424,7 +481,8 @@ class Woo_Pincode_Checker_Admin {
 	 * Actions performed to create tabs on the sub menu page.
 	 */
 	public function wpc_plugin_settings_tabs() {
-		$current = ( filter_input( INPUT_GET, 'tab' ) !== null ) ? sanitize_text_field( filter_input( INPUT_GET, 'tab' ) ) : 'wpc-welcome';
+		$tab_input = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+		$current = ! empty( $tab_input ) ? sanitize_text_field( $tab_input ) : 'wpc-welcome';
 
 		$tab_html = '<div class="wbcom-tabs-section"><div class="nav-tab-wrapper"><div class="wb-responsive-menu"><span>' . esc_html( 'Menu' ) . '</span><input class="wb-toggle-btn" type="checkbox" id="wb-toggle-btn"><label class="wb-toggle-icon" for="wb-toggle-btn"><span class="wb-icon-bars"></span></label></div><ul>';
 
@@ -443,7 +501,7 @@ class Woo_Pincode_Checker_Admin {
 				$tab_html .= '<li class="' . esc_attr( $edd_tab ) . '"><a id="' . esc_attr( $edd_tab ) . '" class="nav-tab ' . esc_attr( $class ) . '" href="admin.php?page=' . esc_attr( $page ) . '&tab=' . esc_attr( $edd_tab ) . '">' . esc_html( $tab_name ) . '</a></li>';
 			}
 		}
-		$tab_html .= '</div></ul></div>';
+		$tab_html .= '</ul></div></div>';
 		echo wp_kses_post( $tab_html );
 	}
 
@@ -1236,7 +1294,7 @@ class Woo_Pincode_Checker_Admin {
 	 * @param WP_Post $post Get a Post Object.
 	 */
 	public function wcpc_meta_callback( $post ) {
-		wp_nonce_field( basename( __FILE__ ), 'wpc_hide_pincode_nonce' );
+		wp_nonce_field( 'wpc_hide_pincode_meta_box', 'wpc_hide_pincode_nonce' );
 		$wpc_hide_pincode_checker = get_post_meta( $post->ID, 'wpc_hide_pincode_checker', true );
 		?>
 		<p>
@@ -1275,7 +1333,7 @@ class Woo_Pincode_Checker_Admin {
 
 		// Verify nonce
 		if ( ! isset( $_POST['wpc_hide_pincode_nonce'] ) || 
-			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc_hide_pincode_nonce'] ) ), basename( __FILE__ ) ) ) {
+			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpc_hide_pincode_nonce'] ) ), 'wpc_hide_pincode_meta_box' ) ) {
 			return;
 		}
 
@@ -1327,5 +1385,296 @@ class Woo_Pincode_Checker_Admin {
 		} else {
 			wp_send_json_error( 'Failed to delete pincodes: ' . $wpdb->last_error );
 		}
+	}
+
+	/**
+	 * AJAX handler for searching pincodes with real-time results
+	 * 
+	 * @since 1.3.0
+	 */
+	public function wpc_ajax_search_pincodes() {
+		// Check user capabilities
+		if ( ! $this->check_admin_capabilities() ) {
+			wp_send_json_error( array( 'message' => 'Unauthorized access' ) );
+			exit;
+		}
+
+		// Check nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpc-admin-nonce' ) ) {
+			wp_send_json_error( array( 'message' => 'Invalid security token' ) );
+			exit;
+		}
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'pincode_checker';
+		
+		// Get search term
+		$search_term = isset( $_POST['search'] ) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '';
+		
+		// Validate search term
+		if ( ! empty( $search_term ) ) {
+			$search_term = $this->validate_pincode( $search_term );
+			if ( false === $search_term ) {
+				wp_send_json_error( array( 'message' => 'Invalid search term' ) );
+				exit;
+			}
+		}
+		
+		// Build query
+		$query = "SELECT * FROM {$table_name}";
+		$params = array();
+		
+		if ( ! empty( $search_term ) ) {
+			$query .= " WHERE (pincode LIKE %s OR city LIKE %s OR state LIKE %s)";
+			$search_pattern = '%' . $wpdb->esc_like( $search_term ) . '%';
+			$params[] = $search_pattern;
+			$params[] = $search_pattern;
+			$params[] = $search_pattern;
+		}
+		
+		$query .= " ORDER BY id DESC LIMIT 50";
+		
+		// Execute query
+		if ( ! empty( $params ) ) {
+			$results = $wpdb->get_results( $wpdb->prepare( $query, $params ), ARRAY_A );
+		} else {
+			$results = $wpdb->get_results( $query, ARRAY_A );
+		}
+		
+		// Get total count
+		$count_query = "SELECT COUNT(*) FROM {$table_name}";
+		if ( ! empty( $search_term ) ) {
+			$count_query .= " WHERE (pincode LIKE %s OR city LIKE %s OR state LIKE %s)";
+			$count = $wpdb->get_var( $wpdb->prepare( $count_query, $params ) );
+		} else {
+			$count = $wpdb->get_var( $count_query );
+		}
+		
+		// Generate table HTML
+		$html = '';
+		if ( ! empty( $results ) ) {
+			foreach ( $results as $pincode ) {
+				$html .= '<tr>';
+				$html .= '<th scope="row" class="check-column">';
+				$html .= '<input type="checkbox" name="wpc_pincode[]" value="' . esc_attr( $pincode['id'] ) . '" />';
+				$html .= '</th>';
+				$html .= '<td>' . esc_html( $pincode['pincode'] ) . '</td>';
+				$html .= '<td>' . esc_html( $pincode['city'] ) . '</td>';
+				$html .= '<td>' . esc_html( $pincode['state'] ) . '</td>';
+				$html .= '<td>' . intval( $pincode['delivery_days'] ) . ' ' . ( intval( $pincode['delivery_days'] ) === 1 ? 'day' : 'days' ) . '</td>';
+				
+				// Shipping amount
+				if ( $pincode['shipping_amount'] > 0 ) {
+					$html .= '<td>' . wc_price( $pincode['shipping_amount'] ) . '</td>';
+				} else {
+					$html .= '<td><span class="wpc-free">' . __( 'Free', 'woo-pincode-checker' ) . '</span></td>';
+				}
+				
+				// COD status
+				if ( $pincode['case_on_delivery'] == 1 ) {
+					$html .= '<td><span class="wpc-status-available">' . __( 'Available', 'woo-pincode-checker' ) . '</span></td>';
+				} else {
+					$html .= '<td><span class="wpc-status-unavailable">' . __( 'Unavailable', 'woo-pincode-checker' ) . '</span></td>';
+				}
+				
+				// COD amount
+				if ( $pincode['cod_amount'] > 0 ) {
+					$html .= '<td>' . wc_price( $pincode['cod_amount'] ) . '</td>';
+				} else {
+					$html .= '<td><span class="wpc-free">' . __( 'Free', 'woo-pincode-checker' ) . '</span></td>';
+				}
+				
+				// Created date
+				if ( ! empty( $pincode['created_at'] ) ) {
+					$html .= '<td>' . wp_date( get_option( 'date_format' ), strtotime( $pincode['created_at'] ) ) . '</td>';
+				} else {
+					$html .= '<td>-</td>';
+				}
+				
+				$html .= '</tr>';
+			}
+		} else {
+			$html = '<tr><td colspan="9" class="no-items">' . __( 'No pincodes found.', 'woo-pincode-checker' ) . '</td></tr>';
+		}
+		
+		// Send response
+		wp_send_json_success( array(
+			'html' => $html,
+			'count' => intval( $count ),
+			'pagination' => $count > 50 ? $this->generate_pagination_html( $count, 1, 50 ) : ''
+		) );
+	}
+	
+	/**
+	 * AJAX handler for sorting pincodes
+	 * 
+	 * @since 1.3.0
+	 */
+	public function wpc_ajax_sort_pincodes() {
+		// Check user capabilities
+		if ( ! $this->check_admin_capabilities() ) {
+			wp_send_json_error( array( 'message' => 'Unauthorized access' ) );
+			exit;
+		}
+
+		// Check nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpc-admin-nonce' ) ) {
+			wp_send_json_error( array( 'message' => 'Invalid security token' ) );
+			exit;
+		}
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'pincode_checker';
+		
+		// Get sort parameters
+		$orderby = isset( $_POST['orderby'] ) ? sanitize_text_field( wp_unslash( $_POST['orderby'] ) ) : 'id';
+		$order = isset( $_POST['order'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_POST['order'] ) ) ) : 'DESC';
+		$search_term = isset( $_POST['search'] ) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '';
+		
+		// Validate orderby and order
+		$allowed_orderby = array( 'pincode', 'city', 'state', 'delivery_days', 'shipping_amount', 'created_at', 'id' );
+		$allowed_order = array( 'ASC', 'DESC' );
+		
+		if ( ! in_array( $orderby, $allowed_orderby, true ) ) {
+			$orderby = 'id';
+		}
+		
+		if ( ! in_array( $order, $allowed_order, true ) ) {
+			$order = 'DESC';
+		}
+		
+		// Build query
+		$query = "SELECT * FROM {$table_name}";
+		$params = array();
+		
+		if ( ! empty( $search_term ) ) {
+			$query .= " WHERE (pincode LIKE %s OR city LIKE %s OR state LIKE %s)";
+			$search_pattern = '%' . $wpdb->esc_like( $search_term ) . '%';
+			$params[] = $search_pattern;
+			$params[] = $search_pattern;
+			$params[] = $search_pattern;
+		}
+		
+		$query .= " ORDER BY `{$orderby}` {$order} LIMIT 50";
+		
+		// Execute query
+		if ( ! empty( $params ) ) {
+			$results = $wpdb->get_results( $wpdb->prepare( $query, $params ), ARRAY_A );
+		} else {
+			$results = $wpdb->get_results( $query, ARRAY_A );
+		}
+		
+		// Generate table HTML
+		$html = '';
+		if ( ! empty( $results ) ) {
+			foreach ( $results as $pincode ) {
+				$html .= '<tr>';
+				$html .= '<th scope="row" class="check-column">';
+				$html .= '<input type="checkbox" name="wpc_pincode[]" value="' . esc_attr( $pincode['id'] ) . '" />';
+				$html .= '</th>';
+				$html .= '<td>' . esc_html( $pincode['pincode'] ) . '</td>';
+				$html .= '<td>' . esc_html( $pincode['city'] ) . '</td>';
+				$html .= '<td>' . esc_html( $pincode['state'] ) . '</td>';
+				$html .= '<td>' . intval( $pincode['delivery_days'] ) . ' ' . ( intval( $pincode['delivery_days'] ) === 1 ? 'day' : 'days' ) . '</td>';
+				
+				// Shipping amount
+				if ( $pincode['shipping_amount'] > 0 ) {
+					$html .= '<td>' . wc_price( $pincode['shipping_amount'] ) . '</td>';
+				} else {
+					$html .= '<td><span class="wpc-free">' . __( 'Free', 'woo-pincode-checker' ) . '</span></td>';
+				}
+				
+				// COD status
+				if ( $pincode['case_on_delivery'] == 1 ) {
+					$html .= '<td><span class="wpc-status-available">' . __( 'Available', 'woo-pincode-checker' ) . '</span></td>';
+				} else {
+					$html .= '<td><span class="wpc-status-unavailable">' . __( 'Unavailable', 'woo-pincode-checker' ) . '</span></td>';
+				}
+				
+				// COD amount
+				if ( $pincode['cod_amount'] > 0 ) {
+					$html .= '<td>' . wc_price( $pincode['cod_amount'] ) . '</td>';
+				} else {
+					$html .= '<td><span class="wpc-free">' . __( 'Free', 'woo-pincode-checker' ) . '</span></td>';
+				}
+				
+				// Created date
+				if ( ! empty( $pincode['created_at'] ) ) {
+					$html .= '<td>' . wp_date( get_option( 'date_format' ), strtotime( $pincode['created_at'] ) ) . '</td>';
+				} else {
+					$html .= '<td>-</td>';
+				}
+				
+				$html .= '</tr>';
+			}
+		} else {
+			$html = '<tr><td colspan="9" class="no-items">' . __( 'No pincodes found.', 'woo-pincode-checker' ) . '</td></tr>';
+		}
+		
+		// Send response
+		wp_send_json_success( array(
+			'html' => $html
+		) );
+	}
+	
+	/**
+	 * Generate pagination HTML
+	 * 
+	 * @param int $total_items Total number of items
+	 * @param int $current_page Current page number
+	 * @param int $per_page Items per page
+	 * @return string Pagination HTML
+	 */
+	private function generate_pagination_html( $total_items, $current_page = 1, $per_page = 50 ) {
+		$total_pages = ceil( $total_items / $per_page );
+		
+		if ( $total_pages <= 1 ) {
+			return '';
+		}
+		
+		$html = '<span class="displaying-num">' . sprintf( 
+			_n( '%s item', '%s items', $total_items, 'woo-pincode-checker' ), 
+			number_format_i18n( $total_items ) 
+		) . '</span>';
+		
+		$html .= '<span class="pagination-links">';
+		
+		// First page link
+		if ( $current_page > 1 ) {
+			$html .= '<a class="first-page button" href="#" data-page="1">';
+			$html .= '<span class="screen-reader-text">' . __( 'First page', 'woo-pincode-checker' ) . '</span>';
+			$html .= '<span aria-hidden="true">«</span></a>';
+			
+			$html .= '<a class="prev-page button" href="#" data-page="' . ( $current_page - 1 ) . '">';
+			$html .= '<span class="screen-reader-text">' . __( 'Previous page', 'woo-pincode-checker' ) . '</span>';
+			$html .= '<span aria-hidden="true">‹</span></a>';
+		} else {
+			$html .= '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>';
+			$html .= '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>';
+		}
+		
+		$html .= '<span class="paging-input">';
+		$html .= '<label for="current-page-selector" class="screen-reader-text">' . __( 'Current Page', 'woo-pincode-checker' ) . '</label>';
+		$html .= '<input class="current-page" id="current-page-selector" type="text" name="paged" value="' . $current_page . '" size="1" aria-describedby="table-paging">';
+		$html .= '<span class="tablenav-paging-text"> of <span class="total-pages">' . $total_pages . '</span></span>';
+		$html .= '</span>';
+		
+		// Next page link
+		if ( $current_page < $total_pages ) {
+			$html .= '<a class="next-page button" href="#" data-page="' . ( $current_page + 1 ) . '">';
+			$html .= '<span class="screen-reader-text">' . __( 'Next page', 'woo-pincode-checker' ) . '</span>';
+			$html .= '<span aria-hidden="true">›</span></a>';
+			
+			$html .= '<a class="last-page button" href="#" data-page="' . $total_pages . '">';
+			$html .= '<span class="screen-reader-text">' . __( 'Last page', 'woo-pincode-checker' ) . '</span>';
+			$html .= '<span aria-hidden="true">»</span></a>';
+		} else {
+			$html .= '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>';
+			$html .= '<span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>';
+		}
+		
+		$html .= '</span>';
+		
+		return $html;
 	}
 }

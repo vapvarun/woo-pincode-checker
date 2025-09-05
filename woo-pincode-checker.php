@@ -3,7 +3,7 @@
  * Plugin Name:       Woo Pincode Checker
  * Plugin URI:        https://wbcomdesigns.com/downloads/woo-pincode-checker/
  * Description:       Woo Pincode Checker enables store owners to show product availability, delivery timelines, and COD options based on the customer's entered pincode.
- * Version:           1.3.5
+ * Version:           1.3.6
  * Author:            wbcomdesigns
  * Author URI:        https://wbcomdesigns.com/plugins
  * License:           GPL-2.0+
@@ -11,10 +11,10 @@
  * Text Domain:       woo-pincode-checker
  * Domain Path:       /languages
  * Requires at least: 5.0
- * Tested up to:      6.4
+ * Tested up to:      6.8.2
  * Requires PHP:      7.4
- * WC requires at least: 3.0
- * WC tested up to:   8.0
+ * WC requires at least: 5.0
+ * WC tested up to:   10.1.2
  */
 
 // If this file is called directly, abort.
@@ -27,17 +27,29 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WOO_PINCODE_CHECKER_VERSION', '1.3.5' );
-define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
-define( 'WPCP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-define( 'WPCP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'WOO_PINCODE_CHECKER_VERSION', '1.3.6' );
+
+// Define plugin constants - simplified and robust approach
+if ( ! defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ) {
+	define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
+}
+
+if ( ! defined( 'WPCP_PLUGIN_PATH' ) ) {
+	define( 'WPCP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+}
+
+if ( ! defined( 'WPCP_PLUGIN_URL' ) ) {
+	define( 'WPCP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
 
 /**
  * Declare WooCommerce HPOS compatibility
  */
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		// Use the defined constant instead of __FILE__ to avoid null issues
+		$plugin_file = defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ? WOO_PINCODE_CHECKER_PLUGIN_FILE : WP_PLUGIN_DIR . '/woo-pincode-checker/woo-pincode-checker.php';
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $plugin_file, true );
 	}
 });
 
@@ -88,9 +100,12 @@ function wpc_load_plugin_files() {
 	require_once WPCP_PLUGIN_PATH . 'includes/class-woo-pincode-checker-deactivator.php';
 	require_once WPCP_PLUGIN_PATH . 'includes/class-woo-pincode-checker.php';
 	
-	// Register activation and deactivation hooks
-	register_activation_hook( __FILE__, 'activate_woo_pincode_checker' );
-	register_deactivation_hook( __FILE__, 'deactivate_woo_pincode_checker' );
+	// Register activation and deactivation hooks with safe file reference
+	$plugin_file_for_hooks = defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ? WOO_PINCODE_CHECKER_PLUGIN_FILE : __FILE__;
+	if ( ! empty( $plugin_file_for_hooks ) ) {
+		register_activation_hook( $plugin_file_for_hooks, 'activate_woo_pincode_checker' );
+		register_deactivation_hook( $plugin_file_for_hooks, 'deactivate_woo_pincode_checker' );
+	}
 	
 	// Initialize the plugin
 	add_action( 'init', 'run_woo_pincode_checker' );
@@ -230,11 +245,23 @@ function run_woo_pincode_checker() {
  * Redirect to plugin settings page after activation.
  */
 function woo_pincode_checker_activation_redirect_settings( $plugin ) {
-	if ( $plugin === plugin_basename( __FILE__ ) ) {
-		$action = filter_input( INPUT_REQUEST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		$plugin_param = filter_input( INPUT_REQUEST, 'plugin', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+	// Get plugin basename safely - avoid calling plugin_basename with empty string
+	$plugin_basename = '';
+	if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
+		$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
+	} else {
+		// Use hardcoded basename as fallback
+		$plugin_basename = 'woo-pincode-checker/woo-pincode-checker.php';
+	}
+	
+	if ( ! empty( $plugin_basename ) && $plugin === $plugin_basename ) {
+		// Get action and plugin parameters safely
+		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
+		$plugin_param = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
 		
-		if ( 'activate' === $action && plugin_basename( __FILE__ ) === $plugin_param ) {
+		// Check for null values before comparing
+		if ( ! empty( $action ) && ! empty( $plugin_param ) && 
+		     'activate' === $action && $plugin_basename === $plugin_param ) {
 			wp_safe_redirect( admin_url( 'admin.php?page=woo-pincode-checker' ) );
 			exit;
 		}
@@ -404,51 +431,12 @@ function wpc_ensure_table_indexes( $table_name ) {
 add_action( 'plugins_loaded', 'wpc_check_update_mysql_db', 15 );
 
 /**
- * Safe database query wrapper that checks table existence
- */
-function wpc_safe_db_query( $query, $params = array(), $output_type = OBJECT ) {
-	global $wpdb;
-	
-	$table_name = $wpdb->prefix . 'pincode_checker';
-	
-	// Check if table exists before running query
-	$table_exists = $wpdb->get_var( $wpdb->prepare( 
-		"SHOW TABLES LIKE %s", 
-		$table_name 
-	) ) == $table_name;
-	
-	if ( ! $table_exists ) {
-		error_log( 'WPC: Attempted query on non-existent table: ' . $query );
-		
-		// Try to create table
-		wpc_check_and_create_table();
-		
-		// Check again
-		$table_exists = $wpdb->get_var( $wpdb->prepare( 
-			"SHOW TABLES LIKE %s", 
-			$table_name 
-		) ) == $table_name;
-		
-		if ( ! $table_exists ) {
-			return false;
-		}
-	}
-	
-	// Run the query
-	if ( ! empty( $params ) ) {
-		$prepared_query = $wpdb->prepare( $query, $params );
-		return $wpdb->get_results( $prepared_query, $output_type );
-	} else {
-		return $wpdb->get_results( $query, $output_type );
-	}
-}
-
-/**
  * Add manual fix page for database issues
  */
 function wpc_add_manual_fix_page() {
+	// Use empty string instead of null to avoid PHP 8.3+ deprecation warnings
 	add_submenu_page(
-		null, // Hidden menu
+		'', // Hidden menu (empty string instead of null for PHP 8.3+ compatibility)
 		'WPC Manual Fix',
 		'WPC Manual Fix',
 		'manage_options',
@@ -641,55 +629,6 @@ function wpc_log_security_event( $event, $data = array() ) {
 	}
 }
 
-/**
- * Handle database errors
- */
-function wpc_handle_db_error( $wpdb_error, $context = '' ) {
-	if ( ! empty( $wpdb_error ) ) {
-		error_log( "WPC Database Error [{$context}]: " . $wpdb_error );
-		
-		// In production, show generic error to users
-		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
-			return __( 'A database error occurred. Please try again later.', 'woo-pincode-checker' );
-		}
-		
-		return $wpdb_error;
-	}
-	
-	return false;
-}
-
-/**
- * Cache management functions
- */
-function wpc_clear_pincode_cache( $pincode = null ) {
-	if ( $pincode ) {
-		wp_cache_delete( 'wpc_pincode_' . md5( $pincode ), 'woo_pincode_checker' );
-	} else {
-		wp_cache_flush_group( 'woo_pincode_checker' );
-	}
-}
-
-/**
- * AJAX rate limiting helper
- */
-function wpc_check_ajax_rate_limit( $action, $limit = 10, $window = 60 ) {
-	$user_ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
-	$transient_key = 'wpc_rate_limit_' . md5( $user_ip . $action );
-	$requests = get_transient( $transient_key );
-	
-	if ( $requests && $requests > $limit ) {
-		wpc_log_security_event( 'rate_limit_exceeded', array(
-			'action' => $action,
-			'requests' => $requests,
-			'limit' => $limit
-		));
-		return false;
-	}
-	
-	set_transient( $transient_key, ( $requests ? $requests + 1 : 1 ), $window );
-	return true;
-}
 
 /**
  * Cleanup functions
@@ -743,13 +682,28 @@ function wpc_add_plugin_action_links( $links ) {
 	
 	return array_merge( $plugin_links, $links );
 }
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wpc_add_plugin_action_links' );
+// Only add filter if we have a valid plugin file
+if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
+	add_filter( 'plugin_action_links_' . plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE ), 'wpc_add_plugin_action_links' );
+} else {
+	// Use hardcoded basename as fallback
+	add_filter( 'plugin_action_links_woo-pincode-checker/woo-pincode-checker.php', 'wpc_add_plugin_action_links' );
+}
 
 /**
  * Add plugin meta links
  */
 function wpc_add_plugin_meta_links( $links, $file ) {
-	if ( $file === plugin_basename( __FILE__ ) ) {
+	// Get plugin basename safely - avoid calling plugin_basename with empty string
+	$plugin_basename = '';
+	if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
+		$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
+	} else {
+		// Use hardcoded basename as fallback
+		$plugin_basename = 'woo-pincode-checker/woo-pincode-checker.php';
+	}
+	
+	if ( ! empty( $plugin_basename ) && $file === $plugin_basename ) {
 		$meta_links = array(
 			'<a href="https://docs.wbcomdesigns.com/doc_category/woo-pincode-checker/" target="_blank">' . __( 'Documentation', 'woo-pincode-checker' ) . '</a>',
 			'<a href="https://wbcomdesigns.com/support/" target="_blank">' . __( 'Support', 'woo-pincode-checker' ) . '</a>',

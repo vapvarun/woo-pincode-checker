@@ -153,22 +153,33 @@ class Woo_Pincode_Checker_Form {
 	 * @return string|false Sanitized pincode or false if invalid
 	 */
 	private function validate_pincode( $pincode ) {
+		// PHP 8.3+ compatibility: ensure we have a string
+		if ( ! is_string( $pincode ) ) {
+			$pincode = is_null( $pincode ) ? '' : (string) $pincode;
+		}
+		
 		// Remove extra whitespace and normalize
 		$pincode = trim( $pincode );
-		$pincode = preg_replace('/\s+/', ' ', $pincode);
 		
-		// Check if empty after cleaning
+		// Check if empty after trimming
 		if ( empty( $pincode ) ) {
 			return false;
 		}
 		
+		// Safely use preg_replace
+		$pincode = preg_replace('/\s+/', ' ', $pincode);
+		if ( $pincode === null ) {
+			return false; // preg_replace error
+		}
+		
 		// Check length (3-10 characters)
-		if ( strlen( $pincode ) < 3 || strlen( $pincode ) > 10 ) {
+		$length = mb_strlen( $pincode, 'UTF-8' );
+		if ( $length < 3 || $length > 10 ) {
 			return false;
 		}
 		
 		// Check format - alphanumeric with optional single spaces, but not at start/end
-		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/', $pincode ) ) {
+		if ( ! preg_match( '/^[A-Za-z0-9](?:[A-Za-z0-9\s]*[A-Za-z0-9])?$/u', $pincode ) ) {
 			return false;
 		}
 		

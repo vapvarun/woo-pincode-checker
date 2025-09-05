@@ -53,15 +53,24 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 * @return string|false Sanitized search term or false if invalid
 	 */
 	private function sanitize_search_term( $search_term ) {
+		// PHP 8.3+ compatibility: ensure we have a string
+		if ( ! is_string( $search_term ) ) {
+			$search_term = is_null( $search_term ) ? '' : (string) $search_term;
+		}
+		
 		$search_term = trim( $search_term );
 		
+		if ( empty( $search_term ) ) {
+			return '';
+		}
+		
 		// Limit search term length
-		if ( strlen( $search_term ) > 50 ) {
+		if ( mb_strlen( $search_term, 'UTF-8' ) > 50 ) {
 			return false;
 		}
 		
 		// Allow alphanumeric, spaces, and basic punctuation
-		if ( ! preg_match( '/^[A-Za-z0-9\s\-_.,]+$/', $search_term ) ) {
+		if ( ! preg_match( '/^[A-Za-z0-9\s\-_.,]+$/u', $search_term ) ) {
 			return false;
 		}
 		
@@ -137,13 +146,19 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		/* pagination */
 		$user = get_current_user_id();
 		$screen = get_current_screen();
-		$option = $screen->get_option( 'per_page', 'option' );
+		
+		// Default pagination if screen is not available
+		if ( ! $screen ) {
+			$pincode_per_page = 20; // Default value
+		} else {
+			$option = $screen->get_option( 'per_page', 'option' );
 
-		/* pagination */
-		$pincode_per_page = get_user_meta( $user, $option, true );
+			/* pagination */
+			$pincode_per_page = get_user_meta( $user, $option, true );
 
-		if ( empty( $pincode_per_page ) || $pincode_per_page < 1 ) {
-			$pincode_per_page = $screen->get_option( 'per_page', 'default' );
+			if ( empty( $pincode_per_page ) || $pincode_per_page < 1 ) {
+				$pincode_per_page = $screen->get_option( 'per_page', 'default' );
+			}
 		}
 
 		$current_page = $this->get_pagenum();
@@ -192,13 +207,22 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 * Static method to sanitize search term
 	 */
 	private static function sanitize_search_term_static( $search_term ) {
+		// PHP 8.3+ compatibility: ensure we have a string
+		if ( ! is_string( $search_term ) ) {
+			$search_term = is_null( $search_term ) ? '' : (string) $search_term;
+		}
+		
 		$search_term = trim( $search_term );
 		
-		if ( strlen( $search_term ) > 50 ) {
+		if ( empty( $search_term ) ) {
+			return '';
+		}
+		
+		if ( mb_strlen( $search_term, 'UTF-8' ) > 50 ) {
 			return false;
 		}
 		
-		if ( ! preg_match( '/^[A-Za-z0-9\s\-_.,]+$/', $search_term ) ) {
+		if ( ! preg_match( '/^[A-Za-z0-9\s\-_.,]+$/u', $search_term ) ) {
 			return false;
 		}
 		
