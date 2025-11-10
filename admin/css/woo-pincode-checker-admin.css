@@ -1,0 +1,630 @@
+/**
+ * WooCommerce Pincode Checker - Admin Styles
+ * Modern, responsive admin interface styles
+ */
+
+/* CSS Variables for Admin */
+:root {
+    --wpc-admin-primary: #2271b1;
+    --wpc-admin-primary-hover: #135e96;
+    --wpc-admin-success: #46b450;
+    --wpc-admin-error: #dc3232;
+    --wpc-admin-warning: #ffb900;
+    --wpc-admin-border: #c3c4c7;
+    --wpc-admin-bg-light: #f0f0f1;
+    --wpc-admin-bg-white: #ffffff;
+    --wpc-admin-text: #1e1e1e;
+    --wpc-admin-text-muted: #646970;
+    --wpc-admin-radius: 8px;
+    --wpc-admin-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    --wpc-admin-shadow-hover: 0 2px 8px rgba(0,0,0,0.08);
+    --wpc-admin-transition: all 0.3s ease;
+}
+
+/* Base Styles */
+.wbwss-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--wpc-admin-text);
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.hide {
+    display: none;
+}
+
+/* Admin Container Styles */
+.wpc-admin-col-12 {
+    width: 100%;
+    padding: 15px 0;
+}
+
+.wpc-adming-setting {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Modern Accordion Styles */
+button.wpc-accordion {
+    background: linear-gradient(135deg, var(--wpc-admin-bg-white) 0%, var(--wpc-admin-bg-light) 100%);
+    border: 1px solid var(--wpc-admin-border);
+    border-radius: var(--wpc-admin-radius);
+    color: var(--wpc-admin-text);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 10px 0;
+    outline: none;
+    padding: 18px 24px;
+    text-align: left;
+    transition: var(--wpc-admin-transition);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--wpc-admin-shadow);
+}
+
+button.wpc-accordion:hover {
+    background: var(--wpc-admin-bg-white);
+    box-shadow: var(--wpc-admin-shadow-hover);
+    transform: translateY(-1px);
+}
+
+button.wpc-accordion.active {
+    background: var(--wpc-admin-primary);
+    color: white;
+    border-color: var(--wpc-admin-primary);
+    box-shadow: 0 4px 12px rgba(34, 113, 177, 0.15);
+}
+
+button.wpc-accordion::after {
+    content: "+";
+    font-size: 20px;
+    font-weight: 300;
+    transition: var(--wpc-admin-transition);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button.wpc-accordion.active::after {
+    content: "−";
+    transform: rotate(180deg);
+}
+
+/* Accordion Panel */
+div.wpc-panel {
+    background: var(--wpc-admin-bg-white);
+    border: 1px solid var(--wpc-admin-border);
+    border-top: none;
+    border-radius: 0 0 var(--wpc-admin-radius) var(--wpc-admin-radius);
+    margin: -10px 0 10px 0;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+
+div.wpc-panel.show {
+    padding: 24px;
+    max-height: 2000px;
+}
+
+.wpc-admin-row {
+    border-top: 1px solid var(--wpc-admin-border);
+    padding: 20px 0;
+    margin: 0;
+}
+
+.wpc-admin-row:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* Tab Styles */
+.wpc-tab-3-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--wpc-admin-text);
+    margin-bottom: 15px;
+}
+
+.wpc-tab-content .form-table td {
+    padding: 15px 10px;
+    vertical-align: top;
+}
+
+/* Navigation Tab Icons */
+.nav-tab-wrapper {
+    border-bottom: 1px solid var(--wpc-admin-border);
+    margin: 0;
+    padding-top: 10px;
+}
+
+.nav-tab-wrapper ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 5px;
+}
+
+.nav-tab-wrapper ul li {
+    margin: 0;
+}
+
+.nav-tab-wrapper ul li a {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: var(--wpc-admin-text);
+    background: var(--wpc-admin-bg-white);
+    border: 1px solid var(--wpc-admin-border);
+    border-bottom: none;
+    border-radius: var(--wpc-admin-radius) var(--wpc-admin-radius) 0 0;
+    transition: var(--wpc-admin-transition);
+    font-weight: 500;
+}
+
+.nav-tab-wrapper ul li a:hover {
+    background: var(--wpc-admin-bg-light);
+}
+
+.nav-tab-wrapper ul li a.nav-tab-active {
+    background: var(--wpc-admin-primary);
+    color: white;
+    border-color: var(--wpc-admin-primary);
+}
+
+.nav-tab-wrapper ul .wpc-general a:before {
+    content: "\f111";
+    font-family: dashicons;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.nav-tab-wrapper ul .wpc-pincodes a:before {
+    content: "\f230";
+    font-family: dashicons;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.nav-tab-wrapper ul .wpc-add-pincodes a:before {
+    content: "\f132";
+    font-family: dashicons;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.nav-tab-wrapper ul .wpc-upload-pincodes a:before {
+    content: "\f317";
+    font-family: dashicons;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.nav-tab-wrapper ul .wpc-faq a:before {
+    content: "\f223";
+    font-family: dashicons;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Settings Section */
+div.wbcom-settings-section-wrap {
+    overflow: visible;
+    background: var(--wpc-admin-bg-white);
+    border-radius: var(--wpc-admin-radius);
+    padding: 24px;
+    margin-top: 20px;
+    box-shadow: var(--wpc-admin-shadow);
+}
+
+/* Modern Form Controls */
+.wbcom-settings-section-options input[type="text"],
+.wbcom-settings-section-options input[type="number"],
+.wbcom-settings-section-options input[type="email"],
+.wbcom-settings-section-options input[type="url"],
+.wbcom-settings-section-options textarea,
+.wbcom-settings-section-options select {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 12px;
+    border: 1px solid var(--wpc-admin-border);
+    border-radius: 4px;
+    font-size: 14px;
+    transition: var(--wpc-admin-transition);
+    background: var(--wpc-admin-bg-white);
+}
+
+.wbcom-settings-section-options input:focus,
+.wbcom-settings-section-options textarea:focus,
+.wbcom-settings-section-options select:focus {
+    border-color: var(--wpc-admin-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.08);
+}
+
+/* Select2/Selectize Styling */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple,
+.selectize-input {
+    min-height: 40px !important;
+    border-radius: 4px !important;
+    background-color: var(--wpc-admin-bg-white) !important;
+    border: 1px solid var(--wpc-admin-border) !important;
+    transition: var(--wpc-admin-transition) !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single,
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.selectize-input.focus {
+    border-color: var(--wpc-admin-primary) !important;
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.08) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px !important;
+    color: var(--wpc-admin-text) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+}
+
+.select2-container {
+    width: 100% !important;
+    max-width: 400px !important;
+}
+
+/* Modern Notifications */
+div#setting-error-settings_updated,
+.wpc-upload-pincode-wrap div#message {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    z-index: 9999;
+    background: var(--wpc-admin-bg-white);
+    border-radius: var(--wpc-admin-radius);
+    padding: 16px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-left: 4px solid var(--wpc-admin-success);
+    animation: slideInRight 0.3s ease-out;
+    max-width: 400px;
+}
+
+.wpc-upload-pincode-wrap div#message.error {
+    border-left-color: var(--wpc-admin-error);
+}
+
+div#setting-error-settings_updated p,
+.wpc-upload-pincode-wrap div#message p {
+    margin: 0;
+    color: var(--wpc-admin-text);
+    font-size: 14px;
+}
+
+div#setting-error-settings_updated button.notice-dismiss,
+.wpc-upload-pincode-wrap div#message button.notice-dismiss {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Button Styles */
+.button,
+.button-primary,
+.button-secondary {
+    border-radius: 4px !important;
+    padding: 8px 16px !important;
+    font-weight: 500 !important;
+    transition: var(--wpc-admin-transition) !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px;
+}
+
+.button-primary {
+    background: var(--wpc-admin-primary) !important;
+    border-color: var(--wpc-admin-primary) !important;
+    color: white !important;
+}
+
+.button-primary:hover {
+    background: var(--wpc-admin-primary-hover) !important;
+    border-color: var(--wpc-admin-primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(34, 113, 177, 0.25) !important;
+}
+
+/* Table Styles */
+.wp-list-table {
+    border: 1px solid var(--wpc-admin-border);
+    border-radius: var(--wpc-admin-radius);
+    overflow: hidden;
+    box-shadow: var(--wpc-admin-shadow);
+}
+
+.wp-list-table thead {
+    background: var(--wpc-admin-bg-light);
+}
+
+.wp-list-table thead th {
+    font-weight: 600;
+    color: var(--wpc-admin-text);
+    border-bottom: 1px solid var(--wpc-admin-border);
+}
+
+.wp-list-table tbody tr:hover {
+    background: #f6f7f7;
+}
+
+.wp-list-table tbody td {
+    vertical-align: middle;
+}
+
+/* Upload Section */
+.wpc-upload-pincode-wrap {
+    background: var(--wpc-admin-bg-white);
+    border-radius: var(--wpc-admin-radius);
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow: var(--wpc-admin-shadow);
+}
+
+.wpc-upload-pincode-wrap h3 {
+    margin-top: 0;
+    color: var(--wpc-admin-text);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1189px) {
+    div#setting-error-settings_updated,
+    .wpc-upload-pincode-wrap div#message {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 20px 0;
+        animation: none;
+    }
+}
+
+@media screen and (max-width: 782px) {
+    .nav-tab-wrapper ul {
+        flex-wrap: wrap;
+    }
+    
+    .nav-tab-wrapper ul li a {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .select2-container {
+        max-width: 100% !important;
+    }
+    
+    .wbcom-settings-section-options input[type="text"],
+    .wbcom-settings-section-options input[type="number"],
+    .wbcom-settings-section-options input[type="email"],
+    .wbcom-settings-section-options input[type="url"],
+    .wbcom-settings-section-options textarea,
+    .wbcom-settings-section-options select {
+        max-width: 100%;
+    }
+    
+    button.wpc-accordion {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+    
+    div.wpc-panel.show {
+        padding: 16px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .wpc-adming-setting {
+        width: 100%;
+        padding: 0 10px;
+    }
+    
+    .nav-tab-wrapper ul li a:before {
+        display: none !important;
+    }
+    
+    .nav-tab-wrapper ul li a {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --wpc-admin-bg-white: #1e1e1e;
+        --wpc-admin-bg-light: #2c3338;
+        --wpc-admin-text: #f0f0f1;
+        --wpc-admin-text-muted: #8c8f94;
+        --wpc-admin-border: #3c434a;
+    }
+}
+/* Fix for wbcom settings layout */
+.wbcom-settings-section-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.wbcom-settings-section-options-heading {
+    flex: 1;
+}
+
+.wbcom-settings-section-options {
+    flex-shrink: 0;
+}
+
+/* Ensure proper spacing */
+.wbcom-admin-option-wrap .wbcom-settings-section-wrap {
+    margin-bottom: 20px;
+}
+
+/* Fix nav-tab display to match wbcom sidebar style */
+.wbcom-admin-settings-page {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.wbcom-admin-settings-page .wbcom-tabs-section {
+    background: #E1E6F4;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 18%;
+    padding: 1%;
+    flex-shrink: 0;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper {
+    padding-bottom: 100px;
+    border-bottom: none;
+    padding-top: 0;
+    width: 100%;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper ul {
+    display: block !important;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper ul li {
+    display: block !important;
+    margin: 0 0 2px !important;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab {
+    display: block !important;
+    float: none;
+    border: 0;
+    background-color: transparent;
+    color: #50575e;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    border-radius: 8px;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab-active,
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab:hover,
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab-active:hover {
+    color: #ee4036;
+    background: #ffffff;
+    box-shadow: 0px 12px 30px rgba(53, 66, 134, 0.12);
+    border: 0;
+}
+
+/* Tab icons */
+.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab:before {
+    content: "\f111";
+    font-family: dashicons;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 400;
+    margin-right: 8px;
+    vertical-align: middle;
+    -webkit-font-smoothing: antialiased;
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-welcome a:before {
+    content: "\f102";
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-general a:before {
+    content: "\f111";
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-pincodes a:before {
+    content: "\f230";
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-add-pincodes a:before {
+    content: "\f132";
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-upload-pincodes a:before {
+    content: "\f317";
+}
+
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-faq a:before {
+    content: "\f223";
+}
+
+/* Content area */
+.wbcom-tab-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Hide responsive menu on desktop */
+@media (min-width: 768px) {
+    .wb-responsive-menu {
+        display: none !important;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+    .wbcom-admin-settings-page {
+        flex-direction: column;
+    }
+    
+    .wbcom-admin-settings-page .nav-tab-wrapper {
+        width: 100%;
+        padding-bottom: 20px;
+    }
+    
+    .wbcom-admin-settings-page .nav-tab-wrapper ul {
+        display: none;
+    }
+    
+    .wbcom-admin-settings-page .nav-tab-wrapper ul.wbcom-show-mobile-menu {
+        display: block;
+    }
+    
+    .wb-responsive-menu {
+        display: block !important;
+        cursor: pointer;
+        padding: 10px;
+        background: #f1f1f1;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+}
