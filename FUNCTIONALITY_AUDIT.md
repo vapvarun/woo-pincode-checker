@@ -1,6 +1,6 @@
 # Pincode Checker for WooCommerce - Complete Functionality Audit
 
-**Version:** 1.4.0
+**Version:** 1.5.0
 **Audit Date:** January 10, 2025
 **Status:** ✅ PRODUCTION READY
 

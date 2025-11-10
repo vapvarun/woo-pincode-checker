@@ -4,7 +4,7 @@
  * Fired during plugin activation - FIXED VERSION
  *
  * @link       https://wbcomdesigns.com/plugins
- * @since      1.4.0
+ * @since      1.5.0
  *
  * @package    Woo_Pincode_Checker
  * @subpackage Woo_Pincode_Checker/includes
@@ -15,12 +15,12 @@ class Woo_Pincode_Checker_Activator {
 	/**
 	 * Plugin activation with improved database table creation.
 	 *
-	 * @since    1.4.0
+	 * @since    1.5.0
 	 */
 	public static function activate() {
 		global $wpdb;
 
-		$wpc_db_version = '1.4.0';
+		$wpc_db_version = '1.5.0';
 		$charset_collate = $wpdb->get_charset_collate();
 		$table_name = $wpdb->prefix . 'pincode_checker';
 

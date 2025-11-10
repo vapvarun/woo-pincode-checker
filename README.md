@@ -1,16 +1,16 @@
 # Pincode Checker for WooCommerce
 
-**Version:** 1.4.0
+**Version:** 1.5.0
 **Requires:** WordPress 5.0+, WooCommerce 5.0+, PHP 7.4+
 **License:** GPL v2 or later
 
 Enable location-based delivery verification for your WooCommerce store. Check product availability, delivery timelines, and shipping options based on customer's pincode/ZIP code.
 
-## ✅ What's Fixed in Version 1.4.0
+## ✅ What's Fixed in Version 1.5.0
 
 ### Critical Fixes Completed:
 1. **Database Table Creation** - Fixed compatibility issues with various MySQL versions
-2. **Version Synchronization** - All components now use version 1.4.0
+2. **Version Synchronization** - All components now use version 1.5.0
 3. **Plugin Naming** - Renamed to "Pincode Checker for WooCommerce" for WordPress.org compliance
 4. **Text Domain** - Updated to `pincode-checker-for-woocommerce`
 
@@ -232,7 +232,7 @@ jQuery(document).on('wpc_form_displayed', function(e) {
 
 ## 📝 Changelog
 
-### Version 1.4.0 (2025-01-10)
+### Version 1.5.0 (2025-01-10)
 - **Major Update:** Plugin renamed for WordPress.org compliance
 - **Fixed:** Database table creation issues
 - **Fixed:** Version synchronization across all files
@@ -262,5 +262,5 @@ This plugin is licensed under the GPL v2 or later.
 ---
 
 **Created by:** [Wbcom Designs](https://wbcomdesigns.com)
-**Version:** 1.4.0
+**Version:** 1.5.0
 **Last Updated:** January 10, 2025

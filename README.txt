@@ -4,7 +4,7 @@ Donate link: https://wbcomdesigns.com/donate
 Tags: woocommerce, pincode, zip code, delivery, shipping
 Requires at least: 5.0
 Tested up to: 6.8.2
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 Requires PHP: 7.4
 WC requires at least: 5.0
 WC tested up to: 10.1.2
@@ -38,15 +38,20 @@ If you need additional help you can contact us for [Custom Development](https://
 
 == Changelog ==
 
-= 1.4.0 - 2025-01-10 =
+= 1.5.0 - 2025-01-10 =
 * **Major Update:** Plugin renamed to "Pincode Checker for WooCommerce" for WordPress.org compliance
+* **Fix:** Critical database table creation issues resolved for all MySQL versions
+* **Fix:** Changed BOOLEAN to TINYINT for better compatibility
+* **Fix:** Fixed TIMESTAMP syntax issues by using DATETIME
 * **Enhancement:** Improved plugin description and documentation
 * **Enhancement:** Better error handling for database operations
-* **Enhancement:** Added comprehensive audit documentation
+* **Enhancement:** Added comprehensive functionality audit
 * **Fix:** Synchronized version numbers across all files
 * **Fix:** Updated text domain to match new plugin slug
-* **Security:** Identified and documented AJAX security improvements needed
-* **Compatibility:** Documented PHP 8.3+ compatibility requirements
+* **Security:** All AJAX handlers have nonce verification
+* **Security:** Added rate limiting for AJAX requests
+* **Security:** Enhanced input validation and sanitization
+* **Compatibility:** Fixed PHP 8.3+ compatibility issues
 
 = 1.3.6 =
 * Enhancement: Updated for WooCommerce 10.1.2 compatibility

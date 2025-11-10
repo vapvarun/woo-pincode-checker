@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:       Pincode Checker for WooCommerce
- * Plugin URI:        https://wbcomdesigns.com/downloads/pincode-checker-for-woocommerce/
- * Description:       Enable location-based delivery verification with pincode/ZIP code checking. Show product availability, delivery timelines, shipping costs, and COD options based on customer location.
- * Version:           1.5.0
- * Author:            Wbcom Designs
- * Author URI:        https://wbcomdesigns.com
+ * Plugin Name:       Woo Pincode Checker
+ * Plugin URI:        https://wbcomdesigns.com/downloads/woo-pincode-checker/
+ * Description:       Woo Pincode Checker enables store owners to show product availability, delivery timelines, and COD options based on the customer's entered pincode.
+ * Version:           1.3.6
+ * Author:            wbcomdesigns
+ * Author URI:        https://wbcomdesigns.com/plugins
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       pincode-checker-for-woocommerce
+ * Text Domain:       woo-pincode-checker
  * Domain Path:       /languages
  * Requires at least: 5.0
  * Tested up to:      6.8.2
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WOO_PINCODE_CHECKER_VERSION', '1.5.0' );
+define( 'WOO_PINCODE_CHECKER_VERSION', '1.3.6' );
 
 // Define plugin constants - simplified and robust approach
 if ( ! defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ) {
@@ -331,7 +331,7 @@ function wpc_check_update_mysql_db() {
 	global $wpdb;
 	
 	$installed_ver = get_option( 'wpc_db_version' );
-	$current_version = '1.5.0';
+	$current_version = '1.3.5';
 	
 	// Always check if table exists first
 	$table_name = $wpdb->prefix . 'pincode_checker';
