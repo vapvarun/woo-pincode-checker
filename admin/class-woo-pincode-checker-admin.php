@@ -520,6 +520,80 @@ class Woo_Pincode_Checker_Admin {
 	}
 
 	/**
+	 * Sanitize general settings before saving to database.
+	 *
+	 * @param array $input The input array from the settings form.
+	 * @return array Sanitized settings array.
+	 */
+	public function wpc_general_settings_sanitize( $input ) {
+		$sanitized = array();
+
+		// Checkbox fields - sanitize as on/off
+		$checkbox_fields = array( 'date_display', 'pincode_field', 'cod_display' );
+		foreach ( $checkbox_fields as $field ) {
+			$sanitized[ $field ] = isset( $input[ $field ] ) && 'on' === $input[ $field ] ? 'on' : '';
+		}
+
+		// Select fields - sanitize as text and validate against allowed values
+		if ( isset( $input['delivery_date'] ) ) {
+			$allowed_formats = array( 'M jS', 'D, jS M', 'D, M d', 'M d' );
+			$sanitized['delivery_date'] = in_array( $input['delivery_date'], $allowed_formats, true )
+				? sanitize_text_field( $input['delivery_date'] )
+				: 'M jS';
+		}
+
+		if ( isset( $input['add_to_cart_option'] ) ) {
+			$allowed_options = array( 'add_to_cart_hide', 'add_to_cart_disable' );
+			$sanitized['add_to_cart_option'] = in_array( $input['add_to_cart_option'], $allowed_options, true )
+				? sanitize_text_field( $input['add_to_cart_option'] )
+				: 'add_to_cart_hide';
+		}
+
+		if ( isset( $input['pincode_position'] ) ) {
+			$allowed_positions = array(
+				'woocommerce_before_add_to_cart_button',
+				'woocommerce_after_add_to_cart_button',
+				'woocommerce_after_add_to_cart_quantity',
+				'wpc_pincode_checker'
+			);
+			$sanitized['pincode_position'] = in_array( $input['pincode_position'], $allowed_positions, true )
+				? sanitize_text_field( $input['pincode_position'] )
+				: 'woocommerce_before_add_to_cart_button';
+		}
+
+		// Text fields - sanitize as text
+		$text_fields = array(
+			'delivery_date_label_text',
+			'check_btn_text',
+			'change_btn_text',
+			'cod_label_text',
+			'availability_label_text'
+		);
+		foreach ( $text_fields as $field ) {
+			if ( isset( $input[ $field ] ) ) {
+				$sanitized[ $field ] = sanitize_text_field( $input[ $field ] );
+			}
+		}
+
+		// Color fields - sanitize as hex color
+		$color_fields = array( 'textcolor', 'buttoncolor', 'buttontcolor' );
+		foreach ( $color_fields as $field ) {
+			if ( isset( $input[ $field ] ) ) {
+				$sanitized[ $field ] = sanitize_hex_color( $input[ $field ] );
+			}
+		}
+
+		// Array field - categories for shipping
+		if ( isset( $input['categories_for_shipping'] ) && is_array( $input['categories_for_shipping'] ) ) {
+			$sanitized['categories_for_shipping'] = array_map( 'absint', $input['categories_for_shipping'] );
+		} else {
+			$sanitized['categories_for_shipping'] = array();
+		}
+
+		return $sanitized;
+	}
+
+	/**
 	 * Get faq html.
 	 */
 	public function wpc_faq_settings_content() {
@@ -534,7 +608,7 @@ class Woo_Pincode_Checker_Admin {
 		add_settings_section( 'wpc-welcome', ' ', array( $this, 'wpc_welcome_content' ), 'wpc-welcome' );
 
 		$this->plugin_settings_tabs['wpc-general'] = esc_html__( 'General', 'woo-pincode-checker' );
-		register_setting( 'wpc_general_settings', 'wpc_general_settings' );
+		register_setting( 'wpc_general_settings', 'wpc_general_settings', array( $this, 'wpc_general_settings_sanitize' ) );
 		add_settings_section( 'wpc-general', ' ', array( $this, 'wpc_general_settings_content' ), 'wpc-general' );
 
 		$this->plugin_settings_tabs['wpc-pincodes'] = esc_html__( 'All Pincodes', 'woo-pincode-checker' );
