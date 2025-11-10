@@ -14,20 +14,20 @@
 					<p>
 						<?php
 							/* Translators: %1$s: Availability Label   */
-							echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_availability_label ) );
+							echo sprintf( esc_html__( '%1$s', 'pincode-checker-for-woocommerce' ), esc_html( $wpc_availability_label ) );
 						?>
 						<?php echo esc_html( $cookie_pin ); ?>
 					</p>
 					<p>
 						<?php
 							/* Translators: %1$s: Availability City Name   */
-							echo sprintf( esc_html__( 'City: %1$s', 'woo-pincode-checker' ), esc_html( $city ) );
+							echo sprintf( esc_html__( 'City: %1$s', 'pincode-checker-for-woocommerce' ), esc_html( $city ) );
 						?>
 					</p>
 					<p>
 						<?php
 							/* Translators: %1$s: Availability State Name   */
-							echo sprintf( esc_html__( 'State: %1$s', 'woo-pincode-checker' ), esc_html( $state ) );
+							echo sprintf( esc_html__( 'State: %1$s', 'pincode-checker-for-woocommerce' ), esc_html( $state ) );
 						?>
 					</p>
 					<div class="wpc_delivery-info-wrap">
@@ -35,7 +35,7 @@
 						<h4>
 						<?php
 						/* Translators: %1$s: We deliver to your location.   */
-						esc_html_e( 'We deliver to your location.', 'woo-pincode-checker' );
+						esc_html_e( 'We deliver to your location.', 'pincode-checker-for-woocommerce' );
 						?>
 						</h4>					
 						<div class="header">
@@ -50,7 +50,7 @@
 										<strong>
 										<?php
 											/* Translators: %1$s: Delivered By Label   */
-											echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_delivery_date_label ) );
+											echo sprintf( esc_html__( '%1$s', 'pincode-checker-for-woocommerce' ), esc_html( $wpc_delivery_date_label ) );
 										?>
 										</strong>
 										<span><?php echo esc_html( $delivery_date ); ?></span>
@@ -70,10 +70,10 @@
 											<strong>
 												<?php
 													/* Translators: %1$s: Cash on Delivery Available Label   */
-													echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_cod_label ) );
+													echo sprintf( esc_html__( '%1$s', 'pincode-checker-for-woocommerce' ), esc_html( $wpc_cod_label ) );
 												?>
 											</strong>
-											<span><?php esc_html_e( 'Available', 'woo-pincode-checker' ); ?></span>
+											<span><?php esc_html_e( 'Available', 'pincode-checker-for-woocommerce' ); ?></span>
 										</div>
 									</div>
 								<?php } ?>
@@ -84,22 +84,22 @@
 				<a class="button wpc-check-button" id='change_pin'>
 					<?php
 					/* Translators: %1$s: Change Button Text   */
-					echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_change_btn_label ) );
+					echo sprintf( esc_html__( '%1$s', 'pincode-checker-for-woocommerce' ), esc_html( $wpc_change_btn_label ) );
 					?>
 				</a>
 				</span>
 				
 			<div class="pin_div pincode_check_btn" id="my_custom_checkout_field2" style="display:none;">
 
-					<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Sorry! We are currently not servicing your area.', 'woo-pincode-checker' ); ?></div>
+					<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Sorry! We are currently not servicing your area.', 'pincode-checker-for-woocommerce' ); ?></div>
 
 					<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
-						<input type="text" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter your pincode', 'woo-pincode-checker' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required ); ?>/>
+						<input type="text" value="<?php echo esc_html( $cookie_pin ); ?>" placeholder="<?php esc_html_e( 'Enter your pincode', 'pincode-checker-for-woocommerce' ); ?>" id="pincode_field_id" name="pincode_field" class="input-text" <?php echo esc_attr( $wpc_required ); ?>/>
 
 						<a class="button wpc-check-button" id="checkpin">
 							<?php
 							/* Translators: %1$s: Check Button Text   */
-							echo sprintf( esc_html__( '%1$s', 'woo-pincode-checker' ), esc_html( $wpc_check_btn_label ) );
+							echo sprintf( esc_html__( '%1$s', 'pincode-checker-for-woocommerce' ), esc_html( $wpc_check_btn_label ) );
 							?>
 						</a>
 					</p>

@@ -214,12 +214,12 @@ class Woo_Pincode_Checker_Public {
 				'required_pincode_field_btn'            => $wpc_required_pincode_field_btn,
 				'wpc_nonce'                             => wp_create_nonce( 'ajax-nonce' ),
 				'messages' => array(
-					'enter_pincode'      => __( 'Please enter a pincode.', 'woo-pincode-checker' ),
-					'invalid_format'     => __( 'Please enter a valid pincode.', 'woo-pincode-checker' ),
-					'not_serviceable'    => __( 'Sorry! We are currently not servicing your area.', 'woo-pincode-checker' ),
-					'network_error'      => __( 'Connection issue. Please check your internet and try again.', 'woo-pincode-checker' ),
-					'server_error'       => __( 'Something went wrong. Please try again.', 'woo-pincode-checker' ),
-					'rate_limit'         => __( 'Too many requests. Please wait a moment.', 'woo-pincode-checker' ),
+					'enter_pincode'      => __( 'Please enter a pincode.', 'pincode-checker-for-woocommerce' ),
+					'invalid_format'     => __( 'Please enter a valid pincode.', 'pincode-checker-for-woocommerce' ),
+					'not_serviceable'    => __( 'Sorry! We are currently not servicing your area.', 'pincode-checker-for-woocommerce' ),
+					'network_error'      => __( 'Connection issue. Please check your internet and try again.', 'pincode-checker-for-woocommerce' ),
+					'server_error'       => __( 'Something went wrong. Please try again.', 'pincode-checker-for-woocommerce' ),
+					'rate_limit'         => __( 'Too many requests. Please wait a moment.', 'pincode-checker-for-woocommerce' ),
 				)
 			)
 		);
@@ -267,7 +267,7 @@ class Woo_Pincode_Checker_Public {
 				// Add shipping fee if applicable
 				if ( ! empty( $wpc_records->shipping_amount ) && $wpc_records->shipping_amount > 0 ) {
 					$woocommerce->cart->add_fee( 
-						__( 'Shipping Amount', 'woo-pincode-checker' ), 
+						__( 'Shipping Amount', 'pincode-checker-for-woocommerce' ), 
 						floatval( $wpc_records->shipping_amount ) 
 					);
 					add_filter( 'woocommerce_cart_ready_to_calc_shipping', array( $this, 'wpc_disable_shipping_calc_on_cart_page' ), 10, 1 );
@@ -333,19 +333,19 @@ class Woo_Pincode_Checker_Public {
 	public function wpc_check_checkout_page_pincode() {
 		// Check rate limiting
 		if ( ! $this->check_rate_limit( 'checkout_pincode_check' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'woo-pincode-checker' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'pincode-checker-for-woocommerce' ) ) );
 			return;
 		}
 
 		// Verify nonce
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'woo-pincode-checker' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'pincode-checker-for-woocommerce' ) ) );
 			return;
 		}
 
 		// Validate input
 		if ( ! isset( $_REQUEST['pincode'] ) || empty( $_REQUEST['pincode'] ) ) {
-			wp_send_json_error( array( 'message' => __( 'Pincode is required.', 'woo-pincode-checker' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Pincode is required.', 'pincode-checker-for-woocommerce' ) ) );
 			return;
 		}
 
@@ -353,7 +353,7 @@ class Woo_Pincode_Checker_Public {
 		
 		// Validate pincode format
 		if ( false === $pincode ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid pincode format.', 'woo-pincode-checker' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid pincode format.', 'pincode-checker-for-woocommerce' ) ) );
 			return;
 		}
 
@@ -391,7 +391,7 @@ class Woo_Pincode_Checker_Public {
 				$errors->add( 
 					'validation', 
 					sprintf( 
-						esc_html__( 'Delivery to %1$s is currently not available for this item.', 'woo-pincode-checker' ), 
+						esc_html__( 'Delivery to %1$s is currently not available for this item.', 'pincode-checker-for-woocommerce' ), 
 						'<strong>' . esc_html( $pincode_to_validate ) . '</strong>' 
 					) 
 				);

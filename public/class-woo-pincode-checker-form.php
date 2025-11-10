@@ -290,8 +290,8 @@ class Woo_Pincode_Checker_Form {
 			// Show a user-friendly message or silently fail
 			if ( current_user_can( 'manage_options' ) ) {
 				echo '<div style="color: red; font-size: 12px; margin: 10px 0;">';
-				echo esc_html__( 'Pincode checker unavailable: Database table missing.', 'woo-pincode-checker' );
-				echo ' <a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '">' . esc_html__( 'Fix this issue', 'woo-pincode-checker' ) . '</a>';
+				echo esc_html__( 'Pincode checker unavailable: Database table missing.', 'pincode-checker-for-woocommerce' );
+				echo ' <a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '">' . esc_html__( 'Fix this issue', 'pincode-checker-for-woocommerce' ) . '</a>';
 				echo '</div>';
 			}
 			return;
@@ -431,12 +431,12 @@ class Woo_Pincode_Checker_Form {
 				<img src="<?php echo esc_url( WPCP_PLUGIN_URL . 'public/image/loading-load.gif' ) ;  ?>"/>
 			</div>
 			<div class="wc-delivery-time-response pin_div pincode_check_btn <?php echo esc_attr( $wpc_position_class ); ?>" id="my_custom_checkout_field">
-				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Sorry! We are currently not servicing your area.', 'woo-pincode-checker' ); ?></div>
+				<div class="error_pin" id="error_pin" style="display:none"><?php esc_html_e( 'Sorry! We are currently not servicing your area.', 'pincode-checker-for-woocommerce' ); ?></div>
 
 				<p id="pincode_field_idp" class="form-row my-field-class form-row-wide">
 					<input type="text" 
 						   value="<?php echo esc_attr( $wpc_zipcode ); ?>" 
-						   placeholder="<?php esc_attr_e( 'Enter your pincode', 'woo-pincode-checker' ); ?>" 
+						   placeholder="<?php esc_attr_e( 'Enter your pincode', 'pincode-checker-for-woocommerce' ); ?>" 
 						   id="pincode_field_id" 
 						   name="pincode_field" 
 						   class="input-text" 
@@ -459,20 +459,20 @@ class Woo_Pincode_Checker_Form {
 		// Check if table exists first
 		if ( ! $this->check_table_exists() ) {
 			wp_send_json_error( array( 
-				'message' => __( 'Service temporarily unavailable. Please try again later.', 'woo-pincode-checker' )
+				'message' => __( 'Service temporarily unavailable. Please try again later.', 'pincode-checker-for-woocommerce' )
 			));
 			return;
 		}
 
 		// Verify nonce first
 		if ( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ajax-nonce' ) ) {
-			wp_send_json_error(array( 'message' => __( 'Security check failed.', 'woo-pincode-checker' ) ));
+			wp_send_json_error(array( 'message' => __( 'Security check failed.', 'pincode-checker-for-woocommerce' ) ));
 			return;
 		}
 
 		// Rate limiting check
 		if ( ! $this->check_rate_limit() ) {
-			wp_send_json_error(array( 'message' => __( 'Too many requests. Please wait a moment.', 'woo-pincode-checker' ) ));
+			wp_send_json_error(array( 'message' => __( 'Too many requests. Please wait a moment.', 'pincode-checker-for-woocommerce' ) ));
 			return;
 		}
 
@@ -482,7 +482,7 @@ class Woo_Pincode_Checker_Form {
 		// Validate pincode
 		$validated_pincode = $this->validate_pincode( $user_input_pincode );
 		if ( false === $validated_pincode ) {
-			wp_send_json_error( array( 'message' => __( 'Please enter a valid pincode (3-10 alphanumeric characters only).', 'woo-pincode-checker' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Please enter a valid pincode (3-10 alphanumeric characters only).', 'pincode-checker-for-woocommerce' ) ) );
 			return;
 		}
 
@@ -527,7 +527,7 @@ class Woo_Pincode_Checker_Form {
 			);
 			
 			if ( !$cookie_set ) {
-				wp_send_json_error(array( 'message' => __( 'Unable to save pincode. Please check your browser settings.', 'woo-pincode-checker' ) ));
+				wp_send_json_error(array( 'message' => __( 'Unable to save pincode. Please check your browser settings.', 'pincode-checker-for-woocommerce' ) ));
 				return;
 			}
 
@@ -565,7 +565,7 @@ class Woo_Pincode_Checker_Form {
 			));
 		} else {
 			wp_send_json_error(array( 
-				'message' => __( 'Sorry! We are currently not servicing your area.', 'woo-pincode-checker' ),
+				'message' => __( 'Sorry! We are currently not servicing your area.', 'pincode-checker-for-woocommerce' ),
 				'pincode' => $validated_pincode
 			));
 		}

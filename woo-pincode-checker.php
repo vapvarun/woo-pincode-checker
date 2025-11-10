@@ -120,13 +120,13 @@ function wpc_load_plugin_files() {
  * WooCommerce missing notice
  */
 function wpc_woocommerce_missing_notice() {
-	$woo_plugin = esc_html__( 'WooCommerce', 'woo-pincode-checker' );
-	$wpc_plugin = esc_html__( 'Woo Pincode Checker', 'woo-pincode-checker' );
+	$woo_plugin = esc_html__( 'WooCommerce', 'pincode-checker-for-woocommerce' );
+	$wpc_plugin = esc_html__( 'Woo Pincode Checker', 'pincode-checker-for-woocommerce' );
 
 	echo '<div class="notice notice-error is-dismissible">';
-	echo '<p><strong>' . esc_html__( 'Plugin Activation Error:', 'woo-pincode-checker' ) . '</strong> ';
+	echo '<p><strong>' . esc_html__( 'Plugin Activation Error:', 'pincode-checker-for-woocommerce' ) . '</strong> ';
 	echo sprintf( 
-		esc_html__( '%1$s requires %2$s to be installed and activated before it can function properly.', 'woo-pincode-checker' ), 
+		esc_html__( '%1$s requires %2$s to be installed and activated before it can function properly.', 'pincode-checker-for-woocommerce' ), 
 		'<em>' . esc_html( $wpc_plugin ) . '</em>', 
 		'<em>' . esc_html( $woo_plugin ) . '</em>' 
 	);
@@ -146,7 +146,7 @@ function wpc_woocommerce_missing_notice() {
 		
 		echo '<p>';
 		echo '<a href="' . esc_url( $install_url ) . '" class="button button-primary">' . 
-			 esc_html__( 'Install WooCommerce', 'woo-pincode-checker' ) . '</a>';
+			 esc_html__( 'Install WooCommerce', 'pincode-checker-for-woocommerce' ) . '</a>';
 		echo '</p>';
 	}
 	
@@ -158,9 +158,9 @@ function wpc_woocommerce_missing_notice() {
  */
 function wpc_php_version_notice() {
 	echo '<div class="notice notice-error is-dismissible">';
-	echo '<p><strong>' . esc_html__( 'PHP Version Error:', 'woo-pincode-checker' ) . '</strong> ';
+	echo '<p><strong>' . esc_html__( 'PHP Version Error:', 'pincode-checker-for-woocommerce' ) . '</strong> ';
 	echo sprintf( 
-		esc_html__( 'Woo Pincode Checker requires PHP version 7.4 or higher. You are running PHP %s.', 'woo-pincode-checker' ), 
+		esc_html__( 'Woo Pincode Checker requires PHP version 7.4 or higher. You are running PHP %s.', 'pincode-checker-for-woocommerce' ), 
 		PHP_VERSION 
 	);
 	echo '</p>';
@@ -172,9 +172,9 @@ function wpc_php_version_notice() {
  */
 function wpc_wordpress_version_notice() {
 	echo '<div class="notice notice-error is-dismissible">';
-	echo '<p><strong>' . esc_html__( 'WordPress Version Error:', 'woo-pincode-checker' ) . '</strong> ';
+	echo '<p><strong>' . esc_html__( 'WordPress Version Error:', 'pincode-checker-for-woocommerce' ) . '</strong> ';
 	echo sprintf( 
-		esc_html__( 'Woo Pincode Checker requires WordPress version 5.0 or higher. You are running WordPress %s.', 'woo-pincode-checker' ), 
+		esc_html__( 'Woo Pincode Checker requires WordPress version 5.0 or higher. You are running WordPress %s.', 'pincode-checker-for-woocommerce' ), 
 		get_bloginfo( 'version' ) 
 	);
 	echo '</p>';
@@ -676,8 +676,8 @@ register_deactivation_hook( __FILE__, 'wpc_handle_plugin_deactivation' );
  */
 function wpc_add_plugin_action_links( $links ) {
 	$plugin_links = array(
-		'<a href="' . admin_url( 'admin.php?page=woo-pincode-checker' ) . '">' . __( 'Settings', 'woo-pincode-checker' ) . '</a>',
-		'<a href="' . admin_url( 'admin.php?page=pincode_lists' ) . '">' . __( 'Manage Codes', 'woo-pincode-checker' ) . '</a>',
+		'<a href="' . admin_url( 'admin.php?page=woo-pincode-checker' ) . '">' . __( 'Settings', 'pincode-checker-for-woocommerce' ) . '</a>',
+		'<a href="' . admin_url( 'admin.php?page=pincode_lists' ) . '">' . __( 'Manage Codes', 'pincode-checker-for-woocommerce' ) . '</a>',
 	);
 	
 	return array_merge( $plugin_links, $links );
@@ -705,8 +705,8 @@ function wpc_add_plugin_meta_links( $links, $file ) {
 	
 	if ( ! empty( $plugin_basename ) && $file === $plugin_basename ) {
 		$meta_links = array(
-			'<a href="https://docs.wbcomdesigns.com/doc_category/woo-pincode-checker/" target="_blank">' . __( 'Documentation', 'woo-pincode-checker' ) . '</a>',
-			'<a href="https://wbcomdesigns.com/support/" target="_blank">' . __( 'Support', 'woo-pincode-checker' ) . '</a>',
+			'<a href="https://docs.wbcomdesigns.com/doc_category/woo-pincode-checker/" target="_blank">' . __( 'Documentation', 'pincode-checker-for-woocommerce' ) . '</a>',
+			'<a href="https://wbcomdesigns.com/support/" target="_blank">' . __( 'Support', 'pincode-checker-for-woocommerce' ) . '</a>',
 		);
 		
 		return array_merge( $links, $meta_links );

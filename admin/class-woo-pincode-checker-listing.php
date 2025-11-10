@@ -30,8 +30,8 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'singular' => __( 'Pincode', 'woo-pincode-checker' ),
-				'plural'   => __( 'Pincodes', 'woo-pincode-checker' ),
+				'singular' => __( 'Pincode', 'pincode-checker-for-woocommerce' ),
+				'plural'   => __( 'Pincodes', 'pincode-checker-for-woocommerce' ),
 				'ajax'     => false,
 			)
 		);
@@ -83,14 +83,14 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	public function get_columns() {
 		$table_columns = array(
 			'cb'               => '<input type="checkbox" />',
-			'pincode'          => __( 'Pincode', 'woo-pincode-checker' ),
-			'city'             => __( 'City', 'woo-pincode-checker' ),
-			'state'            => __( 'State', 'woo-pincode-checker' ),
-			'delivery_days'    => __( 'Delivery Days', 'woo-pincode-checker' ),
-			'shipping_amount'  => __( 'Shipping Amount', 'woo-pincode-checker' ),
-			'case_on_delivery' => __( 'Cash on Delivery', 'woo-pincode-checker' ),
-			'cod_amount'       => __( 'COD Amount', 'woo-pincode-checker' ),
-			'created_at'       => __( 'Created', 'woo-pincode-checker' ),
+			'pincode'          => __( 'Pincode', 'pincode-checker-for-woocommerce' ),
+			'city'             => __( 'City', 'pincode-checker-for-woocommerce' ),
+			'state'            => __( 'State', 'pincode-checker-for-woocommerce' ),
+			'delivery_days'    => __( 'Delivery Days', 'pincode-checker-for-woocommerce' ),
+			'shipping_amount'  => __( 'Shipping Amount', 'pincode-checker-for-woocommerce' ),
+			'case_on_delivery' => __( 'Cash on Delivery', 'pincode-checker-for-woocommerce' ),
+			'cod_amount'       => __( 'COD Amount', 'pincode-checker-for-woocommerce' ),
+			'created_at'       => __( 'Created', 'pincode-checker-for-woocommerce' ),
 		);
 		return $table_columns;
 	}
@@ -109,7 +109,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		if ( isset( $_GET['deleted'] ) && $_GET['deleted'] == '1' ) {
 			add_action( 'admin_notices', function() {
 				echo '<div class="notice notice-success is-dismissible"><p>' . 
-					 esc_html__( 'Pincode deleted successfully.', 'woo-pincode-checker' ) . 
+					 esc_html__( 'Pincode deleted successfully.', 'pincode-checker-for-woocommerce' ) . 
 					 '</p></div>';
 			});
 		}
@@ -119,7 +119,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			add_action( 'admin_notices', function() use ( $count ) {
 				echo '<div class="notice notice-success is-dismissible"><p>' . 
 					 sprintf( 
-						 esc_html( _n( '%d pincode deleted successfully.', '%d pincodes deleted successfully.', $count, 'woo-pincode-checker' ) ), 
+						 esc_html( _n( '%d pincode deleted successfully.', '%d pincodes deleted successfully.', $count, 'pincode-checker-for-woocommerce' ) ), 
 						 $count 
 					 ) . 
 					 '</p></div>';
@@ -293,32 +293,32 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		foreach ( $query_results as &$val ) {
 			// Format COD display
 			if ( isset( $val['case_on_delivery'] ) && $val['case_on_delivery'] == 1 ) {
-				$val['case_on_delivery'] = '<span class="wpc-status-available">' . esc_html__( 'Available', 'woo-pincode-checker' ) . '</span>';
+				$val['case_on_delivery'] = '<span class="wpc-status-available">' . esc_html__( 'Available', 'pincode-checker-for-woocommerce' ) . '</span>';
 			} else {
-				$val['case_on_delivery'] = '<span class="wpc-status-unavailable">' . esc_html__( 'Unavailable', 'woo-pincode-checker' ) . '</span>';
+				$val['case_on_delivery'] = '<span class="wpc-status-unavailable">' . esc_html__( 'Unavailable', 'pincode-checker-for-woocommerce' ) . '</span>';
 			}
 
 			// Format shipping amount
 			if ( isset( $val['shipping_amount'] ) && $val['shipping_amount'] > 0 ) {
 				$val['shipping_amount'] = wc_price( $val['shipping_amount'] );
 			} else {
-				$val['shipping_amount'] = '<span class="wpc-free">' . esc_html__( 'Free', 'woo-pincode-checker' ) . '</span>';
+				$val['shipping_amount'] = '<span class="wpc-free">' . esc_html__( 'Free', 'pincode-checker-for-woocommerce' ) . '</span>';
 			}
 
 			// Format COD amount
 			if ( isset( $val['cod_amount'] ) && $val['cod_amount'] > 0 ) {
 				$val['cod_amount'] = wc_price( $val['cod_amount'] );
 			} else {
-				$val['cod_amount'] = '<span class="wpc-free">' . esc_html__( 'Free', 'woo-pincode-checker' ) . '</span>';
+				$val['cod_amount'] = '<span class="wpc-free">' . esc_html__( 'Free', 'pincode-checker-for-woocommerce' ) . '</span>';
 			}
 
 			// Format delivery days
 			if ( isset( $val['delivery_days'] ) ) {
 				$days = intval( $val['delivery_days'] );
 				if ( $days === 1 ) {
-					$val['delivery_days'] = sprintf( esc_html__( '%d day', 'woo-pincode-checker' ), $days );
+					$val['delivery_days'] = sprintf( esc_html__( '%d day', 'pincode-checker-for-woocommerce' ), $days );
 				} else {
-					$val['delivery_days'] = sprintf( esc_html__( '%d days', 'woo-pincode-checker' ), $days );
+					$val['delivery_days'] = sprintf( esc_html__( '%d days', 'pincode-checker-for-woocommerce' ), $days );
 				}
 			}
 
@@ -410,16 +410,16 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		$actions['edit'] = sprintf(
 			'<a href="%s" aria-label="%s">%s</a>',
 			esc_url( $edit_url ),
-			esc_attr( sprintf( __( 'Edit pincode %s', 'woo-pincode-checker' ), $item['pincode'] ) ),
-			esc_html__( 'Edit', 'woo-pincode-checker' )
+			esc_attr( sprintf( __( 'Edit pincode %s', 'pincode-checker-for-woocommerce' ), $item['pincode'] ) ),
+			esc_html__( 'Edit', 'pincode-checker-for-woocommerce' )
 		);
 
 		$actions['delete'] = sprintf(
 			'<a href="%s" aria-label="%s" onclick="return confirm(\'%s\')">%s</a>',
 			esc_url( $delete_url ),
-			esc_attr( sprintf( __( 'Delete pincode %s', 'woo-pincode-checker' ), $item['pincode'] ) ),
-			esc_js( __( 'Are you sure you want to delete this pincode?', 'woo-pincode-checker' ) ),
-			esc_html__( 'Delete', 'woo-pincode-checker' )
+			esc_attr( sprintf( __( 'Delete pincode %s', 'pincode-checker-for-woocommerce' ), $item['pincode'] ) ),
+			esc_js( __( 'Are you sure you want to delete this pincode?', 'pincode-checker-for-woocommerce' ) ),
+			esc_html__( 'Delete', 'pincode-checker-for-woocommerce' )
 		);
 
 		return sprintf( 
@@ -462,7 +462,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			if ( $id > 0 ) {
 				// Verify nonce for delete action
 				if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete-pincode-' . $id ) ) {
-					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'woo-pincode-checker' ) );
+					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'pincode-checker-for-woocommerce' ) );
 				}
 				
 				self::delete_pincode( $id );
@@ -481,7 +481,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			if ( ! empty( $delete_ids ) ) {
 				// Verify nonce for bulk actions
 				if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'bulk-' . $this->_args['plural'] ) ) {
-					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'woo-pincode-checker' ) );
+					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'pincode-checker-for-woocommerce' ) );
 				}
 				
 				$deleted_count = 0;
@@ -535,7 +535,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array( 
-			'bulk-delete' => esc_html__( 'Delete', 'woo-pincode-checker' ) 
+			'bulk-delete' => esc_html__( 'Delete', 'pincode-checker-for-woocommerce' ) 
 		);
 		return $actions;
 	}
@@ -547,11 +547,11 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$search_term = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			printf(
-				esc_html__( 'No pincodes found matching "%s". Try a different search term.', 'woo-pincode-checker' ),
+				esc_html__( 'No pincodes found matching "%s". Try a different search term.', 'pincode-checker-for-woocommerce' ),
 				esc_html( $search_term )
 			);
 		} else {
-			esc_html_e( 'No pincodes found. Add your first pincode to get started.', 'woo-pincode-checker' );
+			esc_html_e( 'No pincodes found. Add your first pincode to get started.', 'pincode-checker-for-woocommerce' );
 		}
 	}
 
@@ -563,10 +563,10 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			?>
 			<div class="alignleft actions">
 				<select name="action2" id="bulk-action-selector-<?php echo esc_attr( $which ); ?>">
-					<option value="-1"><?php esc_html_e( 'Bulk Actions', 'woo-pincode-checker' ); ?></option>
-					<option value="bulk-delete"><?php esc_html_e( 'Delete', 'woo-pincode-checker' ); ?></option>
+					<option value="-1"><?php esc_html_e( 'Bulk Actions', 'pincode-checker-for-woocommerce' ); ?></option>
+					<option value="bulk-delete"><?php esc_html_e( 'Delete', 'pincode-checker-for-woocommerce' ); ?></option>
 				</select>
-				<?php submit_button( __( 'Apply', 'woo-pincode-checker' ), 'action', '', false, array( 'id' => "doaction{$which}" ) ); ?>
+				<?php submit_button( __( 'Apply', 'pincode-checker-for-woocommerce' ), 'action', '', false, array( 'id' => "doaction{$which}" ) ); ?>
 			</div>
 			
 			<div class="alignright">
@@ -574,7 +574,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 					<?php
 					$total_pincodes = self::record_count();
 					printf(
-						esc_html( _n( '%s pincode total', '%s pincodes total', $total_pincodes, 'woo-pincode-checker' ) ),
+						esc_html( _n( '%s pincode total', '%s pincodes total', $total_pincodes, 'pincode-checker-for-woocommerce' ) ),
 						'<strong>' . number_format_i18n( $total_pincodes ) . '</strong>'
 					);
 					?>

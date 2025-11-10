@@ -71,7 +71,7 @@ class Woo_Pincode_Checker {
 		} else {
 			$this->version = '1.3.4';
 		}
-		$this->plugin_name = 'woo-pincode-checker';
+		$this->plugin_name = 'pincode-checker-for-woocommerce';
 
 		$this->load_dependencies();
 		$this->set_locale();

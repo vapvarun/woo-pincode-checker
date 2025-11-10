@@ -38,7 +38,7 @@ class Woo_Pincode_Checker_i18n {
 		$languages_dir = 'woo-pincode-checker/languages/';
 
 		load_plugin_textdomain(
-			'woo-pincode-checker',
+			'pincode-checker-for-woocommerce',
 			false,
 			$languages_dir
 		);
