@@ -147,6 +147,7 @@
             try {
                 const response = await this.makeAjaxRequest('wpc_picode_check_ajax_submit', {
                     pin_code: pincode,
+                    product_id: pincode_check.product_id || 0,
                     nonce: pincode_check.wpc_nonce
                 });
 
@@ -225,12 +226,17 @@
         }
 
         handleErrorResponse(data, pincode) {
-            const message = data?.message || pincode_check.messages?.not_serviceable || 
+            const message = data?.message || pincode_check.messages?.not_serviceable ||
                           __('Sorry! We are currently not servicing your area.', 'woo-pincode-checker');
-            
+
             this.showError(message, true);
             $('.delivery_msg').hide();
-            
+
+            // Show nearby pincode suggestions if available
+            if (data?.has_nearby && data?.nearby_html) {
+                $('.wpc_error_msg').append(data.nearby_html);
+            }
+
             const hideDisableOption = pincode_check.hide_disable_product_page_cart_btn;
             if (hideDisableOption === 'add_to_cart_disable') {
                 $('.single_add_to_cart_button').prop('disabled', true);
@@ -242,7 +248,8 @@
             $(document).trigger('wpc_pincode_checked', {
                 pincode: pincode,
                 success: false,
-                error: message
+                error: message,
+                nearby_suggestions: data?.nearby_html || null
             });
         }
 

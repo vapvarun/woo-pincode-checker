@@ -124,7 +124,10 @@ class Woo_Pincode_Checker {
 		 */
 		require_once $plugin_base_path . 'includes/class-woo-pincode-checker-i18n.php';
 		require_once $plugin_base_path . 'includes/class-woo-pincode-checker-functions.php';
-		
+		require_once $plugin_base_path . 'includes/class-woo-pincode-pattern-handler.php';
+		require_once $plugin_base_path . 'includes/class-woo-pincode-category-rules.php';
+		require_once $plugin_base_path . 'includes/class-woo-pincode-nearby-suggestions.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
@@ -203,6 +206,12 @@ class Woo_Pincode_Checker {
 		// AJAX handlers for pincode search and sorting
 		$this->loader->add_action( 'wp_ajax_wpc_ajax_search_pincodes', $plugin_admin, 'wpc_ajax_search_pincodes' );
 		$this->loader->add_action( 'wp_ajax_wpc_ajax_sort_pincodes', $plugin_admin, 'wpc_ajax_sort_pincodes' );
+
+		// AJAX handler for pattern preview
+		$this->loader->add_action( 'wp_ajax_wpc_preview_pattern', $plugin_admin, 'wpc_preview_pattern' );
+
+		// AJAX handler for geocoding batch
+		$this->loader->add_action( 'wp_ajax_wpc_geocode_batch', $plugin_admin, 'wpc_geocode_batch' );
 
 	}
 

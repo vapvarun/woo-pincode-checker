@@ -379,32 +379,41 @@ class Woo_Pincode_Checker_Admin {
 			array( $this, 'wpc_pincode_lists_func' ) 
 		);
 
-		add_submenu_page( 
-			'pincode_lists', 
-			esc_html__( 'Add New Pincode', 'pincode-checker-for-woocommerce' ), 
-			esc_html__( 'Add New Pincode', 'pincode-checker-for-woocommerce' ), 
-			'manage_options', 
-			'add_wpc_pincode', 
-			array( $this, 'wpc_add_pincode_func' ) 
+		add_submenu_page(
+			'pincode_lists',
+			esc_html__( 'Add New Pincode', 'pincode-checker-for-woocommerce' ),
+			esc_html__( 'Add New Pincode', 'pincode-checker-for-woocommerce' ),
+			'manage_options',
+			'add_wpc_pincode',
+			array( $this, 'wpc_add_pincode_func' )
+		);
+
+		add_submenu_page(
+			'pincode_lists',
+			esc_html__( 'Bulk Add by Pattern', 'pincode-checker-for-woocommerce' ),
+			esc_html__( 'Bulk Add by Pattern', 'pincode-checker-for-woocommerce' ),
+			'manage_options',
+			'bulk_add_wpc_pincode',
+			array( $this, 'wpc_bulk_add_pincode_func' )
 		);
 
 		if ( class_exists( 'WooCommerce' ) ) {
 			if ( empty( $GLOBALS['admin_page_hooks']['wbcomplugins'] ) ) {
-				add_menu_page( 
-					esc_html__( 'WB Plugins', 'pincode-checker-for-woocommerce' ), 
-					esc_html__( 'WB Plugins', 'pincode-checker-for-woocommerce' ), 
-					'manage_options', 
-					'wbcomplugins', 
-					array( $this, 'wpc_admin_settings_page' ), 
-					'dashicons-lightbulb', 
-					59 
+				add_menu_page(
+					esc_html__( 'WB Plugins', 'pincode-checker-for-woocommerce' ),
+					esc_html__( 'WB Plugins', 'pincode-checker-for-woocommerce' ),
+					'manage_options',
+					'wbcomplugins',
+					array( $this, 'wpc_admin_settings_page' ),
+					'dashicons-lightbulb',
+					59
 				);
-				add_submenu_page( 
-					'wbcomplugins', 
-					esc_html__( 'General', 'pincode-checker-for-woocommerce' ), 
-					esc_html__( 'General', 'pincode-checker-for-woocommerce' ), 
-					'manage_options', 
-					'wbcomplugins' 
+				add_submenu_page(
+					'wbcomplugins',
+					esc_html__( 'General', 'pincode-checker-for-woocommerce' ),
+					esc_html__( 'General', 'pincode-checker-for-woocommerce' ),
+					'manage_options',
+					'wbcomplugins'
 				);
 			}
 			add_submenu_page(
@@ -586,6 +595,36 @@ class Woo_Pincode_Checker_Admin {
 			$sanitized['categories_for_shipping'] = array();
 		}
 
+		// Category-specific delivery rules
+		if ( isset( $input['global_category_rules'] ) && is_array( $input['global_category_rules'] ) ) {
+			$sanitized_rules = array();
+
+			foreach ( $input['global_category_rules'] as $category_id => $rule_data ) {
+				// Only include if enabled checkbox is checked
+				if ( isset( $rule_data['enabled'] ) && '1' === $rule_data['enabled'] ) {
+					$cat_id = absint( $category_id );
+					$days = isset( $rule_data['days'] ) ? absint( $rule_data['days'] ) : 1;
+
+					// Validate delivery days range
+					if ( $days < 1 ) {
+						$days = 1;
+					} elseif ( $days > 365 ) {
+						$days = 365;
+					}
+
+					// Verify category exists
+					$category = get_term( $cat_id, 'product_cat' );
+					if ( $category && ! is_wp_error( $category ) ) {
+						$sanitized_rules[ $cat_id ] = $days;
+					}
+				}
+			}
+
+			$sanitized['global_category_rules'] = $sanitized_rules;
+		} else {
+			$sanitized['global_category_rules'] = array();
+		}
+
 		return $sanitized;
 	}
 
@@ -594,6 +633,24 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function wpc_faq_settings_content() {
 		include_once 'partials/woo-pincode-checker-faq-display.php';
+	}
+
+	/**
+	 * Get category rules settings html.
+	 *
+	 * @since 1.5.0
+	 */
+	public function wpc_category_rules_content() {
+		include_once 'partials/woo-pincode-category-rules-display.php';
+	}
+
+	/**
+	 * Get geocoding settings html.
+	 *
+	 * @since 1.5.0
+	 */
+	public function wpc_geocoding_content() {
+		include_once 'partials/woo-pincode-geocoding-display.php';
 	}
 
 	/**
@@ -620,6 +677,13 @@ class Woo_Pincode_Checker_Admin {
 		$this->plugin_settings_tabs['wpc-faq'] = esc_html__( 'FAQ', 'pincode-checker-for-woocommerce' );
 		register_setting( 'wpc_faq_settings', 'wpc_faq_settings' );
 		add_settings_section( 'wpc-faq', ' ', array( $this, 'wpc_faq_settings_content' ), 'wpc-faq' );
+
+		$this->plugin_settings_tabs['wpc-category-rules'] = esc_html__( 'Category Rules', 'pincode-checker-for-woocommerce' );
+		register_setting( 'wpc_general_settings', 'wpc_general_settings', array( $this, 'wpc_general_settings_sanitize' ) );
+		add_settings_section( 'wpc-category-rules', ' ', array( $this, 'wpc_category_rules_content' ), 'wpc-category-rules' );
+
+		$this->plugin_settings_tabs['wpc-geocoding'] = esc_html__( 'Geocoding', 'pincode-checker-for-woocommerce' );
+		add_settings_section( 'wpc-geocoding', ' ', array( $this, 'wpc_geocoding_content' ), 'wpc-geocoding' );
 	}
 
 	/**
@@ -1190,6 +1254,9 @@ class Woo_Pincode_Checker_Admin {
 					// Skip header row
 					fgetcsv( $handle );
 
+					// Initialize pattern handler for pattern expansion
+					$pattern_handler = new Woo_Pincode_Pattern_Handler();
+
 					while ( ( $data = fgetcsv( $handle, 100000, ',' ) ) !== false ) {
 						// Validate row data
 						if ( count( $data ) < 3 ) {
@@ -1197,13 +1264,10 @@ class Woo_Pincode_Checker_Admin {
 							continue;
 						}
 
-						// Validate and sanitize pincode
-						$pincode = $this->validate_pincode( trim( $data[0] ) );
-						if ( false === $pincode ) {
-							$error_count++;
-							continue;
-						}
+						// Get pincode/pattern from CSV
+						$pincode_input = trim( $data[0] );
 
+						// Get other fields
 						$city = sanitize_text_field( trim( $data[1] ) );
 						$state = sanitize_text_field( trim( $data[2] ) );
 						$delivery_days = isset( $data[3] ) ? intval( $data[3] ) : 1;
@@ -1222,35 +1286,93 @@ class Woo_Pincode_Checker_Admin {
 							$cod_amount = 0;
 						}
 
-						// Check if pincode already exists
-						$existing = $wpdb->get_var( $wpdb->prepare(
-							"SELECT COUNT(*) FROM {$table_name} WHERE pincode = %s", 
-							$pincode
-						) );
+						// Check if it's a pattern (contains *, ?, or -)
+						$is_pattern = ( strpos( $pincode_input, '*' ) !== false ||
+									   strpos( $pincode_input, '?' ) !== false ||
+									   strpos( $pincode_input, '-' ) !== false );
 
-						if ( ! $existing ) {
-							$result = $wpdb->insert(
-								$table_name,
-								array(
-									'pincode'          => $pincode,
-									'city'             => $city,
-									'state'            => $state,
-									'delivery_days'    => $delivery_days,
-									'shipping_amount'  => $shipping_amount,
-									'case_on_delivery' => $case_on_delivery,
-									'cod_amount'       => $cod_amount,
-								),
-								array( '%s', '%s', '%s', '%d', '%f', '%d', '%f' )
-							);
+						if ( $is_pattern ) {
+							// It's a pattern - expand it
+							$pincodes = $pattern_handler->parse_pattern( $pincode_input );
 
-							if ( false !== $result ) {
-								$imported_count++;
-							} else {
+							if ( is_wp_error( $pincodes ) ) {
+								// Pattern parsing error
 								$error_count++;
-								error_log( 'WPC CSV Import Error: ' . $wpdb->last_error );
+								error_log( 'WPC CSV Import Pattern Error: ' . $pincodes->get_error_message() );
+								continue;
+							}
+
+							// Insert all pincodes from pattern
+							foreach ( $pincodes as $pincode ) {
+								// Check if pincode already exists
+								$existing = $wpdb->get_var( $wpdb->prepare(
+									"SELECT COUNT(*) FROM {$table_name} WHERE pincode = %s",
+									$pincode
+								) );
+
+								if ( ! $existing ) {
+									$result = $wpdb->insert(
+										$table_name,
+										array(
+											'pincode'          => $pincode,
+											'city'             => $city,
+											'state'            => $state,
+											'delivery_days'    => $delivery_days,
+											'shipping_amount'  => $shipping_amount,
+											'case_on_delivery' => $case_on_delivery,
+											'cod_amount'       => $cod_amount,
+										),
+										array( '%s', '%s', '%s', '%d', '%f', '%d', '%f' )
+									);
+
+									if ( false !== $result ) {
+										$imported_count++;
+									} else {
+										$error_count++;
+										error_log( 'WPC CSV Import Error: ' . $wpdb->last_error );
+									}
+								} else {
+									$skipped_count++;
+								}
 							}
 						} else {
-							$skipped_count++;
+							// Single pincode - validate and process normally
+							$pincode = $this->validate_pincode( $pincode_input );
+							if ( false === $pincode ) {
+								$error_count++;
+								continue;
+							}
+
+							// Check if pincode already exists
+							$existing = $wpdb->get_var( $wpdb->prepare(
+								"SELECT COUNT(*) FROM {$table_name} WHERE pincode = %s",
+								$pincode
+							) );
+
+							if ( ! $existing ) {
+								$result = $wpdb->insert(
+									$table_name,
+									array(
+										'pincode'          => $pincode,
+										'city'             => $city,
+										'state'            => $state,
+										'delivery_days'    => $delivery_days,
+										'shipping_amount'  => $shipping_amount,
+										'case_on_delivery' => $case_on_delivery,
+										'cod_amount'       => $cod_amount,
+									),
+									array( '%s', '%s', '%s', '%d', '%f', '%d', '%f' )
+								);
+
+								if ( false !== $result ) {
+									$imported_count++;
+								} else {
+									$error_count++;
+									error_log( 'WPC CSV Import Error: ' . $wpdb->last_error );
+								}
+							} else {
+								$skipped_count++;
+							}
 						}
 					}
 					fclose( $handle );
@@ -1335,6 +1457,63 @@ class Woo_Pincode_Checker_Admin {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Bulk Add Pincode by Pattern or Range.
+	 *
+	 * @since 1.6.0
+	 */
+	public function wpc_bulk_add_pincode_func() {
+		// Check user capabilities
+		if ( ! $this->check_admin_capabilities() ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'pincode-checker-for-woocommerce' ) );
+		}
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'pincode_checker';
+
+		// Check if table exists
+		$table_exists = $wpdb->get_var( $wpdb->prepare(
+			"SHOW TABLES LIKE %s",
+			$table_name
+		) ) == $table_name;
+
+		if ( ! $table_exists ) {
+			?>
+			<div class="wrap">
+				<h2><?php esc_html_e( 'Bulk Add by Pattern', 'pincode-checker-for-woocommerce' ); ?></h2>
+				<div class="notice notice-error">
+					<p><strong><?php esc_html_e( 'Database Error:', 'pincode-checker-for-woocommerce' ); ?></strong></p>
+					<p><?php esc_html_e( 'The plugin database table is missing. Cannot add pincodes without the database table.', 'pincode-checker-for-woocommerce' ); ?></p>
+					<p>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ); ?>" class="button button-primary">
+							<?php esc_html_e( 'Fix Database Issue', 'pincode-checker-for-woocommerce' ); ?>
+						</a>
+					</p>
+				</div>
+			</div>
+			<?php
+			return;
+		}
+
+		// Include the bulk add template
+		$plugin_base_path = defined( 'WPCP_PLUGIN_PATH' ) ? WPCP_PLUGIN_PATH : '';
+		if ( ! empty( $plugin_base_path ) ) {
+			$template_file = $plugin_base_path . 'admin/partials/woo-pincode-bulk-add.php';
+			if ( file_exists( $template_file ) ) {
+				include $template_file;
+			} else {
+				?>
+				<div class="wrap">
+					<h2><?php esc_html_e( 'Bulk Add by Pattern', 'pincode-checker-for-woocommerce' ); ?></h2>
+					<div class="notice notice-error">
+						<p><?php esc_html_e( 'Template file not found.', 'pincode-checker-for-woocommerce' ); ?></p>
+					</div>
+				</div>
+				<?php
+			}
+		}
 	}
 
 	/**
@@ -1737,7 +1916,76 @@ class Woo_Pincode_Checker_Admin {
 		}
 		
 		$html .= '</span>';
-		
+
 		return $html;
+	}
+
+	/**
+	 * AJAX handler for pattern preview
+	 *
+	 * @since 1.6.0
+	 */
+	public function wpc_preview_pattern() {
+		// Check user capabilities
+		if ( ! $this->check_admin_capabilities() ) {
+			wp_send_json_error( array( 'message' => __( 'Unauthorized access', 'pincode-checker-for-woocommerce' ) ) );
+			exit;
+		}
+
+		// Check nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpc-preview-pattern' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid security token', 'pincode-checker-for-woocommerce' ) ) );
+			exit;
+		}
+
+		// Get pattern
+		$pattern = isset( $_POST['pattern'] ) ? sanitize_text_field( wp_unslash( $_POST['pattern'] ) ) : '';
+
+		if ( empty( $pattern ) ) {
+			wp_send_json_error( array( 'message' => __( 'Pattern is required', 'pincode-checker-for-woocommerce' ) ) );
+			exit;
+		}
+
+		// Initialize pattern handler
+		$pattern_handler = new Woo_Pincode_Pattern_Handler();
+
+		// Get preview count
+		$count = $pattern_handler->preview_count( $pattern );
+
+		if ( is_wp_error( $count ) ) {
+			wp_send_json_error( array( 'message' => $count->get_error_message() ) );
+			exit;
+		}
+
+		wp_send_json_success( array( 'count' => $count ) );
+		exit;
+	}
+
+	/**
+	 * AJAX handler for geocoding pincodes in batches
+	 *
+	 * @since 1.5.0
+	 */
+	public function wpc_geocode_batch() {
+		// Check user capabilities
+		if ( ! $this->check_admin_capabilities() ) {
+			wp_send_json_error( array( 'message' => __( 'Unauthorized access', 'pincode-checker-for-woocommerce' ) ) );
+			exit;
+		}
+
+		// Check nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpc-geocode-batch' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid security token', 'pincode-checker-for-woocommerce' ) ) );
+			exit;
+		}
+
+		// Initialize nearby suggestions handler
+		$nearby_handler = new Woo_Pincode_Nearby_Suggestions();
+
+		// Process a batch (50 pincodes at a time)
+		$result = $nearby_handler->geocode_batch( 50 );
+
+		wp_send_json_success( $result );
+		exit;
 	}
 }

@@ -205,6 +205,13 @@ class Woo_Pincode_Checker_Public {
 			false 
 		);
 		
+		// Get product ID if on single product page
+		$product_id = 0;
+		if ( is_product() ) {
+			global $post;
+			$product_id = isset( $post->ID ) ? absint( $post->ID ) : 0;
+		}
+
 		wp_localize_script(
 			$this->plugin_name,
 			'pincode_check',
@@ -213,6 +220,7 @@ class Woo_Pincode_Checker_Public {
 				'hide_disable_product_page_cart_btn'    => $wpc_hide_disabled_add_cart_btn,
 				'required_pincode_field_btn'            => $wpc_required_pincode_field_btn,
 				'wpc_nonce'                             => wp_create_nonce( 'ajax-nonce' ),
+				'product_id'                            => $product_id,
 				'messages' => array(
 					'enter_pincode'      => __( 'Please enter a pincode.', 'pincode-checker-for-woocommerce' ),
 					'invalid_format'     => __( 'Please enter a valid pincode.', 'pincode-checker-for-woocommerce' ),

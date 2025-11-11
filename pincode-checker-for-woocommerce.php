@@ -329,37 +329,54 @@ add_action( 'admin_init', 'wpc_check_and_create_table', 5 );
  */
 function wpc_check_update_mysql_db() {
 	global $wpdb;
-	
+
 	$installed_ver = get_option( 'wpc_db_version' );
 	$current_version = '1.5.0';
-	
+
 	// Always check if table exists first
 	$table_name = $wpdb->prefix . 'pincode_checker';
-	$table_exists = $wpdb->get_var( $wpdb->prepare( 
-		"SHOW TABLES LIKE %s", 
-		$table_name 
+	$table_exists = $wpdb->get_var( $wpdb->prepare(
+		"SHOW TABLES LIKE %s",
+		$table_name
 	) ) == $table_name;
-	
+
 	if ( ! $table_exists ) {
 		error_log( 'WPC: Table missing during update check, running activation...' );
 		activate_woo_pincode_checker();
 		return;
 	}
-	
-	// Check for version updates
-	if ( ! empty( $installed_ver ) && version_compare( $installed_ver, $current_version, '<' ) ) {
-		error_log( 'WPC: Updating database from version ' . $installed_ver . ' to ' . $current_version );
-		
+
+	// Check if migration is needed (either by version or by checking if critical columns exist)
+	$latitude_exists = $wpdb->get_results( $wpdb->prepare(
+		"SHOW COLUMNS FROM `{$table_name}` LIKE %s",
+		'latitude'
+	));
+
+	$needs_migration = false;
+
+	// Migration needed if version is old OR if latitude column doesn't exist
+	if ( ( ! empty( $installed_ver ) && version_compare( $installed_ver, $current_version, '<' ) ) || empty( $latitude_exists ) ) {
+		$needs_migration = true;
+	}
+
+	// Also run migration if no version is set (legacy installation)
+	if ( empty( $installed_ver ) ) {
+		$needs_migration = true;
+	}
+
+	if ( $needs_migration ) {
+		error_log( 'WPC: Running database migration to version ' . $current_version );
+
 		// Update table structure if needed
 		wpc_update_table_structure( $table_name );
-		
+
 		// Update version
 		update_option( 'wpc_db_version', $current_version );
-		
+
 		// Clear cache
 		wp_cache_flush_group( 'woo_pincode_checker' );
-		
-		error_log( 'WPC: Database update completed to version ' . $current_version );
+
+		error_log( 'WPC: Database migration completed to version ' . $current_version );
 	}
 }
 
@@ -373,7 +390,10 @@ function wpc_update_table_structure( $table_name ) {
 		'shipping_amount' => "ALTER TABLE `{$table_name}` ADD COLUMN `shipping_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER `delivery_days`",
 		'cod_amount' => "ALTER TABLE `{$table_name}` ADD COLUMN `cod_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER `case_on_delivery`",
 		'created_at' => "ALTER TABLE `{$table_name}` ADD COLUMN `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `cod_amount`",
-		'updated_at' => "ALTER TABLE `{$table_name}` ADD COLUMN `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `created_at`"
+		'updated_at' => "ALTER TABLE `{$table_name}` ADD COLUMN `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `created_at`",
+		'category_rules' => "ALTER TABLE `{$table_name}` ADD COLUMN `category_rules` TEXT NULL DEFAULT NULL AFTER `updated_at`",
+		'latitude' => "ALTER TABLE `{$table_name}` ADD COLUMN `latitude` DECIMAL(10,8) NULL DEFAULT NULL AFTER `category_rules`",
+		'longitude' => "ALTER TABLE `{$table_name}` ADD COLUMN `longitude` DECIMAL(11,8) NULL DEFAULT NULL AFTER `latitude`"
 	);
 	
 	foreach ( $columns_to_add as $column => $query ) {

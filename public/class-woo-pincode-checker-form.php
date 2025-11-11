@@ -478,7 +478,8 @@ class Woo_Pincode_Checker_Form {
 
 		// Get and validate input
 		$user_input_pincode = isset( $_POST['pin_code'] ) ? sanitize_text_field( wp_unslash( $_POST['pin_code'] ) ) : '';
-		
+		$product_id = isset( $_POST['product_id'] ) ? absint( $_POST['product_id'] ) : 0;
+
 		// Validate pincode
 		$validated_pincode = $this->validate_pincode( $user_input_pincode );
 		if ( false === $validated_pincode ) {
@@ -538,6 +539,16 @@ class Woo_Pincode_Checker_Form {
 			$state = esc_html( $pincode_record->state );
 			$cookie_pin = $validated_pincode;
 
+			// Check for category-specific delivery rules
+			if ( $product_id > 0 ) {
+				$category_rules_handler = new Woo_Pincode_Category_Rules();
+				$delivery_info = $category_rules_handler->get_product_delivery_info( $product_id, $validated_pincode );
+
+				if ( $delivery_info && isset( $delivery_info['delivery_days'] ) ) {
+					$delivery_day = intval( $delivery_info['delivery_days'] );
+				}
+			}
+
 			// Calculate delivery date safely
 			$delivery_date_format = isset( $wpc_general_settings['delivery_date'] ) ? $wpc_general_settings['delivery_date'] : 'M jS';
 			
@@ -564,9 +575,41 @@ class Woo_Pincode_Checker_Form {
 				'delivery_days' => $delivery_day
 			));
 		} else {
-			wp_send_json_error(array( 
-				'message' => __( 'Sorry! We are currently not servicing your area.', 'pincode-checker-for-woocommerce' ),
-				'pincode' => $validated_pincode
+			// Pincode not serviceable - check for nearby suggestions
+			$nearby_handler = new Woo_Pincode_Nearby_Suggestions();
+			$nearby_pincodes = $nearby_handler->find_nearby( $validated_pincode, array(
+				'radius_km' => 20,
+				'limit'     => 5
+			) );
+
+			$error_message = __( 'Sorry! We are currently not servicing your area.', 'pincode-checker-for-woocommerce' );
+
+			// Build nearby suggestions HTML if available
+			$nearby_html = '';
+			if ( ! empty( $nearby_pincodes ) ) {
+				$nearby_html .= '<div class="wpc-nearby-suggestions" style="margin-top: 15px; padding: 10px; background: #f0f6fc; border-left: 3px solid #0073aa; border-radius: 3px;">';
+				$nearby_html .= '<p style="margin: 0 0 8px 0; font-weight: 600;">' . __( 'But we deliver to nearby areas:', 'pincode-checker-for-woocommerce' ) . '</p>';
+				$nearby_html .= '<ul style="margin: 0; padding-left: 20px;">';
+
+				foreach ( $nearby_pincodes as $nearby ) {
+					$distance_text = isset( $nearby['distance_km'] ) ? ' (' . $nearby['distance_km'] . ' km away)' : '';
+					$nearby_html .= '<li style="margin: 4px 0;">';
+					$nearby_html .= '<strong>' . esc_html( $nearby['pincode'] ) . '</strong> - ';
+					$nearby_html .= esc_html( $nearby['city'] ) . $distance_text;
+					$nearby_html .= ' <span style="color: #666;">(' . sprintf( _n( '%d day delivery', '%d days delivery', $nearby['delivery_days'], 'pincode-checker-for-woocommerce' ), $nearby['delivery_days'] ) . ')</span>';
+					$nearby_html .= '</li>';
+				}
+
+				$nearby_html .= '</ul>';
+				$nearby_html .= '</div>';
+			}
+
+			wp_send_json_error(array(
+				'message'       => $error_message,
+				'pincode'       => $validated_pincode,
+				'nearby_html'   => $nearby_html,
+				'has_nearby'    => ! empty( $nearby_pincodes ),
+				'nearby_count'  => count( $nearby_pincodes )
 			));
 		}
 	}
