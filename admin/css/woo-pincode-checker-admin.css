@@ -316,7 +316,7 @@ div#setting-error-settings_updated button.notice-dismiss,
     transform: translateY(-50%);
 }
 
-/* Button Styles */
+/* Button Styles - Only loads on settings pages now due to enqueue logic */
 .button,
 .button-primary,
 .button-secondary {
@@ -343,31 +343,8 @@ div#setting-error-settings_updated button.notice-dismiss,
     box-shadow: 0 2px 8px rgba(34, 113, 177, 0.25) !important;
 }
 
-/* Table Styles */
-.wp-list-table {
-    border: 1px solid var(--wpc-admin-border);
-    border-radius: var(--wpc-admin-radius);
-    overflow: hidden;
-    box-shadow: var(--wpc-admin-shadow);
-}
-
-.wp-list-table thead {
-    background: var(--wpc-admin-bg-light);
-}
-
-.wp-list-table thead th {
-    font-weight: 600;
-    color: var(--wpc-admin-text);
-    border-bottom: 1px solid var(--wpc-admin-border);
-}
-
-.wp-list-table tbody tr:hover {
-    background: #f6f7f7;
-}
-
-.wp-list-table tbody td {
-    vertical-align: middle;
-}
+/* Table Styles - Not needed, removed to keep CSS clean */
+/* CSS file only loads on settings pages now, not on list pages */
 
 /* Upload Section */
 .wpc-upload-pincode-wrap {
@@ -467,25 +444,6 @@ div#setting-error-settings_updated button.notice-dismiss,
         --wpc-admin-text-muted: #8c8f94;
         --wpc-admin-border: #3c434a;
     }
-}
-/* Fix for wbcom settings layout */
-.wbcom-settings-section-wrap {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.wbcom-settings-section-options-heading {
-    flex: 1;
-}
-
-.wbcom-settings-section-options {
-    flex-shrink: 0;
-}
-
-/* Ensure proper spacing */
-.wbcom-admin-option-wrap .wbcom-settings-section-wrap {
-    margin-bottom: 20px;
 }
 
 /* Fix nav-tab display to match wbcom sidebar style */

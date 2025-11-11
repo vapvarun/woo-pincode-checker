@@ -16,12 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<div class="wbcom-tab-content">      
-	<div class="wbcom-faq-adming-setting">
+<div class="wbcom-tab-content">
+	<div class="wbcom-wrapper-admin">
 		<div class="wbcom-admin-title-section">
-			<h3><?php esc_html_e( 'Have some questions?', 'pincode-checker-for-woocommerce' ); ?></h3>
+			<h3><?php esc_html_e( 'Frequently Asked Questions', 'pincode-checker-for-woocommerce' ); ?></h3>
+			<p><?php esc_html_e( 'Find answers to common questions about using the Woo Pincode Checker plugin.', 'pincode-checker-for-woocommerce' ); ?></p>
 		</div>
-		<div class="wbcom-faq-admin-settings-block">
+		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
+			<div class="wbcom-faq-admin-settings-block" style="margin-top: 20px;">
 			<div id="wbcom-faq-settings-section" class="wbcom-faq-table">
 				<div class="wbcom-faq-section-row">
 					<div class="wbcom-faq-admin-row">
@@ -158,6 +160,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 					</div>
 				</div>
+			</div>
 			</div>
 		</div>
 	</div>

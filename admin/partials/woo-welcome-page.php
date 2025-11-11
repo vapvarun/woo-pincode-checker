@@ -9,11 +9,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="wbcom-tab-content">
-	<div class="wbcom-welcome-main-wrapper">
-		<div class="wbcom-welcome-head">
+	<div class="wbcom-wrapper-admin">
+		<div class="wbcom-admin-title-section">
+			<h3><?php esc_html_e( 'Welcome to Woo Pincode Checker', 'pincode-checker-for-woocommerce' ); ?></h3>
 			<p class="wbcom-welcome-description"><?php esc_html_e( 'Transform your WooCommerce store with intelligent delivery zone management. Allow customers to check product availability, delivery dates, and shipping costs for their location before making a purchase. Perfect for businesses with specific delivery areas or varying shipping costs across different regions.', 'pincode-checker-for-woocommerce' ); ?></p>
-		</div><!-- .wbcom-welcome-head -->
-		<div class="wbcom-welcome-content">
+		</div>
+		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
+			<div class="wbcom-welcome-content">
 			<div class="wbcom-welcome-support-info">
 				<h3><?php esc_html_e( 'Help &amp; Support Resources', 'pincode-checker-for-woocommerce' ); ?></h3>
 				<p><?php esc_html_e( 'If you need assistance, here are some helpful resources. Our documentation is a great place to start, and our support team is available if you require further help.', 'pincode-checker-for-woocommerce' ); ?></p>
@@ -44,5 +46,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 		</div>
-	</div><!-- .wbcom-welcome-main-wrapper -->
-</div><!-- .wbcom-welcome-content -->
+		</div>
+	</div>
+</div>

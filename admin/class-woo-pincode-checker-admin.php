@@ -229,50 +229,48 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function enqueue_styles() {
 		$screen = get_current_screen();
-		
+
 		// Get current page from request
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-		
+
 		// Get plugin URL safely - use the constant which is guaranteed to be set
 		$plugin_url = defined( 'WPCP_PLUGIN_URL' ) ? WPCP_PLUGIN_URL : plugins_url( '/woo-pincode-checker/' );
-		
-		// Check if we're on any of our plugin pages
-		$is_plugin_page = false;
+
+		// ONLY load custom CSS on the main settings page and wbcom plugins page
+		// Do NOT load on pincode_lists or add_wpc_pincode pages (they use WordPress defaults)
+		$is_settings_page = false;
 		if ( $screen && ! empty( $screen->id ) ) {
-			// Check if screen ID contains our plugin identifiers
-			$is_plugin_page = ( 
-				strpos( $screen->id, 'pincode-checker-for-woocommerce' ) !== false || 
-				strpos( $screen->id, 'pincode_lists' ) !== false ||
-				strpos( $screen->id, 'add_wpc_pincode' ) !== false ||
+			// Check if screen ID is the main settings page
+			$is_settings_page = (
+				strpos( $screen->id, 'pincode-checker-for-woocommerce' ) !== false ||
 				strpos( $screen->id, 'wbcomplugins' ) !== false
 			);
 		}
-		
+
 		// Also check GET parameter as fallback
-		if ( ! $is_plugin_page && ! empty( $page ) ) {
-			$is_plugin_page = ( 
-				$page === 'pincode-checker-for-woocommerce' || 
-				$page === 'pincode_lists' ||
-				$page === 'add_wpc_pincode'
+		if ( ! $is_settings_page && ! empty( $page ) ) {
+			$is_settings_page = (
+				$page === 'pincode-checker-for-woocommerce' ||
+				$page === 'woo-pincode-checker' // Alternative page slug
 			);
 		}
-		
-		// Enqueue styles if we're on a plugin page
-		if ( $is_plugin_page ) {
-			wp_enqueue_style( 
-				'wpc-select2', 
-				$plugin_url . 'admin/css/select2.min.css', 
-				array(), 
-				$this->version, 
-				'all' 
+
+		// Enqueue styles ONLY on settings pages
+		if ( $is_settings_page ) {
+			wp_enqueue_style(
+				'wpc-select2',
+				$plugin_url . 'admin/css/select2.min.css',
+				array(),
+				$this->version,
+				'all'
 			);
-			
-			wp_enqueue_style( 
-				$this->plugin_name, 
-				$plugin_url . 'admin/css/woo-pincode-checker-admin.css', 
-				array(), 
-				$this->version, 
-				'all' 
+
+			wp_enqueue_style(
+				$this->plugin_name,
+				$plugin_url . 'admin/css/woo-pincode-checker-admin.css',
+				array(),
+				$this->version,
+				'all'
 			);
 		}
 	}
@@ -284,50 +282,48 @@ class Woo_Pincode_Checker_Admin {
 	 */
 	public function enqueue_scripts() {
 		$screen = get_current_screen();
-		
+
 		// Get current page from request
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-		
+
 		// Get plugin URL safely - use the constant which is guaranteed to be set
 		$plugin_url = defined( 'WPCP_PLUGIN_URL' ) ? WPCP_PLUGIN_URL : plugins_url( '/woo-pincode-checker/' );
-		
-		// Check if we're on any of our plugin pages
-		$is_plugin_page = false;
+
+		// ONLY load scripts on the main settings page and wbcom plugins page
+		// Do NOT load on pincode_lists or add_wpc_pincode pages (they use WordPress defaults)
+		$is_settings_page = false;
 		if ( $screen && ! empty( $screen->id ) ) {
-			// Check if screen ID contains our plugin identifiers
-			$is_plugin_page = ( 
-				strpos( $screen->id, 'pincode-checker-for-woocommerce' ) !== false || 
-				strpos( $screen->id, 'pincode_lists' ) !== false ||
-				strpos( $screen->id, 'add_wpc_pincode' ) !== false ||
+			// Check if screen ID is the main settings page
+			$is_settings_page = (
+				strpos( $screen->id, 'pincode-checker-for-woocommerce' ) !== false ||
 				strpos( $screen->id, 'wbcomplugins' ) !== false
 			);
 		}
-		
+
 		// Also check GET parameter as fallback
-		if ( ! $is_plugin_page && ! empty( $page ) ) {
-			$is_plugin_page = ( 
-				$page === 'pincode-checker-for-woocommerce' || 
-				$page === 'pincode_lists' ||
-				$page === 'add_wpc_pincode'
+		if ( ! $is_settings_page && ! empty( $page ) ) {
+			$is_settings_page = (
+				$page === 'pincode-checker-for-woocommerce' ||
+				$page === 'woo-pincode-checker' // Alternative page slug
 			);
 		}
-		
-		// Enqueue scripts if we're on a plugin page
-		if ( $is_plugin_page ) {
-			wp_enqueue_script( 
-				'wpc-select2', 
-				$plugin_url . 'admin/js/select2.min.js', 
-				array( 'jquery' ), 
-				$this->version, 
-				true 
+
+		// Enqueue scripts ONLY on settings pages
+		if ( $is_settings_page ) {
+			wp_enqueue_script(
+				'wpc-select2',
+				$plugin_url . 'admin/js/select2.min.js',
+				array( 'jquery' ),
+				$this->version,
+				true
 			);
-			
-			wp_enqueue_script( 
-				$this->plugin_name, 
-				$plugin_url . 'admin/js/woo-pincode-checker-admin.js', 
-				array( 'jquery', 'wp-color-picker'), 
-				$this->version, 
-				true 
+
+			wp_enqueue_script(
+				$this->plugin_name,
+				$plugin_url . 'admin/js/woo-pincode-checker-admin.js',
+				array( 'jquery', 'wp-color-picker'),
+				$this->version,
+				true
 			);
 
 			// Localize script with nonce
@@ -411,13 +407,13 @@ class Woo_Pincode_Checker_Admin {
 					'wbcomplugins' 
 				);
 			}
-			add_submenu_page( 
-				'wbcomplugins', 
-				esc_html__( 'Woo Pincode Checker', 'pincode-checker-for-woocommerce' ), 
-				esc_html__( 'Woo Pincode Checker', 'pincode-checker-for-woocommerce' ), 
-				'manage_options', 
-				'pincode-checker-for-woocommerce', 
-				array( $this, 'wpc_admin_settings_page' ) 
+			add_submenu_page(
+				'wbcomplugins',
+				esc_html__( 'Pincode Checker', 'pincode-checker-for-woocommerce' ),
+				esc_html__( 'Pincode Checker', 'pincode-checker-for-woocommerce' ),
+				'manage_options',
+				'pincode-checker-for-woocommerce',
+				array( $this, 'wpc_admin_settings_page' )
 			);
 		}
 		
@@ -1274,7 +1270,7 @@ class Woo_Pincode_Checker_Admin {
 		}
 
 		?>
-		<div class="wbcom-tab-content wpc-upload-pincode-wrap">
+		<div class="wbcom-tab-content">
 			<div class="wbcom-wrapper-admin">
 				<?php
 				if ( $wpc_message != '' ) {
@@ -1289,57 +1285,50 @@ class Woo_Pincode_Checker_Admin {
 					<h3><?php esc_html_e( 'Upload Your CSV File', 'pincode-checker-for-woocommerce' ); ?></h3>
 					<p><?php esc_html_e( 'Upload a CSV file to import multiple pincodes at once. Make sure your file follows the correct format.', 'pincode-checker-for-woocommerce' ); ?></p>
 				</div>
-				<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view wpc-upload-pincode-section">
+				<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
 					<form enctype="multipart/form-data" method="post">
-						<section>
-							<div class="form-table wpc-pincode-submit-importer-options">
-								<div class="wbcom-settings-section-wrap">
-									<div class="wbcom-settings-section-options-heading">
-										<label for="upload">
-											<?php esc_html_e( 'Select a CSV file to upload from your device.', 'pincode-checker-for-woocommerce' ); ?>
-										</label>
-									</div>
-									<div class="wbcom-settings-section-options">
-										<input type="file" 
-											   id="upload" 
-											   name="import" 
-											   accept=".csv,text/csv" 
-											   required />
-										<input type="hidden" name="action" value="save" />
-										<input type="hidden" name="max_file_size" value="<?php echo esc_attr( $bytes ); ?>" />
-										<br>
-										<small>
-											<?php
-											printf(
-												esc_html__( 'Note: Maximum file size allowed is %s. Only CSV files are accepted.', 'pincode-checker-for-woocommerce' ),
-												esc_html( $size )
-											);
-											?>
-										</small>
-									</div>
+						<div class="form-table">
+							<div class="wbcom-settings-section-wrap">
+								<div class="wbcom-settings-section-options-heading">
+									<label for="upload">
+										<?php esc_html_e( 'Select CSV File', 'pincode-checker-for-woocommerce' ); ?>
+									</label>
+									<p class="description">
+										<?php
+										printf(
+											esc_html__( 'Choose a CSV file from your device to upload. Maximum file size allowed is %s. Only CSV files are accepted.', 'pincode-checker-for-woocommerce' ),
+											esc_html( $size )
+										);
+										?>
+									</p>
 								</div>
-								<div class="wbcom-settings-section-wrap">
-									<div class="wbcom-settings-section-options-heading">
-										<label for="upload">
-											<?php esc_html_e( 'Download Sample CSV File:', 'pincode-checker-for-woocommerce' ); ?>
-										</label>
-									</div>
-									<div class="wbcom-settings-section-options">
-										<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>" class="button">
-											<?php esc_html_e( 'Download Sample', 'pincode-checker-for-woocommerce' ); ?>
-										</a>
-										<p class="description">
-											<?php esc_html_e( 'Download the sample file to see the correct format. Your CSV should have columns: pincode, city, state, delivery_days, shipping_amount, cash_on_delivery, cod_amount', 'pincode-checker-for-woocommerce' ); ?>
-										</p>
-									</div>
+								<div class="wbcom-settings-section-options">
+									<input type="file"
+										   id="upload"
+										   name="import"
+										   accept=".csv,text/csv"
+										   required />
+									<input type="hidden" name="action" value="save" />
+									<input type="hidden" name="max_file_size" value="<?php echo esc_attr( $bytes ); ?>" />
 								</div>
 							</div>
-						</section>
-						<div class="wc-actions submit">
-							<button type="submit" class="button button-primary button-next" name="upload_pincodes">
-								<?php esc_html_e( 'Import CSV File', 'pincode-checker-for-woocommerce' ); ?>
-							</button>
+							<div class="wbcom-settings-section-wrap">
+								<div class="wbcom-settings-section-options-heading">
+									<label for="download-sample">
+										<?php esc_html_e( 'CSV File Format', 'pincode-checker-for-woocommerce' ); ?>
+									</label>
+									<p class="description">
+										<?php esc_html_e( 'Download the sample CSV file to see the correct format. Your CSV should have columns: pincode, city, state, delivery_days, shipping_amount, cash_on_delivery, cod_amount', 'pincode-checker-for-woocommerce' ); ?>
+									</p>
+								</div>
+								<div class="wbcom-settings-section-options">
+									<a href="<?php echo esc_url( WPCP_PLUGIN_URL . 'sample-data/sample-pincodes.csv' ); ?>" class="button" id="download-sample">
+										<?php esc_html_e( 'Download Sample CSV', 'pincode-checker-for-woocommerce' ); ?>
+									</a>
+								</div>
+							</div>
 						</div>
+						<?php submit_button( esc_html__( 'Import CSV File', 'pincode-checker-for-woocommerce' ), 'primary', 'upload_pincodes' ); ?>
 						<?php wp_nonce_field( 'wpc-pincode-submit', 'wpc-pincode-submit' ); ?>
 					</form>
 				</div>

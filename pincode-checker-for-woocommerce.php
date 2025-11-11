@@ -48,7 +48,7 @@ if ( ! defined( 'WPCP_PLUGIN_URL' ) ) {
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 		// Use the defined constant instead of __FILE__ to avoid null issues
-		$plugin_file = defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ? WOO_PINCODE_CHECKER_PLUGIN_FILE : WP_PLUGIN_DIR . '/woo-pincode-checker/woo-pincode-checker.php';
+		$plugin_file = defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ? WOO_PINCODE_CHECKER_PLUGIN_FILE : WP_PLUGIN_DIR . '/pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php';
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $plugin_file, true );
 	}
 });
@@ -251,18 +251,18 @@ function woo_pincode_checker_activation_redirect_settings( $plugin ) {
 		$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
 	} else {
 		// Use hardcoded basename as fallback
-		$plugin_basename = 'woo-pincode-checker/woo-pincode-checker.php';
+		$plugin_basename = 'pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php';
 	}
 	
 	if ( ! empty( $plugin_basename ) && $plugin === $plugin_basename ) {
 		// Get action and plugin parameters safely
 		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
 		$plugin_param = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
-		
+
 		// Check for null values before comparing
-		if ( ! empty( $action ) && ! empty( $plugin_param ) && 
+		if ( ! empty( $action ) && ! empty( $plugin_param ) &&
 		     'activate' === $action && $plugin_basename === $plugin_param ) {
-			wp_safe_redirect( admin_url( 'admin.php?page=woo-pincode-checker' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=pincode-checker-for-woocommerce' ) );
 			exit;
 		}
 	}
@@ -687,7 +687,7 @@ if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKE
 	add_filter( 'plugin_action_links_' . plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE ), 'wpc_add_plugin_action_links' );
 } else {
 	// Use hardcoded basename as fallback
-	add_filter( 'plugin_action_links_woo-pincode-checker/woo-pincode-checker.php', 'wpc_add_plugin_action_links' );
+	add_filter( 'plugin_action_links_pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php', 'wpc_add_plugin_action_links' );
 }
 
 /**
@@ -700,7 +700,7 @@ function wpc_add_plugin_meta_links( $links, $file ) {
 		$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
 	} else {
 		// Use hardcoded basename as fallback
-		$plugin_basename = 'woo-pincode-checker/woo-pincode-checker.php';
+		$plugin_basename = 'pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php';
 	}
 	
 	if ( ! empty( $plugin_basename ) && $file === $plugin_basename ) {

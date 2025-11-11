@@ -72,7 +72,7 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 			$new_general_settings = array();
 			
 			// Get plugin basename safely - never pass empty string to plugin_basename
-			$plugin_basename = 'woo-pincode-checker/woo-pincode-checker.php'; // Default
+			$plugin_basename = 'pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php'; // Default
 			if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
 				$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
 			}
