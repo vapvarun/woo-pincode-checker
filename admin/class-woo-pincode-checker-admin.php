@@ -469,13 +469,11 @@ class Woo_Pincode_Checker_Admin {
 					</div>
 				</div>
 				<div class="wbcom-admin-settings-page">
-					<?php $this->wpc_plugin_settings_tabs(); ?>
-					<div class="wbcom-tab-content">
-						<?php
-						settings_fields( $current );
-						do_settings_sections( $current );
-						?>
-					</div>
+					<?php
+					$this->wpc_plugin_settings_tabs();
+					settings_fields( $current );
+					do_settings_sections( $current );
+					?>
 				</div>
 			</div>
 		</div>

@@ -138,84 +138,6 @@ div.wpc-panel.show {
     vertical-align: top;
 }
 
-/* Navigation Tab Icons */
-.nav-tab-wrapper {
-    border-bottom: 1px solid var(--wpc-admin-border);
-    margin: 0;
-    padding-top: 10px;
-}
-
-.nav-tab-wrapper ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    gap: 5px;
-}
-
-.nav-tab-wrapper ul li {
-    margin: 0;
-}
-
-.nav-tab-wrapper ul li a {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 16px;
-    text-decoration: none;
-    color: var(--wpc-admin-text);
-    background: var(--wpc-admin-bg-white);
-    border: 1px solid var(--wpc-admin-border);
-    border-bottom: none;
-    border-radius: var(--wpc-admin-radius) var(--wpc-admin-radius) 0 0;
-    transition: var(--wpc-admin-transition);
-    font-weight: 500;
-}
-
-.nav-tab-wrapper ul li a:hover {
-    background: var(--wpc-admin-bg-light);
-}
-
-.nav-tab-wrapper ul li a.nav-tab-active {
-    background: var(--wpc-admin-primary);
-    color: white;
-    border-color: var(--wpc-admin-primary);
-}
-
-.nav-tab-wrapper ul .wpc-general a:before {
-    content: "\f111";
-    font-family: dashicons;
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.nav-tab-wrapper ul .wpc-pincodes a:before {
-    content: "\f230";
-    font-family: dashicons;
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.nav-tab-wrapper ul .wpc-add-pincodes a:before {
-    content: "\f132";
-    font-family: dashicons;
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.nav-tab-wrapper ul .wpc-upload-pincodes a:before {
-    content: "\f317";
-    font-family: dashicons;
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.nav-tab-wrapper ul .wpc-faq a:before {
-    content: "\f223";
-    font-family: dashicons;
-    margin-right: 8px;
-    font-size: 18px;
-}
-
 /* Settings Section */
 div.wbcom-settings-section-wrap {
     overflow: visible;
@@ -316,33 +238,6 @@ div#setting-error-settings_updated button.notice-dismiss,
     transform: translateY(-50%);
 }
 
-/* Button Styles - Only loads on settings pages now due to enqueue logic */
-.button,
-.button-primary,
-.button-secondary {
-    border-radius: 4px !important;
-    padding: 8px 16px !important;
-    font-weight: 500 !important;
-    transition: var(--wpc-admin-transition) !important;
-    text-decoration: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px;
-}
-
-.button-primary {
-    background: var(--wpc-admin-primary) !important;
-    border-color: var(--wpc-admin-primary) !important;
-    color: white !important;
-}
-
-.button-primary:hover {
-    background: var(--wpc-admin-primary-hover) !important;
-    border-color: var(--wpc-admin-primary-hover) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(34, 113, 177, 0.25) !important;
-}
-
 /* Table Styles - Not needed, removed to keep CSS clean */
 /* CSS file only loads on settings pages now, not on list pages */
 
@@ -387,14 +282,6 @@ div#setting-error-settings_updated button.notice-dismiss,
 }
 
 @media screen and (max-width: 782px) {
-    .nav-tab-wrapper ul {
-        flex-wrap: wrap;
-    }
-    
-    .nav-tab-wrapper ul li a {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
     
     .select2-container {
         max-width: 100% !important;
@@ -424,19 +311,10 @@ div#setting-error-settings_updated button.notice-dismiss,
         width: 100%;
         padding: 0 10px;
     }
-    
-    .nav-tab-wrapper ul li a:before {
-        display: none !important;
-    }
-    
-    .nav-tab-wrapper ul li a {
-        padding: 6px 10px;
-        font-size: 13px;
-    }
 }
 
 /* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     :root {
         --wpc-admin-bg-white: #1e1e1e;
         --wpc-admin-bg-light: #2c3338;
@@ -444,67 +322,7 @@ div#setting-error-settings_updated button.notice-dismiss,
         --wpc-admin-text-muted: #8c8f94;
         --wpc-admin-border: #3c434a;
     }
-}
-
-/* Fix nav-tab display to match wbcom sidebar style */
-.wbcom-admin-settings-page {
-    display: flex;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-.wbcom-admin-settings-page .wbcom-tabs-section {
-    background: #E1E6F4;
-    border-radius: 12px;
-    overflow: hidden;
-    width: 18%;
-    padding: 1%;
-    flex-shrink: 0;
-}
-
-.wbcom-admin-settings-page .nav-tab-wrapper {
-    padding-bottom: 100px;
-    border-bottom: none;
-    padding-top: 0;
-    width: 100%;
-}
-
-.wbcom-admin-settings-page .nav-tab-wrapper ul {
-    display: block !important;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.wbcom-admin-settings-page .nav-tab-wrapper ul li {
-    display: block !important;
-    margin: 0 0 2px !important;
-}
-
-.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab {
-    display: block !important;
-    float: none;
-    border: 0;
-    background-color: transparent;
-    color: #50575e;
-    padding: 12px 20px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.4;
-    border-radius: 8px;
-    margin: 0;
-    transition: all 0.3s ease;
-}
-
-.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab-active,
-.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab:hover,
-.wbcom-admin-settings-page .nav-tab-wrapper .nav-tab-active:hover {
-    color: #ee4036;
-    background: #ffffff;
-    box-shadow: 0px 12px 30px rgba(53, 66, 134, 0.12);
-    border: 0;
-}
+} */
 
 /* Tab icons */
 .wbcom-admin-settings-page .nav-tab-wrapper .nav-tab:before {
@@ -545,44 +363,24 @@ div#setting-error-settings_updated button.notice-dismiss,
     content: "\f223";
 }
 
-/* Content area */
-.wbcom-tab-content {
-    flex: 1;
-    min-width: 0;
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-category-rules a:before {
+    content: "\f318";
 }
 
-/* Hide responsive menu on desktop */
-@media (min-width: 768px) {
-    .wb-responsive-menu {
-        display: none !important;
-    }
+.wbcom-admin-settings-page .nav-tab-wrapper .wpc-geocoding a:before {
+    content: "\f231";
 }
 
-/* Mobile styles */
-@media (max-width: 767px) {
-    .wbcom-admin-settings-page {
-        flex-direction: column;
-    }
-    
-    .wbcom-admin-settings-page .nav-tab-wrapper {
-        width: 100%;
-        padding-bottom: 20px;
-    }
-    
-    .wbcom-admin-settings-page .nav-tab-wrapper ul {
-        display: none;
-    }
-    
-    .wbcom-admin-settings-page .nav-tab-wrapper ul.wbcom-show-mobile-menu {
-        display: block;
-    }
-    
-    .wb-responsive-menu {
-        display: block !important;
-        cursor: pointer;
-        padding: 10px;
-        background: #f1f1f1;
-        border-radius: 5px;
-        margin-bottom: 10px;
+/* Geocoding Status */
+.geocoding-status {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+@media (max-width: 768px) {
+    .geocoding-status {
+        grid-template-columns: 1fr;
     }
 }

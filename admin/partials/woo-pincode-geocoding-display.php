@@ -44,7 +44,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 							<div style="background: white; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
 								<h4 style="margin-top: 0;"><?php esc_html_e( 'Geocoding Status', 'pincode-checker-for-woocommerce' ); ?></h4>
 
-								<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0;">
+								<div class="geocoding-status">
 									<div style="text-align: center; padding: 10px; background: #f0f0f1; border-radius: 3px;">
 										<div style="font-size: 24px; font-weight: bold; color: #2271b1;"><?php echo esc_html( $stats['total'] ); ?></div>
 										<div style="font-size: 12px; color: #666;"><?php esc_html_e( 'Total Pincodes', 'pincode-checker-for-woocommerce' ); ?></div>
@@ -72,7 +72,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 
 								<?php if ( $stats['remaining'] > 0 ) : ?>
 									<div style="text-align: center; margin-top: 15px;">
-										<button type="button" id="wpc-start-geocoding" class="button button-primary button-large">
+										<button type="button" id="wpc-start-geocoding" class="button button-primary button-large" style="display: flex; justify-content: center; align-items: center; margin: 10px auto; gap: 5px;">
 											<span class="dashicons dashicons-location" style="margin-top: 3px;"></span>
 											<?php esc_html_e( 'Start Geocoding', 'pincode-checker-for-woocommerce' ); ?>
 										</button>
@@ -108,7 +108,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 								<h4 style="margin-top: 0;"><?php esc_html_e( 'How It Works', 'pincode-checker-for-woocommerce' ); ?></h4>
 								<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
 									<div>
-										<h5 style="margin: 0 0 8px 0; color: #2271b1;">
+										<h5 style="margin: 0 0 8px 0; color: #2271b1; display: flex; align-items: center; gap: 5px;">
 											<span class="dashicons dashicons-admin-settings" style="font-size: 18px;"></span>
 											<?php esc_html_e( 'Setup Process', 'pincode-checker-for-woocommerce' ); ?>
 										</h5>
@@ -120,7 +120,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 										</ul>
 									</div>
 									<div>
-										<h5 style="margin: 0 0 8px 0; color: #00a32a;">
+										<h5 style="margin: 0 0 8px 0; color: #00a32a; display: flex; align-items: center; gap: 5px;">
 											<span class="dashicons dashicons-yes-alt" style="font-size: 18px;"></span>
 											<?php esc_html_e( 'Customer Experience', 'pincode-checker-for-woocommerce' ); ?>
 										</h5>
