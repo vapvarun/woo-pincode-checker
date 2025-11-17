@@ -45,7 +45,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 								</p>
 							</div>
 
-							<table class="wp-list-table widefat fixed striped">
+							<table class="wp-list-table wp-list-table-delivery-rules widefat fixed striped">
 								<thead>
 									<tr>
 										<th class="column-primary" style="width: 40%;"><?php esc_html_e( 'Category', 'pincode-checker-for-woocommerce' ); ?></th>

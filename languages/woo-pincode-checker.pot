@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 12:55:50+00:00\n"
+"POT-Creation-Date: 2025-11-17 13:27:04+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -97,15 +97,15 @@ msgid "Upload Pincodes"
 msgstr ""
 
 #: admin/class-woo-pincode-checker-admin.php:675
-msgid "FAQ"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:679
 msgid "Category Rules"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:683
+#: admin/class-woo-pincode-checker-admin.php:679
 msgid "Geocoding"
+msgstr ""
+
+#: admin/class-woo-pincode-checker-admin.php:682
+msgid "FAQ"
 msgstr ""
 
 #: admin/class-woo-pincode-checker-admin.php:692

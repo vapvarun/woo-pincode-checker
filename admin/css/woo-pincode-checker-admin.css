@@ -221,6 +221,10 @@ div#setting-error-settings_updated,
     max-width: 400px;
 }
 
+div#setting-error-settings_updated {
+    padding: 16px 40px 16px 20px;
+}
+
 .wpc-upload-pincode-wrap div#message.error {
     border-left-color: var(--wpc-admin-error);
 }
@@ -379,8 +383,74 @@ div#setting-error-settings_updated button.notice-dismiss,
     margin: 15px 0;
 }
 
+.wpc-geocoding-progress-info-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
 @media (max-width: 768px) {
-    .geocoding-status {
+    .geocoding-status,
+    .wpc-geocoding-progress-info-wrapper {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    button#wpc-start-geocoding {
+        padding: 0 15px;
+    }
+}
+
+/* MOBILE FIX FOR CATEGORY RULES TABLE */
+@media screen and (max-width: 782px) {
+    .wp-list-table.wp-list-table-delivery-rules {
+        border: 0;
+    }
+
+    .wp-list-table.wp-list-table-delivery-rules.widefat.fixed.striped thead {
+        display: none; /* Hide table headers */
+    }
+
+    .wp-list-table.wp-list-table-delivery-rules.widefat.fixed.striped tr {
+        display: block;
+        margin-bottom: 15px;
+        background: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        opacity: 1 !important; /* make row fully visible */
+    }
+
+    .wp-list-table.wp-list-table-delivery-rules.widefat.fixed.striped td {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 5px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Add labels from data-colname attribute */
+    .wp-list-table.wp-list-table-delivery-rules.widefat.fixed.striped td::before {
+        content: attr(data-colname) ": ";
+        font-weight: 600;
+        margin-right: 10px;
+        color: #333;
+    }
+
+    /* Style inputs for mobile */
+    .wp-list-table.wp-list-table-delivery-rules .wpc-category-delivery-input {
+        width: 80px !important;
+        margin-left: auto !important;
+    }
+
+    /* Switch alignment */
+    .wp-list-table.wp-list-table-delivery-rules .wb-switch {
+        margin-left: auto;
+    }
+
+    /* Column primary (category name) fix */
+    .wp-list-table.wp-list-table-delivery-rules .column-primary strong {
+        font-size: 16px;
     }
 }

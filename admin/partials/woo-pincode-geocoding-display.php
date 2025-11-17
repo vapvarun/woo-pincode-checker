@@ -27,7 +27,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 		</div>
 		<div class="wbcom-admin-option-wrap wbcom-admin-option-wrap-view">
 			<div class="form-table">
-				<div class="wbcom-settings-section-wrap">
+				<div class="wbcom-settings-section-geocoding-setup">
 					<div class="wbcom-settings-section-options-heading">
 						<label style="font-size: 16px; font-weight: 600;">
 							<?php esc_html_e( 'Geocoding Setup', 'pincode-checker-for-woocommerce' ); ?>
@@ -35,7 +35,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 						<p class="description"><?php esc_html_e( 'Geocode your pincodes to enable distance-based nearby suggestions. This is a one-time setup using 100% free OpenStreetMap service.', 'pincode-checker-for-woocommerce' ); ?></p>
 					</div>
 					<div class="wbcom-settings-section-options">
-						<div id="wpc-geocoding-container" style="background: #f9f9f9; padding: 20px; border-radius: 5px;">
+						<div id="wpc-geocoding-container">
 							<?php
 							$nearby_handler = new Woo_Pincode_Nearby_Suggestions();
 							$stats = $nearby_handler->get_geocoding_stats();
@@ -106,7 +106,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 
 							<div style="background: white; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
 								<h4 style="margin-top: 0;"><?php esc_html_e( 'How It Works', 'pincode-checker-for-woocommerce' ); ?></h4>
-								<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+								<div class="wpc-geocoding-progress-info-wrapper">
 									<div>
 										<h5 style="margin: 0 0 8px 0; color: #2271b1; display: flex; align-items: center; gap: 5px;">
 											<span class="dashicons dashicons-admin-settings" style="font-size: 18px;"></span>

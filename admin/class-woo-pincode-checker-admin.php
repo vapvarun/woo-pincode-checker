@@ -672,16 +672,16 @@ class Woo_Pincode_Checker_Admin {
 		register_setting( 'wpc_upload_pincodes_settings', 'wpc_upload_pincodes_settings' );
 		add_settings_section( 'wpc-upload-pincodes', ' ', array( $this, 'wpc_upload_pincodes_func' ), 'wpc-upload-pincodes' );
 
-		$this->plugin_settings_tabs['wpc-faq'] = esc_html__( 'FAQ', 'pincode-checker-for-woocommerce' );
-		register_setting( 'wpc_faq_settings', 'wpc_faq_settings' );
-		add_settings_section( 'wpc-faq', ' ', array( $this, 'wpc_faq_settings_content' ), 'wpc-faq' );
-
 		$this->plugin_settings_tabs['wpc-category-rules'] = esc_html__( 'Category Rules', 'pincode-checker-for-woocommerce' );
 		register_setting( 'wpc_general_settings', 'wpc_general_settings', array( $this, 'wpc_general_settings_sanitize' ) );
 		add_settings_section( 'wpc-category-rules', ' ', array( $this, 'wpc_category_rules_content' ), 'wpc-category-rules' );
 
 		$this->plugin_settings_tabs['wpc-geocoding'] = esc_html__( 'Geocoding', 'pincode-checker-for-woocommerce' );
 		add_settings_section( 'wpc-geocoding', ' ', array( $this, 'wpc_geocoding_content' ), 'wpc-geocoding' );
+
+		$this->plugin_settings_tabs['wpc-faq'] = esc_html__( 'FAQ', 'pincode-checker-for-woocommerce' );
+		register_setting( 'wpc_faq_settings', 'wpc_faq_settings' );
+		add_settings_section( 'wpc-faq', ' ', array( $this, 'wpc_faq_settings_content' ), 'wpc-faq' );
 	}
 
 	/**
