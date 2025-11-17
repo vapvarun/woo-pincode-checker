@@ -63,7 +63,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 										<tr <?php echo ! $is_enabled ? 'style="opacity: 0.6;"' : ''; ?>>
 											<td class="column-primary" data-colname="<?php esc_attr_e( 'Category', 'pincode-checker-for-woocommerce' ); ?>">
 												<strong style="font-size: 14px;"><?php echo esc_html( $category['name'] ); ?></strong>
-												<?php if ( $category['count'] > 0 ) : ?>
+												<?php if ( isset( $category['count'] ) && $category['count'] > 0 ) : ?>
 													<br>
 													<span class="description" style="font-size: 13px; color: #646970;">
 														<?php
