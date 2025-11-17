@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 07:03:11+00:00\n"
+"POT-Creation-Date: 2025-11-17 12:55:50+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -417,7 +417,7 @@ msgstr ""
 #: admin/class-woo-pincode-checker-admin.php:1715
 #: admin/class-woo-pincode-checker-admin.php:1829
 #: admin/class-woo-pincode-checker-listing.php:296
-#: public/woo-pincode-checker-delivery-message.php:76
+#: public/woo-pincode-checker-delivery-message.php:77
 msgid "Available"
 msgstr ""
 
@@ -2245,12 +2245,12 @@ msgstr ""
 #: public/class-woo-pincode-checker-form.php:434
 #: public/class-woo-pincode-checker-form.php:585
 #: public/class-woo-pincode-checker-public.php:227
-#: public/woo-pincode-checker-delivery-message.php:94
+#: public/woo-pincode-checker-delivery-message.php:96
 msgid "Sorry! We are currently not servicing your area."
 msgstr ""
 
 #: public/class-woo-pincode-checker-form.php:439
-#: public/woo-pincode-checker-delivery-message.php:97
+#: public/woo-pincode-checker-delivery-message.php:99
 msgid "Enter your pincode"
 msgstr ""
 
@@ -2311,9 +2311,9 @@ msgstr ""
 
 #: public/woo-pincode-checker-delivery-message.php:17
 #: public/woo-pincode-checker-delivery-message.php:53
-#: public/woo-pincode-checker-delivery-message.php:73
-#: public/woo-pincode-checker-delivery-message.php:87
-#: public/woo-pincode-checker-delivery-message.php:102
+#: public/woo-pincode-checker-delivery-message.php:74
+#: public/woo-pincode-checker-delivery-message.php:89
+#: public/woo-pincode-checker-delivery-message.php:104
 #. Translators: %1$s: Availability Label
 #. Translators: %1$s: Delivered By Label
 #. Translators: %1$s: Cash on Delivery Available Label

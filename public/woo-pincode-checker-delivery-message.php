@@ -62,18 +62,20 @@
 							if ( true == $cash_on_delivery && true === $wpc_display_cod_option ) {
 								?>
 									<div class="wpc-delivery-info-list wpc_cash_delivery">
-										<div class="wpc-delivery-checked">
-											<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/check.svg'; ?>">
-										</div>
-										<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/hand-holding-usd.svg'; ?>">
-										<div class="wpc_cash_on_delivery">
-											<strong>
-												<?php
-													/* Translators: %1$s: Cash on Delivery Available Label   */
-													echo sprintf( esc_html__( '%1$s', 'pincode-checker-for-woocommerce' ), esc_html( $wpc_cod_label ) );
-												?>
-											</strong>
-											<span><?php esc_html_e( 'Available', 'pincode-checker-for-woocommerce' ); ?></span>
+										<div class="wpc-delivery-method">
+											<div class="wpc-delivery-checked">
+												<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/check.svg'; ?>">
+											</div>
+											<img src="<?php echo esc_attr( WPCP_PLUGIN_URL ) . 'public/image/hand-holding-usd.svg'; ?>">
+											<div class="wpc_cash_on_delivery">
+												<strong>
+													<?php
+														/* Translators: %1$s: Cash on Delivery Available Label   */
+														echo sprintf( esc_html__( '%1$s', 'pincode-checker-for-woocommerce' ), esc_html( $wpc_cod_label ) );
+													?>
+												</strong>
+												<span><?php esc_html_e( 'Available', 'pincode-checker-for-woocommerce' ); ?></span>
+											</div>
 										</div>
 									</div>
 								<?php } ?>
