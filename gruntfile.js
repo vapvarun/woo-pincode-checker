@@ -10,7 +10,7 @@ module.exports = function ( grunt ) {
 				// Check text domain
 			checktextdomain: {
 				options: {
-					text_domain: [ 'woo-pincode-checker' ], // Specify allowed domain(s)
+					text_domain: [ 'pincode-checker-for-woocommerce' ], // Specify allowed domain(s)
 					keywords: [ // List keyword specifications
 						'__:1,2d',
 						'_e:1,2d',
