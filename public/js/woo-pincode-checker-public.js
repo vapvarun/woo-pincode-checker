@@ -212,11 +212,13 @@
             this.saveToLocalStorage(pincode);
             $('.wc-delivery-time-response').html(data.html).show();
             $('#my_custom_checkout_field2').hide();
-            $('.single_add_to_cart_button').show();
-            
+
+            // Always enable and show button on successful pincode check
+            $('.single_add_to_cart_button').prop('disabled', false).show();
+
             // Hide duplicate delivery messages on grouped products
             this.hideDuplicateMessages();
-            
+
             // Trigger custom event
             $(document).trigger('wpc_pincode_checked', {
                 pincode: pincode,
@@ -284,14 +286,23 @@
             $('#avlpin').hide();
             $('.wpc_delivery-info-wrap').hide();
             this.hideError();
-            
+
             const requiredField = pincode_check.required_pincode_field_btn === 'on';
+            const hideDisableOption = pincode_check.hide_disable_product_page_cart_btn;
+
             if (requiredField) {
-                $('.single_add_to_cart_button').show();
+                // When pincode is required, disable or hide button until valid pincode is checked
+                if (hideDisableOption === 'add_to_cart_disable') {
+                    $('.single_add_to_cart_button').prop('disabled', true).show();
+                } else {
+                    // Default to hide if not specified or set to hide
+                    $('.single_add_to_cart_button').hide();
+                }
             } else {
-                $('.single_add_to_cart_button').hide();
+                // When pincode is not required, keep button visible and enabled
+                $('.single_add_to_cart_button').prop('disabled', false).show();
             }
-            
+
             this.focusPincodeInput();
         }
 
