@@ -104,23 +104,29 @@ if ( isset( $_POST['wpc-bulk-add-submit'] ) && !empty( $_POST['wpc-bulk-add-subm
 				}
 
 				// Insert pincode
-				$result = $wpdb->insert(
-					$table_name,
-					array(
-						'pincode'          => $pincode,
-						'city'             => $pincode_city,
-						'state'            => $pincode_state,
-						'delivery_days'    => $delivery_days,
-						'shipping_amount'  => $shipping_amount,
-						'case_on_delivery' => $cod_enabled,
-						'cod_amount'       => $cod_amount,
-						'latitude'         => $latitude,
-						'longitude'        => $longitude,
-						'created_at'       => current_time( 'mysql' ),
-						'updated_at'       => current_time( 'mysql' ),
-					),
-					array( '%s', '%s', '%s', '%d', '%f', '%d', '%f', '%f', '%f', '%s', '%s' )
+				// Prepare insert data - handle null coordinates properly
+				$insert_data = array(
+					'pincode'          => $pincode,
+					'city'             => $pincode_city,
+					'state'            => $pincode_state,
+					'delivery_days'    => $delivery_days,
+					'shipping_amount'  => $shipping_amount,
+					'case_on_delivery' => $cod_enabled,
+					'cod_amount'       => $cod_amount,
+					'created_at'       => current_time( 'mysql' ),
+					'updated_at'       => current_time( 'mysql' ),
 				);
+
+				$format = array( '%s', '%s', '%s', '%d', '%f', '%d', '%f', '%s', '%s' );
+
+				// Add coordinates only if they exist
+				if ( ! is_null( $latitude ) && ! is_null( $longitude ) ) {
+					$insert_data['latitude'] = $latitude;
+					$insert_data['longitude'] = $longitude;
+					$format = array( '%s', '%s', '%s', '%d', '%f', '%d', '%f', '%f', '%f', '%s', '%s' );
+				}
+
+				$result = $wpdb->insert( $table_name, $insert_data, $format );
 
 				if ( $result ) {
 					$added++;

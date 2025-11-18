@@ -103,18 +103,19 @@
 
         handleAddToCartBehavior() {
             const requiredField = pincode_check.required_pincode_field_btn === 'on';
-            
+            const hideDisableOption = pincode_check.hide_disable_product_page_cart_btn;
+
             if (requiredField) {
-                $(document).on('input', '#wpc-pincode-input, #pincode_field_id', () => {
-                    const value = this.getPincodeValue();
-                    const addToCartBtn = $('.single_add_to_cart_button');
-                    
-                    if (value.length > 0) {
-                        addToCartBtn.hide();
+                // Set initial state on page load
+                const value = this.getPincodeValue();
+                if (!value || value.length === 0) {
+                    // No pincode entered yet - disable or hide based on settings
+                    if (hideDisableOption === 'add_to_cart_disable') {
+                        $('.single_add_to_cart_button').prop('disabled', true).show();
                     } else {
-                        addToCartBtn.show();
+                        $('.single_add_to_cart_button').hide();
                     }
-                });
+                }
             }
         }
 

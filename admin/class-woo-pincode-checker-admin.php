@@ -537,9 +537,9 @@ class Woo_Pincode_Checker_Admin {
 
 		// Detect which tab is being saved
 		// Category Rules tab has 'global_category_rules' field
-		// General tab has 'pincode_position' or 'delivery_date' fields
-		$is_category_rules_tab = isset( $input['global_category_rules'] ) || ( isset( $_POST['option_page'] ) && 'wpc_general_settings' === $_POST['option_page'] && isset( $input['wpc_category_form'] ) );
-		$is_general_tab = isset( $input['pincode_position'] ) || isset( $input['delivery_date'] ) || isset( $input['wpc_general_form'] );
+		// General tab has other configuration fields
+		$is_category_rules_tab = isset( $input['global_category_rules'] );
+		$is_general_tab = isset( $input['pincode_position'] ) || isset( $input['delivery_date'] ) || isset( $input['add_to_cart_option'] ) || isset( $input['textcolor'] );
 
 		// Only process general tab fields if saving from general tab
 		if ( $is_general_tab || ! $is_category_rules_tab ) {

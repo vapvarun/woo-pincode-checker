@@ -61,6 +61,13 @@ class Woo_Pincode_Nearby_Suggestions {
 			return null;
 		}
 
+		// Check HTTP status code
+		$status_code = wp_remote_retrieve_response_code( $response );
+		if ( $status_code !== 200 ) {
+			error_log( 'WPC Nominatim HTTP Error: Status ' . $status_code );
+			return null;
+		}
+
 		$body = wp_remote_retrieve_body( $response );
 		$data = json_decode( $body, true );
 
@@ -112,6 +119,13 @@ class Woo_Pincode_Nearby_Suggestions {
 
 		if ( is_wp_error( $response ) ) {
 			error_log( 'WPC Nominatim Error: ' . $response->get_error_message() );
+			return null;
+		}
+
+		// Check HTTP status code
+		$status_code = wp_remote_retrieve_response_code( $response );
+		if ( $status_code !== 200 ) {
+			error_log( 'WPC Nominatim HTTP Error: Status ' . $status_code );
 			return null;
 		}
 
