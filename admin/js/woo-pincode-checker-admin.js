@@ -89,11 +89,17 @@
           action: "wpc_bulk_delete_action",
           nonce: wpc_admin_ajax.nonce,
         };
-        
+
         $.post(ajaxurl, data, function (response) {
-          location.reload();
-        }).fail(function() {
-          alert('Error occurred while deleting. Please try again.');
+          if (response.success) {
+            alert('All pincodes deleted successfully!');
+            location.reload();
+          } else {
+            alert('Error: ' + (response.data || 'Failed to delete pincodes'));
+            $button.prop('disabled', false).text('Yes, Delete All');
+          }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+          alert('Network error occurred while deleting. Please try again.');
           $button.prop('disabled', false).text('Yes, Delete All');
         });
       });

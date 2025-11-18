@@ -776,7 +776,7 @@ class Woo_Pincode_Checker_Admin {
 				<a class="add-new-h2" href="<?php echo esc_url( admin_url( 'admin.php?page=add_wpc_pincode' ) ); ?>">
 					<?php esc_html_e( 'Add New', 'pincode-checker-for-woocommerce' ); ?>
 				</a>
-				<a class="add-new-h2" href="<?php echo esc_url( admin_url( 'admin.php?page=woo-pincode-checker&tab=wpc-upload-pincodes' ) ); ?>">
+				<a class="add-new-h2" href="<?php echo esc_url( admin_url( 'admin.php?page=pincode-checker-for-woocommerce&tab=wpc-upload-pincodes' ) ); ?>">
 					<?php esc_html_e( 'Import Bulk Post/Zip codes', 'pincode-checker-for-woocommerce' ); ?>
 				</a>
 				<a class="add-new-h2 wpc-bulk-delete">
