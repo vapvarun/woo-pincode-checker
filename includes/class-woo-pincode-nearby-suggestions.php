@@ -442,10 +442,11 @@ class Woo_Pincode_Nearby_Suggestions {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pincode_checker';
 
-		// Get pincodes without coordinates
+		// Get pincodes without coordinates (excluding already failed ones marked with 0,0)
 		$pincodes = $wpdb->get_results( $wpdb->prepare(
 			"SELECT pincode FROM {$table_name}
 			WHERE latitude IS NULL
+			OR (latitude = 0 AND longitude = 0)
 			LIMIT %d",
 			$batch_size
 		) );
@@ -454,27 +455,43 @@ class Woo_Pincode_Nearby_Suggestions {
 			return array(
 				'processed' => 0,
 				'remaining' => 0,
-				'completed' => true
+				'completed' => true,
+				'errors' => 0
 			);
 		}
 
 		$processed = 0;
+		$errors = 0;
 
 		foreach ( $pincodes as $pin ) {
-			$coords = $this->geocode_pincode_nominatim( $pin->pincode );
+			// Add error handling with try-catch
+			try {
+				$coords = $this->geocode_pincode_nominatim( $pin->pincode );
 
-			if ( $coords ) {
-				$this->update_pincode_coordinates( $pin->pincode, $coords );
-				$processed++;
+				if ( $coords && isset( $coords['latitude'] ) && isset( $coords['longitude'] ) ) {
+					$this->update_pincode_coordinates( $pin->pincode, $coords );
+					$processed++;
+				} else {
+					// Mark as failed to avoid infinite retries (0.001, 0.001 instead of 0,0 to distinguish from genuine coordinates)
+					$this->update_pincode_coordinates( $pin->pincode, array( 'latitude' => 0.001, 'longitude' => 0.001 ) );
+					$errors++;
+				}
+			} catch ( Exception $e ) {
+				// Log error and mark as failed
+				error_log( 'WPC Geocoding Error for ' . $pin->pincode . ': ' . $e->getMessage() );
+				$this->update_pincode_coordinates( $pin->pincode, array( 'latitude' => 0.001, 'longitude' => 0.001 ) );
+				$errors++;
 			}
 		}
 
+		// Count only NULL coordinates as remaining (not the failed ones marked as 0.001)
 		$remaining = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name} WHERE latitude IS NULL" );
 
 		return array(
 			'processed' => $processed,
 			'remaining' => intval( $remaining ),
-			'completed' => $remaining == 0
+			'completed' => $remaining == 0,
+			'errors' => $errors
 		);
 	}
 }

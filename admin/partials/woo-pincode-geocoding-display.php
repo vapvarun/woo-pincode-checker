@@ -175,29 +175,43 @@ jQuery(document).ready(function($) {
 				if (response.success) {
 					var processed = response.data.processed;
 					var remaining = response.data.remaining;
+					var errors = response.data.errors || 0;
 					var total = processed + remaining;
 					var percentage = total > 0 ? Math.round((processed / total) * 100) : 0;
 
 					jQuery('#wpc-geocoding-progress-bar').css('width', percentage + '%');
-					jQuery('#wpc-geocoding-status').text('Processed: ' + processed + ' / ' + total + ' pincodes');
+
+					var statusText = 'Processed: ' + processed + ' / ' + total + ' pincodes';
+					if (errors > 0) {
+						statusText += ' <span style="color: #d63638;">(Skipped ' + errors + ' failed)</span>';
+					}
+					jQuery('#wpc-geocoding-status').html(statusText);
 
 					if (!response.data.completed) {
 						// Continue processing
 						setTimeout(wpcGeocodeBatch, 1000);
 					} else {
 						// Done!
-						jQuery('#wpc-geocoding-status').html('<strong style="color: #00a32a;">Geocoding completed!</strong>');
+						var completionMsg = '<strong style="color: #00a32a;">Geocoding completed!</strong>';
+						if (errors > 0) {
+							completionMsg += '<br><span style="color: #856404;">Note: Some pincodes could not be geocoded and were skipped.</span>';
+						}
+						jQuery('#wpc-geocoding-status').html(completionMsg);
 						setTimeout(function() {
 							location.reload();
 						}, 2000);
 					}
 				} else {
-					jQuery('#wpc-geocoding-status').html('<strong style="color: #d63638;">Error: ' + response.data.message + '</strong>');
+					jQuery('#wpc-geocoding-status').html('<strong style="color: #d63638;">Error: ' + (response.data.message || 'Unknown error occurred') + '</strong>');
 					jQuery('#wpc-start-geocoding').prop('disabled', false);
 				}
 			},
-			error: function() {
-				jQuery('#wpc-geocoding-status').html('<strong style="color: #d63638;">Network error. Please try again.</strong>');
+			error: function(xhr, status, error) {
+				var errorMsg = 'Network error. Please check your internet connection and try again.';
+				if (status === 'timeout') {
+					errorMsg = 'Request timed out. Please try again.';
+				}
+				jQuery('#wpc-geocoding-status').html('<strong style="color: #d63638;">' + errorMsg + '</strong>');
 				jQuery('#wpc-start-geocoding').prop('disabled', false);
 			}
 		});
