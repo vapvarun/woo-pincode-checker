@@ -1103,7 +1103,7 @@ class Woo_Pincode_Checker_Admin {
 		}
 
 		// Check first line (header)
-		$first_line = fgetcsv( $handle );
+		$first_line = fgetcsv( $handle, 0, ',', '"', '\\' );
 		if ( ! $first_line || count( $first_line ) < 3 ) {
 			fclose( $handle );
 			return __( 'Invalid CSV format. Expected columns: pincode, city, state, delivery_days, shipping_amount, cash_on_delivery, cod_amount', 'pincode-checker-for-woocommerce' );
@@ -1111,7 +1111,7 @@ class Woo_Pincode_Checker_Admin {
 
 		// Check a few data rows
 		$row_count = 0;
-		while ( ( $data = fgetcsv( $handle ) ) !== false && $row_count < 5 ) {
+		while ( ( $data = fgetcsv( $handle, 0, ',', '"', '\\' ) ) !== false && $row_count < 5 ) {
 			if ( count( $data ) < 3 ) {
 				fclose( $handle );
 				return sprintf( __( 'Invalid CSV format at row %d. Minimum 3 columns required.', 'pincode-checker-for-woocommerce' ), $row_count + 2 );
@@ -1250,12 +1250,12 @@ class Woo_Pincode_Checker_Admin {
 				$handle = fopen( $_FILES['import']['tmp_name'], 'r' );
 				if ( $handle ) {
 					// Skip header row
-					fgetcsv( $handle );
+					fgetcsv( $handle, 0, ',', '"', '\\' );
 
 					// Initialize pattern handler for pattern expansion
 					$pattern_handler = new Woo_Pincode_Pattern_Handler();
 
-					while ( ( $data = fgetcsv( $handle, 100000, ',' ) ) !== false ) {
+					while ( ( $data = fgetcsv( $handle, 100000, ',', '"', '\\' ) ) !== false ) {
 						// Validate row data
 						if ( count( $data ) < 3 ) {
 							$skipped_count++;
