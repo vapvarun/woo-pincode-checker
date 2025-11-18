@@ -50,19 +50,33 @@ if ( isset( $_POST['wpc-bulk-add-submit'] ) && !empty( $_POST['wpc-bulk-add-subm
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'pincode_checker';
 
-			$added = 0;
-			$skipped = 0;
-			$errors = 0;
-			$geocoded = 0;
+			// Check if operation is too large
+			$total_pincodes = count( $pincodes );
+			if ( $total_pincodes > 1000 ) {
+				$message_type = 'error';
+				$wpc_message = sprintf(
+					__( 'Pattern generates %d pincodes. Please limit to 1000 pincodes per operation to avoid timeouts.', 'pincode-checker-for-woocommerce' ),
+					$total_pincodes
+				);
+			} else {
+				// Increase timeout for large operations
+				if ( $total_pincodes > 100 ) {
+					set_time_limit( 300 ); // 5 minutes
+				}
 
-			// Initialize nearby handler for geocoding
-			$nearby_handler = new Woo_Pincode_Nearby_Suggestions();
+				$added = 0;
+				$skipped = 0;
+				$errors = 0;
+				$geocoded = 0;
 
-			foreach ( $pincodes as $pincode ) {
-				// Check if pincode already exists
-				$existing = $wpdb->get_var( $wpdb->prepare(
-					"SELECT COUNT(*) FROM {$table_name} WHERE pincode = %s",
-					$pincode
+				// Initialize nearby handler for geocoding
+				$nearby_handler = new Woo_Pincode_Nearby_Suggestions();
+
+				foreach ( $pincodes as $pincode ) {
+					// Check if pincode already exists
+					$existing = $wpdb->get_var( $wpdb->prepare(
+						"SELECT COUNT(*) FROM {$table_name} WHERE pincode = %s",
+						$pincode
 				) );
 
 				if ( $existing > 0 ) {
@@ -113,24 +127,25 @@ if ( isset( $_POST['wpc-bulk-add-submit'] ) && !empty( $_POST['wpc-bulk-add-subm
 				} else {
 					$errors++;
 				}
-			}
+				}
 
-			$message_type = 'updated';
-			if ( $auto_geocode ) {
-				$wpc_message = sprintf(
-					__( 'Bulk add completed! Added: %d, Skipped: %d, Errors: %d, Auto-geocoded: %d', 'pincode-checker-for-woocommerce' ),
-					$added,
-					$skipped,
-					$errors,
-					$geocoded
-				);
-			} else {
-				$wpc_message = sprintf(
-					__( 'Bulk add completed! Added: %d, Skipped (already exists): %d, Errors: %d', 'pincode-checker-for-woocommerce' ),
-					$added,
-					$skipped,
-					$errors
-				);
+				$message_type = 'updated';
+				if ( $auto_geocode ) {
+					$wpc_message = sprintf(
+						__( 'Bulk add completed! Added: %d, Skipped: %d, Errors: %d, Auto-geocoded: %d', 'pincode-checker-for-woocommerce' ),
+						$added,
+						$skipped,
+						$errors,
+						$geocoded
+					);
+				} else {
+					$wpc_message = sprintf(
+						__( 'Bulk add completed! Added: %d, Skipped (already exists): %d, Errors: %d', 'pincode-checker-for-woocommerce' ),
+						$added,
+						$skipped,
+						$errors
+					);
+				}
 			}
 		}
 	}
