@@ -529,98 +529,116 @@ class Woo_Pincode_Checker_Admin {
 	 * @return array Sanitized settings array.
 	 */
 	public function wpc_general_settings_sanitize( $input ) {
-		$sanitized = array();
+		// Get existing settings to preserve values from other tabs
+		$existing_settings = get_option( 'wpc_general_settings', array() );
 
-		// Checkbox fields - sanitize as on/off
-		$checkbox_fields = array( 'date_display', 'pincode_field', 'cod_display' );
-		foreach ( $checkbox_fields as $field ) {
-			$sanitized[ $field ] = isset( $input[ $field ] ) && 'on' === $input[ $field ] ? 'on' : '';
-		}
+		// Start with existing settings instead of empty array
+		$sanitized = is_array( $existing_settings ) ? $existing_settings : array();
 
-		// Select fields - sanitize as text and validate against allowed values
-		if ( isset( $input['delivery_date'] ) ) {
-			$allowed_formats = array( 'M jS', 'D, jS M', 'D, M d', 'M d' );
-			$sanitized['delivery_date'] = in_array( $input['delivery_date'], $allowed_formats, true )
-				? sanitize_text_field( $input['delivery_date'] )
-				: 'M jS';
-		}
+		// Detect which tab is being saved
+		// Category Rules tab has 'global_category_rules' field
+		// General tab has 'pincode_position' or 'delivery_date' fields
+		$is_category_rules_tab = isset( $input['global_category_rules'] ) || ( isset( $_POST['option_page'] ) && 'wpc_general_settings' === $_POST['option_page'] && isset( $input['wpc_category_form'] ) );
+		$is_general_tab = isset( $input['pincode_position'] ) || isset( $input['delivery_date'] ) || isset( $input['wpc_general_form'] );
 
-		if ( isset( $input['add_to_cart_option'] ) ) {
-			$allowed_options = array( 'add_to_cart_hide', 'add_to_cart_disable' );
-			$sanitized['add_to_cart_option'] = in_array( $input['add_to_cart_option'], $allowed_options, true )
-				? sanitize_text_field( $input['add_to_cart_option'] )
-				: 'add_to_cart_hide';
-		}
+		// Only process general tab fields if saving from general tab
+		if ( $is_general_tab || ! $is_category_rules_tab ) {
+			// Checkbox fields - sanitize as on/off
+			$checkbox_fields = array( 'date_display', 'pincode_field', 'cod_display' );
+			foreach ( $checkbox_fields as $field ) {
+				$sanitized[ $field ] = isset( $input[ $field ] ) && 'on' === $input[ $field ] ? 'on' : '';
+			}
 
-		if ( isset( $input['pincode_position'] ) ) {
-			$allowed_positions = array(
-				'woocommerce_before_add_to_cart_button',
-				'woocommerce_after_add_to_cart_button',
-				'woocommerce_after_add_to_cart_quantity',
-				'wpc_pincode_checker'
+			// Select fields - sanitize as text and validate against allowed values
+			if ( isset( $input['delivery_date'] ) ) {
+				$allowed_formats = array( 'M jS', 'D, jS M', 'D, M d', 'M d' );
+				$sanitized['delivery_date'] = in_array( $input['delivery_date'], $allowed_formats, true )
+					? sanitize_text_field( $input['delivery_date'] )
+					: 'M jS';
+			}
+
+			if ( isset( $input['add_to_cart_option'] ) ) {
+				$allowed_options = array( 'add_to_cart_hide', 'add_to_cart_disable' );
+				$sanitized['add_to_cart_option'] = in_array( $input['add_to_cart_option'], $allowed_options, true )
+					? sanitize_text_field( $input['add_to_cart_option'] )
+					: 'add_to_cart_hide';
+			}
+
+			if ( isset( $input['pincode_position'] ) ) {
+				$allowed_positions = array(
+					'woocommerce_before_add_to_cart_button',
+					'woocommerce_after_add_to_cart_button',
+					'woocommerce_after_add_to_cart_quantity',
+					'wpc_pincode_checker'
+				);
+				$sanitized['pincode_position'] = in_array( $input['pincode_position'], $allowed_positions, true )
+					? sanitize_text_field( $input['pincode_position'] )
+					: 'woocommerce_before_add_to_cart_button';
+			}
+
+			// Text fields - sanitize as text
+			$text_fields = array(
+				'delivery_date_label_text',
+				'check_btn_text',
+				'change_btn_text',
+				'cod_label_text',
+				'availability_label_text'
 			);
-			$sanitized['pincode_position'] = in_array( $input['pincode_position'], $allowed_positions, true )
-				? sanitize_text_field( $input['pincode_position'] )
-				: 'woocommerce_before_add_to_cart_button';
-		}
-
-		// Text fields - sanitize as text
-		$text_fields = array(
-			'delivery_date_label_text',
-			'check_btn_text',
-			'change_btn_text',
-			'cod_label_text',
-			'availability_label_text'
-		);
-		foreach ( $text_fields as $field ) {
-			if ( isset( $input[ $field ] ) ) {
-				$sanitized[ $field ] = sanitize_text_field( $input[ $field ] );
-			}
-		}
-
-		// Color fields - sanitize as hex color
-		$color_fields = array( 'textcolor', 'buttoncolor', 'buttontcolor' );
-		foreach ( $color_fields as $field ) {
-			if ( isset( $input[ $field ] ) ) {
-				$sanitized[ $field ] = sanitize_hex_color( $input[ $field ] );
-			}
-		}
-
-		// Array field - categories for shipping
-		if ( isset( $input['categories_for_shipping'] ) && is_array( $input['categories_for_shipping'] ) ) {
-			$sanitized['categories_for_shipping'] = array_map( 'absint', $input['categories_for_shipping'] );
-		} else {
-			$sanitized['categories_for_shipping'] = array();
-		}
-
-		// Category-specific delivery rules
-		if ( isset( $input['global_category_rules'] ) && is_array( $input['global_category_rules'] ) ) {
-			$sanitized_rules = array();
-
-			foreach ( $input['global_category_rules'] as $category_id => $rule_data ) {
-				// Only include if enabled checkbox is checked
-				if ( isset( $rule_data['enabled'] ) && '1' === $rule_data['enabled'] ) {
-					$cat_id = absint( $category_id );
-					$days = isset( $rule_data['days'] ) ? absint( $rule_data['days'] ) : 1;
-
-					// Validate delivery days range
-					if ( $days < 1 ) {
-						$days = 1;
-					} elseif ( $days > 365 ) {
-						$days = 365;
-					}
-
-					// Verify category exists
-					$category = get_term( $cat_id, 'product_cat' );
-					if ( $category && ! is_wp_error( $category ) ) {
-						$sanitized_rules[ $cat_id ] = $days;
-					}
+			foreach ( $text_fields as $field ) {
+				if ( isset( $input[ $field ] ) ) {
+					$sanitized[ $field ] = sanitize_text_field( $input[ $field ] );
 				}
 			}
 
-			$sanitized['global_category_rules'] = $sanitized_rules;
-		} else {
-			$sanitized['global_category_rules'] = array();
+			// Color fields - sanitize as hex color
+			$color_fields = array( 'textcolor', 'buttoncolor', 'buttontcolor' );
+			foreach ( $color_fields as $field ) {
+				if ( isset( $input[ $field ] ) ) {
+					$sanitized[ $field ] = sanitize_hex_color( $input[ $field ] );
+				}
+			}
+
+			// Array field - categories for shipping
+			if ( isset( $input['categories_for_shipping'] ) && is_array( $input['categories_for_shipping'] ) ) {
+				$sanitized['categories_for_shipping'] = array_map( 'absint', $input['categories_for_shipping'] );
+			} elseif ( $is_general_tab ) {
+				// Only reset to empty if we're saving from general tab
+				$sanitized['categories_for_shipping'] = array();
+			}
+		}
+
+		// Category-specific delivery rules
+		// Only process if saving from category rules tab
+		if ( $is_category_rules_tab ) {
+			if ( isset( $input['global_category_rules'] ) && is_array( $input['global_category_rules'] ) ) {
+				$sanitized_rules = array();
+
+				foreach ( $input['global_category_rules'] as $category_id => $rule_data ) {
+					// Only include if enabled checkbox is checked
+					if ( isset( $rule_data['enabled'] ) && '1' === $rule_data['enabled'] ) {
+						$cat_id = absint( $category_id );
+						$days = isset( $rule_data['days'] ) ? absint( $rule_data['days'] ) : 1;
+
+						// Validate delivery days range
+						if ( $days < 1 ) {
+							$days = 1;
+						} elseif ( $days > 365 ) {
+							$days = 365;
+						}
+
+						// Verify category exists
+						$category = get_term( $cat_id, 'product_cat' );
+						if ( $category && ! is_wp_error( $category ) ) {
+							$sanitized_rules[ $cat_id ] = $days;
+						}
+					}
+				}
+
+				$sanitized['global_category_rules'] = $sanitized_rules;
+			} else {
+				// Only reset to empty if we're saving from category rules tab
+				$sanitized['global_category_rules'] = array();
+			}
 		}
 
 		return $sanitized;
