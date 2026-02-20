@@ -32,14 +32,6 @@ class Woo_Pincode_Checker_I18n {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-		// Use the correct plugin directory for languages.
-		// This should always be relative to WP_PLUGIN_DIR.
-		$languages_dir = 'woo-pincode-checker/languages/';
-
-		load_plugin_textdomain(
-			'pincode-checker-for-woocommerce',
-			false,
-			$languages_dir
-		);
+		// WordPress 6.7+ auto-loads translations via JIT.
 	}
 }
