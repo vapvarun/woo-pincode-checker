@@ -38,7 +38,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 						<div id="wpc-geocoding-container">
 							<?php
 							$nearby_handler = new Woo_Pincode_Nearby_Suggestions();
-							$stats = $nearby_handler->get_geocoding_stats();
+							$stats          = $nearby_handler->get_geocoding_stats();
 							?>
 
 							<div style="background: white; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
@@ -78,10 +78,11 @@ $general_settings = $wpc_globals->wpc_general_settings;
 										</button>
 										<p style="margin: 10px 0 0 0; font-size: 13px; color: #666;">
 											<?php
-											$estimated_time = ceil( $stats['remaining'] / 60 ); // 1 per second
+											$estimated_time = ceil( $stats['remaining'] / 60 ); // 1 per second.
 											printf(
+												// Translators: %d is the estimated time in minutes.
 												esc_html__( 'Estimated time: %d minutes (using free OpenStreetMap service)', 'pincode-checker-for-woocommerce' ),
-												$estimated_time
+												intval( $estimated_time )
 											);
 											?>
 										</p>
@@ -153,7 +154,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 
 <script>
 jQuery(document).ready(function($) {
-	// Handle geocoding start button
+	// Handle geocoding start button.
 	$('#wpc-start-geocoding').on('click', function() {
 		var button = $(this);
 		button.prop('disabled', true);
@@ -162,7 +163,7 @@ jQuery(document).ready(function($) {
 		wpcGeocodeBatch();
 	});
 
-	// Geocode in batches
+	// Geocode in batches.
 	function wpcGeocodeBatch() {
 		jQuery.ajax({
 			url: ajaxurl,
@@ -188,7 +189,7 @@ jQuery(document).ready(function($) {
 					jQuery('#wpc-geocoding-status').html(statusText);
 
 					if (!response.data.completed) {
-						// Continue processing
+						// Continue processing.
 						setTimeout(wpcGeocodeBatch, 1000);
 					} else {
 						// Done!

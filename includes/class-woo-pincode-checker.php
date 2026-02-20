@@ -12,6 +12,11 @@
  * @subpackage Woo_Pincode_Checker/includes
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The core plugin class.
  *
@@ -85,7 +90,7 @@ class Woo_Pincode_Checker {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Woo_Pincode_Checker_Loader. Orchestrates the hooks of the plugin.
-	 * - Woo_Pincode_Checker_i18n. Defines internationalization functionality.
+	 * - Woo_Pincode_Checker_I18n. Defines internationalization functionality.
 	 * - Woo_Pincode_Checker_Admin. Defines all hooks for the admin area.
 	 * - Woo_Pincode_Checker_Public. Defines all hooks for the public side of the site.
 	 *
@@ -96,17 +101,17 @@ class Woo_Pincode_Checker {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-		// Get base path safely
+		// Get base path safely.
 		$base_file = __FILE__;
 		if ( empty( $base_file ) ) {
-			// Use constant if __FILE__ is somehow empty
+			// Use constant if __FILE__ is somehow empty.
 			$base_file = WOO_PINCODE_CHECKER_PLUGIN_FILE;
 		}
-		
-		// Get plugin directory path - use constant directly to avoid issues
+
+		// Get plugin directory path - use constant directly to avoid issues.
 		$plugin_base_path = defined( 'WPCP_PLUGIN_PATH' ) ? WPCP_PLUGIN_PATH : '';
-		
-		// Ensure we have a valid path
+
+		// Ensure we have a valid path.
 		if ( empty( $plugin_base_path ) ) {
 			error_log( 'WPC: Unable to determine plugin base path in load_dependencies' );
 			return;
@@ -145,7 +150,7 @@ class Woo_Pincode_Checker {
 		 */
 		require_once $plugin_base_path . 'public/class-woo-pincode-checker-public.php';
 		require_once $plugin_base_path . 'public/class-woo-pincode-checker-form.php';
-		
+
 		/**
 		 * Include plugin Update Checker file if it exists.
 		 */
@@ -153,7 +158,7 @@ class Woo_Pincode_Checker {
 		if ( file_exists( $update_checker_file ) ) {
 			require_once $update_checker_file;
 		}
-		
+
 		/**
 		 * Include plugin General Functions file.
 		 */
@@ -165,7 +170,7 @@ class Woo_Pincode_Checker {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Woo_Pincode_Checker_i18n class in order to set the domain and to register the hook
+	 * Uses the Woo_Pincode_Checker_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -173,10 +178,9 @@ class Woo_Pincode_Checker {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Woo_Pincode_Checker_i18n();
+		$plugin_i18n = new Woo_Pincode_Checker_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -197,22 +201,21 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'wpc_add_admin_register_setting' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'wpc_featured_meta' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'wpc_meta_save' );
-		
+
 		/* screen option */
 		$this->loader->add_filter( 'set-screen-option', $plugin_admin, 'wpc_pincode_per_page_set_option', 10, 3 );
 		$this->loader->add_action( 'wp_ajax_wpc_bulk_delete_action', $plugin_admin, 'wpc_bulk_delete_action_ajax_callback', 10, 3 );
 		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'wpc_hide_all_admin_notices_from_setting_page' );
-		
-		// AJAX handlers for pincode search and sorting
+
+		// AJAX handlers for pincode search and sorting.
 		$this->loader->add_action( 'wp_ajax_wpc_ajax_search_pincodes', $plugin_admin, 'wpc_ajax_search_pincodes' );
 		$this->loader->add_action( 'wp_ajax_wpc_ajax_sort_pincodes', $plugin_admin, 'wpc_ajax_sort_pincodes' );
 
-		// AJAX handler for pattern preview
+		// AJAX handler for pattern preview.
 		$this->loader->add_action( 'wp_ajax_wpc_preview_pattern', $plugin_admin, 'wpc_preview_pattern' );
 
-		// AJAX handler for geocoding batch
+		// AJAX handler for geocoding batch.
 		$this->loader->add_action( 'wp_ajax_wpc_geocode_batch', $plugin_admin, 'wpc_geocode_batch' );
-
 	}
 
 	/**
@@ -235,11 +238,11 @@ class Woo_Pincode_Checker {
 		$this->loader->add_action( 'wp_ajax_wpc_check_checkout_page_pincode', $plugin_public, 'wpc_check_checkout_page_pincode' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wpc_check_checkout_page_pincode', $plugin_public, 'wpc_check_checkout_page_pincode' );
 		$this->loader->add_action( 'woocommerce_after_checkout_validation', $plugin_public, 'wpc_add_pincode_checker_validation_on_checkout_page', 10, 2 );
-		
+
 		/* add ajax for pincode checker */
 		$this->loader->add_action( 'wp_ajax_nopriv_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
 		$this->loader->add_action( 'wp_ajax_wpc_picode_check_ajax_submit', $pincode_form, 'wpc_picode_check_ajax_submit' );
-		
+
 		$wpc_pincode_btn_position = wpc_single_product_button_position();
 		if ( 'woocommerce_before_add_to_cart_button' === $wpc_pincode_btn_position ) {
 			/* add pincode checker form single product page */
@@ -257,10 +260,9 @@ class Woo_Pincode_Checker {
 
 		/* admin setting css */
 		$this->loader->add_action( 'wp_head', $pincode_form, 'wpc_add_custom_css' );
-		if( 'wpc_pincode_checker' !== $wpc_pincode_btn_position ){
+		if ( 'wpc_pincode_checker' !== $wpc_pincode_btn_position ) {
 			$this->loader->add_action( 'init', $pincode_form, 'wpc_set_wc_billing_and_shipping_zipcode' );
 		}
-
 	}
 
 
@@ -303,5 +305,4 @@ class Woo_Pincode_Checker {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

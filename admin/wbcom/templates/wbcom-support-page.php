@@ -1,3 +1,16 @@
+<?php
+/**
+ * Wbcom support page template.
+ *
+ * @package Woo_Pincode_Checker
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 <div class="wrap">
 	<div class="wbcom-bb-plugins-offer-wrapper">
 		<div id="wb_admin_logo">

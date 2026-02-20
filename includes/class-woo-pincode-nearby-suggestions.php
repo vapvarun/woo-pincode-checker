@@ -10,6 +10,8 @@
  * @since      1.5.0
  */
 
+// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- All table names derived from $wpdb->prefix.
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -25,11 +27,11 @@ class Woo_Pincode_Nearby_Suggestions {
 	 * Geocode a pincode using Nominatim (OpenStreetMap)
 	 * Free service, rate limit: 1 request per second
 	 *
-	 * @param string $pincode Pincode to geocode
+	 * @param string $pincode Pincode to geocode.
 	 * @return array|null Array with latitude and longitude, or null on failure
 	 */
 	public function geocode_pincode_nominatim( $pincode ) {
-		// Rate limiting: wait 1 second between requests
+		// Rate limiting: wait 1 second between requests.
 		$last_request = get_transient( 'wpc_last_nominatim_request' );
 		if ( false !== $last_request ) {
 			$elapsed = time() - $last_request;
@@ -42,28 +44,31 @@ class Woo_Pincode_Nearby_Suggestions {
 		$url = add_query_arg(
 			array(
 				'postalcode' => $pincode,
-				'country'    => 'IN', // India - change if needed
+				'country'    => 'IN', // India - change if needed.
 				'format'     => 'json',
-				'limit'      => 1
+				'limit'      => 1,
 			),
 			'https://nominatim.openstreetmap.org/search'
 		);
 
-		$response = wp_remote_get( $url, array(
-			'headers' => array(
-				'User-Agent' => 'WooCommerce Pincode Checker Plugin/1.5 (' . get_site_url() . ')'
-			),
-			'timeout' => 10
-		) );
+		$response = wp_remote_get(
+			$url,
+			array(
+				'headers' => array(
+					'User-Agent' => 'WooCommerce Pincode Checker Plugin/1.5 (' . get_site_url() . ')',
+				),
+				'timeout' => 10,
+			)
+		);
 
 		if ( is_wp_error( $response ) ) {
 			error_log( 'WPC Nominatim Error: ' . $response->get_error_message() );
 			return null;
 		}
 
-		// Check HTTP status code
+		// Check HTTP status code.
 		$status_code = wp_remote_retrieve_response_code( $response );
-		if ( $status_code !== 200 ) {
+		if ( 200 !== $status_code ) {
 			error_log( 'WPC Nominatim HTTP Error: Status ' . $status_code );
 			return null;
 		}
@@ -74,7 +79,7 @@ class Woo_Pincode_Nearby_Suggestions {
 		if ( ! empty( $data[0] ) && isset( $data[0]['lat'], $data[0]['lon'] ) ) {
 			return array(
 				'latitude'  => floatval( $data[0]['lat'] ),
-				'longitude' => floatval( $data[0]['lon'] )
+				'longitude' => floatval( $data[0]['lon'] ),
 			);
 		}
 
@@ -85,11 +90,11 @@ class Woo_Pincode_Nearby_Suggestions {
 	 * Geocode a pincode and return full details including city and state
 	 * Free service using OpenStreetMap Nominatim
 	 *
-	 * @param string $pincode Pincode to geocode
+	 * @param string $pincode Pincode to geocode.
 	 * @return array|null Array with latitude, longitude, city, and state, or null on failure
 	 */
 	public function geocode_pincode_with_details( $pincode ) {
-		// Rate limiting: wait 1 second between requests
+		// Rate limiting: wait 1 second between requests.
 		$last_request = get_transient( 'wpc_last_nominatim_request' );
 		if ( false !== $last_request ) {
 			$elapsed = time() - $last_request;
@@ -101,30 +106,33 @@ class Woo_Pincode_Nearby_Suggestions {
 
 		$url = add_query_arg(
 			array(
-				'postalcode'       => $pincode,
-				'country'          => 'IN', // India - change if needed
-				'format'           => 'json',
-				'limit'            => 1,
-				'addressdetails'   => 1 // Request address components
+				'postalcode'     => $pincode,
+				'country'        => 'IN', // India - change if needed.
+				'format'         => 'json',
+				'limit'          => 1,
+				'addressdetails' => 1, // Request address components.
 			),
 			'https://nominatim.openstreetmap.org/search'
 		);
 
-		$response = wp_remote_get( $url, array(
-			'headers' => array(
-				'User-Agent' => 'WooCommerce Pincode Checker Plugin/1.5 (' . get_site_url() . ')'
-			),
-			'timeout' => 10
-		) );
+		$response = wp_remote_get(
+			$url,
+			array(
+				'headers' => array(
+					'User-Agent' => 'WooCommerce Pincode Checker Plugin/1.5 (' . get_site_url() . ')',
+				),
+				'timeout' => 10,
+			)
+		);
 
 		if ( is_wp_error( $response ) ) {
 			error_log( 'WPC Nominatim Error: ' . $response->get_error_message() );
 			return null;
 		}
 
-		// Check HTTP status code
+		// Check HTTP status code.
 		$status_code = wp_remote_retrieve_response_code( $response );
-		if ( $status_code !== 200 ) {
+		if ( 200 !== $status_code ) {
 			error_log( 'WPC Nominatim HTTP Error: Status ' . $status_code );
 			return null;
 		}
@@ -135,7 +143,7 @@ class Woo_Pincode_Nearby_Suggestions {
 		if ( ! empty( $data[0] ) && isset( $data[0]['lat'], $data[0]['lon'] ) ) {
 			$address = isset( $data[0]['address'] ) ? $data[0]['address'] : array();
 
-			// Extract city (try multiple fields)
+			// Extract city (try multiple fields).
 			$city = '';
 			if ( ! empty( $address['city'] ) ) {
 				$city = $address['city'];
@@ -147,18 +155,18 @@ class Woo_Pincode_Nearby_Suggestions {
 				$city = $address['suburb'];
 			}
 
-			// Extract state
+			// Extract state.
 			$state = '';
 			if ( ! empty( $address['state'] ) ) {
 				$state = $address['state'];
 			}
 
 			return array(
-				'latitude'  => floatval( $data[0]['lat'] ),
-				'longitude' => floatval( $data[0]['lon'] ),
-				'city'      => $city,
-				'state'     => $state,
-				'display_name' => isset( $data[0]['display_name'] ) ? $data[0]['display_name'] : ''
+				'latitude'     => floatval( $data[0]['lat'] ),
+				'longitude'    => floatval( $data[0]['lon'] ),
+				'city'         => $city,
+				'state'        => $state,
+				'display_name' => isset( $data[0]['display_name'] ) ? $data[0]['display_name'] : '',
 			);
 		}
 
@@ -168,8 +176,8 @@ class Woo_Pincode_Nearby_Suggestions {
 	/**
 	 * Update pincode coordinates in database
 	 *
-	 * @param string $pincode Pincode
-	 * @param array  $coords  Coordinates array with latitude and longitude
+	 * @param string $pincode Pincode.
+	 * @param array  $coords  Coordinates array with latitude and longitude.
 	 * @return bool True on success, false on failure
 	 */
 	public function update_pincode_coordinates( $pincode, $coords ) {
@@ -184,7 +192,7 @@ class Woo_Pincode_Nearby_Suggestions {
 			$table_name,
 			array(
 				'latitude'  => $coords['latitude'],
-				'longitude' => $coords['longitude']
+				'longitude' => $coords['longitude'],
 			),
 			array( 'pincode' => $pincode ),
 			array( '%f', '%f' ),
@@ -197,22 +205,25 @@ class Woo_Pincode_Nearby_Suggestions {
 	/**
 	 * Get pincode coordinates from database
 	 *
-	 * @param string $pincode Pincode
+	 * @param string $pincode Pincode.
 	 * @return array|null Array with latitude and longitude, or null if not found
 	 */
 	public function get_pincode_coordinates( $pincode ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pincode_checker';
 
-		$coords = $wpdb->get_row( $wpdb->prepare(
-			"SELECT latitude, longitude FROM {$table_name} WHERE pincode = %s",
-			$pincode
-		) );
+		$coords = $wpdb->get_row(
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name from $wpdb->prefix.
+			$wpdb->prepare(
+				"SELECT latitude, longitude FROM {$table_name} WHERE pincode = %s",
+				$pincode
+			)
+		);
 
 		if ( $coords && ! is_null( $coords->latitude ) && ! is_null( $coords->longitude ) ) {
 			return array(
 				'latitude'  => floatval( $coords->latitude ),
-				'longitude' => floatval( $coords->longitude )
+				'longitude' => floatval( $coords->longitude ),
 			);
 		}
 
@@ -222,14 +233,14 @@ class Woo_Pincode_Nearby_Suggestions {
 	/**
 	 * Calculate distance between two coordinates using Haversine formula
 	 *
-	 * @param float $lat1 Latitude of point 1
-	 * @param float $lon1 Longitude of point 1
-	 * @param float $lat2 Latitude of point 2
-	 * @param float $lon2 Longitude of point 2
+	 * @param float $lat1 Latitude of point 1.
+	 * @param float $lon1 Longitude of point 1.
+	 * @param float $lat2 Latitude of point 2.
+	 * @param float $lon2 Longitude of point 2.
 	 * @return float Distance in kilometers
 	 */
 	public function calculate_distance( $lat1, $lon1, $lat2, $lon2 ) {
-		$earth_radius = 6371; // Earth radius in kilometers
+		$earth_radius = 6371; // Earth radius in kilometers.
 
 		$lat_diff = deg2rad( $lat2 - $lat1 );
 		$lon_diff = deg2rad( $lon2 - $lon1 );
@@ -246,41 +257,43 @@ class Woo_Pincode_Nearby_Suggestions {
 	/**
 	 * Find nearby serviceable pincodes using distance calculation
 	 *
-	 * @param string $pincode   User's pincode (not serviceable)
-	 * @param int    $radius_km Search radius in kilometers (default 20)
-	 * @param int    $limit     Maximum number of suggestions (default 5)
+	 * @param string $pincode   User's pincode (not serviceable).
+	 * @param int    $radius_km Search radius in kilometers (default 20).
+	 * @param int    $limit     Maximum number of suggestions (default 5).
 	 * @return array Array of nearby pincodes with details
 	 */
 	public function find_nearby_by_distance( $pincode, $radius_km = 20, $limit = 5 ) {
-		// Get coordinates for user's pincode
+		// Get coordinates for user's pincode.
 		$user_coords = $this->get_pincode_coordinates( $pincode );
 
 		if ( ! $user_coords ) {
-			// Try to geocode it
+			// Try to geocode it.
 			$user_coords = $this->geocode_pincode_nominatim( $pincode );
 
 			if ( ! $user_coords ) {
-				return array(); // Can't geocode, can't find nearby
+				return array(); // Can't geocode, can't find nearby.
 			}
 		}
 
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pincode_checker';
 
-		// Get all pincodes with coordinates
-		$pincodes = $wpdb->get_results( "
+		// Get all pincodes with coordinates.
+		$pincodes = $wpdb->get_results(
+			"
 			SELECT pincode, city, state, delivery_days, latitude, longitude
 			FROM {$table_name}
 			WHERE latitude IS NOT NULL
 			AND longitude IS NOT NULL
 			AND pincode != '{$pincode}'
-		" );
+		"
+		);
 
 		if ( empty( $pincodes ) ) {
 			return array();
 		}
 
-		// Calculate distances
+		// Calculate distances.
 		$nearby = array();
 		foreach ( $pincodes as $pin ) {
 			$distance = $this->calculate_distance(
@@ -296,15 +309,18 @@ class Woo_Pincode_Nearby_Suggestions {
 					'city'          => $pin->city,
 					'state'         => $pin->state,
 					'delivery_days' => $pin->delivery_days,
-					'distance_km'   => round( $distance, 1 )
+					'distance_km'   => round( $distance, 1 ),
 				);
 			}
 		}
 
-		// Sort by distance
-		usort( $nearby, function( $a, $b ) {
-			return $a['distance_km'] <=> $b['distance_km'];
-		} );
+		// Sort by distance.
+		usort(
+			$nearby,
+			function ( $a, $b ) {
+				return $a['distance_km'] <=> $b['distance_km'];
+			}
+		);
 
 		return array_slice( $nearby, 0, $limit );
 	}
@@ -313,8 +329,8 @@ class Woo_Pincode_Nearby_Suggestions {
 	 * Find nearby pincodes using prefix and city matching (fallback method)
 	 * Works without geocoding data
 	 *
-	 * @param string $pincode User's pincode (not serviceable)
-	 * @param int    $limit   Maximum number of suggestions (default 5)
+	 * @param string $pincode User's pincode (not serviceable).
+	 * @param int    $limit   Maximum number of suggestions (default 5).
 	 * @return array Array of nearby pincodes with details
 	 */
 	public function find_nearby_by_prefix( $pincode, $limit = 5 ) {
@@ -323,48 +339,52 @@ class Woo_Pincode_Nearby_Suggestions {
 
 		$results = array();
 
-		// Level 1: Try 4-digit prefix match
+		// Level 1: Try 4-digit prefix match.
 		$prefix_4 = substr( $pincode, 0, 4 );
 		if ( strlen( $prefix_4 ) === 4 ) {
-			$results = $wpdb->get_results( $wpdb->prepare(
-				"SELECT pincode, city, state, delivery_days
+			$results = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT pincode, city, state, delivery_days
 				FROM {$table_name}
 				WHERE pincode LIKE %s
 				AND pincode != %s
 				LIMIT %d",
-				$prefix_4 . '%',
-				$pincode,
-				$limit
-			) );
+					$prefix_4 . '%',
+					$pincode,
+					$limit
+				)
+			);
 		}
 
-		// Level 2: If not enough results, try 3-digit prefix
+		// Level 2: If not enough results, try 3-digit prefix.
 		if ( count( $results ) < $limit ) {
-			$prefix_3 = substr( $pincode, 0, 3 );
-			$additional = $wpdb->get_results( $wpdb->prepare(
-				"SELECT pincode, city, state, delivery_days
+			$prefix_3   = substr( $pincode, 0, 3 );
+			$additional = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT pincode, city, state, delivery_days
 				FROM {$table_name}
 				WHERE pincode LIKE %s
 				AND pincode != %s
 				AND pincode NOT IN (SELECT pincode FROM {$table_name} WHERE pincode LIKE %s)
 				LIMIT %d",
-				$prefix_3 . '%',
-				$pincode,
-				$prefix_4 . '%',
-				$limit - count( $results )
-			) );
+					$prefix_3 . '%',
+					$pincode,
+					$prefix_4 . '%',
+					$limit - count( $results )
+				)
+			);
 
 			$results = array_merge( $results, $additional );
 		}
 
-		// Format results
+		// Format results.
 		$nearby = array();
 		foreach ( $results as $pin ) {
 			$nearby[] = array(
 				'pincode'       => $pin->pincode,
 				'city'          => $pin->city,
 				'state'         => $pin->state,
-				'delivery_days' => $pin->delivery_days
+				'delivery_days' => $pin->delivery_days,
 			);
 		}
 
@@ -374,24 +394,24 @@ class Woo_Pincode_Nearby_Suggestions {
 	/**
 	 * Find nearby pincodes - smart method that uses best available strategy
 	 *
-	 * @param string $pincode User's pincode (not serviceable)
-	 * @param array  $options Options: radius_km, limit, method
+	 * @param string $pincode User's pincode (not serviceable).
+	 * @param array  $options Options: radius_km, limit, method.
 	 * @return array Array of nearby pincodes with details
 	 */
 	public function find_nearby( $pincode, $options = array() ) {
 		$defaults = array(
 			'radius_km' => 20,
 			'limit'     => 5,
-			'method'    => 'auto' // auto, distance, prefix
+			'method'    => 'auto', // auto, distance, prefix.
 		);
 
 		$options = wp_parse_args( $options, $defaults );
 
-		// Check if geocoding is available
+		// Check if geocoding is available.
 		$has_geocoding = $this->check_geocoding_available();
 
-		if ( $options['method'] === 'distance' || ( $options['method'] === 'auto' && $has_geocoding ) ) {
-			// Try distance-based search
+		if ( 'distance' === $options['method'] || ( 'auto' === $options['method'] && $has_geocoding ) ) {
+			// Try distance-based search.
 			$results = $this->find_nearby_by_distance( $pincode, $options['radius_km'], $options['limit'] );
 
 			if ( ! empty( $results ) ) {
@@ -399,7 +419,7 @@ class Woo_Pincode_Nearby_Suggestions {
 			}
 		}
 
-		// Fall back to prefix matching
+		// Fall back to prefix matching.
 		return $this->find_nearby_by_prefix( $pincode, $options['limit'] );
 	}
 
@@ -412,10 +432,10 @@ class Woo_Pincode_Nearby_Suggestions {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pincode_checker';
 
-		$total = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" );
+		$total    = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" );
 		$geocoded = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name} WHERE latitude IS NOT NULL" );
 
-		if ( $total == 0 ) {
+		if ( 0 == $total ) {
 			return false;
 		}
 
@@ -433,7 +453,7 @@ class Woo_Pincode_Nearby_Suggestions {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pincode_checker';
 
-		$total = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" );
+		$total    = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" );
 		$geocoded = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name} WHERE latitude IS NOT NULL" );
 
 		$percentage = $total > 0 ? round( ( $geocoded / $total ) * 100, 1 ) : 0;
@@ -442,70 +462,84 @@ class Woo_Pincode_Nearby_Suggestions {
 			'total'      => intval( $total ),
 			'geocoded'   => intval( $geocoded ),
 			'remaining'  => intval( $total - $geocoded ),
-			'percentage' => $percentage
+			'percentage' => $percentage,
 		);
 	}
 
 	/**
 	 * Geocode all pincodes in batches (background processing)
 	 *
-	 * @param int $batch_size Number of pincodes to process per batch
+	 * @param int $batch_size Number of pincodes to process per batch.
 	 * @return array Result with processed count and remaining count
 	 */
 	public function geocode_batch( $batch_size = 50 ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'pincode_checker';
 
-		// Get pincodes without coordinates (excluding already failed ones marked with 0,0)
-		$pincodes = $wpdb->get_results( $wpdb->prepare(
-			"SELECT pincode FROM {$table_name}
+		// Get pincodes without coordinates (excluding already failed ones marked with 0,0).
+		$pincodes = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT pincode FROM {$table_name}
 			WHERE latitude IS NULL
 			OR (latitude = 0 AND longitude = 0)
 			LIMIT %d",
-			$batch_size
-		) );
+				$batch_size
+			)
+		);
 
 		if ( empty( $pincodes ) ) {
 			return array(
 				'processed' => 0,
 				'remaining' => 0,
 				'completed' => true,
-				'errors' => 0
+				'errors'    => 0,
 			);
 		}
 
 		$processed = 0;
-		$errors = 0;
+		$errors    = 0;
 
 		foreach ( $pincodes as $pin ) {
-			// Add error handling with try-catch
+			// Add error handling with try-catch.
 			try {
 				$coords = $this->geocode_pincode_nominatim( $pin->pincode );
 
 				if ( $coords && isset( $coords['latitude'] ) && isset( $coords['longitude'] ) ) {
 					$this->update_pincode_coordinates( $pin->pincode, $coords );
-					$processed++;
+					++$processed;
 				} else {
-					// Mark as failed to avoid infinite retries (0.001, 0.001 instead of 0,0 to distinguish from genuine coordinates)
-					$this->update_pincode_coordinates( $pin->pincode, array( 'latitude' => 0.001, 'longitude' => 0.001 ) );
-					$errors++;
+					// Mark as failed to avoid infinite retries (0.001, 0.001 instead of 0,0 to distinguish from genuine coordinates).
+					$this->update_pincode_coordinates(
+						$pin->pincode,
+						array(
+							'latitude'  => 0.001,
+							'longitude' => 0.001,
+						)
+					);
+					++$errors;
 				}
 			} catch ( Exception $e ) {
-				// Log error and mark as failed
+				// Log error and mark as failed.
 				error_log( 'WPC Geocoding Error for ' . $pin->pincode . ': ' . $e->getMessage() );
-				$this->update_pincode_coordinates( $pin->pincode, array( 'latitude' => 0.001, 'longitude' => 0.001 ) );
-				$errors++;
+				$this->update_pincode_coordinates(
+					$pin->pincode,
+					array(
+						'latitude'  => 0.001,
+						'longitude' => 0.001,
+					)
+				);
+				++$errors;
 			}
 		}
 
-		// Count only NULL coordinates as remaining (not the failed ones marked as 0.001)
+		// Count only NULL coordinates as remaining (not the failed ones marked as 0.001).
 		$remaining = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name} WHERE latitude IS NULL" );
 
 		return array(
 			'processed' => $processed,
 			'remaining' => intval( $remaining ),
-			'completed' => $remaining == 0,
-			'errors' => $errors
+			'completed' => 0 == $remaining,
+			'errors'    => $errors,
 		);
 	}
 }

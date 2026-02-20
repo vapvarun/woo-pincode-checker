@@ -3,8 +3,8 @@ Contributors: wbcomdesigns, vapvarun
 Donate link: https://wbcomdesigns.com/donate
 Tags: woocommerce, pincode, zip code, delivery, shipping
 Requires at least: 5.0
-Tested up to: 6.8.2
-Stable tag: 1.5.0
+Tested up to: 6.9
+Stable tag: 1.5.1
 Requires PHP: 7.4
 WC requires at least: 5.0
 WC tested up to: 10.1.2

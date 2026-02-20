@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage Woo_Pincode_Checker/includes
  * @author     wbcomdesigns <admin@wbcomdesigns.com>
  */
-class Woo_Pincode_Checker_i18n {
+class Woo_Pincode_Checker_I18n {
 
 
 	/**
@@ -33,8 +32,8 @@ class Woo_Pincode_Checker_i18n {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-		// Use the correct plugin directory for languages
-		// This should always be relative to WP_PLUGIN_DIR
+		// Use the correct plugin directory for languages.
+		// This should always be relative to WP_PLUGIN_DIR.
 		$languages_dir = 'woo-pincode-checker/languages/';
 
 		load_plugin_textdomain(
@@ -43,7 +42,4 @@ class Woo_Pincode_Checker_i18n {
 			$languages_dir
 		);
 	}
-
-
-
 }

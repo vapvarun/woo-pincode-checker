@@ -9,6 +9,11 @@
  * @subpackage Woo_Pincode_Checker/admin
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
@@ -49,31 +54,31 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	/**
 	 * Sanitize and validate search term
 	 *
-	 * @param string $search_term The search term to sanitize
+	 * @param string $search_term The search term to sanitize.
 	 * @return string|false Sanitized search term or false if invalid
 	 */
 	private function sanitize_search_term( $search_term ) {
-		// PHP 8.3+ compatibility: ensure we have a string
+		// PHP 8.3+ compatibility: ensure we have a string.
 		if ( ! is_string( $search_term ) ) {
 			$search_term = is_null( $search_term ) ? '' : (string) $search_term;
 		}
-		
+
 		$search_term = trim( $search_term );
-		
+
 		if ( empty( $search_term ) ) {
 			return '';
 		}
-		
-		// Limit search term length
+
+		// Limit search term length.
 		if ( mb_strlen( $search_term, 'UTF-8' ) > 50 ) {
 			return false;
 		}
-		
-		// Allow alphanumeric, spaces, and basic punctuation
+
+		// Allow alphanumeric, spaces, and basic punctuation.
 		if ( ! preg_match( '/^[A-Za-z0-9\s\-_.,]+$/u', $search_term ) ) {
 			return false;
 		}
-		
+
 		return sanitize_text_field( $search_term );
 	}
 
@@ -106,24 +111,33 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 * Show success/error messages
 	 */
 	private function show_admin_notices() {
-		if ( isset( $_GET['deleted'] ) && $_GET['deleted'] == '1' ) {
-			add_action( 'admin_notices', function() {
-				echo '<div class="notice notice-success is-dismissible"><p>' . 
-					 esc_html__( 'Pincode deleted successfully.', 'pincode-checker-for-woocommerce' ) . 
-					 '</p></div>';
-			});
+		if ( isset( $_GET['deleted'] ) && '1' == $_GET['deleted'] ) {
+			add_action(
+				'admin_notices',
+				function () {
+					echo '<div class="notice notice-success is-dismissible"><p>' .
+					esc_html__( 'Pincode deleted successfully.', 'pincode-checker-for-woocommerce' ) .
+					'</p></div>';
+				}
+			);
 		}
-		
+
 		if ( isset( $_GET['bulk-deleted'] ) && intval( $_GET['bulk-deleted'] ) > 0 ) {
 			$count = intval( $_GET['bulk-deleted'] );
-			add_action( 'admin_notices', function() use ( $count ) {
-				echo '<div class="notice notice-success is-dismissible"><p>' . 
-					 sprintf( 
-						 esc_html( _n( '%d pincode deleted successfully.', '%d pincodes deleted successfully.', $count, 'pincode-checker-for-woocommerce' ) ), 
-						 $count 
-					 ) . 
-					 '</p></div>';
-			});
+			add_action(
+				'admin_notices',
+				function () use ( $count ) {
+					echo '<div class="notice notice-success is-dismissible"><p>' .
+					esc_html(
+						sprintf(
+							// Translators: %d is the number of pincodes deleted.
+							_n( '%d pincode deleted successfully.', '%d pincodes deleted successfully.', $count, 'pincode-checker-for-woocommerce' ),
+							absint( $count )
+						)
+					) .
+					'</p></div>';
+				}
+			);
 		}
 	}
 
@@ -131,12 +145,12 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 * Code for fetch data and display listing.
 	 */
 	public function prepare_items() {
-		// Show admin notices
+		// Show admin notices.
 		$this->show_admin_notices();
-		
-		$columns = $this->get_columns();
-		$hidden = $this->get_hidden_columns();
-		$sortable = $this->get_sortable_columns();
+
+		$columns               = $this->get_columns();
+		$hidden                = $this->get_hidden_columns();
+		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		/* Process bulk action */
@@ -144,12 +158,12 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		$this->handle_table_actions();
 
 		/* pagination */
-		$user = get_current_user_id();
+		$user   = get_current_user_id();
 		$screen = get_current_screen();
-		
-		// Default pagination if screen is not available
+
+		// Default pagination if screen is not available.
 		if ( ! $screen ) {
-			$pincode_per_page = 20; // Default value
+			$pincode_per_page = 20; // Default value.
 		} else {
 			$option = $screen->get_option( 'per_page', 'option' );
 
@@ -162,7 +176,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		}
 
 		$current_page = $this->get_pagenum();
-		$total_items = self::record_count();
+		$total_items  = self::record_count();
 
 		$this->set_pagination_args(
 			array(
@@ -180,52 +194,58 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	public static function record_count() {
 		global $wpdb;
 
-		$base_sql = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
+		$base_sql     = "SELECT COUNT(*) FROM {$wpdb->prefix}pincode_checker";
 		$where_clause = '';
-		$params = array();
+		$params       = array();
 
 		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$search_term = self::sanitize_search_term_static( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) );
-			
+
 			if ( false !== $search_term ) {
-				$where_clause = " WHERE (pincode LIKE %s OR city LIKE %s OR state LIKE %s)";
+				$where_clause   = ' WHERE (pincode LIKE %s OR city LIKE %s OR state LIKE %s)';
 				$search_pattern = '%' . $wpdb->esc_like( $search_term ) . '%';
-				$params = array( $search_pattern, $search_pattern, $search_pattern );
+				$params         = array( $search_pattern, $search_pattern, $search_pattern );
 			}
 		}
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Query conditionally built with $wpdb->prepare() below.
 		$sql = $base_sql . $where_clause;
-		
+
 		if ( ! empty( $params ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql built from safe base query and parameterized where clause.
 			$sql = $wpdb->prepare( $sql, $params );
 		}
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Query built with $wpdb->prepare() above.
 		return intval( $wpdb->get_var( $sql ) );
 	}
 
 	/**
-	 * Static method to sanitize search term
+	 * Static method to sanitize search term.
+	 *
+	 * @param string $search_term The search term to sanitize.
+	 * @return string|false Sanitized search term or false if invalid.
 	 */
 	private static function sanitize_search_term_static( $search_term ) {
-		// PHP 8.3+ compatibility: ensure we have a string
+		// PHP 8.3+ compatibility: ensure we have a string.
 		if ( ! is_string( $search_term ) ) {
 			$search_term = is_null( $search_term ) ? '' : (string) $search_term;
 		}
-		
+
 		$search_term = trim( $search_term );
-		
+
 		if ( empty( $search_term ) ) {
 			return '';
 		}
-		
+
 		if ( mb_strlen( $search_term, 'UTF-8' ) > 50 ) {
 			return false;
 		}
-		
+
 		if ( ! preg_match( '/^[A-Za-z0-9\s\-_.,]+$/u', $search_term ) ) {
 			return false;
 		}
-		
+
 		return $search_term;
 	}
 
@@ -238,99 +258,104 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	public function fetch_table_data( $pincode_per_page, $page_number = 1 ) {
 		global $wpdb;
 
-		$base_query = "SELECT * FROM {$wpdb->prefix}pincode_checker";
+		$base_query   = "SELECT * FROM {$wpdb->prefix}pincode_checker";
 		$where_clause = '';
 		$order_clause = ' ORDER BY id DESC';
 		$limit_clause = '';
-		$params = array();
+		$params       = array();
 
-		// Handle search
+		// Handle search.
 		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$search_term = $this->sanitize_search_term( sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) );
-			
+
 			if ( false !== $search_term ) {
-				$where_clause = " WHERE (pincode LIKE %s OR city LIKE %s OR state LIKE %s)";
+				$where_clause   = ' WHERE (pincode LIKE %s OR city LIKE %s OR state LIKE %s)';
 				$search_pattern = '%' . $wpdb->esc_like( $search_term ) . '%';
-				$params[] = $search_pattern;
-				$params[] = $search_pattern;
-				$params[] = $search_pattern;
+				$params[]       = $search_pattern;
+				$params[]       = $search_pattern;
+				$params[]       = $search_pattern;
 			}
 		}
 
-		// Handle ordering
+		// Handle ordering.
 		$allowed_orderby = array( 'pincode', 'city', 'state', 'delivery_days', 'shipping_amount', 'created_at' );
-		$allowed_order = array( 'ASC', 'DESC' );
-		
+		$allowed_order   = array( 'ASC', 'DESC' );
+
 		if ( ! empty( $_REQUEST['orderby'] ) && in_array( $_REQUEST['orderby'], $allowed_orderby, true ) ) {
-			$orderby = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) );
-			$order = ( ! empty( $_REQUEST['order'] ) && in_array( strtoupper( $_REQUEST['order'] ), $allowed_order, true ) ) 
-				? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) ) 
+			$orderby      = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) );
+			$order        = ( ! empty( $_REQUEST['order'] ) && in_array( strtoupper( $_REQUEST['order'] ), $allowed_order, true ) )
+				? strtoupper( sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) )
 				: 'ASC';
 			$order_clause = " ORDER BY `{$orderby}` {$order}";
 		}
 
-		// Handle pagination
+		// Handle pagination.
 		if ( ! isset( $_REQUEST['s'] ) || empty( $_REQUEST['s'] ) ) {
-			$offset = ( $page_number - 1 ) * $pincode_per_page;
-			$limit_clause = " LIMIT %d OFFSET %d";
-			$params[] = $pincode_per_page;
-			$params[] = $offset;
+			$offset       = ( $page_number - 1 ) * $pincode_per_page;
+			$limit_clause = ' LIMIT %d OFFSET %d';
+			$params[]     = $pincode_per_page;
+			$params[]     = $offset;
 		}
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Query conditionally built with $wpdb->prepare() below.
 		$final_query = $base_query . $where_clause . $order_clause . $limit_clause;
-		
+
 		if ( ! empty( $params ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $final_query built from safe base query and parameterized clauses.
 			$final_query = $wpdb->prepare( $final_query, $params );
 		}
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Query built with $wpdb->prepare() above.
 		$query_results = $wpdb->get_results( $final_query, ARRAY_A );
 
 		if ( ! $query_results ) {
 			return array();
 		}
 
-		// Process results for display
+		// Process results for display.
 		foreach ( $query_results as &$val ) {
-			// Format COD display
-			if ( isset( $val['case_on_delivery'] ) && $val['case_on_delivery'] == 1 ) {
+			// Format COD display.
+			if ( isset( $val['case_on_delivery'] ) && 1 == $val['case_on_delivery'] ) {
 				$val['case_on_delivery'] = '<span class="wpc-status-available">' . esc_html__( 'Available', 'pincode-checker-for-woocommerce' ) . '</span>';
 			} else {
 				$val['case_on_delivery'] = '<span class="wpc-status-unavailable">' . esc_html__( 'Unavailable', 'pincode-checker-for-woocommerce' ) . '</span>';
 			}
 
-			// Format shipping amount
+			// Format shipping amount.
 			if ( isset( $val['shipping_amount'] ) && $val['shipping_amount'] > 0 ) {
 				$val['shipping_amount'] = wc_price( $val['shipping_amount'] );
 			} else {
 				$val['shipping_amount'] = '<span class="wpc-free">' . esc_html__( 'Free', 'pincode-checker-for-woocommerce' ) . '</span>';
 			}
 
-			// Format COD amount
+			// Format COD amount.
 			if ( isset( $val['cod_amount'] ) && $val['cod_amount'] > 0 ) {
 				$val['cod_amount'] = wc_price( $val['cod_amount'] );
 			} else {
 				$val['cod_amount'] = '<span class="wpc-free">' . esc_html__( 'Free', 'pincode-checker-for-woocommerce' ) . '</span>';
 			}
 
-			// Format delivery days
+			// Format delivery days.
 			if ( isset( $val['delivery_days'] ) ) {
 				$days = intval( $val['delivery_days'] );
-				if ( $days === 1 ) {
+				if ( 1 === $days ) {
+					// Translators: %s is a placeholder value.
 					$val['delivery_days'] = sprintf( esc_html__( '%d day', 'pincode-checker-for-woocommerce' ), $days );
 				} else {
+					// Translators: %s is a placeholder value.
 					$val['delivery_days'] = sprintf( esc_html__( '%d days', 'pincode-checker-for-woocommerce' ), $days );
 				}
 			}
 
-			// Format created date
+			// Format created date.
 			if ( isset( $val['created_at'] ) && ! empty( $val['created_at'] ) ) {
 				$val['created_at'] = wp_date( get_option( 'date_format' ), strtotime( $val['created_at'] ) );
 			}
 
-			// Escape output for security
+			// Escape output for security.
 			$val['pincode'] = esc_html( $val['pincode'] );
-			$val['city'] = esc_html( $val['city'] );
-			$val['state'] = esc_html( $val['state'] );
+			$val['city']    = esc_html( $val['city'] );
+			$val['state']   = esc_html( $val['state'] );
 		}
 		unset( $val );
 
@@ -378,13 +403,13 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 * @param array $item Display the pincodes.
 	 */
 	public function column_pincode( $item ) {
-		// Check user capabilities
+		// Check user capabilities.
 		if ( ! $this->check_admin_capabilities() ) {
 			return '<strong>' . esc_html( $item['pincode'] ) . '</strong>';
 		}
 
 		$actions = array();
-		
+
 		$edit_url = add_query_arg(
 			array(
 				'page'   => 'add_wpc_pincode',
@@ -393,8 +418,8 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			),
 			admin_url( 'admin.php' )
 		);
-		
-		// Add nonce to delete URL
+
+		// Add nonce to delete URL.
 		$delete_url = wp_nonce_url(
 			add_query_arg(
 				array(
@@ -410,6 +435,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		$actions['edit'] = sprintf(
 			'<a href="%s" aria-label="%s">%s</a>',
 			esc_url( $edit_url ),
+			// Translators: %s is a placeholder value.
 			esc_attr( sprintf( __( 'Edit pincode %s', 'pincode-checker-for-woocommerce' ), $item['pincode'] ) ),
 			esc_html__( 'Edit', 'pincode-checker-for-woocommerce' )
 		);
@@ -417,15 +443,16 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		$actions['delete'] = sprintf(
 			'<a href="%s" aria-label="%s" onclick="return confirm(\'%s\')">%s</a>',
 			esc_url( $delete_url ),
+			// Translators: %s is a placeholder value.
 			esc_attr( sprintf( __( 'Delete pincode %s', 'pincode-checker-for-woocommerce' ), $item['pincode'] ) ),
 			esc_js( __( 'Are you sure you want to delete this pincode?', 'pincode-checker-for-woocommerce' ) ),
 			esc_html__( 'Delete', 'pincode-checker-for-woocommerce' )
 		);
 
-		return sprintf( 
-			'<strong>%1$s</strong> %2$s', 
-			esc_html( $item['pincode'] ), 
-			$this->row_actions( $actions ) 
+		return sprintf(
+			'<strong>%1$s</strong> %2$s',
+			esc_html( $item['pincode'] ),
+			$this->row_actions( $actions )
 		);
 	}
 
@@ -434,12 +461,12 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
-			'pincode'        => array( 'pincode', true ),
-			'city'           => array( 'city', true ),
-			'state'          => array( 'state', true ),
-			'delivery_days'  => array( 'delivery_days', false ),
+			'pincode'         => array( 'pincode', true ),
+			'city'            => array( 'city', true ),
+			'state'           => array( 'state', true ),
+			'delivery_days'   => array( 'delivery_days', false ),
 			'shipping_amount' => array( 'shipping_amount', false ),
-			'created_at'     => array( 'created_at', false ),
+			'created_at'      => array( 'created_at', false ),
 		);
 		return $sortable_columns;
 	}
@@ -448,49 +475,49 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	 * Handle table actions with improved security and proper nonce verification.
 	 */
 	public function handle_table_actions() {
-		// Check user capabilities
+		// Check user capabilities.
 		if ( ! $this->check_admin_capabilities() ) {
 			return;
 		}
 
 		global $wpdb;
 
-		// Delete single item action
+		// Delete single item action.
 		if ( isset( $_REQUEST['action'] ) && 'delete' === $_REQUEST['action'] ) {
 			$id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
-			
+
 			if ( $id > 0 ) {
-				// Verify nonce for delete action
+				// Verify nonce for delete action.
 				if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete-pincode-' . $id ) ) {
 					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'pincode-checker-for-woocommerce' ) );
 				}
-				
+
 				self::delete_pincode( $id );
-				
-				// Redirect to avoid resubmission
+
+				// Redirect to avoid resubmission.
 				$redirect_url = remove_query_arg( array( 'action', 'id', '_wpnonce' ) );
 				wp_redirect( add_query_arg( 'deleted', '1', $redirect_url ) );
 				exit;
 			}
 		}
 
-		// Bulk delete action
+		// Bulk delete action.
 		if ( isset( $_REQUEST['action'] ) && 'bulk-delete' === $_REQUEST['action'] ) {
 			$delete_ids = isset( $_REQUEST['bulk-delete'] ) ? array_map( 'intval', wp_unslash( $_REQUEST['bulk-delete'] ) ) : array();
-			
+
 			if ( ! empty( $delete_ids ) ) {
-				// Verify nonce for bulk actions
+				// Verify nonce for bulk actions.
 				if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'bulk-' . $this->_args['plural'] ) ) {
 					wp_die( esc_html__( 'Security check failed. Invalid nonce.', 'pincode-checker-for-woocommerce' ) );
 				}
-				
+
 				$deleted_count = 0;
 				foreach ( $delete_ids as $id ) {
 					if ( $id > 0 && self::delete_pincode( $id ) ) {
-						$deleted_count++;
+						++$deleted_count;
 					}
 				}
-				
+
 				$redirect_url = remove_query_arg( array( 'action', 'bulk-delete', '_wpnonce' ) );
 				wp_redirect( add_query_arg( 'bulk-deleted', $deleted_count, $redirect_url ) );
 				exit;
@@ -500,9 +527,12 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 	/**
 	 * Delete Query with improved security.
+	 *
+	 * @param int $id The pincode record ID to delete.
+	 * @return bool True on success, false on failure.
 	 */
 	public static function delete_pincode( $id ) {
-		// Validate ID
+		// Validate ID.
 		$id = intval( $id );
 		if ( $id <= 0 ) {
 			return false;
@@ -510,11 +540,13 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 
 		global $wpdb;
 
-		// Get pincode before deletion for cache clearing
-		$pincode_data = $wpdb->get_row( $wpdb->prepare(
-			"SELECT pincode FROM {$wpdb->prefix}pincode_checker WHERE id = %d",
-			$id
-		) );
+		// Get pincode before deletion for cache clearing.
+		$pincode_data = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT pincode FROM {$wpdb->prefix}pincode_checker WHERE id = %d",
+				$id
+			)
+		);
 
 		$result = $wpdb->delete(
 			"{$wpdb->prefix}pincode_checker",
@@ -522,20 +554,20 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 			array( '%d' )
 		);
 
-		// Clear related cache if deletion was successful
-		if ( $result !== false && $pincode_data ) {
+		// Clear related cache if deletion was successful.
+		if ( false !== $result && $pincode_data ) {
 			wp_cache_delete( 'wpc_pincode_' . md5( $pincode_data->pincode ), 'woo_pincode_checker' );
 		}
 
-		return $result !== false;
+		return false !== $result;
 	}
 
 	/**
 	 * Delete Action.
 	 */
 	public function get_bulk_actions() {
-		$actions = array( 
-			'bulk-delete' => esc_html__( 'Delete', 'pincode-checker-for-woocommerce' ) 
+		$actions = array(
+			'bulk-delete' => esc_html__( 'Delete', 'pincode-checker-for-woocommerce' ),
 		);
 		return $actions;
 	}
@@ -547,6 +579,7 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 		if ( isset( $_REQUEST['s'] ) && ! empty( $_REQUEST['s'] ) ) {
 			$search_term = sanitize_text_field( wp_unslash( $_REQUEST['s'] ) );
 			printf(
+				// Translators: %s is a placeholder value.
 				esc_html__( 'No pincodes found matching "%s". Try a different search term.', 'pincode-checker-for-woocommerce' ),
 				esc_html( $search_term )
 			);
@@ -556,7 +589,9 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * Extra table navigation
+	 * Extra table navigation.
+	 *
+	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 	 */
 	protected function extra_tablenav( $which ) {
 		if ( 'top' === $which ) {
@@ -574,8 +609,9 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 					<?php
 					$total_pincodes = self::record_count();
 					printf(
+						// Translators: %s is a placeholder value.
 						esc_html( _n( '%s pincode total', '%s pincodes total', $total_pincodes, 'pincode-checker-for-woocommerce' ) ),
-						'<strong>' . number_format_i18n( $total_pincodes ) . '</strong>'
+						'<strong>' . esc_html( number_format_i18n( $total_pincodes ) ) . '</strong>'
 					);
 					?>
 				</span>
@@ -607,7 +643,9 @@ class Woo_Pincode_Checker_Listing extends WP_List_Table {
 	}
 
 	/**
-	 * Generate the table navigation above or below the table
+	 * Generate the table navigation above or below the table.
+	 *
+	 * @param string $which The location of the table nav markup: 'top' or 'bottom'.
 	 */
 	protected function display_tablenav( $which ) {
 		?>

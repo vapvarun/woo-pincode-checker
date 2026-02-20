@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Fired during plugin activation - FIXED VERSION
+ * Fired during plugin activation - FIXED VERSION.
  *
  * @link       https://wbcomdesigns.com/plugins
  * @since      1.5.0
@@ -10,6 +9,16 @@
  * @subpackage Woo_Pincode_Checker/includes
  */
 
+/**
+ * Fired during plugin activation.
+ *
+ * This class defines all code necessary to run during the plugin's activation.
+ *
+ * @since      1.5.0
+ * @package    Woo_Pincode_Checker
+ * @subpackage Woo_Pincode_Checker/includes
+ * @author     wbcomdesigns <admin@wbcomdesigns.com>
+ */
 class Woo_Pincode_Checker_Activator {
 
 	/**
@@ -20,16 +29,22 @@ class Woo_Pincode_Checker_Activator {
 	public static function activate() {
 		global $wpdb;
 
-		$wpc_db_version = '1.5.0';
+		$wpc_db_version  = '1.5.0';
 		$charset_collate = $wpdb->get_charset_collate();
-		$table_name = $wpdb->prefix . 'pincode_checker';
+		$table_name      = $wpdb->prefix . 'pincode_checker';
 
-		// Check if table already exists
-		$table_exists = $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name;
+		// Check if table already exists.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$table_exists = $wpdb->get_var(
+			$wpdb->prepare(
+				'SHOW TABLES LIKE %s',
+				$table_name
+			)
+		) === $table_name;
 
 		if ( ! $table_exists ) {
-			// Create table with better compatibility
-			$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			// Create table with better compatibility.
+			$sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
 				id int(11) NOT NULL AUTO_INCREMENT,
 				pincode varchar(20) NOT NULL,
 				city varchar(100) NOT NULL,
@@ -47,97 +62,118 @@ class Woo_Pincode_Checker_Activator {
 				UNIQUE KEY unique_pincode (pincode),
 				KEY idx_city (city),
 				KEY idx_state (state)
-			) $charset_collate;";
+			) {$charset_collate};";
 
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
 
-			// Verify table was created
-			$table_exists = $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name;
+			// Verify table was created.
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$table_exists = $wpdb->get_var(
+				$wpdb->prepare(
+					'SHOW TABLES LIKE %s',
+					$table_name
+				)
+			) === $table_name;
 
 			if ( ! $table_exists ) {
-				// Try alternative approach without dbDelta
+				// Try alternative approach without dbDelta.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- DDL statement using safe table name.
 				$wpdb->query( $sql );
-				$table_exists = $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name;
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$table_exists = $wpdb->get_var(
+					$wpdb->prepare(
+						'SHOW TABLES LIKE %s',
+						$table_name
+					)
+				) === $table_name;
 			}
 
 			if ( $table_exists ) {
-				// Insert sample data
+				// Insert sample data.
 				self::insert_sample_data( $table_name );
 			}
 		}
 
-		// Set default options
+		// Set default options.
 		self::set_default_options();
 
-		// Update database version
+		// Update database version.
 		update_option( 'wpc_db_version', $wpc_db_version );
 
-		// Clear any cache
+		// Clear any cache.
 		wp_cache_flush();
 
 		return $table_exists;
 	}
 
 	/**
-	 * Insert sample data for testing
+	 * Insert sample data for testing.
+	 *
+	 * @param string $table_name The database table name.
 	 */
 	private static function insert_sample_data( $table_name ) {
 		global $wpdb;
 
-		// Check if table is empty
-		$count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" );
+		// Check if table is empty.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$count = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$table_name}", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name from $wpdb->prefix.
+			)
+		);
 
-		if ( $count == 0 ) {
+		if ( 0 === (int) $count ) {
 			$sample_data = array(
 				array(
-					'pincode' => '110001',
-					'city' => 'New Delhi',
-					'state' => 'Delhi',
-					'delivery_days' => 2,
-					'shipping_amount' => 0.00,
+					'pincode'          => '110001',
+					'city'             => 'New Delhi',
+					'state'            => 'Delhi',
+					'delivery_days'    => 2,
+					'shipping_amount'  => 0.00,
 					'case_on_delivery' => 1,
-					'cod_amount' => 25.00
+					'cod_amount'       => 25.00,
 				),
 				array(
-					'pincode' => '400001',
-					'city' => 'Mumbai',
-					'state' => 'Maharashtra',
-					'delivery_days' => 3,
-					'shipping_amount' => 50.00,
+					'pincode'          => '400001',
+					'city'             => 'Mumbai',
+					'state'            => 'Maharashtra',
+					'delivery_days'    => 3,
+					'shipping_amount'  => 50.00,
 					'case_on_delivery' => 1,
-					'cod_amount' => 30.00
+					'cod_amount'       => 30.00,
 				),
 				array(
-					'pincode' => '560001',
-					'city' => 'Bangalore',
-					'state' => 'Karnataka',
-					'delivery_days' => 2,
-					'shipping_amount' => 0.00,
+					'pincode'          => '560001',
+					'city'             => 'Bangalore',
+					'state'            => 'Karnataka',
+					'delivery_days'    => 2,
+					'shipping_amount'  => 0.00,
 					'case_on_delivery' => 1,
-					'cod_amount' => 20.00
+					'cod_amount'       => 20.00,
 				),
 				array(
-					'pincode' => '600001',
-					'city' => 'Chennai',
-					'state' => 'Tamil Nadu',
-					'delivery_days' => 4,
-					'shipping_amount' => 40.00,
+					'pincode'          => '600001',
+					'city'             => 'Chennai',
+					'state'            => 'Tamil Nadu',
+					'delivery_days'    => 4,
+					'shipping_amount'  => 40.00,
 					'case_on_delivery' => 0,
-					'cod_amount' => 0.00
+					'cod_amount'       => 0.00,
 				),
 				array(
-					'pincode' => '700001',
-					'city' => 'Kolkata',
-					'state' => 'West Bengal',
-					'delivery_days' => 3,
-					'shipping_amount' => 35.00,
+					'pincode'          => '700001',
+					'city'             => 'Kolkata',
+					'state'            => 'West Bengal',
+					'delivery_days'    => 3,
+					'shipping_amount'  => 35.00,
 					'case_on_delivery' => 1,
-					'cod_amount' => 25.00
-				)
+					'cod_amount'       => 25.00,
+				),
 			);
 
 			foreach ( $sample_data as $data ) {
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 				$wpdb->insert(
 					$table_name,
 					$data,
@@ -148,7 +184,7 @@ class Woo_Pincode_Checker_Activator {
 	}
 
 	/**
-	 * Set default plugin options
+	 * Set default plugin options.
 	 */
 	private static function set_default_options() {
 		$default_settings = array(

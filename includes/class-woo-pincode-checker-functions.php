@@ -70,20 +70,20 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 		public function setup_plugin_global() {
 			$wpc_general_settings = '';
 			$new_general_settings = array();
-			
-			// Get plugin basename safely - never pass empty string to plugin_basename
-			$plugin_basename = 'pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php'; // Default
+
+			// Get plugin basename safely - never pass empty string to plugin_basename.
+			$plugin_basename = 'pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php'; // Default.
 			if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
 				$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
 			}
-			
+
 			if ( is_multisite() && is_plugin_active_for_network( $plugin_basename ) ) {
 				$wpc_general_settings = get_site_option( 'wpc_general_settings' );
 			} else {
 				$wpc_general_settings = get_option( 'wpc_general_settings' );
 			}
 
-			// Initialize with defaults
+			// Initialize with defaults.
 			$default_settings = array(
 				'date_display'             => '',
 				'delivery_date'            => '',
@@ -107,24 +107,24 @@ if ( ! class_exists( 'Woo_Pincode_Checker_Functions' ) ) :
 			);
 
 			if ( ! empty( $wpc_general_settings ) && is_array( $wpc_general_settings ) ) {
-				// Safely merge settings with null checks
+				// Safely merge settings with null checks.
 				foreach ( $default_settings as $key => $default_value ) {
-					$new_general_settings[ $key ] = isset( $wpc_general_settings[ $key ] ) 
-						? $wpc_general_settings[ $key ] 
+					$new_general_settings[ $key ] = isset( $wpc_general_settings[ $key ] )
+						? $wpc_general_settings[ $key ]
 						: $default_value;
 				}
-				
-				// Handle special cases for backwards compatibility
+
+				// Handle special cases for backwards compatibility.
 				if ( ! empty( $wpc_general_settings['delivery_date'] ) ) {
-					$new_general_settings['date_display'] = isset( $wpc_general_settings['date_display'] ) 
-						? $wpc_general_settings['date_display'] 
+					$new_general_settings['date_display']  = isset( $wpc_general_settings['date_display'] )
+						? $wpc_general_settings['date_display']
 						: '';
 					$new_general_settings['delivery_date'] = $wpc_general_settings['delivery_date'];
 				}
 			} else {
 				$new_general_settings = $default_settings;
 			}
-			
+
 			$this->wpc_general_settings = $new_general_settings;
 		}
 

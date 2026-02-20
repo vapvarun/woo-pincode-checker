@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provide a public-facing view for the plugin
  *
@@ -11,6 +10,12 @@
  * @package    Woo_Pincode_Checker
  * @subpackage Woo_Pincode_Checker/public/partials
  */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

@@ -34,8 +34,8 @@ $general_settings = $wpc_globals->wpc_general_settings;
 					<div class="wbcom-settings-section-wrap">
 						<?php
 						$category_rules_handler = new Woo_Pincode_Category_Rules();
-						$all_categories = $category_rules_handler->get_all_product_categories();
-						$global_rules = $category_rules_handler->get_global_category_rules();
+						$all_categories         = $category_rules_handler->get_all_product_categories();
+						$global_rules           = $category_rules_handler->get_global_category_rules();
 
 						if ( ! empty( $all_categories ) ) {
 							?>
@@ -56,8 +56,9 @@ $general_settings = $wpc_globals->wpc_general_settings;
 								<tbody>
 									<?php foreach ( $all_categories as $category ) : ?>
 										<?php
-										$cat_id = $category['id'];
-										$is_enabled = isset( $global_rules[ $cat_id ] );
+										// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+										$cat_id        = $category['id'];
+										$is_enabled    = isset( $global_rules[ $cat_id ] );
 										$delivery_days = $is_enabled ? $global_rules[ $cat_id ] : 1;
 										?>
 										<tr <?php echo ! $is_enabled ? 'style="opacity: 0.6;"' : ''; ?>>
@@ -68,8 +69,9 @@ $general_settings = $wpc_globals->wpc_general_settings;
 													<span class="description" style="font-size: 13px; color: #646970;">
 														<?php
 														printf(
-															_n( '%d product', '%d products', $category['count'], 'pincode-checker-for-woocommerce' ),
-															$category['count']
+															/* translators: %d: number of products in category. */
+															esc_html( _n( '%d product', '%d products', $category['count'], 'pincode-checker-for-woocommerce' ) ),
+															intval( $category['count'] )
 														);
 														?>
 													</span>
@@ -77,24 +79,24 @@ $general_settings = $wpc_globals->wpc_general_settings;
 											</td>
 											<td data-colname="<?php esc_attr_e( 'Delivery Days', 'pincode-checker-for-woocommerce' ); ?>">
 												<input type="number"
-													   name="wpc_general_settings[global_category_rules][<?php echo esc_attr( $cat_id ); ?>][days]"
-													   value="<?php echo esc_attr( $delivery_days ); ?>"
-													   min="1"
-													   max="365"
-													   class="small-text wpc-category-delivery-input"
-													   data-category-id="<?php echo esc_attr( $cat_id ); ?>"
-													   style="width: 60px;"
-													   <?php echo ! $is_enabled ? 'disabled' : ''; ?>>
+														name="wpc_general_settings[global_category_rules][<?php echo esc_attr( $cat_id ); ?>][days]"
+														value="<?php echo esc_attr( $delivery_days ); ?>"
+														min="1"
+														max="365"
+														class="small-text wpc-category-delivery-input"
+														data-category-id="<?php echo esc_attr( $cat_id ); ?>"
+														style="width: 60px;"
+														<?php echo ! $is_enabled ? 'disabled' : ''; ?>>
 												<span style="margin-left: 5px; color: #646970;"><?php esc_html_e( 'days', 'pincode-checker-for-woocommerce' ); ?></span>
 											</td>
 											<td data-colname="<?php esc_attr_e( 'Enable Rule', 'pincode-checker-for-woocommerce' ); ?>">
 												<label class="wb-switch" style="display: inline-block;">
 													<input type="checkbox"
-														   name="wpc_general_settings[global_category_rules][<?php echo esc_attr( $cat_id ); ?>][enabled]"
-														   value="1"
-														   class="wpc-category-enabled-checkbox"
-														   data-category-id="<?php echo esc_attr( $cat_id ); ?>"
-														   <?php checked( $is_enabled, true ); ?>>
+															name="wpc_general_settings[global_category_rules][<?php echo esc_attr( $cat_id ); ?>][enabled]"
+															value="1"
+															class="wpc-category-enabled-checkbox"
+															data-category-id="<?php echo esc_attr( $cat_id ); ?>"
+															<?php checked( $is_enabled, true ); ?>>
 													<div class="wb-slider wb-round"></div>
 												</label>
 											</td>
@@ -153,7 +155,7 @@ $general_settings = $wpc_globals->wpc_general_settings;
 
 <script>
 jQuery(document).ready(function($) {
-	// Handle category rules enable/disable
+	// Handle category rules enable/disable.
 	$('.wpc-category-enabled-checkbox').on('change', function() {
 		var categoryId = $(this).data('category-id');
 		var deliveryInput = $('.wpc-category-delivery-input[data-category-id="' + categoryId + '"]');

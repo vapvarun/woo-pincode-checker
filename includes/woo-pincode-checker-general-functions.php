@@ -12,6 +12,11 @@
  * @subpackage Woo_Pincode_Checker/includes
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Get an array of the categories.
  *
@@ -25,7 +30,7 @@ function wpc_get_wc_categories() {
 	if ( ! empty( $products_categories ) ) {
 		return $products_categories;
 	}
-	return array(); // Return empty array instead of null
+	return array(); // Return empty array instead of null.
 }
 
 /**
@@ -33,11 +38,11 @@ function wpc_get_wc_categories() {
  */
 function wpc_get_products_to_pincode_checker_by_category() {
 	$wpc_general_settings     = get_option( 'wpc_general_settings' );
-	$wpc_pinocode_by_category = array(); // Default to empty array
-	
+	$wpc_pinocode_by_category = array(); // Default to empty array.
+
 	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['categories_for_shipping'] ) ) {
-		$wpc_pinocode_by_category = is_array( $wpc_general_settings['categories_for_shipping'] ) 
-			? $wpc_general_settings['categories_for_shipping'] 
+		$wpc_pinocode_by_category = is_array( $wpc_general_settings['categories_for_shipping'] )
+			? $wpc_general_settings['categories_for_shipping']
 			: array();
 	}
 
@@ -50,9 +55,9 @@ function wpc_get_products_to_pincode_checker_by_category() {
 function wpc_single_product_button_position() {
 	$wpc_general_settings       = get_option( 'wpc_general_settings' );
 	$wpc_single_button_position = '';
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['pincode_position'] ) && 
-		 ! empty( $wpc_general_settings['pincode_position'] ) ) {
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['pincode_position'] ) &&
+		! empty( $wpc_general_settings['pincode_position'] ) ) {
 		$wpc_single_button_position = $wpc_general_settings['pincode_position'];
 	}
 
@@ -64,13 +69,13 @@ function wpc_single_product_button_position() {
  */
 function wpc_get_check_btn_label() {
 	$wpc_general_settings = get_option( 'wpc_general_settings' );
-	$wpc_check_btn_label  = 'Check'; // Default value
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['check_btn_text'] ) && 
-		 ! empty( $wpc_general_settings['check_btn_text'] ) ) {
+	$wpc_check_btn_label  = 'Check'; // Default value.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['check_btn_text'] ) &&
+		! empty( $wpc_general_settings['check_btn_text'] ) ) {
 		$wpc_check_btn_label = $wpc_general_settings['check_btn_text'];
 	}
-	
+
 	return apply_filters( 'alter_wpc_get_check_btn_label', $wpc_check_btn_label );
 }
 
@@ -79,13 +84,13 @@ function wpc_get_check_btn_label() {
  */
 function wpc_get_change_btn_label() {
 	$wpc_general_settings = get_option( 'wpc_general_settings' );
-	$wpc_change_btn_label = 'Change'; // Default value
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['change_btn_text'] ) && 
-		 ! empty( $wpc_general_settings['change_btn_text'] ) ) {
+	$wpc_change_btn_label = 'Change'; // Default value.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['change_btn_text'] ) &&
+		! empty( $wpc_general_settings['change_btn_text'] ) ) {
 		$wpc_change_btn_label = $wpc_general_settings['change_btn_text'];
 	}
-	
+
 	return apply_filters( 'alter_wpc_get_change_btn_label', $wpc_change_btn_label );
 }
 
@@ -94,13 +99,13 @@ function wpc_get_change_btn_label() {
  */
 function wpc_get_delivery_date_label() {
 	$wpc_general_settings    = get_option( 'wpc_general_settings' );
-	$wpc_delivery_date_label = 'Delivery Date'; // Default value
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['delivery_date_label_text'] ) && 
-		 ! empty( $wpc_general_settings['delivery_date_label_text'] ) ) {
+	$wpc_delivery_date_label = 'Delivery Date'; // Default value.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['delivery_date_label_text'] ) &&
+		! empty( $wpc_general_settings['delivery_date_label_text'] ) ) {
 		$wpc_delivery_date_label = $wpc_general_settings['delivery_date_label_text'];
 	}
-	
+
 	return apply_filters( 'alter_wpc_get_delivery_date_label', $wpc_delivery_date_label );
 }
 
@@ -109,13 +114,13 @@ function wpc_get_delivery_date_label() {
  */
 function wpc_get_availability_label() {
 	$wpc_general_settings   = get_option( 'wpc_general_settings' );
-	$wpc_availability_label = 'Available at'; // Default value
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['availability_label_text'] ) && 
-		 ! empty( $wpc_general_settings['availability_label_text'] ) ) {
+	$wpc_availability_label = 'Available at'; // Default value.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['availability_label_text'] ) &&
+		! empty( $wpc_general_settings['availability_label_text'] ) ) {
 		$wpc_availability_label = $wpc_general_settings['availability_label_text'];
 	}
-	
+
 	return apply_filters( 'alter_wpc_get_availability_label', $wpc_availability_label );
 }
 
@@ -124,13 +129,13 @@ function wpc_get_availability_label() {
  */
 function wpc_get_cod_label() {
 	$wpc_general_settings = get_option( 'wpc_general_settings' );
-	$wpc_cod_label        = 'Cash on Delivery Available'; // Default value
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['cod_label_text'] ) && 
-		 ! empty( $wpc_general_settings['cod_label_text'] ) ) {
+	$wpc_cod_label        = 'Cash on Delivery Available'; // Default value.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['cod_label_text'] ) &&
+		! empty( $wpc_general_settings['cod_label_text'] ) ) {
 		$wpc_cod_label = $wpc_general_settings['cod_label_text'];
 	}
-	
+
 	return apply_filters( 'alter_wpc_get_cod_label', $wpc_cod_label );
 }
 
@@ -141,10 +146,10 @@ function wpc_get_cod_label() {
  */
 function wpc_display_cod_option() {
 	$wpc_general_settings   = get_option( 'wpc_general_settings' );
-	$wpc_display_cod_option = false; // Default to false
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['cod_display'] ) && 
-		 'on' === $wpc_general_settings['cod_display'] ) {
+	$wpc_display_cod_option = false; // Default to false.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['cod_display'] ) &&
+		'on' === $wpc_general_settings['cod_display'] ) {
 		$wpc_display_cod_option = true;
 	}
 
@@ -158,10 +163,10 @@ function wpc_display_cod_option() {
  */
 function wpc_hide_shop_page_cart_btn_option() {
 	$wpc_general_settings = get_option( 'wpc_general_settings' );
-	$wpc_hide_cart_btn    = false; // Default to false
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['hide_shop_btn'] ) && 
-		 'on' === $wpc_general_settings['hide_shop_btn'] ) {
+	$wpc_hide_cart_btn    = false; // Default to false.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['hide_shop_btn'] ) &&
+		'on' === $wpc_general_settings['hide_shop_btn'] ) {
 		$wpc_hide_cart_btn = true;
 	}
 
@@ -175,10 +180,10 @@ function wpc_hide_shop_page_cart_btn_option() {
  */
 function wpc_hide_product_page_cart_btn_option() {
 	$wpc_general_settings           = get_option( 'wpc_general_settings' );
-	$wpc_hide_product_page_cart_btn = false; // Default to false
-	
-	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['hide_product_page_btn'] ) && 
-		 'on' === $wpc_general_settings['hide_product_page_btn'] ) {
+	$wpc_hide_product_page_cart_btn = false; // Default to false.
+
+	if ( is_array( $wpc_general_settings ) && isset( $wpc_general_settings['hide_product_page_btn'] ) &&
+		'on' === $wpc_general_settings['hide_product_page_btn'] ) {
 		$wpc_hide_product_page_cart_btn = true;
 	}
 

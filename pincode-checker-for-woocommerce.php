@@ -3,7 +3,7 @@
  * Plugin Name:       Pincode Checker for WooCommerce
  * Plugin URI:        https://wbcomdesigns.com/downloads/pincode-checker-for-woocommerce/
  * Description:       Enable location-based delivery verification with pincode/ZIP code checking. Show product availability, delivery timelines, shipping costs, and COD options based on customer location.
- * Version:           1.5.0
+ * Version:           1.5.1
  * Author:            Wbcom Designs
  * Author URI:        https://wbcomdesigns.com
  * License:           GPL-2.0+
@@ -11,10 +11,12 @@
  * Text Domain:       pincode-checker-for-woocommerce
  * Domain Path:       /languages
  * Requires at least: 5.0
- * Tested up to:      6.8.2
+ * Tested up to:      6.9
  * Requires PHP:      7.4
  * WC requires at least: 5.0
  * WC tested up to:   10.1.2
+ *
+ * @package Woo_Pincode_Checker
  */
 
 // If this file is called directly, abort.
@@ -27,9 +29,9 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WOO_PINCODE_CHECKER_VERSION', '1.5.0' );
+define( 'WOO_PINCODE_CHECKER_VERSION', '1.5.1' );
 
-// Define plugin constants - simplified and robust approach
+// Define plugin constants - simplified and robust approach.
 if ( ! defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ) {
 	define( 'WOO_PINCODE_CHECKER_PLUGIN_FILE', __FILE__ );
 }
@@ -43,18 +45,21 @@ if ( ! defined( 'WPCP_PLUGIN_URL' ) ) {
 }
 
 /**
- * Declare WooCommerce HPOS compatibility
+ * Declare WooCommerce HPOS compatibility.
  */
-add_action( 'before_woocommerce_init', function() {
-	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-		// Use the defined constant instead of __FILE__ to avoid null issues
-		$plugin_file = defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ? WOO_PINCODE_CHECKER_PLUGIN_FILE : WP_PLUGIN_DIR . '/pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php';
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $plugin_file, true );
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			// Use the defined constant instead of __FILE__ to avoid null issues.
+			$plugin_file = defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ? WOO_PINCODE_CHECKER_PLUGIN_FILE : WP_PLUGIN_DIR . '/pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php';
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $plugin_file, true );
+		}
 	}
-});
+);
 
 /**
- * Check if WooCommerce is active and load plugin files
+ * Check if WooCommerce is active and load plugin files.
  *
  * @since   1.0.0
  * @author  Wbcom Designs
@@ -62,76 +67,79 @@ add_action( 'before_woocommerce_init', function() {
 add_action( 'plugins_loaded', 'wpc_check_woocommerce_and_load_plugin' );
 
 /**
- * Check WooCommerce dependency and load plugin
+ * Check WooCommerce dependency and load plugin.
  */
 function wpc_check_woocommerce_and_load_plugin() {
 	if ( ! function_exists( 'is_plugin_active' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
-	
-	// Check if WooCommerce is active
+
+	// Check if WooCommerce is active.
 	if ( ! class_exists( 'WooCommerce', false ) ) {
 		add_action( 'admin_notices', 'wpc_woocommerce_missing_notice' );
 		return;
 	}
-	
-	// Check PHP version
+
+	// Check PHP version.
 	if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 		add_action( 'admin_notices', 'wpc_php_version_notice' );
 		return;
 	}
-	
-	// Check WordPress version
+
+	// Check WordPress version.
 	if ( version_compare( get_bloginfo( 'version' ), '5.0', '<' ) ) {
 		add_action( 'admin_notices', 'wpc_wordpress_version_notice' );
 		return;
 	}
-	
-	// All checks passed, load the plugin
+
+	// All checks passed, load the plugin.
 	wpc_load_plugin_files();
 }
 
 /**
- * Load plugin files and initialize
+ * Load plugin files and initialize.
  */
 function wpc_load_plugin_files() {
-	// Load required files
+	// Load required files.
 	require_once WPCP_PLUGIN_PATH . 'includes/class-woo-pincode-checker-activator.php';
 	require_once WPCP_PLUGIN_PATH . 'includes/class-woo-pincode-checker-deactivator.php';
 	require_once WPCP_PLUGIN_PATH . 'includes/class-woo-pincode-checker.php';
-	
-	// Register activation and deactivation hooks with safe file reference
+
+	// Register activation and deactivation hooks with safe file reference.
 	$plugin_file_for_hooks = defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) ? WOO_PINCODE_CHECKER_PLUGIN_FILE : __FILE__;
 	if ( ! empty( $plugin_file_for_hooks ) ) {
 		register_activation_hook( $plugin_file_for_hooks, 'activate_woo_pincode_checker' );
 		register_deactivation_hook( $plugin_file_for_hooks, 'deactivate_woo_pincode_checker' );
 	}
-	
-	// Initialize the plugin
+
+	// Initialize the plugin.
 	add_action( 'init', 'run_woo_pincode_checker' );
-	
-	// Add activation redirect
+
+	// Add activation redirect.
 	if ( class_exists( 'WooCommerce' ) ) {
 		add_action( 'activated_plugin', 'woo_pincode_checker_activation_redirect_settings' );
 	}
 }
 
 /**
- * WooCommerce missing notice
+ * WooCommerce missing notice.
  */
 function wpc_woocommerce_missing_notice() {
 	$woo_plugin = esc_html__( 'WooCommerce', 'pincode-checker-for-woocommerce' );
 	$wpc_plugin = esc_html__( 'Woo Pincode Checker', 'pincode-checker-for-woocommerce' );
 
 	echo '<div class="notice notice-error is-dismissible">';
+	// Translators: %s is a placeholder value.
 	echo '<p><strong>' . esc_html__( 'Plugin Activation Error:', 'pincode-checker-for-woocommerce' ) . '</strong> ';
-	echo sprintf( 
-		esc_html__( '%1$s requires %2$s to be installed and activated before it can function properly.', 'pincode-checker-for-woocommerce' ), 
-		'<em>' . esc_html( $wpc_plugin ) . '</em>', 
-		'<em>' . esc_html( $woo_plugin ) . '</em>' 
+	// Translators: %1$s is the plugin name, %2$s is the required plugin name.
+	printf(
+		// Translators: %s is a placeholder value.
+		esc_html__( '%1$s requires %2$s to be installed and activated before it can function properly.', 'pincode-checker-for-woocommerce' ),
+		'<em>' . esc_html( $wpc_plugin ) . '</em>',
+		'<em>' . esc_html( $woo_plugin ) . '</em>'
 	);
 	echo '</p>';
-	
+
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		$install_url = wp_nonce_url(
 			add_query_arg(
@@ -143,70 +151,79 @@ function wpc_woocommerce_missing_notice() {
 			),
 			'install-plugin_woocommerce'
 		);
-		
+
 		echo '<p>';
-		echo '<a href="' . esc_url( $install_url ) . '" class="button button-primary">' . 
-			 esc_html__( 'Install WooCommerce', 'pincode-checker-for-woocommerce' ) . '</a>';
+		echo '<a href="' . esc_url( $install_url ) . '" class="button button-primary">' .
+			esc_html__( 'Install WooCommerce', 'pincode-checker-for-woocommerce' ) . '</a>';
 		echo '</p>';
 	}
-	
+
 	echo '</div>';
 }
 
 /**
- * PHP version notice
+ * PHP version notice.
  */
 function wpc_php_version_notice() {
 	echo '<div class="notice notice-error is-dismissible">';
+	// Translators: %s is a placeholder value.
 	echo '<p><strong>' . esc_html__( 'PHP Version Error:', 'pincode-checker-for-woocommerce' ) . '</strong> ';
-	echo sprintf( 
-		esc_html__( 'Woo Pincode Checker requires PHP version 7.4 or higher. You are running PHP %s.', 'pincode-checker-for-woocommerce' ), 
-		PHP_VERSION 
+	// Translators: %s is the current PHP version.
+	printf(
+		// Translators: %s is a placeholder value.
+		esc_html__( 'Woo Pincode Checker requires PHP version 7.4 or higher. You are running PHP %s.', 'pincode-checker-for-woocommerce' ),
+		PHP_VERSION
 	);
 	echo '</p>';
 	echo '</div>';
 }
 
 /**
- * WordPress version notice
+ * WordPress version notice.
  */
 function wpc_wordpress_version_notice() {
 	echo '<div class="notice notice-error is-dismissible">';
+	// Translators: %s is a placeholder value.
 	echo '<p><strong>' . esc_html__( 'WordPress Version Error:', 'pincode-checker-for-woocommerce' ) . '</strong> ';
-	echo sprintf( 
-		esc_html__( 'Woo Pincode Checker requires WordPress version 5.0 or higher. You are running WordPress %s.', 'pincode-checker-for-woocommerce' ), 
-		get_bloginfo( 'version' ) 
+	// Translators: %s is the current WordPress version.
+	printf(
+		// Translators: %s is a placeholder value.
+		esc_html__( 'Woo Pincode Checker requires WordPress version 5.0 or higher. You are running WordPress %s.', 'pincode-checker-for-woocommerce' ),
+		esc_html( get_bloginfo( 'version' ) )
 	);
 	echo '</p>';
 	echo '</div>';
 }
 
 /**
- * Enhanced activation function with better error handling
+ * Enhanced activation function with better error handling.
  */
 function activate_woo_pincode_checker() {
 	if ( ! class_exists( 'Woo_Pincode_Checker_Activator' ) ) {
 		require_once WPCP_PLUGIN_PATH . 'includes/class-woo-pincode-checker-activator.php';
 	}
-	
-	// Run activation
+
+	// Run activation.
 	$activation_result = Woo_Pincode_Checker_Activator::activate();
-	
-	// Check if there were any errors
+
+	// Check if there were any errors.
 	$activation_error = get_option( 'wpc_activation_error' );
 	if ( $activation_error ) {
-		// Store error for display in admin
-		add_action( 'admin_notices', function() use ( $activation_error ) {
-			echo '<div class="notice notice-error is-dismissible">';
-			echo '<p><strong>Woo Pincode Checker Activation Error:</strong> ' . esc_html( $activation_error ) . '</p>';
-			echo '<p>Please check with your hosting provider about database permissions or try deactivating and reactivating the plugin.</p>';
-			echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '" class="button">Try Manual Fix</a></p>';
-			echo '</div>';
-		});
-		
+		// Store error for display in admin.
+		add_action(
+			'admin_notices',
+			function () use ( $activation_error ) {
+				echo '<div class="notice notice-error is-dismissible">';
+				echo '<p><strong>Woo Pincode Checker Activation Error:</strong> ' . esc_html( $activation_error ) . '</p>';
+				echo '<p>Please check with your hosting provider about database permissions or try deactivating and reactivating the plugin.</p>';
+				echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '" class="button">Try Manual Fix</a></p>';
+				echo '</div>';
+			}
+		);
+
 		error_log( 'WPC Activation Error: ' . $activation_error );
 	}
-	
+
 	if ( ! $activation_result ) {
 		error_log( 'WPC: Activation completed with issues' );
 	}
@@ -236,32 +253,34 @@ function run_woo_pincode_checker() {
 	if ( ! class_exists( 'Woo_Pincode_Checker' ) ) {
 		return;
 	}
-	
+
 	$plugin = new Woo_Pincode_Checker();
 	$plugin->run();
 }
 
 /**
  * Redirect to plugin settings page after activation.
+ *
+ * @param string $plugin The plugin basename being activated.
  */
 function woo_pincode_checker_activation_redirect_settings( $plugin ) {
-	// Get plugin basename safely - avoid calling plugin_basename with empty string
+	// Get plugin basename safely - avoid calling plugin_basename with empty string.
 	$plugin_basename = '';
 	if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
 		$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
 	} else {
-		// Use hardcoded basename as fallback
+		// Use hardcoded basename as fallback.
 		$plugin_basename = 'pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php';
 	}
-	
+
 	if ( ! empty( $plugin_basename ) && $plugin === $plugin_basename ) {
-		// Get action and plugin parameters safely
-		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
+		// Get action and plugin parameters safely.
+		$action       = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
 		$plugin_param = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
 
-		// Check for null values before comparing
+		// Check for null values before comparing.
 		if ( ! empty( $action ) && ! empty( $plugin_param ) &&
-		     'activate' === $action && $plugin_basename === $plugin_param ) {
+			'activate' === $action && $plugin_basename === $plugin_param ) {
 			wp_safe_redirect( admin_url( 'admin.php?page=pincode-checker-for-woocommerce' ) );
 			exit;
 		}
@@ -269,76 +288,85 @@ function woo_pincode_checker_activation_redirect_settings( $plugin ) {
 }
 
 /**
- * Check and create table if missing during runtime
+ * Check and create table if missing during runtime.
  */
 function wpc_check_and_create_table() {
-	// Only run in admin area
+	// Only run in admin area.
 	if ( ! is_admin() ) {
 		return;
 	}
-	
+
 	global $wpdb;
-	
+
 	$table_name = $wpdb->prefix . 'pincode_checker';
-	
-	// Check if table exists
-	$table_exists = $wpdb->get_var( $wpdb->prepare( 
-		"SHOW TABLES LIKE %s", 
-		$table_name 
-	) ) == $table_name;
-	
+
+	// Check if table exists.
+	$table_exists = $wpdb->get_var(
+		$wpdb->prepare(
+			'SHOW TABLES LIKE %s',
+			$table_name
+		)
+	) === $table_name;
+
 	if ( ! $table_exists ) {
 		error_log( 'WPC: Table missing during runtime, attempting to create...' );
-		
-		// Try to create the table
+
+		// Try to create the table.
 		activate_woo_pincode_checker();
-		
-		// Check again
-		$table_exists = $wpdb->get_var( $wpdb->prepare( 
-			"SHOW TABLES LIKE %s", 
-			$table_name 
-		) ) == $table_name;
-		
+
+		// Check again.
+		$table_exists = $wpdb->get_var(
+			$wpdb->prepare(
+				'SHOW TABLES LIKE %s',
+				$table_name
+			)
+		) === $table_name;
+
 		if ( ! $table_exists ) {
-			// Show admin notice only once per session
+			// Show admin notice only once per session.
 			if ( ! get_transient( 'wpc_table_error_shown' ) ) {
-				add_action( 'admin_notices', function() {
-					echo '<div class="notice notice-error is-dismissible">';
-					echo '<p><strong>Woo Pincode Checker:</strong> Database table could not be created automatically.</p>';
-					echo '<p>Please contact your hosting provider to ensure your WordPress database user has CREATE TABLE permissions.</p>';
-					echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '" class="button button-primary">Try Manual Fix</a> ';
-					echo '<a href="#" onclick="location.reload();" class="button">Retry</a></p>';
-					echo '</div>';
-				});
-				
-				// Set transient to prevent repeated notices
+				add_action(
+					'admin_notices',
+					function () {
+						echo '<div class="notice notice-error is-dismissible">';
+						echo '<p><strong>Woo Pincode Checker:</strong> Database table could not be created automatically.</p>';
+						echo '<p>Please contact your hosting provider to ensure your WordPress database user has CREATE TABLE permissions.</p>';
+						echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=wpc-manual-fix' ) ) . '" class="button button-primary">Try Manual Fix</a> ';
+						echo '<a href="#" onclick="location.reload();" class="button">Retry</a></p>';
+						echo '</div>';
+					}
+				);
+
+				// Set transient to prevent repeated notices.
 				set_transient( 'wpc_table_error_shown', true, 12 * HOUR_IN_SECONDS );
 			}
 		} else {
-			// Clear any error transients if table was created
+			// Clear any error transients if table was created.
 			delete_transient( 'wpc_table_error_shown' );
 		}
 	}
 }
 
-// Add table check on admin_init with priority 5 to run early
+// Add table check on admin_init with priority 5 to run early.
 add_action( 'admin_init', 'wpc_check_and_create_table', 5 );
 
 /**
- * Enhanced database update check with table existence verification
+ * Enhanced database update check with table existence verification.
  */
 function wpc_check_update_mysql_db() {
 	global $wpdb;
 
-	$installed_ver = get_option( 'wpc_db_version' );
+	$installed_ver   = get_option( 'wpc_db_version' );
 	$current_version = '1.5.0';
 
-	// Always check if table exists first
-	$table_name = $wpdb->prefix . 'pincode_checker';
-	$table_exists = $wpdb->get_var( $wpdb->prepare(
-		"SHOW TABLES LIKE %s",
-		$table_name
-	) ) == $table_name;
+	// Always check if table exists first.
+	$table_name   = $wpdb->prefix . 'pincode_checker';
+	$table_exists = $wpdb->get_var(
+		$wpdb->prepare(
+			'SHOW TABLES LIKE %s',
+			$table_name
+		)
+	) === $table_name;
 
 	if ( ! $table_exists ) {
 		error_log( 'WPC: Table missing during update check, running activation...' );
@@ -346,20 +374,23 @@ function wpc_check_update_mysql_db() {
 		return;
 	}
 
-	// Check if migration is needed (either by version or by checking if critical columns exist)
-	$latitude_exists = $wpdb->get_results( $wpdb->prepare(
-		"SHOW COLUMNS FROM `{$table_name}` LIKE %s",
-		'latitude'
-	));
+	// Check if migration is needed (by version or by checking if critical columns exist).
+	// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Table name from $wpdb->prefix.
+	$latitude_exists = $wpdb->get_results(
+		$wpdb->prepare(
+			'SHOW COLUMNS FROM `' . esc_sql( $table_name ) . '` LIKE %s',
+			'latitude'
+		)
+	);
 
 	$needs_migration = false;
 
-	// Migration needed if version is old OR if latitude column doesn't exist
+	// Migration needed if version is old OR if latitude column doesn't exist.
 	if ( ( ! empty( $installed_ver ) && version_compare( $installed_ver, $current_version, '<' ) ) || empty( $latitude_exists ) ) {
 		$needs_migration = true;
 	}
 
-	// Also run migration if no version is set (legacy installation)
+	// Also run migration if no version is set (legacy installation).
 	if ( empty( $installed_ver ) ) {
 		$needs_migration = true;
 	}
@@ -367,13 +398,13 @@ function wpc_check_update_mysql_db() {
 	if ( $needs_migration ) {
 		error_log( 'WPC: Running database migration to version ' . $current_version );
 
-		// Update table structure if needed
+		// Update table structure if needed.
 		wpc_update_table_structure( $table_name );
 
-		// Update version
+		// Update version.
 		update_option( 'wpc_db_version', $current_version );
 
-		// Clear cache
+		// Clear cache.
 		wp_cache_flush_group( 'woo_pincode_checker' );
 
 		error_log( 'WPC: Database migration completed to version ' . $current_version );
@@ -381,29 +412,35 @@ function wpc_check_update_mysql_db() {
 }
 
 /**
- * Update table structure for existing installations
+ * Update table structure for existing installations.
+ *
+ * @param string $table_name The database table name.
  */
 function wpc_update_table_structure( $table_name ) {
 	global $wpdb;
-	
+
 	$columns_to_add = array(
 		'shipping_amount' => "ALTER TABLE `{$table_name}` ADD COLUMN `shipping_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER `delivery_days`",
-		'cod_amount' => "ALTER TABLE `{$table_name}` ADD COLUMN `cod_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER `case_on_delivery`",
-		'created_at' => "ALTER TABLE `{$table_name}` ADD COLUMN `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `cod_amount`",
-		'updated_at' => "ALTER TABLE `{$table_name}` ADD COLUMN `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `created_at`",
-		'category_rules' => "ALTER TABLE `{$table_name}` ADD COLUMN `category_rules` TEXT NULL DEFAULT NULL AFTER `updated_at`",
-		'latitude' => "ALTER TABLE `{$table_name}` ADD COLUMN `latitude` DECIMAL(10,8) NULL DEFAULT NULL AFTER `category_rules`",
-		'longitude' => "ALTER TABLE `{$table_name}` ADD COLUMN `longitude` DECIMAL(11,8) NULL DEFAULT NULL AFTER `latitude`"
+		'cod_amount'      => "ALTER TABLE `{$table_name}` ADD COLUMN `cod_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00 AFTER `case_on_delivery`",
+		'created_at'      => "ALTER TABLE `{$table_name}` ADD COLUMN `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `cod_amount`",
+		'updated_at'      => "ALTER TABLE `{$table_name}` ADD COLUMN `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `created_at`",
+		'category_rules'  => "ALTER TABLE `{$table_name}` ADD COLUMN `category_rules` TEXT NULL DEFAULT NULL AFTER `updated_at`",
+		'latitude'        => "ALTER TABLE `{$table_name}` ADD COLUMN `latitude` DECIMAL(10,8) NULL DEFAULT NULL AFTER `category_rules`",
+		'longitude'       => "ALTER TABLE `{$table_name}` ADD COLUMN `longitude` DECIMAL(11,8) NULL DEFAULT NULL AFTER `latitude`",
 	);
-	
-	foreach ( $columns_to_add as $column => $query ) {
-		$column_exists = $wpdb->get_results( $wpdb->prepare(
-			"SHOW COLUMNS FROM `{$table_name}` LIKE %s",
-			$column
-		));
-		
+
+	foreach ( $columns_to_add as $column => $alter_query ) {
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- Table name from $wpdb->prefix.
+		$column_exists = $wpdb->get_results(
+			$wpdb->prepare(
+				'SHOW COLUMNS FROM `' . esc_sql( $table_name ) . '` LIKE %s',
+				$column
+			)
+		);
+
 		if ( empty( $column_exists ) ) {
-			$result = $wpdb->query( $query );
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- DDL statement with validated table name.
+			$result = $wpdb->query( $alter_query );
 			if ( false === $result ) {
 				error_log( "WPC Database Update Error for column {$column}: " . $wpdb->last_error );
 			} else {
@@ -411,35 +448,40 @@ function wpc_update_table_structure( $table_name ) {
 			}
 		}
 	}
-	
-	// Ensure indexes exist
+
+	// Ensure indexes exist.
 	wpc_ensure_table_indexes( $table_name );
 }
 
 /**
- * Ensure all required indexes exist
+ * Ensure all required indexes exist.
+ *
+ * @param string $table_name The database table name.
  */
 function wpc_ensure_table_indexes( $table_name ) {
 	global $wpdb;
-	
+
 	$indexes_to_add = array(
-		'unique_pincode' => "ALTER TABLE `{$table_name}` ADD UNIQUE KEY `unique_pincode` (`pincode`)",
+		'unique_pincode'     => "ALTER TABLE `{$table_name}` ADD UNIQUE KEY `unique_pincode` (`pincode`)",
 		'idx_pincode_search' => "ALTER TABLE `{$table_name}` ADD INDEX `idx_pincode_search` (`pincode`)",
-		'idx_city_state' => "ALTER TABLE `{$table_name}` ADD INDEX `idx_city_state` (`city`, `state`)",
-		'idx_delivery_days' => "ALTER TABLE `{$table_name}` ADD INDEX `idx_delivery_days` (`delivery_days`)"
+		'idx_city_state'     => "ALTER TABLE `{$table_name}` ADD INDEX `idx_city_state` (`city`, `state`)",
+		'idx_delivery_days'  => "ALTER TABLE `{$table_name}` ADD INDEX `idx_delivery_days` (`delivery_days`)",
 	);
-	
-	// Get existing indexes
-	$existing_indexes = $wpdb->get_results( "SHOW INDEX FROM `{$table_name}`" );
+
+	// Get existing indexes.
+	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Table name from $wpdb->prefix.
+	$existing_indexes     = $wpdb->get_results( 'SHOW INDEX FROM `' . esc_sql( $table_name ) . '`' );
 	$existing_index_names = array();
-	
+
 	foreach ( $existing_indexes as $index ) {
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- MySQL column name.
 		$existing_index_names[] = $index->Key_name;
 	}
-	
-	foreach ( $indexes_to_add as $index_name => $query ) {
-		if ( ! in_array( $index_name, $existing_index_names ) ) {
-			$result = $wpdb->query( $query );
+
+	foreach ( $indexes_to_add as $index_name => $index_query ) {
+		if ( ! in_array( $index_name, $existing_index_names, true ) ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- DDL statement with validated table name.
+			$result = $wpdb->query( $index_query );
 			if ( false === $result ) {
 				error_log( "WPC: Failed to add index {$index_name}: " . $wpdb->last_error );
 			}
@@ -447,16 +489,16 @@ function wpc_ensure_table_indexes( $table_name ) {
 	}
 }
 
-// Run database check on plugins_loaded with high priority
+// Run database check on plugins_loaded with high priority.
 add_action( 'plugins_loaded', 'wpc_check_update_mysql_db', 15 );
 
 /**
- * Add manual fix page for database issues
+ * Add manual fix page for database issues.
  */
 function wpc_add_manual_fix_page() {
-	// Use empty string instead of null to avoid PHP 8.3+ deprecation warnings
+	// Use empty string instead of null to avoid PHP 8.3+ deprecation warnings.
 	add_submenu_page(
-		'', // Hidden menu (empty string instead of null for PHP 8.3+ compatibility)
+		'', // Hidden menu (empty string instead of null for PHP 8.3+ compatibility).
 		'WPC Manual Fix',
 		'WPC Manual Fix',
 		'manage_options',
@@ -467,88 +509,92 @@ function wpc_add_manual_fix_page() {
 add_action( 'admin_menu', 'wpc_add_manual_fix_page' );
 
 /**
- * Manual fix page content
+ * Manual fix page content.
  */
 function wpc_manual_fix_page_content() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( 'Unauthorized' );
 	}
-	
+
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'pincode_checker';
-	$message = '';
+	$table_name   = $wpdb->prefix . 'pincode_checker';
+	$message      = '';
 	$message_type = '';
-	
+
 	if ( isset( $_POST['create_table'] ) ) {
-		// Verify nonce
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'wpc_manual_fix' ) ) {
+		// Verify nonce.
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wpc_manual_fix' ) ) {
 			wp_die( 'Security check failed' );
 		}
-		
-		// Force table creation
+
+		// Force table creation.
 		if ( class_exists( 'Woo_Pincode_Checker_Activator' ) ) {
 			$result = Woo_Pincode_Checker_Activator::force_create_table();
-			
+
 			if ( $result ) {
-				$message = 'Table created successfully!';
+				$message      = 'Table created successfully!';
 				$message_type = 'success';
-				
-				// Clear any error flags
+
+				// Clear any error flags.
 				delete_option( 'wpc_activation_error' );
 				delete_transient( 'wpc_table_error_shown' );
 			} else {
-				$message = 'Table creation failed. Error: ' . $wpdb->last_error;
+				$message      = 'Table creation failed. Error: ' . $wpdb->last_error;
 				$message_type = 'error';
 			}
 		}
 	}
-	
+
 	if ( isset( $_POST['reactivate_plugin'] ) ) {
-		// Verify nonce
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'wpc_manual_fix' ) ) {
+		// Verify nonce.
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wpc_manual_fix' ) ) {
 			wp_die( 'Security check failed' );
 		}
-		
-		// Run activation again
+
+		// Run activation again.
 		activate_woo_pincode_checker();
-		$message = 'Plugin reactivation attempted. Check if the table exists now.';
+		$message      = 'Plugin reactivation attempted. Check if the table exists now.';
 		$message_type = 'info';
 	}
-	
-	$table_exists = $wpdb->get_var( $wpdb->prepare( 
-		"SHOW TABLES LIKE %s", 
-		$table_name 
-	) ) == $table_name;
-	
+
+	$table_exists = $wpdb->get_var(
+		$wpdb->prepare(
+			'SHOW TABLES LIKE %s',
+			$table_name
+		)
+	) === $table_name;
+
 	?>
 	<div class="wrap">
 		<h1>Woo Pincode Checker - Manual Fix</h1>
-		
-		<?php if ( $message ): ?>
+
+		<?php if ( $message ) : ?>
 		<div class="notice notice-<?php echo esc_attr( $message_type ); ?> is-dismissible">
 			<p><?php echo esc_html( $message ); ?></p>
 		</div>
 		<?php endif; ?>
-		
+
 		<div class="card">
 			<h2>Database Table Status</h2>
 			<p>Table Name: <code><?php echo esc_html( $table_name ); ?></code></p>
-			<p>Status: 
-				<?php if ( $table_exists ): ?>
-					<span style="color: green; font-weight: bold;">✓ EXISTS</span>
-				<?php else: ?>
-					<span style="color: red; font-weight: bold;">✗ MISSING</span>
+			<p>Status:
+				<?php if ( $table_exists ) : ?>
+					<span style="color: green; font-weight: bold;">&#10003; EXISTS</span>
+				<?php else : ?>
+					<span style="color: red; font-weight: bold;">&#10007; MISSING</span>
 				<?php endif; ?>
 			</p>
-			
-			<?php if ( $table_exists ): ?>
+
+			<?php if ( $table_exists ) : ?>
 				<?php
-				$row_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" );
-				$columns = $wpdb->get_results( "SHOW COLUMNS FROM {$table_name}" );
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name from $wpdb->prefix.
+				$row_count = $wpdb->get_var( "SELECT COUNT(*) FROM `{$table_name}`" );
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name from $wpdb->prefix.
+				$columns = $wpdb->get_results( "SHOW COLUMNS FROM `{$table_name}`" );
 				?>
 				<p>Records: <strong><?php echo esc_html( $row_count ); ?></strong></p>
 				<p>Columns: <strong><?php echo esc_html( count( $columns ) ); ?></strong></p>
-				
+
 				<h3>Table Structure</h3>
 				<table class="widefat">
 					<thead>
@@ -561,24 +607,26 @@ function wpc_manual_fix_page_content() {
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ( $columns as $column ): ?>
+						<?php foreach ( $columns as $column ) : ?>
 						<tr>
+							<?php // phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- MySQL column names. ?>
 							<td><?php echo esc_html( $column->Field ); ?></td>
 							<td><?php echo esc_html( $column->Type ); ?></td>
 							<td><?php echo esc_html( $column->Null ); ?></td>
 							<td><?php echo esc_html( $column->Key ); ?></td>
 							<td><?php echo esc_html( $column->Default ); ?></td>
+							<?php // phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase ?>
 						</tr>
 						<?php endforeach; ?>
 					</tbody>
 				</table>
 			<?php endif; ?>
 		</div>
-		
+
 		<div class="card">
 			<h2>Fix Options</h2>
-			
-			<?php if ( ! $table_exists ): ?>
+
+			<?php if ( ! $table_exists ) : ?>
 			<form method="post">
 				<?php wp_nonce_field( 'wpc_manual_fix' ); ?>
 				<p>
@@ -586,7 +634,7 @@ function wpc_manual_fix_page_content() {
 					<span class="description">Force create the database table</span>
 				</p>
 			</form>
-			
+
 			<form method="post">
 				<?php wp_nonce_field( 'wpc_manual_fix' ); ?>
 				<p>
@@ -594,34 +642,34 @@ function wpc_manual_fix_page_content() {
 					<span class="description">Run the plugin activation process again</span>
 				</p>
 			</form>
-			<?php else: ?>
-			<p style="color: green;">✓ Table exists! The plugin should work correctly now.</p>
+			<?php else : ?>
+			<p style="color: green;">&#10003; Table exists! The plugin should work correctly now.</p>
 			<p><a href="<?php echo esc_url( admin_url( 'admin.php?page=pincode_lists' ) ); ?>" class="button button-primary">View Pincodes</a></p>
 			<?php endif; ?>
 		</div>
-		
+
 		<div class="card">
 			<h2>Manual SQL (Advanced Users Only)</h2>
 			<p>If automatic creation fails, you can run this SQL manually in your database:</p>
 			<textarea readonly style="width: 100%; height: 200px; font-family: monospace; font-size: 12px;">
 CREATE TABLE <?php echo esc_html( $table_name ); ?> (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  pincode VARCHAR(20) NOT NULL,
-  city VARCHAR(100) NOT NULL,
-  state VARCHAR(100) NOT NULL,
-  delivery_days TINYINT UNSIGNED NOT NULL DEFAULT 1,
-  shipping_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-  case_on_delivery BOOLEAN NOT NULL DEFAULT FALSE,
-  cod_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  UNIQUE KEY unique_pincode (pincode),
-  INDEX idx_pincode_search (pincode),
-  INDEX idx_city_state (city, state),
-  INDEX idx_delivery_days (delivery_days),
-  INDEX idx_created_at (created_at)
-) <?php echo $wpdb->get_charset_collate(); ?> ENGINE=InnoDB;
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	pincode VARCHAR(20) NOT NULL,
+	city VARCHAR(100) NOT NULL,
+	state VARCHAR(100) NOT NULL,
+	delivery_days TINYINT UNSIGNED NOT NULL DEFAULT 1,
+	shipping_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+	case_on_delivery BOOLEAN NOT NULL DEFAULT FALSE,
+	cod_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	UNIQUE KEY unique_pincode (pincode),
+	INDEX idx_pincode_search (pincode),
+	INDEX idx_city_state (city, state),
+	INDEX idx_delivery_days (delivery_days),
+	INDEX idx_created_at (created_at)
+) <?php echo esc_html( $wpdb->get_charset_collate() ); ?> ENGINE=InnoDB;
 			</textarea>
 		</div>
 	</div>
@@ -629,21 +677,20 @@ CREATE TABLE <?php echo esc_html( $table_name ); ?> (
 }
 
 /**
- * Enhanced error handling and monitoring functions
- */
-
-/**
- * Log security events for monitoring
+ * Log security events for monitoring.
+ *
+ * @param string $event The security event name.
+ * @param array  $data  Additional data for the event.
  */
 function wpc_log_security_event( $event, $data = array() ) {
 	if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
 		$log_data = array(
-			'timestamp' => current_time( 'mysql' ),
-			'event' => $event,
-			'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
-			'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
-			'user_id' => get_current_user_id(),
-			'data' => $data
+			'timestamp'  => current_time( 'mysql' ),
+			'event'      => $event,
+			'ip'         => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown',
+			'user_agent' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : 'unknown',
+			'user_id'    => get_current_user_id(),
+			'data'       => $data,
 		);
 		error_log( '[WPC Security] ' . wp_json_encode( $log_data ) );
 	}
@@ -651,87 +698,99 @@ function wpc_log_security_event( $event, $data = array() ) {
 
 
 /**
- * Cleanup functions
+ * Cleanup old rate-limiting transients.
  */
 function wpc_cleanup_old_transients() {
 	global $wpdb;
-	
-	// Clean up rate limiting transients older than 1 hour
-	$wpdb->query( $wpdb->prepare(
-		"DELETE FROM {$wpdb->options} 
-		 WHERE option_name LIKE %s 
-		 AND option_name LIKE %s 
+
+	// Clean up rate limiting transients older than 1 hour.
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->options}
+		 WHERE option_name LIKE %s
+		 AND option_name LIKE %s
 		 AND UNIX_TIMESTAMP(NOW()) - SUBSTRING(option_value, LENGTH(option_value) - 9) > 3600",
-		'_transient_timeout_wpc_rate_limit_%',
-		'_transient_wpc_rate_limit_%'
-	));
+			'_transient_timeout_wpc_rate_limit_%',
+			'_transient_wpc_rate_limit_%'
+		)
+	);
 }
 
-// Schedule cleanup twice daily
+// Schedule cleanup twice daily.
 if ( ! wp_next_scheduled( 'wpc_cleanup_transients' ) ) {
 	wp_schedule_event( time(), 'twicedaily', 'wpc_cleanup_transients' );
 }
 add_action( 'wpc_cleanup_transients', 'wpc_cleanup_old_transients' );
 
 /**
- * Handle plugin deactivation cleanup
+ * Handle plugin deactivation cleanup.
  */
 function wpc_handle_plugin_deactivation() {
-	// Clear scheduled events
+	// Clear scheduled events.
 	wp_clear_scheduled_hook( 'wpc_cleanup_transients' );
-	
-	// Clear cache
+
+	// Clear cache.
 	wp_cache_flush_group( 'woo_pincode_checker' );
-	
-	// Log deactivation
-	wpc_log_security_event( 'plugin_deactivated', array(
-		'user_id' => get_current_user_id(),
-		'timestamp' => current_time( 'mysql' )
-	));
+
+	// Log deactivation.
+	wpc_log_security_event(
+		'plugin_deactivated',
+		array(
+			'user_id'   => get_current_user_id(),
+			'timestamp' => current_time( 'mysql' ),
+		)
+	);
 }
 register_deactivation_hook( __FILE__, 'wpc_handle_plugin_deactivation' );
 
 /**
- * Add plugin action links
+ * Add plugin action links.
+ *
+ * @param array $links The existing plugin action links.
+ * @return array Modified plugin action links.
  */
 function wpc_add_plugin_action_links( $links ) {
 	$plugin_links = array(
 		'<a href="' . admin_url( 'admin.php?page=woo-pincode-checker' ) . '">' . __( 'Settings', 'pincode-checker-for-woocommerce' ) . '</a>',
 		'<a href="' . admin_url( 'admin.php?page=pincode_lists' ) . '">' . __( 'Manage Codes', 'pincode-checker-for-woocommerce' ) . '</a>',
 	);
-	
+
 	return array_merge( $plugin_links, $links );
 }
-// Only add filter if we have a valid plugin file
+// Only add filter if we have a valid plugin file.
 if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
 	add_filter( 'plugin_action_links_' . plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE ), 'wpc_add_plugin_action_links' );
 } else {
-	// Use hardcoded basename as fallback
+	// Use hardcoded basename as fallback.
 	add_filter( 'plugin_action_links_pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php', 'wpc_add_plugin_action_links' );
 }
 
 /**
- * Add plugin meta links
+ * Add plugin meta links.
+ *
+ * @param array  $links The existing plugin meta links.
+ * @param string $file  The plugin file path.
+ * @return array Modified plugin meta links.
  */
 function wpc_add_plugin_meta_links( $links, $file ) {
-	// Get plugin basename safely - avoid calling plugin_basename with empty string
+	// Get plugin basename safely - avoid calling plugin_basename with empty string.
 	$plugin_basename = '';
 	if ( defined( 'WOO_PINCODE_CHECKER_PLUGIN_FILE' ) && ! empty( WOO_PINCODE_CHECKER_PLUGIN_FILE ) ) {
 		$plugin_basename = plugin_basename( WOO_PINCODE_CHECKER_PLUGIN_FILE );
 	} else {
-		// Use hardcoded basename as fallback
+		// Use hardcoded basename as fallback.
 		$plugin_basename = 'pincode-checker-for-woocommerce/pincode-checker-for-woocommerce.php';
 	}
-	
+
 	if ( ! empty( $plugin_basename ) && $file === $plugin_basename ) {
 		$meta_links = array(
 			'<a href="https://docs.wbcomdesigns.com/doc_category/woo-pincode-checker/" target="_blank">' . __( 'Documentation', 'pincode-checker-for-woocommerce' ) . '</a>',
 			'<a href="https://wbcomdesigns.com/support/" target="_blank">' . __( 'Support', 'pincode-checker-for-woocommerce' ) . '</a>',
 		);
-		
+
 		return array_merge( $links, $meta_links );
 	}
-	
+
 	return $links;
 }
 add_filter( 'plugin_row_meta', 'wpc_add_plugin_meta_links', 10, 2 );
