@@ -26,6 +26,10 @@
 		document.cookie = COOKIE + '=' + encodeURIComponent( country + ':' + postcode ) + '; path=/; max-age=' + ( cfg.cookieDays * 86400 ) + '; SameSite=Lax' + ( 'https:' === location.protocol ? '; Secure' : '' );
 	}
 
+	function forget() {
+		document.cookie = COOKIE + '=; path=/; max-age=0; SameSite=Lax' + ( 'https:' === location.protocol ? '; Secure' : '' );
+	}
+
 	function line( className, text ) {
 		var p = document.createElement( 'p' );
 		p.className = className;
@@ -77,7 +81,7 @@
 			this.form.addEventListener( 'submit', function ( e ) {
 				if ( self.blocked ) {
 					e.preventDefault();
-					self.edit();
+					self.reveal();
 				}
 			}, true );
 
@@ -186,7 +190,22 @@
 		}
 	};
 
+	/**
+	 * Change: the shopper is replacing the pincode, so the old answer goes everywhere it lives -
+	 * the result on screen, the Add to cart state and the saved cookie the server reads on add to cart.
+	 */
 	Checker.prototype.edit = function () {
+		this.state = null;
+		forget();
+		this.root.classList.remove( 'is-available', 'is-unavailable', 'is-invalid' );
+		this.input.setAttribute( 'aria-invalid', 'false' );
+		this.result.textContent = '';
+		this.apply();
+		this.reveal();
+	};
+
+	/** Show the field again, keeping the current answer (used when a blocked add to cart is submitted). */
+	Checker.prototype.reveal = function () {
 		this.entry.hidden = false;
 		this.change.hidden = true;
 		this.input.focus();
