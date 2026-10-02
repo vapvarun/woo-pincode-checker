@@ -1,0 +1,268 @@
+{
+  "$schema": "https://wpmediaverse.com/schemas/wp-plugin-manifest-v2.json",
+  "generated": "2026-10-02",
+  "version": 2,
+  "plugin": {
+    "slug": "woo-pincode-checker",
+    "name": "Pincode Checker for WooCommerce",
+    "version": "1.6.0",
+    "namespace": "Wbcom\\PincodeChecker",
+    "prefix": "wbpc",
+    "main_file": "woo-pincode-checker.php",
+    "text_domain": "woo-pincode-checker",
+    "requires_wp": "6.5",
+    "requires_php": "8.1",
+    "requires_plugins": [
+      "woocommerce"
+    ],
+    "wc_requires": "8.0",
+    "features_declared": [
+      "custom_order_tables",
+      "cart_checkout_blocks"
+    ]
+  },
+  "tables": [
+    {
+      "name": "{prefix}wbpc_areas",
+      "owner": "Repository/AreaRepository.php",
+      "schema": "Core/Installer.php",
+      "indexes": [
+        "PRIMARY(id)",
+        "UNIQUE area(country,match_type,code_norm,range_start)",
+        "lookup(code_norm,match_type,country)",
+        "lookup_range(match_type,range_start,range_end)",
+        "state(state)",
+        "updated(updated_at)"
+      ]
+    }
+  ],
+  "options": [
+    {
+      "key": "wbpc_general",
+      "autoload": true,
+      "purpose": "General tab settings"
+    },
+    {
+      "key": "wbpc_delivery",
+      "autoload": true,
+      "purpose": "Delivery Dates tab settings"
+    },
+    {
+      "key": "wbpc_category_days",
+      "autoload": true,
+      "purpose": "Category Rules: term_id => extra days"
+    },
+    {
+      "key": "wbpc_checkout",
+      "autoload": true,
+      "purpose": "Checkout and COD tab settings"
+    },
+    {
+      "key": "wbpc_display",
+      "autoload": true,
+      "purpose": "Display and Messages tab settings (WPML admin-texts)"
+    },
+    {
+      "key": "wbpc_db_version",
+      "autoload": true,
+      "purpose": "Schema version (Installer::DB_VERSION)"
+    },
+    {
+      "key": "wbpc_areas_version",
+      "autoload": true,
+      "purpose": "Cache buster, bumped on every area write"
+    },
+    {
+      "key": "wbpc_job",
+      "autoload": false,
+      "purpose": "Current/last CSV import job"
+    },
+    {
+      "key": "wbpc_job_history",
+      "autoload": false,
+      "purpose": "Last 10 import jobs"
+    },
+    {
+      "key": "wbpc_import_lock",
+      "autoload": false,
+      "purpose": "Import chunk lock"
+    },
+    {
+      "key": "wbpc_keep_data",
+      "autoload": false,
+      "purpose": "Tools: keep data on uninstall"
+    }
+  ],
+  "transients": [
+    "wbpc_rl_* (rate limit, 70s)",
+    "wbpc_activation_redirect"
+  ],
+  "post_meta": [
+    {
+      "key": "_wbpc_hide_checker",
+      "object": "product",
+      "ui": "Product > Shipping tab"
+    }
+  ],
+  "order_meta": [
+    {
+      "key": "_wbpc_postcode"
+    },
+    {
+      "key": "_wbpc_estimate",
+      "shape": "{min,max,label}"
+    }
+  ],
+  "cookies": [
+    {
+      "name": "wbpc_postcode",
+      "value": "CC:CODE",
+      "set_by": "assets/frontend/js/checker.js"
+    }
+  ],
+  "rest": {
+    "namespace": "wbpc/v1",
+    "endpoints": [
+      {
+        "route": "/check",
+        "methods": [
+          "GET"
+        ],
+        "permission": "public, rate limited (wbpc_rate_limit)"
+      },
+      {
+        "route": "/areas",
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "permission": "wbpc_manage_capability"
+      },
+      {
+        "route": "/areas/{id}",
+        "methods": [
+          "GET",
+          "PATCH",
+          "DELETE"
+        ],
+        "permission": "wbpc_manage_capability"
+      },
+      {
+        "route": "/areas/batch-delete",
+        "methods": [
+          "POST"
+        ],
+        "permission": "wbpc_manage_capability"
+      },
+      {
+        "route": "/import",
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "permission": "wbpc_manage_capability"
+      },
+      {
+        "route": "/import/start",
+        "methods": [
+          "POST"
+        ],
+        "permission": "wbpc_manage_capability"
+      },
+      {
+        "route": "/import/cancel",
+        "methods": [
+          "POST"
+        ],
+        "permission": "wbpc_manage_capability"
+      },
+      {
+        "route": "/tools/test",
+        "methods": [
+          "POST"
+        ],
+        "permission": "wbpc_manage_capability"
+      }
+    ]
+  },
+  "ajax": [],
+  "admin_post": [
+    "wbpc_export",
+    "wbpc_sample_csv",
+    "wbpc_import_errors",
+    "wbpc_tool_upgrade",
+    "wbpc_tool_cache",
+    "wbpc_tool_keep_data"
+  ],
+  "cli": [
+    "wbpc check",
+    "wbpc count",
+    "wbpc import",
+    "wbpc export",
+    "wbpc seed",
+    "wbpc self-test"
+  ],
+  "action_scheduler": [
+    {
+      "hook": "wbpc_import_chunk",
+      "group": "wbpc"
+    }
+  ],
+  "admin_pages": [
+    {
+      "parent": "wbcomplugins",
+      "slug": "woo-pincode-checker",
+      "capability": "wbpc_manage_capability",
+      "tabs": [
+        "wbpc-overview",
+        "wbpc-areas",
+        "wbpc-import",
+        "wbpc-general",
+        "wbpc-delivery",
+        "wbpc-categories",
+        "wbpc-checkout",
+        "wbpc-display",
+        "wbpc-tools",
+        "wbpc-faq"
+      ]
+    }
+  ],
+  "shortcodes": [
+    "wbpc_pincode_checker"
+  ],
+  "blocks": [
+    "wbpc/pincode-checker"
+  ],
+  "shipping_methods": [
+    "wbpc_pincode_rate"
+  ],
+  "templates": {
+    "root": "templates/",
+    "override_dir": "woocommerce/wbpc/",
+    "files": [
+      "checker.php"
+    ]
+  },
+  "hooks_doc": "docs/HOOKS.md",
+  "bundled_libraries": [
+    {
+      "name": "wbcom-settings",
+      "path": "lib/wbcom-settings",
+      "version": "1.0.4"
+    },
+    {
+      "name": "lucide",
+      "path": "assets/vendor/lucide.min.js",
+      "version": "0.460.0"
+    }
+  ],
+  "third_party_integrations": [
+    "WooCommerce",
+    "Action Scheduler (bundled with WooCommerce)",
+    "WPML (wpml-config.xml)"
+  ],
+  "data_lifecycle": {
+    "activation": "Installer::install (dbDelta)",
+    "uninstall": "Core/Uninstaller: drops table, deletes options/meta/jobs/files unless wbpc_keep_data=yes; keeps order meta"
+  }
+}

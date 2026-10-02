@@ -1,0 +1,21 @@
+<wpml-config>
+	<admin-texts>
+		<key name="wbpc_display">
+			<key name="title" />
+			<key name="placeholder" />
+			<key name="check_label" />
+			<key name="change_label" />
+			<key name="msg_available" />
+			<key name="msg_estimate" />
+			<key name="msg_unavailable" />
+			<key name="msg_invalid" />
+			<key name="msg_required" />
+			<key name="cod_available" />
+			<key name="cod_unavailable" />
+			<key name="shipping_label" />
+		</key>
+		<key name="wbpc_checkout">
+			<key name="cod_fee_label" />
+		</key>
+	</admin-texts>
+</wpml-config>

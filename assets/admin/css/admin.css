@@ -1,0 +1,627 @@
+/**
+ * Pincode Checker admin widgets. Shell tokens only (--wbcom-*), logical properties for RTL.
+ */
+
+.wbcom-admin {
+	--wbpc-danger: #b32d2e;
+	--wbpc-danger-strong: #8a2424;
+	--wbpc-gap: 12px;
+}
+
+/* One rule for every toggled element: component display values must never beat [hidden]. */
+.wbcom-admin [hidden] {
+	display: none !important;
+}
+
+/* Toolbar ------------------------------------------------------------------------------ */
+
+.wbpc-areas {
+	container-type: inline-size;
+}
+
+/* Filters: search plus five equal selects on one row, wrapping evenly as the card narrows. */
+.wbpc-toolbar {
+	display: grid;
+	grid-template-columns: minmax(180px, 2fr) repeat(4, minmax(0, 1fr));
+	gap: 8px;
+	margin-block-end: 12px;
+}
+
+.wbpc-toolbar .wbcom-input,
+.wbpc-toolbar .wbcom-select {
+	width: 100%;
+	min-width: 0;
+	max-width: none;
+}
+
+/* Result count on the left, the page's one primary action on the right. */
+.wbpc-listbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 16px;
+	align-items: center;
+	justify-content: space-between;
+	margin-block-end: 8px;
+}
+
+.wbpc-listbar .wbpc-status {
+	margin: 0;
+}
+
+.wbpc-listbar .wbpc-status {
+	margin-inline-end: auto;
+}
+
+.wbpc-listbar .wbcom-select {
+	width: auto;
+}
+
+/* Add / edit form ---------------------------------------------------------------------- */
+
+.wbpc-area-form {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--wbpc-gap) 20px;
+	padding: 16px;
+	margin-block-end: 16px;
+	border: 1px solid var(--wbcom-border);
+	border-radius: 8px;
+	background: var(--wbcom-surface-alt);
+}
+
+.wbpc-area-form__title,
+.wbpc-form-error,
+.wbpc-area-form__actions,
+.wbpc-field--wide {
+	grid-column: 1 / -1;
+}
+
+.wbpc-area-form__title {
+	margin: 0;
+	font-size: 15px;
+}
+
+.wbpc-field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin: 0;
+	min-width: 0;
+}
+
+.wbpc-field label,
+.wbpc-field legend,
+.wbpc-field__label {
+	font-weight: 600;
+	color: var(--wbcom-text);
+}
+
+fieldset.wbpc-field {
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 8px 20px;
+	border: 0;
+	padding: 0;
+}
+
+fieldset.wbpc-field legend {
+	width: 100%;
+	margin-block-end: 4px;
+}
+
+fieldset.wbpc-field label {
+	font-weight: 400;
+}
+
+.wbpc-field .wbcom-input,
+.wbpc-field .wbcom-select {
+	width: 100%;
+	max-width: none;
+}
+
+.wbpc-field-error {
+	color: var(--wbpc-danger);
+	font-size: 12px;
+}
+
+.wbpc-field-error:empty {
+	display: none;
+}
+
+[aria-invalid="true"] {
+	border-color: var(--wbpc-danger) !important;
+}
+
+.wbpc-form-error {
+	margin: 0;
+	padding: 8px 12px;
+	border-inline-start: 4px solid var(--wbpc-danger);
+	background: var(--wbcom-surface);
+	color: var(--wbcom-text);
+}
+
+.wbpc-area-form__actions {
+	display: flex;
+	gap: 8px;
+}
+
+/* Confirm + bulk bars ------------------------------------------------------------------ */
+
+.wbpc-confirm,
+.wbpc-bulkbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 12px;
+	align-items: center;
+	padding: 10px 12px;
+	margin-block-end: 12px;
+	border-radius: 8px;
+	border: 1px solid var(--wbcom-border);
+	background: var(--wbcom-surface-alt);
+}
+
+.wbpc-confirm {
+	border-inline-start: 4px solid var(--wbpc-danger);
+}
+
+.wbpc-confirm p {
+	margin: 0;
+}
+
+.wbpc-confirm__typed {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+.wbpc-confirm__typed .wbcom-input {
+	width: 120px;
+}
+
+.wp-core-ui .wbcom-admin .button.wbpc-btn--danger {
+	background: var(--wbpc-danger);
+	border-color: var(--wbpc-danger);
+	color: var(--wbcom-on-accent);
+}
+
+.wp-core-ui .wbcom-admin .button.wbpc-btn--danger:hover,
+.wp-core-ui .wbcom-admin .button.wbpc-btn--danger:focus {
+	background: var(--wbpc-danger-strong);
+	border-color: var(--wbpc-danger-strong);
+	color: var(--wbcom-on-accent);
+}
+
+.wbpc-status {
+	min-height: 20px;
+	margin: 0 0 8px;
+	color: var(--wbcom-muted);
+}
+
+.wbpc-status:empty {
+	min-height: 0;
+}
+
+/* Table -------------------------------------------------------------------------------- */
+
+.wbpc-table-wrap {
+	overflow-x: auto;
+}
+
+.wbpc-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.wbpc-table th,
+.wbpc-table td {
+	padding: 10px 8px;
+	text-align: start;
+	vertical-align: middle;
+	border-block-end: 1px solid var(--wbcom-border);
+}
+
+.wbpc-table thead th,
+.wbpc-table thead td {
+	white-space: nowrap;
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--wbcom-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.wbpc-col-check {
+	width: 32px;
+}
+
+/* Value on top, a quiet detail (type, state, COD fee) underneath. Values never wrap mid-word. */
+.wbpc-cell {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.wbpc-cell__main,
+.wbpc-cell__sub {
+	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
+}
+
+.wbpc-cell__sub {
+	font-size: 12px;
+	color: var(--wbcom-muted);
+}
+
+.wbpc-col-code .wbpc-cell__main {
+	font-weight: 600;
+}
+
+.wbpc-col-actions {
+	white-space: nowrap;
+	text-align: end;
+}
+
+/* Row actions: quiet icon buttons, outlined only on hover or focus. */
+.wbpc-col-actions .wbpc-icon-btn + .wbpc-icon-btn {
+	margin-inline-start: 4px;
+}
+
+.wp-core-ui .wbcom-admin .button.wbpc-icon-btn {
+	min-width: 32px;
+	min-height: 32px;
+	padding: 0;
+	justify-content: center;
+	border-color: transparent;
+	background: transparent;
+	color: var(--wbcom-muted);
+	box-shadow: none;
+}
+
+.wp-core-ui .wbcom-admin .button.wbpc-icon-btn:hover,
+.wp-core-ui .wbcom-admin .button.wbpc-icon-btn:focus-visible {
+	border-color: var(--wbcom-border);
+	background: var(--wbcom-surface-alt);
+	color: var(--wbcom-accent);
+}
+
+.wp-core-ui .wbcom-admin .button.wbpc-icon-btn--danger:hover,
+.wp-core-ui .wbcom-admin .button.wbpc-icon-btn--danger:focus-visible {
+	color: var(--wbpc-danger);
+}
+
+.wbpc-icon-btn svg {
+	width: 16px;
+	height: 16px;
+}
+
+tbody.is-loading {
+	opacity: 0.5;
+}
+
+.wbpc-pager {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	justify-content: flex-end;
+	margin-block-start: 12px;
+}
+
+/* Overview tester ---------------------------------------------------------------------- */
+
+.wbpc-tester {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.wbpc-tester .wbcom-input {
+	flex: 1 1 160px;
+	max-width: 240px;
+}
+
+.wbpc-tester .wbcom-select {
+	flex: 0 1 220px;
+}
+
+.wbpc-tester__result:not(:empty) {
+	margin-block-start: 16px;
+}
+
+.wbpc-tester__list {
+	display: grid;
+	grid-template-columns: max-content minmax(0, 1fr);
+	gap: 8px 16px;
+	margin: 0;
+}
+
+.wbpc-tester__list dt {
+	font-weight: 600;
+	color: var(--wbcom-text);
+}
+
+.wbpc-tester__list dd {
+	margin: 0;
+	color: var(--wbcom-muted);
+}
+
+/* Import / export ---------------------------------------------------------------------- */
+
+.wbpc-import__upload,
+.wbpc-import__preview,
+.wbpc-import__progress {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wbpc-gap);
+}
+
+.wbpc-import fieldset.wbpc-field {
+	flex-direction: column;
+	gap: 6px;
+}
+
+/* Wrapped option text hangs beside its radio instead of running under it. */
+.wbpc-import fieldset.wbpc-field label {
+	display: flex;
+	gap: 6px;
+	align-items: flex-start;
+}
+
+.wbpc-import fieldset.wbpc-field input[type="radio"] {
+	flex: 0 0 auto;
+	margin-block-start: 2px;
+}
+
+.wbpc-import .wbpc-field .wbcom-select {
+	max-width: 320px;
+}
+
+.wbpc-import progress {
+	width: 100%;
+	height: 12px;
+	accent-color: var(--wbcom-accent);
+}
+
+.wbpc-import p {
+	margin: 0;
+}
+
+.wbpc-format {
+	margin-block-start: 16px;
+	color: var(--wbcom-muted);
+}
+
+.wbpc-format summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--wbcom-text);
+}
+
+.wbpc-format ul {
+	margin-inline-start: 18px;
+	list-style: disc;
+}
+
+/* Settings forms ----------------------------------------------------------------------- */
+
+.wbpc-choices {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 16px;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.wbpc-multi {
+	width: 100%;
+	max-width: 360px;
+	min-height: 160px;
+}
+
+.wbpc-input-days {
+	width: 100px;
+}
+
+.wbpc-add-rule {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	margin-block: 16px 0;
+	padding: 12px;
+	border: 1px dashed var(--wbcom-border);
+	border-radius: 8px;
+}
+
+.wbpc-add-rule legend {
+	font-weight: 600;
+	padding-inline: 4px;
+}
+
+.wbpc-settings-form input[type="color"] {
+	width: 64px;
+	height: 40px;
+	padding: 2px;
+}
+
+/* Tools ------------------------------------------------------------------------------- */
+
+.wbpc-tool {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 12px;
+	align-items: center;
+	margin-block-end: 12px;
+}
+
+.wbpc-tool .description {
+	color: var(--wbcom-muted);
+}
+
+/* Responsive --------------------------------------------------------------------------- */
+
+@media screen and (max-width: 782px) {
+	.wbpc-area-form {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@container (max-width: 860px) {
+	.wbpc-toolbar {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.wbpc-toolbar .wbcom-input[type="search"] {
+		grid-column: 1 / -1;
+	}
+}
+
+@container (max-width: 600px) {
+	.wbpc-toolbar {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	/* Count on its own line; sort and Add share the row beneath it. */
+	.wbpc-listbar .wbpc-status {
+		flex-basis: 100%;
+	}
+
+	.wbpc-listbar .wbcom-select {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+}
+
+@container (max-width: 760px) {
+	/* Rows become cards: each cell shows its column name. Only the "select page" box stays from the head. */
+	.wbpc-table thead,
+	.wbpc-table thead tr {
+		display: block;
+		border: 0;
+		padding: 0;
+		margin: 0;
+	}
+
+	.wbpc-table thead th {
+		display: none;
+	}
+
+	.wbpc-table thead .wbpc-col-check {
+		position: static;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 8px;
+		padding-block: 0 12px;
+		text-transform: none;
+		letter-spacing: 0;
+	}
+
+	.wbpc-table thead .wbpc-col-check::after {
+		content: attr(data-label);
+	}
+
+	.wbpc-table,
+	.wbpc-table tbody,
+	.wbpc-table tr,
+	.wbpc-table td {
+		display: block;
+		width: 100%;
+	}
+
+	/* Fields in two columns; the code (title) and the actions take the full width. */
+	.wbpc-table tbody tr {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		column-gap: 24px;
+	}
+
+	.wbpc-table tbody .wbpc-col-code,
+	.wbpc-table tbody .wbpc-col-actions {
+		grid-column: 1 / -1;
+	}
+
+	.wbpc-table tr {
+		position: relative;
+		padding: 12px;
+		margin-block-end: 12px;
+		border: 1px solid var(--wbcom-border);
+		border-radius: 8px;
+	}
+
+	.wbpc-table td {
+		display: flex;
+		gap: 12px;
+		justify-content: space-between;
+		padding: 4px 0;
+		border: 0;
+	}
+
+	.wbpc-table tbody td[data-label]::before {
+		content: attr(data-label);
+		font-weight: 600;
+		color: var(--wbcom-muted);
+	}
+
+	.wbpc-table td .wbpc-cell {
+		align-items: flex-end;
+		text-align: end;
+	}
+
+	.wbpc-table .wbpc-col-check {
+		position: absolute;
+		inset-block-start: 12px;
+		inset-inline-end: 12px;
+		width: auto;
+	}
+
+	/* The code is the card's title: no label, left aligned, a little larger. */
+	.wbpc-table tbody .wbpc-col-code {
+		padding-inline-end: 44px;
+		padding-block-end: 8px;
+	}
+
+	.wbpc-table tbody td.wbpc-col-code::before {
+		content: none;
+	}
+
+	.wbpc-table tbody .wbpc-col-code .wbpc-cell {
+		align-items: flex-start;
+		text-align: start;
+	}
+
+	.wbpc-table tbody .wbpc-col-code .wbpc-cell__main {
+		font-size: 15px;
+	}
+
+	.wbpc-table .wbpc-col-actions {
+		justify-content: flex-end;
+		gap: 8px;
+		padding-block-start: 8px;
+	}
+
+	/* Touch-sized targets once rows are cards. */
+	.wp-core-ui .wbcom-admin .button.wbpc-icon-btn {
+		min-width: 40px;
+		min-height: 40px;
+		border-color: var(--wbcom-border);
+	}
+}
+
+@container (max-width: 440px) {
+	.wbpc-table tbody tr {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.wbpc-tester__list {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.wbpc-tester .wbcom-input,
+	.wbpc-tester .wbcom-select {
+		max-width: none;
+	}
+}

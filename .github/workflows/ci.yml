@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    name: PHP ${{ matrix.php }} lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '8.1', '8.2', '8.3', '8.4', '8.5' ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - run: find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0 | xargs -0 -n1 php -l
+
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+      - run: composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true && composer global require --no-interaction wp-coding-standards/wpcs:^3 phpcompatibility/phpcompatibility-wp:"*"
+      - run: ~/.composer/vendor/bin/phpcs
+
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+      - run: composer global config allow-plugins.phpstan/extension-installer true && composer global require --no-interaction phpstan/phpstan szepeviktor/phpstan-wordpress php-stubs/woocommerce-stubs php-stubs/wp-cli-stubs
+      - name: Analyse (with WooCommerce stubs)
+        run: |
+          V="$HOME/.composer/vendor/php-stubs"
+          printf 'includes:\n  - phpstan.neon.dist\nparameters:\n  scanFiles:\n    - %s\n    - %s\n    - %s\n    - %s\n' "$V/woocommerce-stubs/woocommerce-stubs.php" "$V/woocommerce-stubs/woocommerce-packages-stubs.php" "$V/wp-cli-stubs/wp-cli-stubs.php" "$V/wp-cli-stubs/wp-cli-tools-stubs.php" > phpstan.neon
+          ~/.composer/vendor/bin/phpstan analyse --memory-limit=1G

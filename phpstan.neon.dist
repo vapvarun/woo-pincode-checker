@@ -1,0 +1,20 @@
+includes:
+	- %rootDir%/../../szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	level: 6
+	paths:
+		- woo-pincode-checker.php
+		- uninstall.php
+		- includes
+		- templates
+		- src
+	bootstrapFiles:
+		- bin/phpstan-bootstrap.php
+	scanDirectories:
+		- lib
+	treatPhpDocTypesAsCertain: false
+	ignoreErrors:
+		# WordPress passes loosely shaped arrays everywhere (hook args, settings, packages); spelling out
+		# every value type adds noise, not safety. Every other level-6 rule stays on.
+		- identifier: missingType.iterableValue

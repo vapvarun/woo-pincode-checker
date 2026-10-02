@@ -1,2338 +1,1905 @@
-# Copyright (C) 2025
-# This file is distributed under the same license as the  package.
+# Copyright (C) 2026 Wbcom Designs
+# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 13:27:04+00:00\n"
+"Project-Id-Version: Pincode Checker for WooCommerce 1.6.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-pincode-checker\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Varun Dubey\n"
-"Language-Team: Wbcom Designs\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Country: United States\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
-"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-Bookmarks: \n"
-"X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"POT-Creation-Date: 2026-10-02T08:45:06+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: woo-pincode-checker\n"
 
-#: admin/class-woo-pincode-checker-admin.php:364
-#: admin/class-woo-pincode-checker-admin.php:365
-#: admin/class-woo-pincode-checker-listing.php:34
-msgid "Pincodes"
+#. Plugin Name of the plugin
+#: woo-pincode-checker.php
+msgid "Pincode Checker for WooCommerce"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:375
-#: admin/class-woo-pincode-checker-admin.php:376
-#: admin/class-woo-pincode-checker-admin.php:665
-msgid "All Pincodes"
+#. Plugin URI of the plugin
+#: woo-pincode-checker.php
+msgid "https://wbcomdesigns.com/downloads/woo-pincode-checker/"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:384
-#: admin/class-woo-pincode-checker-admin.php:385
-msgid "Add New Pincode"
+#. Description of the plugin
+#: woo-pincode-checker.php
+msgid "Tell shoppers whether you deliver to their pincode or postcode, when it will arrive, what shipping costs and whether cash on delivery is available - on product pages and at checkout."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:393
-#: admin/class-woo-pincode-checker-admin.php:394
-#: admin/class-woo-pincode-checker-admin.php:1483
-#: admin/class-woo-pincode-checker-admin.php:1507
-msgid "Bulk Add by Pattern"
+#. Author of the plugin
+#: woo-pincode-checker.php
+msgid "Wbcom Designs"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:403
-#: admin/class-woo-pincode-checker-admin.php:404
-msgid "WB Plugins"
+#. Author URI of the plugin
+#: woo-pincode-checker.php
+msgid "https://wbcomdesigns.com/"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:413
-#: admin/class-woo-pincode-checker-admin.php:414
-#: admin/class-woo-pincode-checker-admin.php:661
-msgid "General"
+#: includes/Admin/DownloadHandler.php:88
+msgid "This error report is no longer available."
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:421
-#: admin/class-woo-pincode-checker-admin.php:422
+#: includes/Admin/DownloadHandler.php:103
+msgid "You are not allowed to download this file."
+msgstr ""
+
+#: includes/Admin/Form.php:51
+#: includes/Admin/Tabs/CategoriesTab.php:83
+msgid "Save changes"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:77
+#: includes/Admin/SettingsPage.php:78
+#: includes/Admin/SettingsPage.php:120
 msgid "Pincode Checker"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:442
-#: admin/class-woo-pincode-checker-admin.php:722
-#: admin/class-woo-pincode-checker-admin.php:797
-#: admin/class-woo-pincode-checker-admin.php:1141
-#: admin/class-woo-pincode-checker-admin.php:1468
-msgid "You do not have sufficient permissions to access this page."
+#: includes/Admin/SettingsPage.php:79
+msgid "Delivery areas and dates"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:458
-#: admin/wbcom/templates/wbcom-license-page.php:9
-#: pincode-checker-for-woocommerce.php:124
-msgid "Woo Pincode Checker"
+#: includes/Admin/SettingsPage.php:80
+msgid "Pincode Checker sections"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:462
-#: admin/wbcom/templates/wbcom-license-page.php:13
-#. translators: %s:
-msgid "Version %s"
+#: includes/Admin/SettingsPage.php:100
+#: includes/Admin/SettingsPage.php:101
+msgid "WB Plugins"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:658
-msgid "Welcome"
+#: includes/Admin/SettingsPage.php:123
+msgid "Overview"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:668
-msgid "Add Pincodes"
+#: includes/Admin/SettingsPage.php:128
+msgid "Service Areas"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:671
-msgid "Upload Pincodes"
+#: includes/Admin/SettingsPage.php:133
+msgid "Import / Export"
 msgstr ""
 
-#: admin/class-woo-pincode-checker-admin.php:675
-msgid "Category Rules"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:679
-msgid "Geocoding"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:682
-msgid "FAQ"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:692
-msgid "Pincode Per Page"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:736
-#: admin/class-woo-pincode-checker-admin.php:757
-msgid "Pincode Lists"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:738
-#: admin/class-woo-pincode-checker-admin.php:814
-#: admin/class-woo-pincode-checker-admin.php:1158
-#: admin/class-woo-pincode-checker-admin.php:1485
-msgid "Database Error:"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:739
-msgid ""
-"The plugin database table is missing. This usually happens when the plugin "
-"activation failed."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:742
-#: admin/class-woo-pincode-checker-admin.php:818
-#: admin/class-woo-pincode-checker-admin.php:1162
-#: admin/class-woo-pincode-checker-admin.php:1489
-msgid "Fix Database Issue"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:745
-msgid "Retry"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:759
-msgid "Add New"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:762
-msgid "Import Bulk Post/Zip codes"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:765
-msgid "Bulk Delete"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:812
-#: admin/class-woo-pincode-checker-admin.php:958
-#: admin/class-woo-pincode-checker-admin.php:1079
-msgid "Add Pincode"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:815
-#: admin/class-woo-pincode-checker-admin.php:1486
-msgid ""
-"The plugin database table is missing. Cannot add pincodes without the "
-"database table."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:832
-#: admin/class-woo-pincode-checker-admin.php:1180
-#: admin/partials/woo-pincode-bulk-add.php:23
-#: public/class-woo-pincode-checker-form.php:469
-#: public/class-woo-pincode-checker-public.php:350
-msgid "Security check failed."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:846
-#: public/class-woo-pincode-checker-form.php:486
-msgid "Please enter a valid pincode (3-10 alphanumeric characters only)."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:849
-msgid "City and State are required fields."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:852
-msgid "Delivery days must be between 1 and 365."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:855
-msgid "Amounts cannot be negative."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:893
-msgid "Pincode updated successfully."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:898
-msgid "Error updating pincode. Please try again."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:918
-msgid "Pincode added successfully."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:921
-msgid "Error adding pincode. Please try again."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:926
-msgid "This pincode already exists."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:956
-msgid "Edit Pincode"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:968
-#: admin/class-woo-pincode-checker-listing.php:33
-#: admin/class-woo-pincode-checker-listing.php:86
-msgid "Pincode"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:979
-msgid "Enter pincode"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:980
-msgid "Enter alphanumeric pincode (3-10 characters)"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:985
-#: admin/class-woo-pincode-checker-listing.php:87
-#: admin/partials/woo-pincode-bulk-add.php:205
-msgid "City"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:995
-#: admin/partials/woo-pincode-bulk-add.php:215
-msgid "Enter city name"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1000
-#: admin/class-woo-pincode-checker-listing.php:88
-#: admin/partials/woo-pincode-bulk-add.php:224
-msgid "State"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1010
-#: admin/partials/woo-pincode-bulk-add.php:234
-msgid "Enter state name"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1015
-#: admin/class-woo-pincode-checker-listing.php:90
-#: admin/partials/woo-pincode-bulk-add.php:283
-#: public/class-woo-pincode-checker-public.php:278
-msgid "Shipping Amount"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1025
-msgid "Enable shipping cost in settings to calculate the shipping amount."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1030
-msgid "Delivery within days"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1041
-#: admin/partials/woo-pincode-bulk-add.php:276
-msgid "Number of days for delivery (1-365)"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1046
-#: admin/class-woo-pincode-checker-listing.php:91
-#: admin/partials/woo-pincode-bulk-add.php:302
-#: includes/class-woo-pincode-checker-activator.php:164
-msgid "Cash on Delivery"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1055
-msgid "Enable Cash on Delivery for this pincode"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1060
-msgid "Cash on Delivery Amount"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1070
-msgid ""
-"If COD option is enabled, then COD amount will be counted on cart and "
-"checkout page."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1077
-msgid "Update Pincode"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1097
-msgid "File does not exist."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1102
-msgid "Cannot read uploaded file."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1109
-msgid ""
-"Invalid CSV format. Expected columns: pincode, city, state, delivery_days, "
-"shipping_amount, cash_on_delivery, cod_amount"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1117
-msgid "Invalid CSV format at row %d. Minimum 3 columns required."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1123
-msgid "Invalid pincode format at row %d: %s"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1159
-msgid ""
-"The plugin database table is missing. Cannot upload pincodes without the "
-"database table."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1188
-msgid "File upload error. Please try again."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1197
-msgid "File too large. Maximum size is 5MB."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1214
-msgid "Invalid file type. Please upload a CSV file only."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1227
-msgid "File content does not match CSV format."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1380
-msgid ""
-"Import completed. %d pincodes imported, %d skipped (already exist), %d "
-"errors."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1387
-msgid "Could not read the uploaded file."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1405
-msgid "Upload Your CSV File"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1406
-msgid ""
-"Upload a CSV file to import multiple pincodes at once. Make sure your file "
-"follows the correct format."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1414
-msgid "Select CSV File"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1419
-msgid ""
-"Choose a CSV file from your device to upload. Maximum file size allowed is "
-"%s. Only CSV files are accepted."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1438
-msgid "CSV File Format"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1441
-msgid ""
-"Download the sample CSV file to see the correct format. Your CSV should "
-"have columns: pincode, city, state, delivery_days, shipping_amount, "
-"cash_on_delivery, cod_amount"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1446
-msgid "Download Sample CSV"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1451
-msgid "Import CSV File"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1509
-msgid "Template file not found."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1523
-msgid "Pincode/Zipcode for Shipping Availability"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1548
-msgid "Hide pincode checker for this product"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1551
-msgid "Check this option to hide the pincode checker form on this product page."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1710
-#: admin/class-woo-pincode-checker-admin.php:1724
-#: admin/class-woo-pincode-checker-admin.php:1824
-#: admin/class-woo-pincode-checker-admin.php:1838
-#: admin/class-woo-pincode-checker-listing.php:305
-#: admin/class-woo-pincode-checker-listing.php:312
-msgid "Free"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1715
-#: admin/class-woo-pincode-checker-admin.php:1829
-#: admin/class-woo-pincode-checker-listing.php:296
-#: public/woo-pincode-checker-delivery-message.php:77
-msgid "Available"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1717
-#: admin/class-woo-pincode-checker-admin.php:1831
-#: admin/class-woo-pincode-checker-listing.php:298
-msgid "Unavailable"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1737
-#: admin/class-woo-pincode-checker-admin.php:1851
-msgid "No pincodes found."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1876
-msgid "%s item"
-msgid_plural "%s items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: admin/class-woo-pincode-checker-admin.php:1885
-msgid "First page"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1889
-msgid "Previous page"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1897
-msgid "Current Page"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1905
-msgid "Next page"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1909
-msgid "Last page"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1929
-#: admin/class-woo-pincode-checker-admin.php:1970
-msgid "Unauthorized access"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1935
-#: admin/class-woo-pincode-checker-admin.php:1976
-msgid "Invalid security token"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-admin.php:1943
-msgid "Pattern is required"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:89
-#: admin/partials/woo-pincode-bulk-add.php:262
-#: admin/partials/woo-pincode-category-rules-display.php:52
-#: admin/partials/woo-pincode-category-rules-display.php:78
-msgid "Delivery Days"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:92
-#: admin/partials/woo-pincode-bulk-add.php:318
-msgid "COD Amount"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:93
-msgid "Created"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:112
-msgid "Pincode deleted successfully."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:122
-msgid "%d pincode deleted successfully."
-msgid_plural "%d pincodes deleted successfully."
-msgstr[0] ""
-msgstr[1] ""
-
-#: admin/class-woo-pincode-checker-listing.php:319
-msgid "%d day"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:321
-msgid "%d days"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:413
-msgid "Edit pincode %s"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:414
-msgid "Edit"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:420
-msgid "Delete pincode %s"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:421
-msgid "Are you sure you want to delete this pincode?"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:422
-#: admin/class-woo-pincode-checker-listing.php:538
-#: admin/class-woo-pincode-checker-listing.php:567
-msgid "Delete"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:465
-#: admin/class-woo-pincode-checker-listing.php:484
-msgid "Security check failed. Invalid nonce."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:550
-msgid "No pincodes found matching \"%s\". Try a different search term."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:554
-msgid "No pincodes found. Add your first pincode to get started."
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:566
-msgid "Bulk Actions"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:569
-msgid "Apply"
-msgstr ""
-
-#: admin/class-woo-pincode-checker-listing.php:577
-msgid "%s pincode total"
-msgid_plural "%s pincodes total"
-msgstr[0] ""
-msgstr[1] ""
-
-#: admin/partials/woo-pincode-bulk-add.php:38
-msgid "Pattern is required."
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:41
-msgid "City and State are required when not using auto-detection."
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:121
-msgid "Bulk add completed! Added: %d, Skipped: %d, Errors: %d, Auto-geocoded: %d"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:129
-msgid "Bulk add completed! Added: %d, Skipped (already exists): %d, Errors: %d"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:141
-msgid "Bulk Add Pincodes by Pattern or Range"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:151
-msgid ""
-"Add multiple pincodes at once using patterns or ranges. All generated "
-"pincodes will have the same settings (city, state, delivery days, etc.)."
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:156
-msgid "Pattern Examples:"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:166
-msgid "Note:"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:167
-msgid ""
-"Use * for multiple digits, ? for single digit. Maximum 10,000 pincodes per "
-"pattern."
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:170
-msgid "Tip:"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:171
-msgid ""
-"When using patterns that span multiple cities (e.g., 110*** covers "
-"different areas of Delhi), enable \"Auto-Detect City/State\" below to "
-"automatically fetch the correct city/state for each pincode using free "
-"geocoding."
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:181
-msgid "Pattern or Range"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:191
-msgid "e.g., 110*** or 110001-110099"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:194
-msgid "Enter a pattern (with * or ?) or a range (START-END)"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:197
-msgid "Preview:"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:217
-#: admin/partials/woo-pincode-bulk-add.php:410
-msgid "All generated pincodes will have this city"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:236
-#: admin/partials/woo-pincode-bulk-add.php:411
-msgid "All generated pincodes will have this state"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:243
-msgid "Auto-Detect City/State"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:252
-msgid "Automatically detect city and state for each pincode using geocoding (free)"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:255
-msgid ""
-"When enabled, the system will use OpenStreetMap to determine the actual "
-"city and state for each pincode. This is slower but more accurate. City and "
-"State fields above become optional fallbacks."
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:295
-msgid "Shipping cost for these pincodes"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:311
-msgid "Enable COD for these pincodes"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:330
-msgid "Additional charge for COD"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:338
-msgid "Generate & Add Pincodes"
-msgstr ""
-
-#: admin/partials/woo-pincode-bulk-add.php:400
-#: admin/partials/woo-pincode-bulk-add.php:401
-msgid "Optional fallback if geocoding fails"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:25
-msgid "Category-Specific Delivery Rules"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:26
-msgid ""
-"Set different delivery times for different product categories. These rules "
-"apply site-wide to all pincodes unless overridden in individual pincode "
-"settings."
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:44
-msgid ""
-"Set different delivery times for specific product categories. Enable a "
-"category and enter the number of days for delivery."
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:51
-#: admin/partials/woo-pincode-category-rules-display.php:64
-msgid "Category"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:53
-#: admin/partials/woo-pincode-category-rules-display.php:90
-msgid "Enable Rule"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:71
-msgid "%d product"
-msgid_plural "%d products"
-msgstr[0] ""
-msgstr[1] ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:88
-msgid "days"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:110
-msgid "Priority"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:113
-msgid ""
-"Category-specific delivery times override default pincode delivery times. "
-"For products in multiple categories, the first matching rule applies."
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:120
-msgid "Example"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:123
-msgid ""
-"Electronics = 5 days, Groceries = 1 day. Rules apply instantly to all "
-"products in those categories across all pincodes."
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:133
-msgid "No Product Categories Found"
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:136
-msgid ""
-"Create product categories in WooCommerce to set category-specific delivery "
-"times."
-msgstr ""
-
-#: admin/partials/woo-pincode-category-rules-display.php:140
-msgid "Create Product Categories"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:37
-msgid "General Settings"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:48
-msgid "Show Delivery Date"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:50
-msgid ""
-"Enable this option to display the estimated delivery date on the product "
-"page."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:62
-#: admin/partials/woo-pincode-checker-admin-display.php:68
-msgid "Select Delivery Date Format"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:64
-msgid "Choose the format in which the delivery date will be displayed to users."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:69
-msgid "M jS - July 1st"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:70
-msgid "D, jS M  – Mon, 25th Nov"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:71
-msgid "D, M d  – Sat, Nov 23"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:72
-msgid "M d  – Nov 23"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:79
-msgid "Delivery Date Label"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:81
-msgid "Customize the label shown before the estimated delivery date."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:84
-#: includes/class-woo-pincode-checker-activator.php:163
-msgid "Delivery Date"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:90
-msgid "Make pincode field required"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:92
-msgid ""
-"Make the pincode input field mandatory before the customer can proceed with "
-"adding the product to the cart."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:104
-msgid "Add to cart button behavior for unavailable pincodes"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:106
-msgid ""
-"Choose how the Add to Cart button should behave when the entered pincode is "
-"not serviceable."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:110
-msgid "Hide"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:111
-msgid "Disabled"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:119
-msgid "Exclude category for shipping availability"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:121
-msgid ""
-"Select product categories that should be excluded from pincode availability "
-"checking. Products in these categories will not display the pincode checker."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:143
-msgid "Pincode Availability Check Position"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:145
-msgid ""
-"Choose where the pincode availability check box should appear on the "
-"product page. Note: You can use shortcode [wpc_pincode_checker] to place it "
-"anywhere by selecting \"Use Shortcode\" option."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:149
-msgid "Before Add to Cart button"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:150
-msgid "After Add to Cart Button"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:151
-msgid "After Add to Cart Quantity"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:152
-msgid "Use Shortcode"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:159
-msgid "Show Cash on Delivery Option"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:161
-msgid ""
-"Enable this setting to display the Cash on Delivery (COD) option if it is "
-"available for the entered pincode."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:173
-msgid "Check Availability Button Text"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:175
-msgid "Enter the text to display on the button used to check delivery availability."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:178
-#: includes/class-woo-pincode-checker-activator.php:161
-msgid "Check"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:184
-msgid "Change Pincode Button Text"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:186
-msgid ""
-"Enter the text to display on the button that allows users to re-enter or "
-"change the pincode."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:189
-#: includes/class-woo-pincode-checker-activator.php:162
-msgid "Change"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:195
-msgid "Cash on Delivery label text"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:197
-msgid "Customize the label shown for the Cash on Delivery option"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:200
-msgid "Cash On Delivery"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:206
-msgid "Pincode Check Label"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:208
-msgid "Set the label text shown before the pincode input field."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:211
-#: includes/class-woo-pincode-checker-activator.php:165
-msgid "Available at"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:217
-msgid "Pincode Label Text Color"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:219
-msgid "Choose the text color for the pincode label displayed on the product page."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:226
-msgid "Check Button Background Color"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:228
-msgid "Select the background color of the \"Check\" button."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:235
-msgid "Select Button Text Color"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-admin-display.php:237
-msgid "Select the text color for the \"Check\" button."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:22
-msgid "Frequently Asked Questions"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:23
-msgid "Find answers to common questions about using the Woo Pincode Checker plugin."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:30
-msgid "Does this plugin require WooCommerce?"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:34
-msgid ""
-"Yes, this plugin requires WooCommerce to be installed and activated in "
-"order to function properly."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:42
-msgid "What should I do after activating the plugin?"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:46
-msgid ""
-"After activating the plugin, you need to add or upload pincodes to enable "
-"the delivery availability check."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:54
-msgid "How to upload the Pincodes?"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:58
-msgid ""
-"If you want to manually upload the pincode from the backend then navigate "
-"to the WP Dashboard > Pincodes > Add Pincode. Now you can add the Pincode "
-"by providing pincode, city, state, delivery within days, and payment option "
-"( cash on delivery ). Enable cash on delivery option if you want to provide "
-"this payment option for the particular pincode."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:61
-msgid ""
-"If you want to bulk upload the pincodes from a CSV file then Navigate to "
-"the WP Dashboard > Pincodes > upload Pincodes tab and import the CSV file "
-"to add the pincodes in bulk."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:64
-msgid ""
-"you need to add csv file column as pincode, city, state, delivery within "
-"days, cash on delivery."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:68
-msgid "Download Sample CSV File:"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:70
-msgid "Click Here"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:78
-msgid "How to configure the backend settings?"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:82
-msgid ""
-"To configure the backend settings, navigate to the Dashboard > WB plugins > "
-"Woo pin code checker. Now here you can find the general setting of the "
-"plugin."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:85
-msgid ""
-"Show Delivery Date: Enable this option to display the delivery date on the "
-"product page."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:88
-msgid ""
-"Select Delivery Date Format: This option allows you to select any date "
-"format from the dropdown list to display on the product page."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:91
-msgid ""
-"Select Pincode Label Text Color: Allow you to select Pincode Label Text "
-"Color."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:94
-msgid "Select Button Color: Allow you to select the “check” button color."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:97
-msgid "Select Button Text Color: Allow you to select Button Text Color."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:105
-msgid "Can I hide the pincode checker for specific products?"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:109
-msgid "Yes, you can hide the pincode checker form for individual products."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:112
-msgid ""
-"To hide the pincode checker form Navigate to the WP Dashboard > Products > "
-"Add New Product or Edit any product page and you will find the checkbox ( "
-"Check if Hide for this Product ). you can check this checkbox to hide the "
-"pincode checker form for the specific product."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:120
-msgid "Where will the pincode checker appear on my website?"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:124
-msgid "The pincode checker form appears on individual product pages."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:127
-msgid "To use it:"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:130
-msgid "1) Go to your Shop Page, select a product."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:133
-msgid "2) Enter your area pincode and click \"Check\"."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:136
-msgid "The plugin will display:"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:139
-msgid "1) Whether the product is deliverable to the entered pincode."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:142
-msgid "2) The estimated delivery date."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:145
-msgid "3) Whether Cash on Delivery is available at that location."
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:153
-msgid "Does this plugin provide any shortcode?"
-msgstr ""
-
-#: admin/partials/woo-pincode-checker-faq-display.php:157
-msgid ""
-"Yes! It provides a shortcode [wpc_pincode_checker]. Using this shortcode, "
-"you can check the Pincode anywhere on the website."
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:25
-msgid "Geocoding & Nearby Suggestions"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:26
-msgid ""
-"Show nearby serviceable pincodes when a customer's pincode is not "
-"available. Geocode your pincodes using free OpenStreetMap service for "
-"accurate distance-based suggestions."
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:33
-msgid "Geocoding Setup"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:35
-msgid ""
-"Geocode your pincodes to enable distance-based nearby suggestions. This is "
-"a one-time setup using 100% free OpenStreetMap service."
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:45
-msgid "Geocoding Status"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:50
-msgid "Total Pincodes"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:54
-msgid "Geocoded"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:58
-msgid "Remaining"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:68
-msgid "Complete"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:77
-msgid "Start Geocoding"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:83
-msgid "Estimated time: %d minutes (using free OpenStreetMap service)"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:91
-msgid "Geocoding in progress..."
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:101
-msgid "All pincodes geocoded! Nearby suggestions are active."
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:108
-msgid "How It Works"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:113
-msgid "Setup Process"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:116
-msgid "Click \"Start Geocoding\" button"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:117
-msgid "Process runs in background (keep page open)"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:118
-msgid "Fetches latitude/longitude for each pincode"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:119
-msgid "One-time setup, no maintenance needed"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:125
-msgid "Customer Experience"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:128
-msgid "Customer enters unavailable pincode"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:129
-msgid "See nearby serviceable pincodes (within 20km)"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:130
-msgid "Distance shown for each suggestion"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:131
-msgid "Reduces cart abandonment"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:138
-msgid "Free & Unlimited:"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:140
-msgid "100% free using OpenStreetMap Nominatim service"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:141
-msgid "No API key required, no credit card needed"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:142
-msgid "Shows accurate nearby pincodes based on distance"
-msgstr ""
-
-#: admin/partials/woo-pincode-geocoding-display.php:143
-msgid "Works automatically on product pages and checkout"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:14
-msgid "Welcome to Woo Pincode Checker"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:15
-msgid ""
-"Transform your WooCommerce store with intelligent delivery zone management. "
-"Allow customers to check product availability, delivery dates, and shipping "
-"costs for their location before making a purchase. Perfect for businesses "
-"with specific delivery areas or varying shipping costs across different "
-"regions."
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:19
-msgid "Help &amp; Support Resources"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:20
-msgid ""
-"If you need assistance, here are some helpful resources. Our documentation "
-"is a great place to start, and our support team is available if you require "
-"further help."
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:25
-#: pincode-checker-for-woocommerce.php:728
-msgid "Documentation"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:26
-msgid ""
-"Explore our detailed guide on Woo Pincode Checker to understand all the "
-"features and how to make the most of them."
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:27
-msgid "Read Documentation"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:33
-msgid "Support Center"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:34
-msgid ""
-"Our support team is here to assist you with any questions or issues. Feel "
-"free to contact us anytime through our support center."
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:35
-msgid "Get Support"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:40
-msgid "Share Your Feedback"
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:41
-msgid ""
-"We’d love to hear about your experience with the plugin. Your feedback and "
-"suggestions help us improve future updates."
-msgstr ""
-
-#: admin/partials/woo-welcome-page.php:42
-msgid "Send Feedback"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:20
-msgid "Plugin License"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:26
-#: admin/wbcom/templates/wbcom-license-page.php:38
-msgid "Product"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:27
-#: admin/wbcom/templates/wbcom-license-page.php:39
-msgid "Version"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:28
-#: admin/wbcom/templates/wbcom-license-page.php:40
-msgid "Key"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:29
-#: admin/wbcom/templates/wbcom-license-page.php:41
-msgid "Status"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-license-page.php:30
-#: admin/wbcom/templates/wbcom-license-page.php:42
-msgid "Action"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:9
-msgid "Themes & Extensions"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:17
-#: admin/wbcom/templates/wbcom-plugins-page.php:25
-msgid "Paid Extensions"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:18
-msgid "Free Extensions"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:19
-msgid "LearnDash Extensions"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:20
-#: admin/wbcom/templates/wbcom-plugins-page.php:366
-#: admin/wbcom/wbcom-admin-settings.php:224
-#: admin/wbcom/wbcom-admin-settings.php:225
-msgid "Our Themes"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:26
-#: admin/wbcom/templates/wbcom-plugins-page.php:327
-#: admin/wbcom/templates/wbcom-plugins-page.php:417
-msgid "View More Extensions"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:31
-msgid "Advanced Username Manager"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:32
-msgid ""
-"Allow users to change their usernames directly from their profile settings. "
-"Enhance flexibility for members while keeping admin-level approval and "
-"control over username updates."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:34
-#: admin/wbcom/templates/wbcom-plugins-page.php:44
-#: admin/wbcom/templates/wbcom-plugins-page.php:54
-#: admin/wbcom/templates/wbcom-plugins-page.php:64
-#: admin/wbcom/templates/wbcom-plugins-page.php:74
-#: admin/wbcom/templates/wbcom-plugins-page.php:84
-#: admin/wbcom/templates/wbcom-plugins-page.php:94
-#: admin/wbcom/templates/wbcom-plugins-page.php:104
-#: admin/wbcom/templates/wbcom-plugins-page.php:114
-#: admin/wbcom/templates/wbcom-plugins-page.php:124
-#: admin/wbcom/templates/wbcom-plugins-page.php:134
-#: admin/wbcom/templates/wbcom-plugins-page.php:144
-#: admin/wbcom/templates/wbcom-plugins-page.php:154
-#: admin/wbcom/templates/wbcom-plugins-page.php:164
-#: admin/wbcom/templates/wbcom-plugins-page.php:174
-#: admin/wbcom/templates/wbcom-plugins-page.php:184
-#: admin/wbcom/templates/wbcom-plugins-page.php:194
-#: admin/wbcom/templates/wbcom-plugins-page.php:204
-#: admin/wbcom/templates/wbcom-plugins-page.php:214
-#: admin/wbcom/templates/wbcom-plugins-page.php:224
-#: admin/wbcom/templates/wbcom-plugins-page.php:234
-#: admin/wbcom/templates/wbcom-plugins-page.php:244
-#: admin/wbcom/templates/wbcom-plugins-page.php:254
-#: admin/wbcom/templates/wbcom-plugins-page.php:264
-#: admin/wbcom/templates/wbcom-plugins-page.php:274
-#: admin/wbcom/templates/wbcom-plugins-page.php:284
-#: admin/wbcom/templates/wbcom-plugins-page.php:294
-#: admin/wbcom/templates/wbcom-plugins-page.php:304
-#: admin/wbcom/templates/wbcom-plugins-page.php:314
-#: admin/wbcom/templates/wbcom-plugins-page.php:335
-#: admin/wbcom/templates/wbcom-plugins-page.php:345
-#: admin/wbcom/templates/wbcom-plugins-page.php:355
-#: admin/wbcom/templates/wbcom-plugins-page.php:375
-#: admin/wbcom/templates/wbcom-plugins-page.php:385
-#: admin/wbcom/templates/wbcom-plugins-page.php:395
-#: admin/wbcom/templates/wbcom-plugins-page.php:405
-#: admin/wbcom/templates/wbcom-plugins-page.php:425
-#: admin/wbcom/templates/wbcom-plugins-page.php:435
-#: admin/wbcom/templates/wbcom-plugins-page.php:445
-#: admin/wbcom/templates/wbcom-plugins-page.php:455
-#: admin/wbcom/templates/wbcom-plugins-page.php:465
-#: admin/wbcom/templates/wbcom-plugins-page.php:475
-#: admin/wbcom/templates/wbcom-plugins-page.php:485
-#: admin/wbcom/templates/wbcom-plugins-page.php:495
-#: admin/wbcom/templates/wbcom-plugins-page.php:505
-#: admin/wbcom/templates/wbcom-plugins-page.php:515
-#: admin/wbcom/templates/wbcom-plugins-page.php:525
-#: admin/wbcom/templates/wbcom-plugins-page.php:535
-#: admin/wbcom/templates/wbcom-plugins-page.php:545
-#: admin/wbcom/templates/wbcom-plugins-page.php:555
-#: admin/wbcom/templates/wbcom-plugins-page.php:565
-#: admin/wbcom/templates/wbcom-plugins-page.php:575
-#: admin/wbcom/templates/wbcom-plugins-page.php:585
-#: admin/wbcom/templates/wbcom-plugins-page.php:595
-#: admin/wbcom/templates/wbcom-plugins-page.php:605
-#: admin/wbcom/templates/wbcom-plugins-page.php:615
-msgid "View Details"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:35
-#: admin/wbcom/templates/wbcom-plugins-page.php:45
-#: admin/wbcom/templates/wbcom-plugins-page.php:55
-#: admin/wbcom/templates/wbcom-plugins-page.php:65
-#: admin/wbcom/templates/wbcom-plugins-page.php:75
-#: admin/wbcom/templates/wbcom-plugins-page.php:85
-#: admin/wbcom/templates/wbcom-plugins-page.php:95
-#: admin/wbcom/templates/wbcom-plugins-page.php:105
-#: admin/wbcom/templates/wbcom-plugins-page.php:115
-#: admin/wbcom/templates/wbcom-plugins-page.php:125
-#: admin/wbcom/templates/wbcom-plugins-page.php:135
-#: admin/wbcom/templates/wbcom-plugins-page.php:145
-#: admin/wbcom/templates/wbcom-plugins-page.php:155
-#: admin/wbcom/templates/wbcom-plugins-page.php:165
-#: admin/wbcom/templates/wbcom-plugins-page.php:175
-#: admin/wbcom/templates/wbcom-plugins-page.php:185
-#: admin/wbcom/templates/wbcom-plugins-page.php:195
-#: admin/wbcom/templates/wbcom-plugins-page.php:205
-#: admin/wbcom/templates/wbcom-plugins-page.php:215
-#: admin/wbcom/templates/wbcom-plugins-page.php:225
-#: admin/wbcom/templates/wbcom-plugins-page.php:235
-#: admin/wbcom/templates/wbcom-plugins-page.php:245
-#: admin/wbcom/templates/wbcom-plugins-page.php:255
-#: admin/wbcom/templates/wbcom-plugins-page.php:265
-#: admin/wbcom/templates/wbcom-plugins-page.php:275
-#: admin/wbcom/templates/wbcom-plugins-page.php:285
-#: admin/wbcom/templates/wbcom-plugins-page.php:295
-#: admin/wbcom/templates/wbcom-plugins-page.php:305
-#: admin/wbcom/templates/wbcom-plugins-page.php:315
-#: admin/wbcom/templates/wbcom-plugins-page.php:336
-#: admin/wbcom/templates/wbcom-plugins-page.php:346
-#: admin/wbcom/templates/wbcom-plugins-page.php:356
-#: admin/wbcom/templates/wbcom-plugins-page.php:376
-#: admin/wbcom/templates/wbcom-plugins-page.php:386
-#: admin/wbcom/templates/wbcom-plugins-page.php:396
-#: admin/wbcom/templates/wbcom-plugins-page.php:406
-#: admin/wbcom/templates/wbcom-plugins-page.php:426
-#: admin/wbcom/templates/wbcom-plugins-page.php:436
-#: admin/wbcom/templates/wbcom-plugins-page.php:446
-#: admin/wbcom/templates/wbcom-plugins-page.php:456
-#: admin/wbcom/templates/wbcom-plugins-page.php:466
-#: admin/wbcom/templates/wbcom-plugins-page.php:476
-#: admin/wbcom/templates/wbcom-plugins-page.php:486
-#: admin/wbcom/templates/wbcom-plugins-page.php:496
-#: admin/wbcom/templates/wbcom-plugins-page.php:506
-#: admin/wbcom/templates/wbcom-plugins-page.php:516
-#: admin/wbcom/templates/wbcom-plugins-page.php:526
-#: admin/wbcom/templates/wbcom-plugins-page.php:536
-#: admin/wbcom/templates/wbcom-plugins-page.php:546
-#: admin/wbcom/templates/wbcom-plugins-page.php:556
-#: admin/wbcom/templates/wbcom-plugins-page.php:566
-#: admin/wbcom/templates/wbcom-plugins-page.php:576
-#: admin/wbcom/templates/wbcom-plugins-page.php:586
-#: admin/wbcom/templates/wbcom-plugins-page.php:596
-#: admin/wbcom/templates/wbcom-plugins-page.php:606
-#: admin/wbcom/templates/wbcom-plugins-page.php:616
-msgid "Docs"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:41
-msgid "BuddyLists"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:42
-msgid ""
-"Empower users to create personalized lists of friends, follow curated "
-"streams, and organize their connections for a better social experience "
-"within your community."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:51
-msgid "BuddyPress Schedule Activity"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:52
-msgid ""
-"Plan posts and activities in advance with easy scheduling tools. Keep your "
-"community active even during off-hours and automate important updates."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:61
-msgid "BuddyPress Anonymous Activity"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:62
-msgid ""
-"Enable members to share updates anonymously without revealing their "
-"identity, encouraging more honest, open, and candid conversations across "
-"your platform."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:71
-msgid "BuddyPress Edit Activity"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:72
-msgid ""
-"Let users edit their posted activities anytime. Help members fix mistakes "
-"or update their posts, keeping conversations fresh and accurate."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:81
-msgid "WP Stories"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:82
-msgid ""
-"Introduce Instagram-style stories where users can share photos and videos. "
-"Boost community engagement through visual storytelling and real-time "
-"content sharing."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:91
-msgid "BuddyPress Business Profile"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:92
-msgid ""
-"Allow businesses to set up profile pages, showcase their services, and "
-"directly connect with potential customers through your social network."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:101
-msgid "BuddyPress Moderation Pro"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:102
-msgid ""
-"Allow members to flag inappropriate content and maintain a safe, "
-"respectful, and welcoming community environment."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:111
-msgid "BuddyPress Resume Manager"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:112
-msgid ""
-"Let users upload and display professional resumes right on their profiles. "
-"Ideal for building career-focused communities."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:121
-msgid "BuddyPress Polls"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:122
-msgid ""
-"Let members create polls and surveys directly inside activity streams to "
-"collect opinions, boost participation, and spark discussions easily."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:131
-msgid "BuddyPress Private Community Pro"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:132
-msgid ""
-"Restrict access to BuddyPress areas. Protect member profiles and create a "
-"fully private, members-only experience."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:141
-msgid "BuddyPress Profile Pro"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:142
-msgid ""
-"Add custom repeater fields and groups to member profiles. Collect richer "
-"information and enhance profile personalization."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:151
-msgid "BuddyPress Check-ins Pro"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:152
-msgid ""
-"Allow users to check in at places like restaurants or events. Encourage "
-"social interactions and real-world meetups through your platform."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:161
-msgid "BuddyPress Ideapush Integration"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:162
-msgid ""
-"Streamline idea management. Let members submit ideas, provide feedback, and "
-"spark innovation directly within their profiles."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:171
-msgid "BuddyPress Contact Me"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:172
-msgid ""
-"Add easy-to-use contact forms on member profiles. Enable seamless "
-"communication between visitors and users without sharing personal "
-"information."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:181
-msgid "BuddyPress Member Blog Pro"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:182
-msgid ""
-"Offer personal blogging spaces for members. Let users share articles, "
-"stories, and updates, turning your community into a vibrant content hub."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:191
-msgid "BuddyVendor"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:192
-msgid ""
-"Combine e-commerce with social networking. Allow users to buy, sell, and "
-"interact on a community-driven multi-vendor marketplace."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:201
-msgid "BuddyPress Statistics"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:202
-msgid ""
-"Get detailed community analytics. Monitor activities, understand engagement "
-"patterns, and make smarter decisions to grow your site."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:211
-msgid "Who viewed my profile"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:212
-msgid ""
-"Give users visibility into who has visited their profile. Build curiosity, "
-"drive more profile views, and increase member engagement."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:221
-msgid "BuddyPress Friend & Follow Suggestion"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:222
-msgid ""
-"Provide personalized friend and follow suggestions based on profile data, "
-"boosting connections and community interactions."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:231
-msgid "BuddyPress Giphy"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:232
-msgid ""
-"Enable GIF sharing in activities, comments, and private messages. Make "
-"conversations more fun, expressive, and visually engaging."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:241
-msgid "Shortcodes for BuddyPress Pro"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:242
-msgid ""
-"Add BuddyPress components anywhere on your site with shortcodes and "
-"Elementor widgets. Enjoy full design freedom and flexibility."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:251
-msgid "BuddyPress Sticky Post"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:252
-msgid ""
-"Highlight important updates by pinning posts to the top of activity "
-"streams. Ensure key messages are always seen by members."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:261
-msgid "BuddyPress Quotes"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:262
-msgid ""
-"Let users decorate their posts with vibrant backgrounds and images, making "
-"activity updates more expressive and attention-grabbing."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:271
-msgid "BuddyPress Auto Friends"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:272
-msgid ""
-"Automatically add specific users as friends to new members, helping them "
-"build their network and feel connected from day one."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:281
-msgid "BuddyPress Newsfeed"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:282
-msgid ""
-"Organize activity updates into a familiar Facebook-style newsfeed, helping "
-"members find new content quickly and engage more."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:291
-msgid "BuddyPress Status"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:292
-msgid ""
-"Allow members to post quick status updates and react to activities, making "
-"your community more dynamic and lively."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:301
-msgid "BuddyPress Hashtags"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:302
-msgid ""
-"Boost discoverability and organize discussions by adding hashtag "
-"functionality across activities, posts, and comments."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:311
-msgid "BuddyPress Profanity Filter"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:312
-msgid ""
-"Block unwanted words and keep your community safe, family-friendly, and "
-"free from offensive language."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:326
-msgid "Extensions for LearnDash"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:332
-msgid "LMS Notes"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:333
-msgid ""
-"LMS Notes will extend the LMS functionality to create Notes for courses, "
-"lessons and topics."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:342
-msgid "Learndash wpForo"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:343
-msgid ""
-"The LearnDash wpForo integration allows you to create dedicated discussion "
-"channels for your learners and link your courses to multiple forums."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:352
-msgid "LearnDash Dashboard"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:353
-msgid ""
-"The LearnDash Dashboard provides admins, instructors, group leaders, and "
-"students with personalized dashboards, allowing them to easily manage their "
-"courses, lessons, and communication."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:367
-msgid "View More Themes"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:372
-msgid "Reign Theme"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:373
-msgid ""
-"Create your social network website for the company, school, sports team, or "
-"any niche community using a highly customizable WordPress, Community theme."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:382
-msgid "BuddyX Pro Theme"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:383
-msgid ""
-"Build a flexible, code-free online community website with full control. "
-"Enjoy unique layouts, clean code, and easy customization for "
-"BuddyPress/BossBoss Platform."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:392
-msgid "BuddyX Theme"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:393
-msgid ""
-"BuddyX is a free, fast, and responsive WordPress theme for creating social "
-"network sites like Facebook. Ideal for BuddyPress and BuddyBoss "
-"communities, memberships, eLearning, and marketplaces."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:402
-msgid "KnowX Theme"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:403
-msgid ""
-"A Free WordPress Knowledge base Theme. KnowX helps you set up a Knowledge "
-"Base in WordPress in less time than it takes to brew a coffee."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:416
-msgid "Our Free Extensions"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:422
-msgid "Wbcom Essential"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:423
-msgid ""
-"Get dozens of stylish widgets packed inside Wbcom Essential. Enhance your "
-"BuddyPress site's design with advanced customizations without needing any "
-"technical skills."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:432
-msgid "BuddyPress Member Type"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:433
-msgid ""
-"Effortlessly create and manage multiple member types. Personalize user "
-"experiences and organize your community more effectively based on user "
-"profiles."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:442
-msgid "BuddyPress Advertisement Placements"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:443
-msgid ""
-"Add advertisement placements across your BuddyPress community. Increase "
-"engagement and generate extra revenue with seamless ad integration."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:452
-msgid "reCaptcha for BuddyPress"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:453
-msgid ""
-"Secure your BuddyPress, WordPress, and WooCommerce sites by adding powerful "
-"Google reCaptcha protection against bots and spam activities."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:462
-msgid "BuddyPress Member Blog"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:463
-msgid ""
-"Allow community members to create and manage their blog posts directly from "
-"their BuddyPress profiles, boosting engagement and user-generated content."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:472
-msgid "BuddyPress WooCommerce Integration"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:473
-msgid ""
-"Easily integrate WooCommerce with BuddyPress. Showcase WooCommerce "
-"activities inside profiles and create a seamless social shopping experience."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:482
-msgid "BuddyPress Activity Link Preview"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:483
-msgid ""
-"Automatically generate rich link previews inside the activity feed, "
-"displaying title, description, and image to make posts more engaging."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:492
-msgid "BuddyPress Birthday Widget"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:493
-msgid ""
-"Celebrate community members' birthdays by displaying upcoming birthdays in "
-"a sidebar widget, fostering deeper social interactions."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:502
-msgid "BuddyPress Redirect"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:503
-msgid ""
-"Redirect users to custom pages after login or logout, based on their user "
-"roles, creating a more personalized navigation experience."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:512
-msgid "BuddyPress Activity Bump"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:513
-msgid ""
-"Move the most recent interactions to the top of the activity feed "
-"automatically, keeping your BuddyPress newsfeed lively and active."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:522
-msgid "BuddyPress Lock – Private Community"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:523
-msgid ""
-"Lock down selected BuddyPress components to create a private, members-only "
-"community and protect your site's content from the public."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:532
-msgid "Shortcodes for BuddyPress"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:533
-msgid ""
-"Use simple shortcodes to embed BuddyPress components like activity streams, "
-"member lists, or groups on any page or post."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:542
-msgid "BuddyPress User Todo List"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:543
-msgid ""
-"Allow users to create, organize, and manage personal to-do lists with "
-"categories directly from their BuddyPress profiles."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:552
-msgid "BuddyPress Job Manager"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:553
-msgid ""
-"Create dedicated job tabs for employers and candidates inside their "
-"BuddyPress profiles, enhancing your site's job board functionality."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:562
-msgid "BuddyPress Group Reviews"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:563
-msgid ""
-"Enable members to rate and review BuddyPress groups based on multiple "
-"criteria, improving group quality and encouraging community feedback."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:572
-msgid "BuddyPress Member Reviews"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:573
-msgid ""
-"Allow users to rate and review other member profiles based on customizable "
-"criteria, helping build trust and credibility within your community."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:582
-msgid "BuddyPress Check-ins"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:583
-msgid ""
-"Allow community members to post activity updates along with their current "
-"location, encouraging real-world interactions and meetups."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:592
-msgid "BuddyPress Activity Filter"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:593
-msgid ""
-"Display customized activity feeds by applying filters to show specific "
-"content types based on your community's needs."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:602
-msgid "BuddyPress Favorite Notification"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:603
-msgid ""
-"Send real-time notifications to members when someone favorites their "
-"content, boosting engagement and interaction across your community."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:612
-msgid "BuddyPress Activity Social Share"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-plugins-page.php:613
-msgid ""
-"Allow users to share their BuddyPress activity updates easily to external "
-"social media platforms, extending their reach. "
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:9
-#: admin/wbcom/wbcom-admin-settings.php:312
-msgid "Help & Support"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:14
-msgid "How can we help you?"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:15
-msgid ""
-"Our team is here to help you out at anytime. If you have any idea about how "
-"we could improve. You can share access to your site on our helpdesk if it "
-"can help getting faster."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:24
-msgid "Tickets Support"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:25
-msgid ""
-"Open a ticket on our helpdesk, we don't guarantee a fast response but "
-"within a week. Except if you've purchased one of our product we'll reply "
-"within 24 hours."
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:28
-msgid "Open a ticket"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:41
-#: admin/wbcom/templates/wbcom-support-page.php:45
-msgid "Contact Us"
-msgstr ""
-
-#: admin/wbcom/templates/wbcom-support-page.php:42
-msgid ""
-"Create a new thread on our plugin page, participation is open to anyone "
-"from all around the world. We'll be there to help as well but can't "
-"guarantee any delay."
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:193
-msgid "Activate"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:194
-msgid "Deactivate"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:216
-#: admin/wbcom/wbcom-admin-settings.php:217
-msgid "Our Plugins"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:232
-#: admin/wbcom/wbcom-admin-settings.php:233
-#: pincode-checker-for-woocommerce.php:729
-msgid "Support"
-msgstr ""
-
-#: admin/wbcom/wbcom-admin-settings.php:300
-#: pincode-checker-for-woocommerce.php:699
+#: includes/Admin/SettingsPage.php:140
+#: includes/Admin/SettingsPage.php:238
 msgid "Settings"
 msgstr ""
 
-#: admin/wbcom/wbcom-admin-settings.php:306
-msgid "Themes & Extension"
+#: includes/Admin/SettingsPage.php:143
+msgid "General"
 msgstr ""
 
-#: includes/class-woo-pincode-category-rules.php:273
-msgid "Rules must be an array"
+#: includes/Admin/SettingsPage.php:148
+msgid "Delivery Dates"
 msgstr ""
 
-#: includes/class-woo-pincode-category-rules.php:290
-msgid "Delivery days must be between 1 and 365"
+#: includes/Admin/SettingsPage.php:153
+msgid "Category Rules"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:41
-#: includes/class-woo-pincode-pattern-handler.php:185
-msgid "Pattern cannot be empty"
+#: includes/Admin/SettingsPage.php:158
+msgid "Checkout and COD"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:68
-msgid "Invalid range format. Use format: START-END (e.g., 110001-110099)"
+#: includes/Admin/SettingsPage.php:163
+msgid "Display and Messages"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:76
-msgid "Range values must be numeric"
+#: includes/Admin/SettingsPage.php:170
+msgid "Help"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:81
-msgid "Start and end of range must have same length"
+#: includes/Admin/SettingsPage.php:173
+msgid "Tools"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:88
-msgid "Start value must be less than or equal to end value"
+#: includes/Admin/SettingsPage.php:178
+msgid "FAQ"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:97
-msgid ""
-"Range generates %d pincodes. Maximum allowed is %d. Please use smaller "
-"ranges."
+#: includes/Admin/Tabs/AreasTab.php:26
+#: includes/Admin/Tabs/AreasTab.php:114
+msgid "Service areas"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:132
-msgid ""
-"Pattern generates %d pincodes. Maximum allowed is %d. Please use more "
-"specific patterns."
+#: includes/Admin/Tabs/AreasTab.php:27
+msgid "Postcodes you deliver to or block. Use exact codes (110001), prefixes (SW1* or 110*) or numeric ranges (110001 to 110099)."
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:190
-msgid "Pattern must be between 3 and 10 characters"
+#: includes/Admin/Tabs/AreasTab.php:32
+msgid "Search areas"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:195
-msgid "Pattern can only contain letters, numbers, *, ?, and -"
+#: includes/Admin/Tabs/AreasTab.php:33
+msgid "Search code or city"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:202
-msgid "Invalid range format"
+#: includes/Admin/Tabs/AreasTab.php:38
+#: includes/Admin/Tabs/ImportTab.php:145
+msgid "Type"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:239
-msgid "Generates 1000 pincodes from 110000 to 110999"
+#: includes/Admin/Tabs/AreasTab.php:40
+#: includes/Admin/Tabs/ImportTab.php:147
+msgid "All types"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:243
-msgid "Generates 10 pincodes from 4000 to 4009"
+#: includes/Admin/Tabs/AreasTab.php:41
+#: includes/Admin/Tabs/ImportTab.php:148
+#: assets/admin/js/admin.js:180
+msgid "Exact"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:247
-msgid "Generates 10 pincodes from 110010 to 110019"
+#: includes/Admin/Tabs/AreasTab.php:42
+#: includes/Admin/Tabs/ImportTab.php:149
+#: assets/admin/js/admin.js:180
+msgid "Prefix"
 msgstr ""
 
-#: includes/class-woo-pincode-pattern-handler.php:251
-msgid "Generates 99 pincodes from 110001 to 110099"
+#: includes/Admin/Tabs/AreasTab.php:43
+#: includes/Admin/Tabs/ImportTab.php:150
+#: assets/admin/js/admin.js:180
+msgid "Range"
 msgstr ""
 
-#: pincode-checker-for-woocommerce.php:123
+#: includes/Admin/Tabs/AreasTab.php:48
+#: includes/Admin/Tabs/AreasTab.php:124
+#: includes/Admin/Tabs/AreasTab.php:204
+#: includes/Admin/Tabs/ImportTab.php:152
+#: assets/admin/js/admin.js:188
+msgid "Status"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:50
+#: includes/Admin/Tabs/ImportTab.php:154
+msgid "All statuses"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:51
+#: includes/Admin/Tabs/ImportTab.php:155
+#: assets/admin/js/admin.js:189
+msgid "Serviceable"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:52
+#: includes/Admin/Tabs/ImportTab.php:156
+#: assets/admin/js/admin.js:189
+msgid "Blocked"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:57
+#: includes/Admin/Tabs/AreasTab.php:248
+#: includes/Admin/Tabs/CheckoutTab.php:35
+#: assets/admin/js/admin.js:586
+msgid "Cash on delivery"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:59
+msgid "COD: any"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:60
+msgid "COD allowed"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:61
+msgid "No COD"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:66
+#: includes/Admin/Tabs/AreasTab.php:119
+#: includes/Admin/Tabs/AreasTab.php:194
+#: includes/Admin/Tabs/ImportTab.php:137
+#: includes/Admin/Tabs/OverviewTab.php:84
+#: assets/admin/js/admin.js:181
+msgid "Country"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:68
+#: includes/Admin/Tabs/ImportTab.php:139
+msgid "All countries"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:69
+#: includes/Admin/Tabs/AreasTab.php:196
+#: includes/Admin/Tabs/ImportTab.php:53
+#: includes/Admin/Tabs/ImportTab.php:140
+msgid "Any country"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:81
+msgid "Sort by"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:83
+msgid "Sort: newest"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:84
+msgid "Sort: code"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:85
+msgid "Sort: city"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:86
+msgid "Sort: fastest delivery"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:91
+msgid "Add area"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:99
+msgid "Type DELETE to confirm"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:102
+msgid "Delete"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:103
+#: includes/Admin/Tabs/AreasTab.php:270
+#: includes/Admin/Tabs/ImportTab.php:84
+msgid "Cancel"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:109
+msgid "Delete selected"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:117
+msgid "Select all on this page"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:117
+msgid "Select all areas on this page"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:118
+#: includes/Admin/Tabs/ImportTab.php:71
+#: assets/admin/js/admin.js:180
+#: assets/admin/js/admin.js:685
+msgid "Code"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:120
+#: assets/admin/js/admin.js:182
+msgid "City / State"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:121
+#: assets/admin/js/admin.js:183
+#: assets/admin/js/admin.js:584
+msgid "Delivery days"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:122
+#: assets/admin/js/admin.js:184
+msgid "Shipping"
+msgstr ""
+
+#. translators: %s: COD fee.
+#: includes/Admin/Tabs/AreasTab.php:123
+#: assets/admin/js/admin.js:186
+msgid "COD"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:125
+msgid "Actions"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:138
+msgid "Service areas pages"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:139
+msgid "Previous"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:141
+msgid "Next"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:142
+msgid "Areas per page"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:164
+msgid "Match"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:165
+msgid "Exact postcode"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:166
+msgid "Starts with"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:167
+msgid "Numeric range"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:173
+#: includes/Admin/Tabs/OverviewTab.php:82
+#: includes/Admin/Tabs/OverviewTab.php:83
+#: assets/admin/js/admin.js:362
+msgid "Postcode"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:183
+msgid "Range end"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:206
+msgid "We deliver here"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:207
+msgid "Blocked (no delivery)"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:211
+#: includes/Admin/Tabs/ImportTab.php:72
+#: assets/admin/js/admin.js:686
+msgid "City"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:212
+msgid "State / region"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:215
+msgid "Delivery days (min)"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:221
+#: assets/admin/js/admin.js:584
+msgid "Store default"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:226
+msgid "Delivery days (max)"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:232
+msgid "Same as min"
+msgstr ""
+
+#. translators: %s: currency symbol.
+#: includes/Admin/Tabs/AreasTab.php:238
+#, php-format
+msgid "Shipping fee (%s)"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:243
+msgid "No area fee"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:252
+msgid "Allow cash on delivery"
+msgstr ""
+
+#. translators: %s: currency symbol.
+#: includes/Admin/Tabs/AreasTab.php:259
+#, php-format
+msgid "COD fee (%s)"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:266
+msgid "Internal note"
+msgstr ""
+
+#: includes/Admin/Tabs/AreasTab.php:269
+msgid "Save area"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:40
+msgid "Extra delivery days by category"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:41
+msgid "Add days to the estimate for products that take longer, such as made-to-order furniture. A product in several categories gets the largest number; a cart gets the largest of its products."
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:50
+msgid "Category rules"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:52
+#: includes/Admin/Tabs/CategoriesTab.php:58
+#: includes/Admin/Tabs/CategoriesTab.php:71
+msgid "Category"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:53
+msgid "Extra days (0 removes the rule)"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:59
+#: includes/Admin/Tabs/CategoriesTab.php:78
+msgid "Extra days"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:66
+msgid "No category rules yet. Every product uses the delivery days of its area."
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:70
+msgid "Add a category"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:73
+msgid "Choose a category"
+msgstr ""
+
+#: includes/Admin/Tabs/CategoriesTab.php:79
+msgid "Days"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:30
+msgid "Checkout"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:31
+msgid "Block orders to areas you do not serve"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:31
+msgid "Checks the shipping postcode when the order is placed, on both the Checkout block and the classic checkout."
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:32
+msgid "Fill in the checked pincode at checkout"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:32
+msgid "Saves guests from typing it twice. A customer's saved address is never changed."
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:36
+msgid "Offer COD only where allowed"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:36
+msgid "Hides the Cash on delivery payment method for areas that do not allow it."
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:37
+msgid "Charge the area's COD fee"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:37
+msgid "Adds the fee set on the area when the shopper pays by cash on delivery."
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:38
+msgid "Fee name shown in the cart"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:43
+msgid "Shipping cost by pincode"
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:43
+msgid "Charge each area's shipping fee with the \"Pincode rate\" shipping method."
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:46
+msgid "Go to WooCommerce > Settings > Shipping and open a shipping zone."
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:47
+msgid "Add the \"Pincode rate\" method. It charges the area's fee (plus an optional base cost) and only appears for postcodes you deliver to."
+msgstr ""
+
+#: includes/Admin/Tabs/CheckoutTab.php:49
+msgid "Open shipping zones"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:35
+#: includes/Admin/Tabs/DisplayTab.php:40
+msgid "Delivery estimate"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:35
+msgid "How the arrival date is worked out. Each area can set its own delivery days; these apply when it does not."
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:36
+msgid "Show delivery dates"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:39
+msgid "Default delivery days (min)"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:49
+msgid "Default delivery days (max)"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:59
+msgid "Processing days"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:61
+msgid "Working days you need before an order ships."
+msgstr ""
+
+#. translators: %s: site timezone.
+#: includes/Admin/Tabs/DeliveryTab.php:68
+msgid "Same-day cut-off"
+msgstr ""
+
+#. translators: %s: site timezone.
+#: includes/Admin/Tabs/DeliveryTab.php:68
+#, php-format
+msgid "Orders after this time (%s) start processing the next working day."
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:71
+msgid "Working days and holidays"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:74
+msgid "Working days"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:76
+msgid "Monday"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:77
+msgid "Tuesday"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:78
+msgid "Wednesday"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:79
+msgid "Thursday"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:80
+msgid "Friday"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:81
+msgid "Saturday"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:82
+msgid "Sunday"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:87
+msgid "Count delivery days as"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:89
+msgid "Working days only (skip days off and holidays)"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:90
+msgid "Calendar days (couriers deliver every day)"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:93
+msgid "Holidays"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:93
+msgid "One date per line as YYYY-MM-DD, for example 2026-12-25. Past dates are removed automatically."
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:96
+msgid "How dates look"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:99
+msgid "Show the estimate as"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:101
+msgid "A date range - Arrives Oct 8 to Oct 10"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:102
+msgid "The latest date - Arrives by Oct 10"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:103
+msgid "Days - Arrives in 3-5 days"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:106
+msgid "Date format"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:109
+msgid "Show the estimate on"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:111
+#: includes/Admin/Tabs/GeneralTab.php:38
+msgid "Product page"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:112
+msgid "Cart and checkout (next to each shipping option)"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:113
+msgid "Order details"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:114
+msgid "Order emails"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:27
+msgid "You can use {postcode}, {city} and {state}."
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:31
+msgid "Checker labels"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:32
+msgid "Heading"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:33
+msgid "Input placeholder"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:34
+msgid "Check button"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:35
+msgid "Change button"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:38
+msgid "Messages"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:38
+msgid "Leave a message empty to restore its default."
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:39
+#: assets/admin/js/admin.js:566
+msgid "Delivery available"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:40
+msgid "{estimate} becomes the date, range or days set on the Delivery Dates tab."
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:41
+msgid "Not delivered"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:42
+msgid "Invalid pincode"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:43
+msgid "Check required"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:43
+msgid "Shown when Add to cart needs a pincode check first."
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:44
+#: assets/admin/js/admin.js:585
+msgid "Shipping fee"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:44
+msgid "{amount} becomes the area's shipping fee."
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:45
+msgid "Show cash on delivery availability"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:46
+msgid "COD available"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:47
+msgid "COD not available"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:50
+msgid "Style"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:53
+msgid "Colours"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:55
+msgid "Match my theme"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:56
+msgid "Use my accent colour"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:59
+msgid "Accent colour"
+msgstr ""
+
+#: includes/Admin/Tabs/DisplayTab.php:59
+msgid "Used for the Check button when \"Use my accent colour\" is selected."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:26
+msgid "Do I have to add areas before the store works?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:26
+msgid "No. With the default \"Automatic\" setting every postcode is deliverable on your default delivery days until you add your first area. After that, only the areas you list are deliverable."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:27
+msgid "What can an area be?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:27
+msgid "An exact postcode (110001), a prefix ending in * that covers every postcode starting that way (SW1* or 110*), or a numeric range (110001 to 110099). Mark an area \"Blocked\" to carve exceptions out of a prefix or range."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:28
+msgid "Which area wins when several match?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:28
+msgid "The most specific one: an exact postcode beats a prefix, a longer prefix beats a shorter one, a narrower range beats a wider one, and an area for a specific country beats \"Any country\". Use the \"Test a postcode\" tool on the Overview to see the winner."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:29
+msgid "Does it work with UK, US and other postcodes?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:29
+msgid "Yes. Postcodes are compared without spaces or hyphens and checked against the country's format. Use prefixes for letter postcodes (SW1*, M1*) and ranges for numeric ones."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:30
+msgid "How do I charge shipping per area?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:30
+msgid "Add the \"Pincode rate\" method to a shipping zone (WooCommerce > Settings > Shipping). It charges the area's shipping fee plus an optional base cost, and is only offered where you deliver."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:31
+msgid "Does it work with the Cart and Checkout blocks?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:31
+msgid "Yes, and with the classic shortcodes. Orders to areas you do not serve are blocked in both, cash on delivery follows each area, and delivery dates appear next to each shipping option."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:32
+msgid "Will page caching break it?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:32
+msgid "No. The product page is the same for every visitor; the answer is fetched separately, so full-page caches and CDNs can cache your pages safely."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:33
+msgid "Where do I place the checker?"
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:33
+msgid "Choose a position on the General tab, or add the Pincode Checker block or the [wbpc_pincode_checker] shortcode anywhere. On a product it also controls Add to cart; elsewhere it is a general delivery check."
+msgstr ""
+
+#: includes/Admin/Tabs/FaqTab.php:36
+msgid "Frequently asked questions"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:38
+msgid "Where shoppers check their pincode, and what Add to cart does with the answer."
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:41
+msgid "Show the checker"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:43
+msgid "Above the Add to cart button"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:44
+msgid "Below the Add to cart button"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:45
+msgid "Right after the quantity box"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:46
+msgid "In the product summary, below the price"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:47
+msgid "Only where I add the block or [wbpc_pincode_checker] shortcode"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:50
+msgid "Require a pincode check"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:50
+msgid "Shoppers must check a pincode you deliver to before they can add the product to the cart."
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:53
+msgid "When you do not deliver there"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:55
+msgid "Disable the Add to cart button"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:56
+msgid "Hide the Add to cart button"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:57
+msgid "Keep Add to cart, show a warning"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:59
+msgid "Add to cart is also checked on the server. Checkout blocks orders to postcodes you do not deliver to while \"Block orders to areas you do not serve\" is on (Checkout and COD tab)."
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:61
+msgid "Skip these categories"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:61
+msgid "Products in these categories show no checker and are never blocked (digital goods, gift cards)."
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:64
+msgid "Postcode matching"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:67
+msgid "Postcodes with no area"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:69
+msgid "Automatic - available until I add my first delivery area, then only listed areas"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:70
+msgid "Not available - I list every area I deliver to"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:71
+msgid "Available on default terms - I only list exceptions"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:73
+msgid "Automatic keeps a new store selling before any areas are set up."
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:77
+msgid "Default country"
+msgstr ""
+
+#. translators: %s: store base country name.
+#: includes/Admin/Tabs/GeneralTab.php:79
+#, php-format
+msgid "Store country (%s)"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:80
+msgid "Used to read a postcode when the shopper has not chosen a country yet."
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:82
+msgid "Suggest nearby areas"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:82
+msgid "When a postcode is not served, list served postcodes that start the same way."
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:85
+msgid "Remember the pincode for"
+msgstr ""
+
+#: includes/Admin/Tabs/GeneralTab.php:87
+msgid "Days the shopper's last checked pincode is remembered on this device."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:32
+msgid "Import areas from CSV"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:33
+msgid "Upload a spreadsheet saved as CSV. Large files are imported in the background, so you can leave this page while it runs."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:39
+msgid "CSV file (max 10 MB)"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:44
+msgid "Areas that already exist"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:45
+msgid "Keep them as they are (add new areas only)"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:46
+msgid "Update them with the values in the file (only the columns your file has)"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:47
+msgid "Delete all current areas first, then import the file"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:51
+msgid "Country for rows without one"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:61
+msgid "Upload and preview"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:68
+msgid "First rows of the file"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:70
+#: assets/admin/js/admin.js:684
+msgid "Line"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:73
+#: includes/Services/SettingsService.php:74
+#: assets/admin/js/admin.js:687
+msgid "Check"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:79
+msgid "This deletes every current area first. Type REPLACE to confirm."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:83
+msgid "Start import"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:91
+msgid "You can leave this page. The import keeps running and its result appears here and on the Overview."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:92
+msgid "Cancel import"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:98
+msgid "Download rows that failed"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:99
+msgid "Import another file"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:105
+msgid "File format"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:106
+msgid "The first row must name the columns. Only \"code\" is required; leave other cells empty to use store defaults. If the same code appears twice, the last row wins in update mode."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:108
+msgid "Postcode. End with * for a prefix (110*, SW1*). Also read as pincode, postcode or zip."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:109
+msgid "End of a numeric range (code 110001, code_to 110099)."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:110
+msgid "Two-letter country code such as IN, GB or US."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:111
+msgid "serviceable or blocked."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:113
+msgid "Delivery days."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:116
+msgid "Download a sample file"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:130
+msgid "Export areas"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:131
+msgid "Download your areas as CSV - for backups, or to edit in a spreadsheet and import again in \"update\" mode."
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:158
+msgid "Download CSV"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:174
+#: includes/Admin/Tabs/ImportTab.php:178
+msgid "Recent imports"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:180
+#: includes/Admin/Tabs/ImportTab.php:189
+msgid "File"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:181
+#: includes/Admin/Tabs/ImportTab.php:190
+msgid "When"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:182
+#: includes/Admin/Tabs/ImportTab.php:191
+msgid "Result"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:183
+#: includes/Admin/Tabs/ImportTab.php:194
+msgid "Rows"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:184
+msgid "Error report"
+msgstr ""
+
+#. translators: 1: added, 2: updated, 3: skipped, 4: failed.
+#: includes/Admin/Tabs/ImportTab.php:197
+#, php-format
+msgid "%1$s added, %2$s updated, %3$s skipped, %4$s failed"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:202
+msgid "Failed rows"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:221
+msgid "Finished"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:222
+msgid "Failed"
+msgstr ""
+
+#: includes/Admin/Tabs/ImportTab.php:223
+msgid "Cancelled"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:30
+msgid "Store status"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:31
+msgid "What Pincode Checker sees on your store right now."
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:35
 msgid "WooCommerce"
 msgstr ""
 
-#: pincode-checker-for-woocommerce.php:127
-msgid "Plugin Activation Error:"
+#: includes/Admin/Tabs/OverviewTab.php:36
+msgid "Pincode Checker needs WooCommerce 8.0 or newer."
 msgstr ""
 
-#: pincode-checker-for-woocommerce.php:129
-msgid ""
-"%1$s requires %2$s to be installed and activated before it can function "
-"properly."
+#: includes/Admin/Tabs/OverviewTab.php:42
+msgid "Delivery areas"
 msgstr ""
 
-#: pincode-checker-for-woocommerce.php:149
-msgid "Install WooCommerce"
+#: includes/Admin/Tabs/OverviewTab.php:43
+msgid "Postcodes, prefixes and ranges you deliver to or block."
 msgstr ""
 
-#: pincode-checker-for-woocommerce.php:161
-msgid "PHP Version Error:"
-msgstr ""
-
-#: pincode-checker-for-woocommerce.php:163
-msgid ""
-"Woo Pincode Checker requires PHP version 7.4 or higher. You are running PHP "
-"%s."
-msgstr ""
-
-#: pincode-checker-for-woocommerce.php:175
-msgid "WordPress Version Error:"
-msgstr ""
-
-#: pincode-checker-for-woocommerce.php:177
-msgid ""
-"Woo Pincode Checker requires WordPress version 5.0 or higher. You are "
-"running WordPress %s."
-msgstr ""
-
-#: pincode-checker-for-woocommerce.php:700
-msgid "Manage Codes"
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:293
-msgid "Pincode checker unavailable: Database table missing."
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:294
-msgid "Fix this issue"
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:434
-#: public/class-woo-pincode-checker-form.php:585
-#: public/class-woo-pincode-checker-public.php:227
-#: public/woo-pincode-checker-delivery-message.php:96
-msgid "Sorry! We are currently not servicing your area."
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:439
-#: public/woo-pincode-checker-delivery-message.php:99
-msgid "Enter your pincode"
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:462
-msgid "Service temporarily unavailable. Please try again later."
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:475
-#: public/class-woo-pincode-checker-public.php:230
-msgid "Too many requests. Please wait a moment."
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:531
-msgid "Unable to save pincode. Please check your browser settings."
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:591
-msgid "But we deliver to nearby areas:"
-msgstr ""
-
-#: public/class-woo-pincode-checker-form.php:599
-msgid "%d day delivery"
-msgid_plural "%d days delivery"
+#. translators: %s: number of delivery areas.
+#: includes/Admin/Tabs/OverviewTab.php:46
+#, php-format
+msgid "%s area"
+msgid_plural "%s areas"
 msgstr[0] ""
 msgstr[1] ""
 
-#: public/class-woo-pincode-checker-public.php:225
-msgid "Please enter a pincode."
+#: includes/Admin/Tabs/OverviewTab.php:52
+msgid "Pincode rate shipping"
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:226
+#: includes/Admin/Tabs/OverviewTab.php:53
+msgid "Charges each area's shipping fee. Add it to a shipping zone to use area fees."
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:55
+msgid "Enabled"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:56
+msgid "Add to a shipping zone"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:60
+msgid "Checkout type"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:61
+msgid "Both the Checkout block and the classic checkout shortcode are supported."
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:63
+msgid "Checkout block"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:63
+msgid "Classic checkout"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:64
+msgid "No checkout page set"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:68
+msgid "Version"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:69
+msgid "Installed Pincode Checker version."
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:77
+msgid "Test a postcode"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:78
+msgid "See exactly what a shopper sees for a postcode, and which area decided it."
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:90
+msgid "Test"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:96
+msgid "Support & resources"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:99
+msgid "Documentation"
+msgstr ""
+
+#: includes/Admin/Tabs/OverviewTab.php:100
+msgid "Support center"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:42
+msgid "You are not allowed to do this."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:49
+msgid "Database tables checked and updated."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:53
+msgid "Lookup cache cleared."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:59
+msgid "Your areas and settings will be kept if the plugin is deleted."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:59
+msgid "All plugin data will be removed if the plugin is deleted."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:93
+msgid "System status"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:93
+msgid "Share this with support if something does not look right."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:95
+msgid "Areas table"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:95
+msgid "Missing - run \"Update database\" below"
+msgstr ""
+
+#. translators: 1: installed schema version, 2: expected schema version.
+#: includes/Admin/Tabs/ToolsTab.php:97
+msgid "Database version"
+msgstr ""
+
+#. translators: 1: installed schema version, 2: expected schema version.
+#: includes/Admin/Tabs/ToolsTab.php:97
+#, php-format
+msgid "%1$s (expected %2$s)"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:98
+msgid "Background jobs"
+msgstr ""
+
+#. translators: 1: pending, 2: failed.
+#: includes/Admin/Tabs/ToolsTab.php:98
+#, php-format
+msgid "%1$d pending, %2$d failed"
+msgstr ""
+
+#. translators: 1: pending, 2: failed.
+#: includes/Admin/Tabs/ToolsTab.php:99
+msgid "Object cache"
+msgstr ""
+
+#. translators: 1: pending, 2: failed.
+#: includes/Admin/Tabs/ToolsTab.php:99
+msgid "Persistent"
+msgstr ""
+
+#. translators: 1: pending, 2: failed.
+#: includes/Admin/Tabs/ToolsTab.php:99
+msgid "Per request (no persistent cache)"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:100
+msgid "Plugin / WooCommerce / PHP"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:104
+msgid "Maintenance"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:105
+msgid "Update database"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:105
+msgid "Creates or repairs the plugin's table. Safe to run any time."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:106
+msgid "Clear lookup cache"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:106
+msgid "Only needed if a change you made directly in the database is not showing."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:110
+msgid "When the plugin is deleted"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:115
+msgid "Keep my delivery areas and settings when the plugin is deleted"
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:116
+msgid "Off: deleting the plugin removes its table, settings and files. Delivery dates already saved on orders are always kept."
+msgstr ""
+
+#: includes/Admin/Tabs/ToolsTab.php:117
+msgid "Save"
+msgstr ""
+
+#: includes/Frontend/Storefront.php:107
+#: assets/admin/js/admin.js:545
+msgid "Checking..."
+msgstr ""
+
+#: includes/Frontend/Storefront.php:109
+msgid "Could not check right now. Please try again."
+msgstr ""
+
+#: includes/Frontend/Storefront.php:110
+msgid "Try again"
+msgstr ""
+
+#: includes/Frontend/Storefront.php:111
+msgid "We deliver nearby:"
+msgstr ""
+
+#: includes/Frontend/Storefront.php:112
+msgid "Not deliverable to this pincode."
+msgstr ""
+
+#. translators: 1: shipping method name, 2: delivery estimate such as "Oct 8 to Oct 10".
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:73
+#, php-format
+msgid "%1$s (arrives %2$s)"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:125
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:158
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:162
+msgid "Estimated delivery:"
+msgstr ""
+
+#. translators: 1: estimate label, 2: earliest date Y-m-d, 3: latest date Y-m-d.
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:139
+msgid "Promised delivery"
+msgstr ""
+
+#. translators: 1: estimate label, 2: earliest date Y-m-d, 3: latest date Y-m-d.
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:139
+#, php-format
+msgid "%1$s (%2$s to %3$s)"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ProductSettings.php:34
+msgid "Pincode checker"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ProductSettings.php:35
+msgid "Hide the pincode checker and skip delivery-area checks for this product"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:33
+msgid "Pincode rate"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:34
+msgid "Charges each delivery area's shipping fee (set under Pincode Checker > Service Areas) plus an optional base cost. Not offered where you do not deliver."
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:39
+msgid "Name shown to shoppers"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:41
+msgid "Delivery"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:44
+msgid "Tax status"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:49
+msgid "Taxable"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:50
+msgctxt "Tax status"
+msgid "None"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:54
+msgid "Base cost"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:57
+msgid "Added to every order, before the area fee."
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:61
+msgid "Fee when the area has none"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/ShippingMethod.php:64
+msgid "Used for areas without their own shipping fee, and for postcodes delivered on default terms."
+msgstr ""
+
+#: includes/REST/Controller/AreasController.php:157
+#: includes/Services/AreaService.php:290
+msgid "This area no longer exists. It may have been deleted already."
+msgstr ""
+
+#: includes/REST/Controller/AreasController.php:196
+msgid "Select at least one area."
+msgstr ""
+
+#: includes/REST/Controller/CheckController.php:67
+msgid "Too many checks. Please wait a minute and try again."
+msgstr ""
+
+#: includes/REST/Controller/ImportController.php:97
+msgid "Choose a CSV file to upload."
+msgstr ""
+
+#: includes/Services/AreaService.php:52
+#: includes/Services/AreaService.php:79
+msgid "The area could not be saved. Please try again."
+msgstr ""
+
+#: includes/Services/AreaService.php:143
+msgid "Choose a country from the list."
+msgstr ""
+
+#: includes/Services/AreaService.php:153
+msgid "Use a number of days between 0 and 365."
+msgstr ""
+
+#: includes/Services/AreaService.php:157
+msgid "The maximum cannot be lower than the minimum."
+msgstr ""
+
+#: includes/Services/AreaService.php:163
+msgid "Enter an amount of 0 or more, or leave it empty."
+msgstr ""
+
+#: includes/Services/AreaService.php:166
+msgid "Enter an amount of 0 or more."
+msgstr ""
+
+#: includes/Services/AreaService.php:185
+msgid "An area with this code already exists."
+msgstr ""
+
+#: includes/Services/AreaService.php:193
+msgid "Please fix the highlighted fields."
+msgstr ""
+
+#: includes/Services/AreaService.php:300
+msgid "Ranges work with numbers only. Use a prefix such as SW1* for postcodes with letters."
+msgstr ""
+
+#: includes/Services/AreaService.php:301
+msgid "Both ends of a range need the same number of digits."
+msgstr ""
+
+#: includes/Services/AreaService.php:302
+msgid "The range end must be greater than or equal to its start."
+msgstr ""
+
+#: includes/Services/AreaService.php:303
+msgid "Use * only at the end, for example 110*."
+msgstr ""
+
+#: includes/Services/AreaService.php:304
+msgid "Enter a postcode of 2-20 letters or digits."
+msgstr ""
+
+#: includes/Services/DeliveryDateService.php:114
+msgid "today"
+msgstr ""
+
+#. translators: %d: number of days.
+#: includes/Services/DeliveryDateService.php:119
+#, php-format
+msgid "in %d day"
+msgid_plural "in %d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: minimum days, 2: maximum days.
+#: includes/Services/DeliveryDateService.php:121
+#, php-format
+msgid "in %1$d-%2$d days"
+msgstr ""
+
+#. translators: %s: latest delivery date.
+#: includes/Services/DeliveryDateService.php:126
+#, php-format
+msgid "by %s"
+msgstr ""
+
+#. translators: 1: earliest delivery date, 2: latest delivery date.
+#: includes/Services/DeliveryDateService.php:130
+#, php-format
+msgid "%1$s to %2$s"
+msgstr ""
+
+#: includes/Services/ImportService.php:80
+msgid "An import is already running. Wait for it to finish or cancel it first."
+msgstr ""
+
+#: includes/Services/ImportService.php:83
+msgid "Choose how existing areas should be handled."
+msgstr ""
+
+#: includes/Services/ImportService.php:86
+msgid "Upload a .csv file."
+msgstr ""
+
+#: includes/Services/ImportService.php:89
+msgid "The file is missing or larger than 10 MB. Split it into smaller files."
+msgstr ""
+
+#: includes/Services/ImportService.php:99
+msgid "The file could not be saved on the server."
+msgstr ""
+
+#: includes/Services/ImportService.php:108
+msgid "The first row must be a header with a \"code\" (or pincode, postcode, zip) column. Download the sample file to see the format."
+msgstr ""
+
+#: includes/Services/ImportService.php:176
+msgid "Upload a file first."
+msgstr ""
+
+#: includes/Services/ImportService.php:196
+msgid "There is no import to cancel."
+msgstr ""
+
+#: includes/Services/ImportService.php:208
+msgid "Import cancelled. Areas already imported were kept."
+msgstr ""
+
+#: includes/Services/ImportService.php:311
+msgid "The uploaded file is no longer on the server."
+msgstr ""
+
+#: includes/Services/ImportService.php:350
+msgid "Import finished."
+msgstr ""
+
+#: includes/Services/SettingsService.php:68
+msgid "Cash on delivery fee"
+msgstr ""
+
+#: includes/Services/SettingsService.php:72
+msgid "Check delivery"
+msgstr ""
+
+#: includes/Services/SettingsService.php:73
+msgid "Enter pincode"
+msgstr ""
+
+#: includes/Services/SettingsService.php:75
+msgid "Change"
+msgstr ""
+
+#: includes/Services/SettingsService.php:76
+msgid "Delivery available to {city}"
+msgstr ""
+
+#: includes/Services/SettingsService.php:77
+msgid "Arrives {estimate}"
+msgstr ""
+
+#: includes/Services/SettingsService.php:78
+msgid "Sorry, we don't deliver to {postcode} yet."
+msgstr ""
+
+#: includes/Services/SettingsService.php:79
 msgid "Please enter a valid pincode."
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:228
-msgid "Connection issue. Please check your internet and try again."
+#: includes/Services/SettingsService.php:80
+msgid "Check your pincode to add this product to the cart."
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:229
+#: includes/Services/SettingsService.php:81
+msgid "Cash on delivery available"
+msgstr ""
+
+#: includes/Services/SettingsService.php:82
+msgid "Cash on delivery not available"
+msgstr ""
+
+#: includes/Services/SettingsService.php:83
+msgid "Shipping: {amount}"
+msgstr ""
+
+#: includes/Services/SettingsService.php:171
+msgid "Choose at least one working day. Monday to Saturday was kept."
+msgstr ""
+
+#: includes/Services/SettingsService.php:176
+msgid "The default maximum delivery days was raised to match the minimum."
+msgstr ""
+
+#: assets/admin/js/admin.js:42
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:344
-msgid "Too many requests. Please try again later."
+#: assets/admin/js/admin.js:63
+msgid "Default"
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:356
-msgid "Pincode is required."
+#: assets/admin/js/admin.js:133
+msgid "Could not load areas"
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:364
-msgid "Invalid pincode format."
+#: assets/admin/js/admin.js:160
+msgid "No areas match these filters"
 msgstr ""
 
-#: public/class-woo-pincode-checker-public.php:402
-msgid "Delivery to %1$s is currently not available for this item."
+#: assets/admin/js/admin.js:160
+msgid "No delivery areas yet"
 msgstr ""
 
-#: public/woo-pincode-checker-delivery-message.php:17
-#: public/woo-pincode-checker-delivery-message.php:53
-#: public/woo-pincode-checker-delivery-message.php:74
-#: public/woo-pincode-checker-delivery-message.php:89
-#: public/woo-pincode-checker-delivery-message.php:104
-#. Translators: %1$s: Availability Label
-#. Translators: %1$s: Delivered By Label
-#. Translators: %1$s: Cash on Delivery Available Label
-#. Translators: %1$s: Change Button Text
-#. Translators: %1$s: Check Button Text
-msgid "%1$s"
+#: assets/admin/js/admin.js:161
+msgid "Clear the search or filters to see all areas."
 msgstr ""
 
-#: public/woo-pincode-checker-delivery-message.php:24
-#. Translators: %1$s: Availability City Name
-msgid "City: %1$s"
+#: assets/admin/js/admin.js:161
+msgid "Add the postcodes you deliver to, or import them from a CSV file."
 msgstr ""
 
-#: public/woo-pincode-checker-delivery-message.php:30
-#. Translators: %1$s: Availability State Name
-msgid "State: %1$s"
+#: assets/admin/js/admin.js:173
+#, js-format
+msgid "Select area %s"
 msgstr ""
 
-#: public/woo-pincode-checker-delivery-message.php:38
-#. Translators: %1$s: We deliver to your location.
-msgid "We deliver to your location."
+#: assets/admin/js/admin.js:181
+msgid "Any"
+msgstr ""
+
+#: assets/admin/js/admin.js:186
+msgid "Yes"
+msgstr ""
+
+#: assets/admin/js/admin.js:186
+msgid "No"
+msgstr ""
+
+#: assets/admin/js/admin.js:186
+#, js-format
+msgid "+%s fee"
+msgstr ""
+
+#: assets/admin/js/admin.js:193
+#, js-format
+msgid "Edit %s"
+msgstr ""
+
+#: assets/admin/js/admin.js:196
+#, js-format
+msgid "Delete %s"
+msgstr ""
+
+#. translators: 1: first row, 2: last row, 3: total areas.
+#: assets/admin/js/admin.js:208
+#, js-format
+msgid "Showing %1$s-%2$s of %3$s area"
+msgid_plural "Showing %1$s-%2$s of %3$s areas"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/admin/js/admin.js:211
+#, js-format
+msgid "Page %1$s of %2$s"
+msgstr ""
+
+#: assets/admin/js/admin.js:227
+#, js-format
+msgid "%s area selected"
+msgid_plural "%s areas selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/admin/js/admin.js:231
+#, js-format
+msgid "Select all %s matching areas"
+msgstr ""
+
+#: assets/admin/js/admin.js:309
+#, js-format
+msgid "%s area deleted."
+msgid_plural "%s areas deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/admin/js/admin.js:319
+#, js-format
+msgid "Delete %s area? This cannot be undone."
+msgid_plural "Delete %s areas? This cannot be undone."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/admin/js/admin.js:343
+#, js-format
+msgid "Delete area %s? This cannot be undone."
+msgstr ""
+
+#: assets/admin/js/admin.js:346
+#, js-format
+msgid "Area %s deleted."
+msgstr ""
+
+#: assets/admin/js/admin.js:362
+msgid "Range start"
+msgstr ""
+
+#: assets/admin/js/admin.js:362
+msgid "Postcode starts with"
+msgstr ""
+
+#: assets/admin/js/admin.js:379
+#, js-format
+msgid "Edit area %s"
+msgstr ""
+
+#: assets/admin/js/admin.js:379
+msgid "Add a delivery area"
+msgstr ""
+
+#: assets/admin/js/admin.js:432
+#, js-format
+msgid "Area %s updated."
+msgstr ""
+
+#: assets/admin/js/admin.js:432
+#, js-format
+msgid "Area %s added."
+msgstr ""
+
+#: assets/admin/js/admin.js:454
+msgid "Open the existing area"
+msgstr ""
+
+#: assets/admin/js/admin.js:564
+msgid "Shopper sees"
+msgstr ""
+
+#: assets/admin/js/admin.js:567
+msgid "Not available"
+msgstr ""
+
+#: assets/admin/js/admin.js:568
+msgid "Invalid postcode for this country"
+msgstr ""
+
+#: assets/admin/js/admin.js:574
+msgid "Decided by"
+msgstr ""
+
+#: assets/admin/js/admin.js:576
+#, js-format
+msgid "Area %1$s (%2$s, %3$s, %4$s)"
+msgstr ""
+
+#: assets/admin/js/admin.js:576
+msgid "any country"
+msgstr ""
+
+#: assets/admin/js/admin.js:577
+msgid "No area matched, so the unknown-postcode setting applies."
+msgstr ""
+
+#: assets/admin/js/admin.js:581
+msgid "Location"
+msgstr ""
+
+#: assets/admin/js/admin.js:585
+msgid "None from this area"
+msgstr ""
+
+#: assets/admin/js/admin.js:586
+#, js-format
+msgid "Allowed (+%s)"
+msgstr ""
+
+#: assets/admin/js/admin.js:586
+msgid "Allowed"
+msgstr ""
+
+#: assets/admin/js/admin.js:586
+msgid "Not allowed"
+msgstr ""
+
+#: assets/admin/js/admin.js:589
+msgid "Suggested nearby"
+msgstr ""
+
+#. translators: 1: added, 2: updated, 3: skipped, 4: failed.
+#: assets/admin/js/admin.js:621
+#, js-format
+msgid "%1$s added, %2$s updated, %3$s skipped (already existed), %4$s failed."
+msgstr ""
+
+#: assets/admin/js/admin.js:625
+msgid "Import finished:"
+msgstr ""
+
+#: assets/admin/js/admin.js:625
+msgid "Import cancelled. Rows already imported were kept:"
+msgstr ""
+
+#: assets/admin/js/admin.js:625
+#, js-format
+msgid "Import stopped: %s"
+msgstr ""
+
+#: assets/admin/js/admin.js:638
+msgid "Waiting for the background worker to start..."
+msgstr ""
+
+#: assets/admin/js/admin.js:639
+#, js-format
+msgid "Imported %1$s of %2$s rows (%3$s%%)"
+msgstr ""
+
+#: assets/admin/js/admin.js:688
+msgid "OK"
+msgstr ""
+
+#: assets/admin/js/admin.js:694
+#, js-format
+msgid "%1$s row found in %2$s."
+msgid_plural "%1$s rows found in %2$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/admin/js/admin.js:695
+#, js-format
+msgid "%s of the first rows has a problem and will be skipped; the import reports every such row."
+msgid_plural "%s of the first rows have problems and will be skipped; the import reports every such row."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/admin/js/admin.js:695
+msgid "The first rows look good."
+msgstr ""
+
+#: src/blocks/pincode-checker/block.json
+msgctxt "block title"
+msgid "Pincode Checker"
+msgstr ""
+
+#: src/blocks/pincode-checker/block.json
+msgctxt "block description"
+msgid "Let shoppers check delivery to their pincode or postcode. On a product it controls Add to cart; elsewhere it is a general delivery check."
+msgstr ""
+
+#: src/blocks/pincode-checker/block.json
+msgctxt "block keyword"
+msgid "pincode"
+msgstr ""
+
+#: src/blocks/pincode-checker/block.json
+msgctxt "block keyword"
+msgid "postcode"
+msgstr ""
+
+#: src/blocks/pincode-checker/block.json
+msgctxt "block keyword"
+msgid "zip"
+msgstr ""
+
+#: src/blocks/pincode-checker/block.json
+msgctxt "block keyword"
+msgid "delivery"
 msgstr ""

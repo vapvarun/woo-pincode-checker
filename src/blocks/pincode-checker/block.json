@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wbpc/pincode-checker",
+	"title": "Pincode Checker",
+	"category": "woocommerce",
+	"icon": "location",
+	"description": "Let shoppers check delivery to their pincode or postcode. On a product it controls Add to cart; elsewhere it is a general delivery check.",
+	"keywords": [ "pincode", "postcode", "zip", "delivery" ],
+	"textdomain": "woo-pincode-checker",
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true, "padding": true }
+	},
+	"usesContext": [ "postId", "postType" ],
+	"editorScript": "file:./edit.js",
+	"render": "file:./render.php"
+}

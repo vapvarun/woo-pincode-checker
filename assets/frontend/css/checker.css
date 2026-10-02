@@ -1,0 +1,210 @@
+/**
+ * Pincode checker (storefront).
+ *
+ * Inherits the theme: colours bridge BuddyX -> Reign -> block-theme presets -> a neutral fallback,
+ * borders and surfaces derive from currentColor so light and dark themes both work. Logical
+ * properties only, so RTL needs no separate file.
+ */
+
+.wbpc-checker {
+	--wbpc-accent: var(--bx-color-accent, var(--reign-accent-color, var(--wp--preset--color--primary, var(--wp--preset--color--contrast, #2271b1))));
+	--wbpc-on-accent: var(--wp--preset--color--base, #fff);
+	--wbpc-success: #15803d;
+	--wbpc-danger: #b91c1c;
+	--wbpc-line: color-mix(in srgb, currentColor 18%, transparent);
+	--wbpc-soft: color-mix(in srgb, currentColor 5%, transparent);
+	--wbpc-radius: 6px;
+	--wbpc-tap: 40px;
+
+	margin-block: 1em;
+	padding: 12px 14px;
+	border: 1px solid var(--wbpc-line);
+	border-radius: var(--wbpc-radius);
+	background: var(--wbpc-soft);
+	font-size: 0.95em;
+	line-height: 1.45;
+}
+
+/* Inside the add-to-cart form, sit on our own line above/below the button row. */
+form.cart .wbpc-checker {
+	flex-basis: 100%;
+	width: 100%;
+}
+
+.wbpc-checker__title {
+	margin: 0 0 8px;
+	font-weight: 600;
+}
+
+.wbpc-checker__entry {
+	display: flex;
+	gap: 8px;
+}
+
+.wbpc-checker__entry[hidden],
+.wbpc-checker__change[hidden] {
+	display: none;
+}
+
+.wbpc-checker__input {
+	flex: 1 1 auto;
+	min-width: 0;
+	min-height: var(--wbpc-tap);
+	margin: 0;
+	padding-inline: 12px;
+	border: 1px solid var(--wbpc-line);
+	border-radius: var(--wbpc-radius);
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	text-transform: uppercase;
+}
+
+.wbpc-checker__input::placeholder {
+	text-transform: none;
+}
+
+.wbpc-checker__input[aria-invalid="true"] {
+	border-color: var(--wbpc-danger);
+}
+
+.wbpc-checker__button {
+	flex: 0 0 auto;
+	min-height: var(--wbpc-tap);
+	margin: 0;
+	padding-inline: 18px;
+	border: 0;
+	border-radius: var(--wbpc-radius);
+	background: var(--wbpc-accent);
+	color: var(--wbpc-on-accent);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.wbpc-checker__button:hover {
+	filter: brightness(0.92);
+}
+
+.wbpc-checker :focus-visible {
+	outline: 2px solid var(--wbpc-accent);
+	outline-offset: 2px;
+}
+
+.wbpc-checker__result:empty {
+	display: none;
+}
+
+.wbpc-checker__result {
+	margin-block-start: 8px;
+}
+
+.wbpc-checker__result p {
+	margin: 0 0 2px;
+}
+
+.wbpc-checker__headline {
+	font-weight: 600;
+}
+
+.wbpc-checker.is-available .wbpc-checker__headline::before,
+.wbpc-checker.is-unavailable .wbpc-checker__headline::before {
+	display: inline-block;
+	margin-inline-end: 6px;
+	font-weight: 700;
+}
+
+.wbpc-checker.is-available .wbpc-checker__headline {
+	color: var(--wbpc-success);
+}
+
+.wbpc-checker.is-available .wbpc-checker__headline::before {
+	content: "\2713"; /* check mark */
+}
+
+.wbpc-checker.is-unavailable .wbpc-checker__headline,
+.wbpc-checker.is-invalid .wbpc-checker__headline,
+.wbpc-checker__error {
+	color: var(--wbpc-danger);
+}
+
+.wbpc-checker.is-unavailable .wbpc-checker__headline::before {
+	content: "\2715"; /* cross */
+}
+
+.wbpc-checker__muted {
+	opacity: 0.75;
+}
+
+.wbpc-checker__nearby {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	margin-block-start: 6px;
+}
+
+.wbpc-checker__nearby p {
+	flex-basis: 100%;
+}
+
+.wbpc-checker__chip,
+.wbpc-checker__change,
+.wbpc-checker__link {
+	min-height: var(--wbpc-tap);
+	padding-inline: 12px;
+	border: 1px solid var(--wbpc-line);
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+.wbpc-checker__change {
+	margin-block-start: 8px;
+	border-radius: var(--wbpc-radius);
+}
+
+.wbpc-checker[aria-busy="true"] .wbpc-checker__button {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+/* Add to cart hidden by the "hide" setting. Ours, so WooCommerce's classes stay untouched. */
+.wbpc-atc-hidden {
+	display: none !important;
+}
+
+.wbpc-checker .screen-reader-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* Follow the THEME's dark mode, not the OS: a light theme on a dark-mode OS must keep dark text colours. */
+[data-bx-mode="dark"] .wbpc-checker,
+.is-dark-theme .wbpc-checker {
+	--wbpc-success: #4ade80;
+	--wbpc-danger: #f87171;
+}
+
+@media (max-width: 480px) {
+	.wbpc-checker__entry {
+		flex-direction: column;
+	}
+
+	.wbpc-checker__button {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wbpc-checker * {
+		transition: none !important;
+	}
+}
