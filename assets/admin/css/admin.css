@@ -202,6 +202,11 @@ fieldset.wbpc-field label {
 	color: var(--wbcom-muted);
 }
 
+/* Separate sentences shown together (see sentences() in admin.js). */
+.wbpc-sentence + .wbpc-sentence {
+	margin-inline-start: 0.3em;
+}
+
 .wbpc-status:empty {
 	min-height: 0;
 }

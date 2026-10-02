@@ -55,6 +55,20 @@ final class DeliveryDateService {
 	}
 
 	/**
+	 * PHP date format for a "Date format" setting value.
+	 *
+	 * @param string $key Setting value: locale, site, or a literal format.
+	 */
+	public static function date_format( string $key ): string {
+		if ( 'locale' === $key ) {
+			/* translators: Short delivery date in your language's order, e.g. "Sat, Oct 3". See https://www.php.net/manual/datetime.format.php */
+			return _x( 'D, M j', 'delivery date format', 'woo-pincode-checker' );
+		}
+
+		return 'site' === $key ? (string) get_option( 'date_format' ) : $key;
+	}
+
+	/**
 	 * Pure date arithmetic, covered by `wp wbpc self-test`.
 	 *
 	 * @param array             $rules Delivery settings (working_days, holidays, cutoff_time, processing_days, transit_counting).
@@ -94,18 +108,23 @@ final class DeliveryDateService {
 	}
 
 	/**
-	 * Shopper text for the estimate, per the "Show the estimate as" setting.
+	 * Text for an estimate, per the "Show the estimate as" setting, in the current locale.
 	 *
-	 * @param array{min:string, max:string} $dates Dates.
-	 * @param array                         $rules Delivery settings.
+	 * Orders pass $relative = false: "in 3 days" means nothing once the order is a week old,
+	 * so saved estimates are always shown as dates, rebuilt in the viewer's language.
+	 *
+	 * @param array{min:string, max:string} $dates    Dates (Y-m-d).
+	 * @param array|null                    $rules    Delivery settings; default the saved ones.
+	 * @param bool                          $relative Allow "in N days" (the "Days" display).
 	 */
-	private function label( array $dates, array $rules ): string {
-		$tz  = wp_timezone();
-		$min = new DateTimeImmutable( $dates['min'], $tz );
-		$max = new DateTimeImmutable( $dates['max'], $tz );
-		$fmt = (string) $rules['date_format'];
+	public function label( array $dates, ?array $rules = null, bool $relative = true ): string {
+		$rules = $rules ?? (array) $this->settings->get( 'delivery' );
+		$tz    = wp_timezone();
+		$min   = new DateTimeImmutable( $dates['min'], $tz );
+		$max   = new DateTimeImmutable( $dates['max'], $tz );
+		$fmt   = self::date_format( (string) $rules['date_format'] );
 
-		if ( 'days' === $rules['display'] ) {
+		if ( 'days' === $rules['display'] && $relative ) {
 			$today = new DateTimeImmutable( 'today', $tz );
 			$from  = (int) $today->diff( $min )->days;
 			$to    = (int) $today->diff( $max )->days;

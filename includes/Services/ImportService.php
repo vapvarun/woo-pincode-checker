@@ -152,6 +152,7 @@ final class ImportService {
 			'failed'     => 0,
 			'replaced'   => false,
 			'user'       => get_current_user_id(),
+			'locale'     => determine_locale(), // The importer's language: background chunks write messages in it.
 			'started'    => 0,
 			'heartbeat'  => time(),
 			'message'    => '',
@@ -222,9 +223,17 @@ final class ImportService {
 			return false;
 		}
 
+		// Background chunks run in the site language; messages and the failed-rows report should be
+		// in the language of the person who started the import.
+		$job      = $this->current();
+		$switched = is_array( $job ) && ! empty( $job['locale'] ) && switch_to_locale( (string) $job['locale'] );
+
 		try {
 			$this->chunk( $queue_next );
 		} finally {
+			if ( $switched ) {
+				restore_previous_locale();
+			}
 			delete_option( 'wbpc_import_lock' );
 		}
 

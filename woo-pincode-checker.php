@@ -48,7 +48,7 @@ spl_autoload_register(
 // Shared Wbcom settings shell: the newest bundled copy across active Wbcom plugins is the one loaded.
 if ( file_exists( WBPC_DIR . 'lib/wbcom-settings/loader.php' ) ) {
 	require_once WBPC_DIR . 'lib/wbcom-settings/loader.php';
-	wbcom_settings_register( '1.0.4', WBPC_DIR . 'lib/wbcom-settings/class-wbcom-settings-page.php' );
+	wbcom_settings_register( '1.0.5', WBPC_DIR . 'lib/wbcom-settings/class-wbcom-settings-page.php' );
 }
 
 add_action(

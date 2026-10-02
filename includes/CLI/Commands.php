@@ -98,13 +98,14 @@ final class Commands {
 		);
 		$bar->finish();
 
-		$summary = sprintf( 'Rows: %d. Added: %d. Updated: %d. Skipped (already existed): %d. Failed: %d.', $job['total'] ?? 0, $job['added'] ?? 0, $job['updated'] ?? 0, $job['skipped'] ?? 0, $job['failed'] ?? 0 );
+		/* translators: 1: rows in the file, 2: added, 3: updated, 4: skipped because they already existed, 5: failed. */
+		$summary = sprintf( __( 'Rows: %1$s. Added: %2$s. Updated: %3$s. Skipped (already existed): %4$s. Failed: %5$s.', 'woo-pincode-checker' ), number_format_i18n( (int) ( $job['total'] ?? 0 ) ), number_format_i18n( (int) ( $job['added'] ?? 0 ) ), number_format_i18n( (int) ( $job['updated'] ?? 0 ) ), number_format_i18n( (int) ( $job['skipped'] ?? 0 ) ), number_format_i18n( (int) ( $job['failed'] ?? 0 ) ) );
 
 		if ( 'done' !== ( $job['status'] ?? '' ) ) {
-			WP_CLI::error( ( $job['message'] ?? 'Import failed.' ) . ' ' . $summary );
+			WP_CLI::error( ( $job['message'] ?? __( 'Import failed.', 'woo-pincode-checker' ) ) . "\n" . $summary );
 		}
 		if ( ! empty( $job['failed'] ) ) {
-			WP_CLI::warning( 'Some rows were rejected. Download the error report from WB Plugins > Pincode Checker > Import / Export.' );
+			WP_CLI::warning( __( 'Some rows were rejected. Download the error report from WB Plugins > Pincode Checker > Import / Export.', 'woo-pincode-checker' ) );
 		}
 
 		WP_CLI::success( $summary );
@@ -150,7 +151,8 @@ final class Commands {
 
 		if ( isset( $args[0] ) ) {
 			fclose( $out ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
-			WP_CLI::success( sprintf( 'Exported %d areas to %s.', $count, $args[0] ) );
+			/* translators: 1: number of areas, 2: file path. */
+			WP_CLI::success( sprintf( _n( 'Exported %1$s area to %2$s.', 'Exported %1$s areas to %2$s.', $count, 'woo-pincode-checker' ), number_format_i18n( $count ), $args[0] ) );
 		}
 	}
 
@@ -209,7 +211,8 @@ final class Commands {
 		}
 
 		$inserted = Plugin::areas()->insert_many( $rows );
-		WP_CLI::success( sprintf( 'Inserted %d areas (%d skipped as duplicates). Total: %d.', $inserted, count( $rows ) - $inserted, Plugin::areas()->count() ) );
+		/* translators: 1: areas inserted, 2: rows skipped as duplicates, 3: total areas now. */
+		WP_CLI::success( sprintf( __( 'Inserted: %1$s. Skipped as duplicates: %2$s. Total areas: %3$s.', 'woo-pincode-checker' ), number_format_i18n( $inserted ), number_format_i18n( count( $rows ) - $inserted ), number_format_i18n( Plugin::areas()->count() ) ) );
 	}
 
 	/**
@@ -284,9 +287,10 @@ final class Commands {
 		$eq( 'same-day delivery', $dates( $rules, 0, 0, '2026-10-05 13:59' ), '2026-10-05 / 2026-10-05' );
 
 		if ( $fail ) {
-			WP_CLI::error( "Self-test failed:\n" . implode( "\n", $fail ) );
+			WP_CLI::error( __( 'Self-test failed:', 'woo-pincode-checker' ) . "\n" . implode( "\n", $fail ) );
 		}
 
-		WP_CLI::success( '30 checks passed.' );
+		/* translators: %s: number of checks. */
+		WP_CLI::success( sprintf( _n( '%s check passed.', '%s checks passed.', 30, 'woo-pincode-checker' ), number_format_i18n( 30 ) ) );
 	}
 }

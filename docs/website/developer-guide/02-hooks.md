@@ -15,6 +15,7 @@ The full reference with parameters and examples is in the plugin repository: [do
 | `wbpc_check_matched` | Action | A check matched an area |
 | `wbpc_check_not_matched` | Action | A check matched no area |
 | `wbpc_estimate` | Filter | Change a delivery estimate (`min`, `max`, `label`) |
+| `wbpc_shipping_estimate` | Filter | Change or hide the estimate for one shipping method (none for local pickup by default) |
 | `wbpc_is_product_excluded` | Filter | Turn the checker off or on for a product |
 | `wbpc_before_area_save` | Filter | Change or reject (return `WP_Error`) an area before it is written |
 | `wbpc_area_saved` | Action | An area was created or updated |

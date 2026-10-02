@@ -117,7 +117,7 @@
 		this.result.textContent = '';
 		this.result.appendChild( line( 'wbpc-checker__muted', cfg.i18n.checking ) );
 
-		var query = new URLSearchParams( { postcode: postcode, country: cfg.country, product_id: String( this.product ) } );
+		var query = new URLSearchParams( { postcode: postcode, country: cfg.country, product_id: String( this.product ), locale: cfg.locale || '' } );
 
 		window.fetch( cfg.endpoint + ( cfg.endpoint.indexOf( '?' ) > -1 ? '&' : '?' ) + query.toString(), { credentials: 'same-origin' } )
 			.then( function ( response ) {

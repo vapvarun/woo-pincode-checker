@@ -10,7 +10,7 @@ Guideline doc: how to build in this plugin. Change history lives in git, not her
 | Prefix | `wbpc` (options, hooks, CSS, JS, REST `wbpc/v1`, CLI `wp wbpc`, table `{prefix}wbpc_areas`) |
 | Namespace | `Wbcom\PincodeChecker` (PSR-4 from `includes/`) |
 | Requires | PHP 8.1, WP 6.5, WooCommerce 8.0 (declared HPOS + Cart/Checkout blocks compatible) |
-| Admin | WB Plugins > Pincode Checker on the shared shell `lib/wbcom-settings` (vendored, 1.0.4) |
+| Admin | WB Plugins > Pincode Checker on the shared shell `lib/wbcom-settings` (vendored, 1.0.5) |
 
 ## Layers (where code goes)
 - `Core/` - bootstrap (`Plugin` = lazy service getters, the container), `Installer` (dbDelta, `DB_VERSION`), `Uninstaller`.

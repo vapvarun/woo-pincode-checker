@@ -53,7 +53,7 @@ Rebuilt from the ground up: faster, works with any postal format, the Checkout b
 
 * New      - Delivery areas as exact postcodes, prefixes and numeric ranges, per country, with blocked exceptions.
 * New      - Delivery date engine with processing days, same-day cut-off, working days, holidays and per-category extra days.
-* New      - Delivery estimate on the product page, next to each shipping option, on orders and in order emails.
+* New      - Delivery estimate on the product page, next to each delivery option (not local pickup), on orders and in order emails.
 * New      - "Pincode rate" shipping method that charges each area's shipping fee.
 * New      - Cash on delivery offered only where an area allows it, with an optional per-area COD fee.
 * New      - Checkout Block support, including server-side blocking of orders to areas you do not serve.
@@ -66,10 +66,12 @@ Rebuilt from the ground up: faster, works with any postal format, the Checkout b
 * Improve  - Add to cart control works with variable products.
 * Improve  - New admin screen under WB Plugins, usable by Shop Managers.
 * Improve  - Lookups stay fast with over 100,000 delivery areas.
+* Improve  - Translation ready: dates, prices and counts follow the site language and WooCommerce price format, and saved order estimates show in the reader's language.
 * Fix      - Saving one settings tab no longer resets another.
 * Fix      - Bulk add and import no longer time out on large lists.
 * Fix      - Bulk delete works.
 * Fix      - Removed the PHP 8.4 fgetcsv() deprecation notice.
 * Dev      - Requires PHP 8.1, WordPress 6.5 and WooCommerce 8.0.
-* Dev      - New hooks for extensions; see docs/HOOKS.md.
+* Dev      - New hooks for extensions, including wbpc_shipping_estimate per shipping method; see docs/HOOKS.md.
+* Compat   - WPML and Polylang: display texts, the COD fee name and the Pincode rate method name are registered for translation.
 * Compat   - Declared compatible with WooCommerce HPOS and Cart/Checkout blocks.

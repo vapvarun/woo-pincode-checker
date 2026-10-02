@@ -38,9 +38,9 @@ final class AreasTab {
 					__( 'Type', 'woo-pincode-checker' ),
 					array(
 						''       => __( 'All types', 'woo-pincode-checker' ),
-						'exact'  => __( 'Exact', 'woo-pincode-checker' ),
-						'prefix' => __( 'Prefix', 'woo-pincode-checker' ),
-						'range'  => __( 'Range', 'woo-pincode-checker' ),
+						'exact'  => _x( 'Exact', 'postcode area type', 'woo-pincode-checker' ),
+						'prefix' => _x( 'Prefix', 'postcode area type', 'woo-pincode-checker' ),
+						'range'  => _x( 'Range', 'postcode area type', 'woo-pincode-checker' ),
 					)
 				);
 				$this->select(
@@ -48,8 +48,8 @@ final class AreasTab {
 					__( 'Status', 'woo-pincode-checker' ),
 					array(
 						''            => __( 'All statuses', 'woo-pincode-checker' ),
-						'serviceable' => __( 'Serviceable', 'woo-pincode-checker' ),
-						'blocked'     => __( 'Blocked', 'woo-pincode-checker' ),
+						'serviceable' => _x( 'Serviceable', 'area status', 'woo-pincode-checker' ),
+						'blocked'     => _x( 'Blocked', 'area status', 'woo-pincode-checker' ),
 					)
 				);
 				$this->select(
@@ -305,6 +305,7 @@ final class AreasTab {
 	 * @param string $name    Name.
 	 * @param string $label   Visually hidden label.
 	 * @param array  $options value => text.
+	 * @param string $form    Id of the form it belongs to when placed outside it (form attribute).
 	 */
 	private function select( string $name, string $label, array $options, string $form = '' ): void {
 		?>

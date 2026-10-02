@@ -110,7 +110,8 @@
     },
     {
       "key": "_wbpc_estimate",
-      "shape": "{min,max,label}"
+      "shape": "{min,max,label}",
+      "note": "Saved per chosen shipping method (none for local pickup, filter wbpc_shipping_estimate). Displayed from min/max in the reader's locale; label is the checkout-time text, kept for developers."
     }
   ],
   "cookies": [
@@ -128,7 +129,13 @@
         "methods": [
           "GET"
         ],
-        "permission": "public, rate limited (wbpc_rate_limit)"
+        "permission": "public, rate limited (wbpc_rate_limit)",
+        "args": [
+          "postcode",
+          "country",
+          "product_id",
+          "locale"
+        ]
       },
       {
         "route": "/areas",
@@ -248,7 +255,7 @@
     {
       "name": "wbcom-settings",
       "path": "lib/wbcom-settings",
-      "version": "1.0.4"
+      "version": "1.0.5"
     },
     {
       "name": "lucide",

@@ -14,11 +14,17 @@ use Wbcom\PincodeChecker\Core\Plugin;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Cart and checkout: appended to every shipping rate label, which the classic templates and the
+ * Cart and checkout: appended to each delivery rate's label (not local pickup), which the classic templates and the
  * Cart/Checkout blocks both render with no extra script. Order: saved once at checkout, so the
  * date the customer was promised never changes afterwards.
  */
 final class DeliveryEstimates {
+
+	/**
+	 * Shipping methods where the customer collects the order: "arrives on" does not apply.
+	 * local_pickup = classic checkout, pickup_location = Checkout block local pickup.
+	 */
+	private const PICKUP_METHODS = array( 'local_pickup', 'pickup_location' );
 
 	/**
 	 * Hook in.
@@ -68,9 +74,14 @@ final class DeliveryEstimates {
 		}
 
 		foreach ( $rates as $rate ) {
+			$rate_estimate = $this->for_method( $estimate, (string) $rate->get_method_id(), (int) $rate->get_instance_id() );
+			if ( ! $rate_estimate ) {
+				continue;
+			}
+
 			$rate->add_meta_data( 'wbpc_base_label', $rate->get_label() );
 			/* translators: 1: shipping method name, 2: delivery estimate such as "Oct 8 to Oct 10". */
-			$rate->set_label( sprintf( __( '%1$s (arrives %2$s)', 'woo-pincode-checker' ), $rate->get_label(), $estimate['label'] ) );
+			$rate->set_label( sprintf( __( '%1$s (arrives %2$s)', 'woo-pincode-checker' ), $rate->get_label(), $rate_estimate['label'] ) );
 		}
 
 		return $rates;
@@ -108,9 +119,41 @@ final class DeliveryEstimates {
 		$order->update_meta_data( '_wbpc_postcode', strtoupper( $country . ':' . $postcode ) );
 
 		$estimate = $this->for_destination( (string) $country, (string) $postcode );
+
+		// The promise follows the shipping method the customer chose (none for local pickup).
+		$shipping = current( $order->get_shipping_methods() );
+		if ( $estimate && $shipping ) {
+			$estimate = $this->for_method( $estimate, (string) $shipping->get_method_id(), (int) $shipping->get_instance_id() );
+		}
+
 		if ( $estimate ) {
 			$order->update_meta_data( '_wbpc_estimate', $estimate );
+		} else {
+			$order->delete_meta_data( '_wbpc_estimate' );
 		}
+	}
+
+	/**
+	 * The estimate for one shipping method: none for pickup, otherwise filterable so a store can
+	 * shift it (express) or remove it for a method.
+	 *
+	 * @param array  $estimate    Estimate for the destination (min, max, label).
+	 * @param string $method_id   Shipping method id, e.g. flat_rate.
+	 * @param int    $instance_id Shipping method instance id (per zone).
+	 */
+	private function for_method( array $estimate, string $method_id, int $instance_id ): ?array {
+		$estimate = in_array( $method_id, self::PICKUP_METHODS, true ) ? null : $estimate;
+
+		/**
+		 * Filters the delivery estimate shown for a shipping method and saved on the order.
+		 *
+		 * @param array|null $estimate    Estimate (min, max as Y-m-d, label), or null for none.
+		 * @param string     $method_id   Shipping method id.
+		 * @param int        $instance_id Shipping method instance id.
+		 */
+		$estimate = apply_filters( 'wbpc_shipping_estimate', $estimate, $method_id, $instance_id );
+
+		return is_array( $estimate ) ? $estimate : null;
 	}
 
 	/**
@@ -119,10 +162,11 @@ final class DeliveryEstimates {
 	 * @param \WC_Order $order Order.
 	 */
 	public function order_details( \WC_Order $order ): void {
-		$estimate = $order->get_meta( '_wbpc_estimate' );
+		$label = $this->order_label( $order );
 
-		if ( is_array( $estimate ) && $this->shows( 'order' ) ) {
-			printf( '<p class="wbpc-order-estimate"><strong>%s</strong> %s</p>', esc_html__( 'Estimated delivery:', 'woo-pincode-checker' ), esc_html( (string) $estimate['label'] ) );
+		if ( '' !== $label && $this->shows( 'order' ) ) {
+			/* translators: %s: delivery estimate, e.g. "Sat, Oct 3 to Mon, Oct 5". */
+			printf( '<p class="wbpc-order-estimate">%s</p>', esc_html( sprintf( __( 'Estimated delivery: %s', 'woo-pincode-checker' ), $label ) ) );
 		}
 	}
 
@@ -134,9 +178,15 @@ final class DeliveryEstimates {
 	public function admin_order( \WC_Order $order ): void {
 		$estimate = $order->get_meta( '_wbpc_estimate' );
 
-		if ( is_array( $estimate ) ) {
-			/* translators: 1: estimate label, 2: earliest date Y-m-d, 3: latest date Y-m-d. */
-			printf( '<p><strong>%s</strong><br>%s</p>', esc_html__( 'Promised delivery', 'woo-pincode-checker' ), esc_html( sprintf( __( '%1$s (%2$s to %3$s)', 'woo-pincode-checker' ), $estimate['label'], $estimate['min'], $estimate['max'] ) ) );
+		if ( is_array( $estimate ) && isset( $estimate['min'], $estimate['max'] ) ) {
+			// Staff see full dates in the site's date format and their own language.
+			$format = (string) get_option( 'date_format' );
+			$min    = wp_date( $format, (int) strtotime( $estimate['min'] . ' 12:00' ) );
+			$max    = wp_date( $format, (int) strtotime( $estimate['max'] . ' 12:00' ) );
+			/* translators: 1: earliest delivery date, 2: latest delivery date. */
+			$dates = $estimate['min'] === $estimate['max'] ? $max : sprintf( __( '%1$s to %2$s', 'woo-pincode-checker' ), $min, $max );
+
+			printf( '<p><strong>%s</strong><br>%s</p>', esc_html__( 'Promised delivery', 'woo-pincode-checker' ), esc_html( $dates ) );
 		}
 	}
 
@@ -148,18 +198,35 @@ final class DeliveryEstimates {
 	 * @param bool      $plain_text    Plain-text email.
 	 */
 	public function email( $order, $sent_to_admin, $plain_text ): void {
-		$estimate = $order instanceof \WC_Order ? $order->get_meta( '_wbpc_estimate' ) : null;
+		$label = $order instanceof \WC_Order ? $this->order_label( $order ) : '';
 
-		if ( ! is_array( $estimate ) || ! $this->shows( 'emails' ) ) {
+		if ( '' === $label || ! $this->shows( 'emails' ) ) {
 			return;
 		}
+
+		/* translators: %s: delivery estimate, e.g. "Sat, Oct 3 to Mon, Oct 5". */
+		$text = sprintf( __( 'Estimated delivery: %s', 'woo-pincode-checker' ), $label );
 
 		if ( $plain_text ) {
-			echo "\n" . esc_html__( 'Estimated delivery:', 'woo-pincode-checker' ) . ' ' . esc_html( (string) $estimate['label'] ) . "\n";
+			echo "\n" . esc_html( $text ) . "\n";
 			return;
 		}
 
-		printf( '<p style="margin:0 0 16px;"><strong>%s</strong> %s</p>', esc_html__( 'Estimated delivery:', 'woo-pincode-checker' ), esc_html( (string) $estimate['label'] ) );
+		printf( '<p style="margin:0 0 16px;">%s</p>', esc_html( $text ) );
+	}
+
+	/**
+	 * The saved promise as text, built now: in the language of whoever is reading (customer,
+	 * staff, or the email's locale) and always as dates, since "in 3 days" goes stale.
+	 *
+	 * @param \WC_Order $order Order.
+	 */
+	private function order_label( \WC_Order $order ): string {
+		$estimate = $order->get_meta( '_wbpc_estimate' );
+
+		return is_array( $estimate ) && isset( $estimate['min'], $estimate['max'] )
+			? Plugin::dates()->label( $estimate, null, false )
+			: '';
 	}
 
 	/**

@@ -10,6 +10,8 @@ declare( strict_types = 1 );
 namespace Wbcom\PincodeChecker\Admin\Tabs;
 
 use Wbcom\PincodeChecker\Admin\Form;
+use Wbcom\PincodeChecker\Core\Plugin;
+use Wbcom\PincodeChecker\Services\DeliveryDateService;
 use Wbcom_Settings_Page;
 
 defined( 'ABSPATH' ) || exit;
@@ -23,11 +25,29 @@ final class DeliveryTab {
 	 * Render.
 	 */
 	public function render(): void {
+		global $wp_locale;
+
 		$form    = new Form( 'delivery' );
 		$sample  = strtotime( '+3 days' );
-		$formats = array();
+		$formats = array(
+			/* translators: %s: a sample date in the short format for the site language. */
+			'locale' => sprintf( __( 'Short date for your language (%s)', 'woo-pincode-checker' ), wp_date( DeliveryDateService::date_format( 'locale' ), $sample ) ),
+			/* translators: %s: a sample date in the site's date format (Settings > General). */
+			'site'   => sprintf( __( 'Site date format (%s)', 'woo-pincode-checker' ), wp_date( DeliveryDateService::date_format( 'site' ), $sample ) ),
+		);
 		foreach ( array( 'D, M j', 'M j', 'j M', 'l, F j', 'd/m', 'm/d' ) as $format ) {
 			$formats[ $format ] = wp_date( $format, $sample );
+		}
+
+		// Examples for "Show the estimate as", built by the same code that writes the real text.
+		$rules    = (array) Plugin::settings()->get( 'delivery' );
+		$example  = array(
+			'min' => wp_date( 'Y-m-d', strtotime( '+3 days' ) ),
+			'max' => wp_date( 'Y-m-d', strtotime( '+5 days' ) ),
+		);
+		$examples = array();
+		foreach ( array( 'range', 'date', 'days' ) as $display ) {
+			$examples[ $display ] = Plugin::dates()->label( $example, array( 'display' => $display ) + $rules );
 		}
 
 		$form->open();
@@ -73,13 +93,14 @@ final class DeliveryTab {
 			'working_days',
 			__( 'Working days', 'woo-pincode-checker' ),
 			array(
-				'1' => __( 'Monday', 'woo-pincode-checker' ),
-				'2' => __( 'Tuesday', 'woo-pincode-checker' ),
-				'3' => __( 'Wednesday', 'woo-pincode-checker' ),
-				'4' => __( 'Thursday', 'woo-pincode-checker' ),
-				'5' => __( 'Friday', 'woo-pincode-checker' ),
-				'6' => __( 'Saturday', 'woo-pincode-checker' ),
-				'7' => __( 'Sunday', 'woo-pincode-checker' ),
+				// ISO day numbers (1 = Monday); names come from WordPress core's translations.
+				'1' => $wp_locale->get_weekday( 1 ),
+				'2' => $wp_locale->get_weekday( 2 ),
+				'3' => $wp_locale->get_weekday( 3 ),
+				'4' => $wp_locale->get_weekday( 4 ),
+				'5' => $wp_locale->get_weekday( 5 ),
+				'6' => $wp_locale->get_weekday( 6 ),
+				'7' => $wp_locale->get_weekday( 0 ),
 			)
 		);
 		$form->select(
@@ -98,9 +119,12 @@ final class DeliveryTab {
 			'display',
 			__( 'Show the estimate as', 'woo-pincode-checker' ),
 			array(
-				'range' => __( 'A date range - Arrives Oct 8 to Oct 10', 'woo-pincode-checker' ),
-				'date'  => __( 'The latest date - Arrives by Oct 10', 'woo-pincode-checker' ),
-				'days'  => __( 'Days - Arrives in 3-5 days', 'woo-pincode-checker' ),
+				/* translators: %s: example estimate, e.g. "Oct 8 to Oct 10". */
+				'range' => sprintf( __( 'A date range (%s)', 'woo-pincode-checker' ), $examples['range'] ),
+				/* translators: %s: example estimate, e.g. "by Oct 10". */
+				'date'  => sprintf( __( 'The latest date (%s)', 'woo-pincode-checker' ), $examples['date'] ),
+				/* translators: %s: example estimate, e.g. "in 3-5 days". */
+				'days'  => sprintf( __( 'Days (%s)', 'woo-pincode-checker' ), $examples['days'] ),
 			)
 		);
 		$form->select( 'date_format', __( 'Date format', 'woo-pincode-checker' ), $formats );

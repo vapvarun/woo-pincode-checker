@@ -50,9 +50,12 @@ final class SettingsPage {
 			'wbpc-admin',
 			'wbpcAdmin',
 			array(
-				'currency'  => html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ),
-				'decimals'  => wc_get_price_decimals(),
-				'errorsUrl' => DownloadHandler::url( 'wbpc_import_errors' ),
+				'currency'    => html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ),
+				'currencyPos' => (string) get_option( 'woocommerce_currency_pos', 'left' ),
+				'decimals'    => wc_get_price_decimals(),
+				'decimalSep'  => wc_get_price_decimal_separator(),
+				'thousandSep' => wc_get_price_thousand_separator(),
+				'errorsUrl'   => DownloadHandler::url( 'wbpc_import_errors' ),
 			)
 		);
 	}

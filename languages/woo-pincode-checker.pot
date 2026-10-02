@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-02T08:45:06+00:00\n"
+"POT-Creation-Date: 2026-10-02T12:43:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: woo-pincode-checker\n"
@@ -52,71 +52,71 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:77
-#: includes/Admin/SettingsPage.php:78
-#: includes/Admin/SettingsPage.php:120
+#: includes/Admin/SettingsPage.php:80
+#: includes/Admin/SettingsPage.php:81
+#: includes/Admin/SettingsPage.php:123
 msgid "Pincode Checker"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:79
+#: includes/Admin/SettingsPage.php:82
 msgid "Delivery areas and dates"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:80
+#: includes/Admin/SettingsPage.php:83
 msgid "Pincode Checker sections"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:100
-#: includes/Admin/SettingsPage.php:101
+#: includes/Admin/SettingsPage.php:103
+#: includes/Admin/SettingsPage.php:104
 msgid "WB Plugins"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:123
+#: includes/Admin/SettingsPage.php:126
 msgid "Overview"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:128
+#: includes/Admin/SettingsPage.php:131
 msgid "Service Areas"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:133
+#: includes/Admin/SettingsPage.php:136
 msgid "Import / Export"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:140
-#: includes/Admin/SettingsPage.php:238
+#: includes/Admin/SettingsPage.php:143
+#: includes/Admin/SettingsPage.php:241
 msgid "Settings"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:143
+#: includes/Admin/SettingsPage.php:146
 msgid "General"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:148
+#: includes/Admin/SettingsPage.php:151
 msgid "Delivery Dates"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:153
+#: includes/Admin/SettingsPage.php:156
 msgid "Category Rules"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:158
+#: includes/Admin/SettingsPage.php:161
 msgid "Checkout and COD"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:163
+#: includes/Admin/SettingsPage.php:166
 msgid "Display and Messages"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:170
+#: includes/Admin/SettingsPage.php:173
 msgid "Help"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:173
+#: includes/Admin/SettingsPage.php:176
 msgid "Tools"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:178
+#: includes/Admin/SettingsPage.php:181
 msgid "FAQ"
 msgstr ""
 
@@ -149,19 +149,22 @@ msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:41
 #: includes/Admin/Tabs/ImportTab.php:148
-#: assets/admin/js/admin.js:180
+#: assets/admin/js/admin.js:45
+msgctxt "postcode area type"
 msgid "Exact"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:42
 #: includes/Admin/Tabs/ImportTab.php:149
-#: assets/admin/js/admin.js:180
+#: assets/admin/js/admin.js:46
+msgctxt "postcode area type"
 msgid "Prefix"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:43
 #: includes/Admin/Tabs/ImportTab.php:150
-#: assets/admin/js/admin.js:180
+#: assets/admin/js/admin.js:47
+msgctxt "postcode area type"
 msgid "Range"
 msgstr ""
 
@@ -169,7 +172,7 @@ msgstr ""
 #: includes/Admin/Tabs/AreasTab.php:124
 #: includes/Admin/Tabs/AreasTab.php:204
 #: includes/Admin/Tabs/ImportTab.php:152
-#: assets/admin/js/admin.js:188
+#: assets/admin/js/admin.js:224
 msgid "Status"
 msgstr ""
 
@@ -180,20 +183,22 @@ msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:51
 #: includes/Admin/Tabs/ImportTab.php:155
-#: assets/admin/js/admin.js:189
+#: assets/admin/js/admin.js:50
+msgctxt "area status"
 msgid "Serviceable"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:52
 #: includes/Admin/Tabs/ImportTab.php:156
-#: assets/admin/js/admin.js:189
+#: assets/admin/js/admin.js:51
+msgctxt "area status"
 msgid "Blocked"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:57
 #: includes/Admin/Tabs/AreasTab.php:248
 #: includes/Admin/Tabs/CheckoutTab.php:35
-#: assets/admin/js/admin.js:586
+#: assets/admin/js/admin.js:635
 msgid "Cash on delivery"
 msgstr ""
 
@@ -214,7 +219,7 @@ msgstr ""
 #: includes/Admin/Tabs/AreasTab.php:194
 #: includes/Admin/Tabs/ImportTab.php:137
 #: includes/Admin/Tabs/OverviewTab.php:84
-#: assets/admin/js/admin.js:181
+#: assets/admin/js/admin.js:216
 msgid "Country"
 msgstr ""
 
@@ -282,30 +287,29 @@ msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:118
 #: includes/Admin/Tabs/ImportTab.php:71
-#: assets/admin/js/admin.js:180
-#: assets/admin/js/admin.js:685
+#: assets/admin/js/admin.js:215
+#: assets/admin/js/admin.js:741
 msgid "Code"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:120
-#: assets/admin/js/admin.js:182
+#: assets/admin/js/admin.js:217
 msgid "City / State"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:121
-#: assets/admin/js/admin.js:183
-#: assets/admin/js/admin.js:584
+#: assets/admin/js/admin.js:218
+#: assets/admin/js/admin.js:633
 msgid "Delivery days"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:122
-#: assets/admin/js/admin.js:184
+#: assets/admin/js/admin.js:219
 msgid "Shipping"
 msgstr ""
 
-#. translators: %s: COD fee.
 #: includes/Admin/Tabs/AreasTab.php:123
-#: assets/admin/js/admin.js:186
+#: assets/admin/js/admin.js:220
 msgid "COD"
 msgstr ""
 
@@ -348,7 +352,7 @@ msgstr ""
 #: includes/Admin/Tabs/AreasTab.php:173
 #: includes/Admin/Tabs/OverviewTab.php:82
 #: includes/Admin/Tabs/OverviewTab.php:83
-#: assets/admin/js/admin.js:362
+#: assets/admin/js/admin.js:407
 msgid "Postcode"
 msgstr ""
 
@@ -366,7 +370,7 @@ msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:211
 #: includes/Admin/Tabs/ImportTab.php:72
-#: assets/admin/js/admin.js:686
+#: assets/admin/js/admin.js:742
 msgid "City"
 msgstr ""
 
@@ -379,7 +383,7 @@ msgid "Delivery days (min)"
 msgstr ""
 
 #: includes/Admin/Tabs/AreasTab.php:221
-#: assets/admin/js/admin.js:584
+#: assets/admin/js/admin.js:633
 msgid "Store default"
 msgstr ""
 
@@ -522,144 +526,134 @@ msgstr ""
 msgid "Open shipping zones"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:35
+#. translators: %s: a sample date in the short format for the site language.
+#: includes/Admin/Tabs/DeliveryTab.php:34
+#, php-format
+msgid "Short date for your language (%s)"
+msgstr ""
+
+#. translators: %s: a sample date in the site's date format (Settings > General).
+#: includes/Admin/Tabs/DeliveryTab.php:36
+#, php-format
+msgid "Site date format (%s)"
+msgstr ""
+
+#: includes/Admin/Tabs/DeliveryTab.php:55
 #: includes/Admin/Tabs/DisplayTab.php:40
 msgid "Delivery estimate"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:35
+#: includes/Admin/Tabs/DeliveryTab.php:55
 msgid "How the arrival date is worked out. Each area can set its own delivery days; these apply when it does not."
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:36
+#: includes/Admin/Tabs/DeliveryTab.php:56
 msgid "Show delivery dates"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:39
+#: includes/Admin/Tabs/DeliveryTab.php:59
 msgid "Default delivery days (min)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:49
+#: includes/Admin/Tabs/DeliveryTab.php:69
 msgid "Default delivery days (max)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:59
+#: includes/Admin/Tabs/DeliveryTab.php:79
 msgid "Processing days"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:61
+#: includes/Admin/Tabs/DeliveryTab.php:81
 msgid "Working days you need before an order ships."
 msgstr ""
 
 #. translators: %s: site timezone.
-#: includes/Admin/Tabs/DeliveryTab.php:68
+#: includes/Admin/Tabs/DeliveryTab.php:88
 msgid "Same-day cut-off"
 msgstr ""
 
 #. translators: %s: site timezone.
-#: includes/Admin/Tabs/DeliveryTab.php:68
+#: includes/Admin/Tabs/DeliveryTab.php:88
 #, php-format
 msgid "Orders after this time (%s) start processing the next working day."
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:71
+#: includes/Admin/Tabs/DeliveryTab.php:91
 msgid "Working days and holidays"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:74
+#: includes/Admin/Tabs/DeliveryTab.php:94
 msgid "Working days"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:76
-msgid "Monday"
-msgstr ""
-
-#: includes/Admin/Tabs/DeliveryTab.php:77
-msgid "Tuesday"
-msgstr ""
-
-#: includes/Admin/Tabs/DeliveryTab.php:78
-msgid "Wednesday"
-msgstr ""
-
-#: includes/Admin/Tabs/DeliveryTab.php:79
-msgid "Thursday"
-msgstr ""
-
-#: includes/Admin/Tabs/DeliveryTab.php:80
-msgid "Friday"
-msgstr ""
-
-#: includes/Admin/Tabs/DeliveryTab.php:81
-msgid "Saturday"
-msgstr ""
-
-#: includes/Admin/Tabs/DeliveryTab.php:82
-msgid "Sunday"
-msgstr ""
-
-#: includes/Admin/Tabs/DeliveryTab.php:87
+#: includes/Admin/Tabs/DeliveryTab.php:108
 msgid "Count delivery days as"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:89
+#: includes/Admin/Tabs/DeliveryTab.php:110
 msgid "Working days only (skip days off and holidays)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:90
+#: includes/Admin/Tabs/DeliveryTab.php:111
 msgid "Calendar days (couriers deliver every day)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:93
+#: includes/Admin/Tabs/DeliveryTab.php:114
 msgid "Holidays"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:93
+#: includes/Admin/Tabs/DeliveryTab.php:114
 msgid "One date per line as YYYY-MM-DD, for example 2026-12-25. Past dates are removed automatically."
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:96
+#: includes/Admin/Tabs/DeliveryTab.php:117
 msgid "How dates look"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:99
+#: includes/Admin/Tabs/DeliveryTab.php:120
 msgid "Show the estimate as"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:101
-msgid "A date range - Arrives Oct 8 to Oct 10"
+#. translators: %s: example estimate, e.g. "Oct 8 to Oct 10".
+#: includes/Admin/Tabs/DeliveryTab.php:123
+#, php-format
+msgid "A date range (%s)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:102
-msgid "The latest date - Arrives by Oct 10"
+#. translators: %s: example estimate, e.g. "by Oct 10".
+#: includes/Admin/Tabs/DeliveryTab.php:125
+#, php-format
+msgid "The latest date (%s)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:103
-msgid "Days - Arrives in 3-5 days"
+#. translators: %s: example estimate, e.g. "in 3-5 days".
+#: includes/Admin/Tabs/DeliveryTab.php:127
+#, php-format
+msgid "Days (%s)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:106
+#: includes/Admin/Tabs/DeliveryTab.php:130
 msgid "Date format"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:109
+#: includes/Admin/Tabs/DeliveryTab.php:133
 msgid "Show the estimate on"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:111
+#: includes/Admin/Tabs/DeliveryTab.php:135
 #: includes/Admin/Tabs/GeneralTab.php:38
 msgid "Product page"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:112
+#: includes/Admin/Tabs/DeliveryTab.php:136
 msgid "Cart and checkout (next to each shipping option)"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:113
+#: includes/Admin/Tabs/DeliveryTab.php:137
 msgid "Order details"
 msgstr ""
 
-#: includes/Admin/Tabs/DeliveryTab.php:114
+#: includes/Admin/Tabs/DeliveryTab.php:138
 msgid "Order emails"
 msgstr ""
 
@@ -696,7 +690,7 @@ msgid "Leave a message empty to restore its default."
 msgstr ""
 
 #: includes/Admin/Tabs/DisplayTab.php:39
-#: assets/admin/js/admin.js:566
+#: assets/admin/js/admin.js:615
 msgid "Delivery available"
 msgstr ""
 
@@ -721,7 +715,7 @@ msgid "Shown when Add to cart needs a pincode check first."
 msgstr ""
 
 #: includes/Admin/Tabs/DisplayTab.php:44
-#: assets/admin/js/admin.js:585
+#: assets/admin/js/admin.js:634
 msgid "Shipping fee"
 msgstr ""
 
@@ -992,13 +986,13 @@ msgid "First rows of the file"
 msgstr ""
 
 #: includes/Admin/Tabs/ImportTab.php:70
-#: assets/admin/js/admin.js:684
+#: assets/admin/js/admin.js:740
 msgid "Line"
 msgstr ""
 
 #: includes/Admin/Tabs/ImportTab.php:73
-#: includes/Services/SettingsService.php:74
-#: assets/admin/js/admin.js:687
+#: assets/admin/js/admin.js:743
+msgctxt "import preview column: row validation result"
 msgid "Check"
 msgstr ""
 
@@ -1333,48 +1327,85 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: includes/Frontend/Storefront.php:107
-#: assets/admin/js/admin.js:545
+#. translators: 1: rows in the file, 2: added, 3: updated, 4: skipped because they already existed, 5: failed.
+#: includes/CLI/Commands.php:102
+#, php-format
+msgid "Rows: %1$s. Added: %2$s. Updated: %3$s. Skipped (already existed): %4$s. Failed: %5$s."
+msgstr ""
+
+#: includes/CLI/Commands.php:105
+msgid "Import failed."
+msgstr ""
+
+#: includes/CLI/Commands.php:108
+msgid "Some rows were rejected. Download the error report from WB Plugins > Pincode Checker > Import / Export."
+msgstr ""
+
+#. translators: 1: number of areas, 2: file path.
+#: includes/CLI/Commands.php:155
+#, php-format
+msgid "Exported %1$s area to %2$s."
+msgid_plural "Exported %1$s areas to %2$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: areas inserted, 2: rows skipped as duplicates, 3: total areas now.
+#: includes/CLI/Commands.php:215
+#, php-format
+msgid "Inserted: %1$s. Skipped as duplicates: %2$s. Total areas: %3$s."
+msgstr ""
+
+#: includes/CLI/Commands.php:290
+msgid "Self-test failed:"
+msgstr ""
+
+#. translators: %s: number of checks.
+#: includes/CLI/Commands.php:294
+#, php-format
+msgid "%s check passed."
+msgid_plural "%s checks passed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Frontend/Storefront.php:108
+#: assets/admin/js/admin.js:594
 msgid "Checking..."
 msgstr ""
 
-#: includes/Frontend/Storefront.php:109
+#: includes/Frontend/Storefront.php:110
 msgid "Could not check right now. Please try again."
 msgstr ""
 
-#: includes/Frontend/Storefront.php:110
+#: includes/Frontend/Storefront.php:111
 msgid "Try again"
 msgstr ""
 
-#: includes/Frontend/Storefront.php:111
+#: includes/Frontend/Storefront.php:112
 msgid "We deliver nearby:"
 msgstr ""
 
-#: includes/Frontend/Storefront.php:112
-msgid "Not deliverable to this pincode."
-msgstr ""
-
 #. translators: 1: shipping method name, 2: delivery estimate such as "Oct 8 to Oct 10".
-#: includes/Integrations/WooCommerce/DeliveryEstimates.php:73
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:84
 #, php-format
 msgid "%1$s (arrives %2$s)"
 msgstr ""
 
-#: includes/Integrations/WooCommerce/DeliveryEstimates.php:125
-#: includes/Integrations/WooCommerce/DeliveryEstimates.php:158
-#: includes/Integrations/WooCommerce/DeliveryEstimates.php:162
-msgid "Estimated delivery:"
-msgstr ""
-
-#. translators: 1: estimate label, 2: earliest date Y-m-d, 3: latest date Y-m-d.
-#: includes/Integrations/WooCommerce/DeliveryEstimates.php:139
-msgid "Promised delivery"
-msgstr ""
-
-#. translators: 1: estimate label, 2: earliest date Y-m-d, 3: latest date Y-m-d.
-#: includes/Integrations/WooCommerce/DeliveryEstimates.php:139
+#. translators: %s: delivery estimate, e.g. "Sat, Oct 3 to Mon, Oct 5".
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:169
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:208
 #, php-format
-msgid "%1$s (%2$s to %3$s)"
+msgid "Estimated delivery: %s"
+msgstr ""
+
+#. translators: 1: earliest delivery date, 2: latest delivery date.
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:187
+#: includes/Services/DeliveryDateService.php:149
+#, php-format
+msgid "%1$s to %2$s"
+msgstr ""
+
+#: includes/Integrations/WooCommerce/DeliveryEstimates.php:189
+msgid "Promised delivery"
 msgstr ""
 
 #: includes/Integrations/WooCommerce/ProductSettings.php:34
@@ -1439,7 +1470,7 @@ msgstr ""
 msgid "Select at least one area."
 msgstr ""
 
-#: includes/REST/Controller/CheckController.php:67
+#: includes/REST/Controller/CheckController.php:72
 msgid "Too many checks. Please wait a minute and try again."
 msgstr ""
 
@@ -1500,12 +1531,18 @@ msgstr ""
 msgid "Enter a postcode of 2-20 letters or digits."
 msgstr ""
 
-#: includes/Services/DeliveryDateService.php:114
+#. translators: Short delivery date in your language's order, e.g. "Sat, Oct 3". See https://www.php.net/manual/datetime.format.php
+#: includes/Services/DeliveryDateService.php:65
+msgctxt "delivery date format"
+msgid "D, M j"
+msgstr ""
+
+#: includes/Services/DeliveryDateService.php:133
 msgid "today"
 msgstr ""
 
 #. translators: %d: number of days.
-#: includes/Services/DeliveryDateService.php:119
+#: includes/Services/DeliveryDateService.php:138
 #, php-format
 msgid "in %d day"
 msgid_plural "in %d days"
@@ -1513,21 +1550,15 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: 1: minimum days, 2: maximum days.
-#: includes/Services/DeliveryDateService.php:121
+#: includes/Services/DeliveryDateService.php:140
 #, php-format
 msgid "in %1$d-%2$d days"
 msgstr ""
 
 #. translators: %s: latest delivery date.
-#: includes/Services/DeliveryDateService.php:126
+#: includes/Services/DeliveryDateService.php:145
 #, php-format
 msgid "by %s"
-msgstr ""
-
-#. translators: 1: earliest delivery date, 2: latest delivery date.
-#: includes/Services/DeliveryDateService.php:130
-#, php-format
-msgid "%1$s to %2$s"
 msgstr ""
 
 #: includes/Services/ImportService.php:80
@@ -1554,23 +1585,24 @@ msgstr ""
 msgid "The first row must be a header with a \"code\" (or pincode, postcode, zip) column. Download the sample file to see the format."
 msgstr ""
 
-#: includes/Services/ImportService.php:176
+#: includes/Services/ImportService.php:177
 msgid "Upload a file first."
 msgstr ""
 
-#: includes/Services/ImportService.php:196
+#: includes/Services/ImportService.php:197
 msgid "There is no import to cancel."
 msgstr ""
 
-#: includes/Services/ImportService.php:208
+#: includes/Services/ImportService.php:209
 msgid "Import cancelled. Areas already imported were kept."
 msgstr ""
 
-#: includes/Services/ImportService.php:311
+#: includes/Services/ImportService.php:320
 msgid "The uploaded file is no longer on the server."
 msgstr ""
 
-#: includes/Services/ImportService.php:350
+#: includes/Services/ImportService.php:359
+#: assets/admin/js/admin.js:677
 msgid "Import finished."
 msgstr ""
 
@@ -1586,7 +1618,13 @@ msgstr ""
 msgid "Enter pincode"
 msgstr ""
 
+#: includes/Services/SettingsService.php:74
+msgctxt "button: check delivery to a pincode"
+msgid "Check"
+msgstr ""
+
 #: includes/Services/SettingsService.php:75
+msgctxt "button: enter a different pincode"
 msgid "Change"
 msgstr ""
 
@@ -1630,247 +1668,264 @@ msgstr ""
 msgid "The default maximum delivery days was raised to match the minimum."
 msgstr ""
 
-#: assets/admin/js/admin.js:42
+#: assets/admin/js/admin.js:76
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: assets/admin/js/admin.js:63
+#: assets/admin/js/admin.js:97
+msgctxt "delivery days: store default"
 msgid "Default"
 msgstr ""
 
-#: assets/admin/js/admin.js:133
+#: assets/admin/js/admin.js:167
 msgid "Could not load areas"
 msgstr ""
 
-#: assets/admin/js/admin.js:160
+#: assets/admin/js/admin.js:194
 msgid "No areas match these filters"
 msgstr ""
 
-#: assets/admin/js/admin.js:160
+#: assets/admin/js/admin.js:194
 msgid "No delivery areas yet"
 msgstr ""
 
-#: assets/admin/js/admin.js:161
+#: assets/admin/js/admin.js:195
 msgid "Clear the search or filters to see all areas."
 msgstr ""
 
-#: assets/admin/js/admin.js:161
+#: assets/admin/js/admin.js:195
 msgid "Add the postcodes you deliver to, or import them from a CSV file."
 msgstr ""
 
-#: assets/admin/js/admin.js:173
+#. translators: %s: area code or range, e.g. 110001.
+#: assets/admin/js/admin.js:208
 #, js-format
 msgid "Select area %s"
 msgstr ""
 
-#: assets/admin/js/admin.js:181
+#: assets/admin/js/admin.js:216
+#: assets/admin/js/admin.js:625
+msgctxt "country: any country"
 msgid "Any"
 msgstr ""
 
-#: assets/admin/js/admin.js:186
+#: assets/admin/js/admin.js:220
 msgid "Yes"
 msgstr ""
 
-#: assets/admin/js/admin.js:186
+#: assets/admin/js/admin.js:220
 msgid "No"
 msgstr ""
 
-#: assets/admin/js/admin.js:186
+#. translators: %s: cash on delivery fee with currency, e.g. ₹25.00.
+#: assets/admin/js/admin.js:221
 #, js-format
 msgid "+%s fee"
 msgstr ""
 
-#: assets/admin/js/admin.js:193
+#. translators: %s: area code or range.
+#: assets/admin/js/admin.js:230
 #, js-format
 msgid "Edit %s"
 msgstr ""
 
-#: assets/admin/js/admin.js:196
+#. translators: %s: area code or range.
+#: assets/admin/js/admin.js:234
 #, js-format
 msgid "Delete %s"
 msgstr ""
 
 #. translators: 1: first row, 2: last row, 3: total areas.
-#: assets/admin/js/admin.js:208
+#: assets/admin/js/admin.js:246
 #, js-format
 msgid "Showing %1$s-%2$s of %3$s area"
 msgid_plural "Showing %1$s-%2$s of %3$s areas"
 msgstr[0] ""
 msgstr[1] ""
 
-#: assets/admin/js/admin.js:211
+#. translators: 1: current page number, 2: total pages.
+#: assets/admin/js/admin.js:250
 #, js-format
 msgid "Page %1$s of %2$s"
 msgstr ""
 
-#: assets/admin/js/admin.js:227
+#. translators: %s: number of selected areas.
+#: assets/admin/js/admin.js:267
 #, js-format
 msgid "%s area selected"
 msgid_plural "%s areas selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: assets/admin/js/admin.js:231
+#. translators: %s: number of areas matching the filters.
+#: assets/admin/js/admin.js:272
 #, js-format
-msgid "Select all %s matching areas"
-msgstr ""
+msgid "Select the %s matching area"
+msgid_plural "Select all %s matching areas"
+msgstr[0] ""
+msgstr[1] ""
 
-#: assets/admin/js/admin.js:309
+#. translators: %s: number of areas deleted.
+#: assets/admin/js/admin.js:351
 #, js-format
 msgid "%s area deleted."
 msgid_plural "%s areas deleted."
 msgstr[0] ""
 msgstr[1] ""
 
-#: assets/admin/js/admin.js:319
+#. translators: %s: number of areas to delete.
+#: assets/admin/js/admin.js:362
 #, js-format
 msgid "Delete %s area? This cannot be undone."
 msgid_plural "Delete %s areas? This cannot be undone."
 msgstr[0] ""
 msgstr[1] ""
 
-#: assets/admin/js/admin.js:343
+#. translators: %s: area code or range.
+#: assets/admin/js/admin.js:387
 #, js-format
 msgid "Delete area %s? This cannot be undone."
 msgstr ""
 
-#: assets/admin/js/admin.js:346
+#. translators: %s: area code or range.
+#: assets/admin/js/admin.js:391
 #, js-format
 msgid "Area %s deleted."
 msgstr ""
 
-#: assets/admin/js/admin.js:362
+#: assets/admin/js/admin.js:407
 msgid "Range start"
 msgstr ""
 
-#: assets/admin/js/admin.js:362
+#: assets/admin/js/admin.js:407
 msgid "Postcode starts with"
 msgstr ""
 
-#: assets/admin/js/admin.js:379
+#. translators: %s: area code or range.
+#: assets/admin/js/admin.js:425
 #, js-format
 msgid "Edit area %s"
 msgstr ""
 
-#: assets/admin/js/admin.js:379
+#: assets/admin/js/admin.js:426
 msgid "Add a delivery area"
 msgstr ""
 
-#: assets/admin/js/admin.js:432
+#. translators: %s: area code or range.
+#: assets/admin/js/admin.js:480
 #, js-format
 msgid "Area %s updated."
 msgstr ""
 
-#: assets/admin/js/admin.js:432
+#. translators: %s: area code or range.
+#: assets/admin/js/admin.js:481
 #, js-format
 msgid "Area %s added."
 msgstr ""
 
-#: assets/admin/js/admin.js:454
+#: assets/admin/js/admin.js:503
 msgid "Open the existing area"
 msgstr ""
 
-#: assets/admin/js/admin.js:564
+#: assets/admin/js/admin.js:613
 msgid "Shopper sees"
 msgstr ""
 
-#: assets/admin/js/admin.js:567
+#: assets/admin/js/admin.js:616
 msgid "Not available"
 msgstr ""
 
-#: assets/admin/js/admin.js:568
+#: assets/admin/js/admin.js:617
 msgid "Invalid postcode for this country"
 msgstr ""
 
-#: assets/admin/js/admin.js:574
+#: assets/admin/js/admin.js:623
 msgid "Decided by"
 msgstr ""
 
-#: assets/admin/js/admin.js:576
+#. translators: 1: area code or range, 2: area type (Exact, Prefix or Range), 3: country code or "Any", 4: area status (Serviceable or Blocked).
+#: assets/admin/js/admin.js:625
 #, js-format
 msgid "Area %1$s (%2$s, %3$s, %4$s)"
 msgstr ""
 
-#: assets/admin/js/admin.js:576
-msgid "any country"
-msgstr ""
-
-#: assets/admin/js/admin.js:577
+#: assets/admin/js/admin.js:626
 msgid "No area matched, so the unknown-postcode setting applies."
 msgstr ""
 
-#: assets/admin/js/admin.js:581
+#: assets/admin/js/admin.js:630
 msgid "Location"
 msgstr ""
 
-#: assets/admin/js/admin.js:585
+#: assets/admin/js/admin.js:634
 msgid "None from this area"
 msgstr ""
 
-#: assets/admin/js/admin.js:586
+#. translators: %s: cash on delivery fee with currency.
+#: assets/admin/js/admin.js:636
 #, js-format
 msgid "Allowed (+%s)"
 msgstr ""
 
-#: assets/admin/js/admin.js:586
+#: assets/admin/js/admin.js:637
 msgid "Allowed"
 msgstr ""
 
-#: assets/admin/js/admin.js:586
+#: assets/admin/js/admin.js:637
 msgid "Not allowed"
 msgstr ""
 
-#: assets/admin/js/admin.js:589
+#: assets/admin/js/admin.js:640
 msgid "Suggested nearby"
 msgstr ""
 
 #. translators: 1: added, 2: updated, 3: skipped, 4: failed.
-#: assets/admin/js/admin.js:621
+#: assets/admin/js/admin.js:672
 #, js-format
 msgid "%1$s added, %2$s updated, %3$s skipped (already existed), %4$s failed."
 msgstr ""
 
-#: assets/admin/js/admin.js:625
-msgid "Import finished:"
+#: assets/admin/js/admin.js:678
+msgid "Import cancelled. Rows already imported were kept."
 msgstr ""
 
-#: assets/admin/js/admin.js:625
-msgid "Import cancelled. Rows already imported were kept:"
-msgstr ""
-
-#: assets/admin/js/admin.js:625
+#. translators: %s: reason the import stopped.
+#: assets/admin/js/admin.js:680
 #, js-format
 msgid "Import stopped: %s"
 msgstr ""
 
-#: assets/admin/js/admin.js:638
+#: assets/admin/js/admin.js:694
 msgid "Waiting for the background worker to start..."
 msgstr ""
 
-#: assets/admin/js/admin.js:639
+#. translators: 1: rows imported so far, 2: total rows, 3: percent complete.
+#: assets/admin/js/admin.js:695
 #, js-format
 msgid "Imported %1$s of %2$s rows (%3$s%%)"
 msgstr ""
 
-#: assets/admin/js/admin.js:688
+#: assets/admin/js/admin.js:744
 msgid "OK"
 msgstr ""
 
-#: assets/admin/js/admin.js:694
+#. translators: 1: number of rows, 2: file name.
+#: assets/admin/js/admin.js:751
 #, js-format
 msgid "%1$s row found in %2$s."
 msgid_plural "%1$s rows found in %2$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: assets/admin/js/admin.js:695
+#. translators: %s: number of preview rows with problems.
+#: assets/admin/js/admin.js:753
 #, js-format
 msgid "%s of the first rows has a problem and will be skipped; the import reports every such row."
 msgid_plural "%s of the first rows have problems and will be skipped; the import reports every such row."
 msgstr[0] ""
 msgstr[1] ""
 
-#: assets/admin/js/admin.js:695
+#: assets/admin/js/admin.js:754
 msgid "The first rows look good."
 msgstr ""
 

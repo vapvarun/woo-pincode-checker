@@ -58,7 +58,7 @@ final class SettingsService {
 				'transit_counting' => array( 'enum', 'business', array( 'business', 'calendar' ) ),
 				'holidays'         => array( 'dates', array() ),
 				'display'          => array( 'enum', 'range', array( 'range', 'date', 'days' ) ),
-				'date_format'      => array( 'enum', 'D, M j', array( 'D, M j', 'M j', 'j M', 'l, F j', 'd/m', 'm/d' ) ),
+				'date_format'      => array( 'enum', 'locale', array( 'locale', 'site', 'D, M j', 'M j', 'j M', 'l, F j', 'd/m', 'm/d' ) ), // locale: the short format translators set for their language.
 				'show_on'          => array( 'enum_list', array( 'product', 'cart', 'order', 'emails' ), array( 'product', 'cart', 'order', 'emails' ) ), // cart = cart and checkout (shipping rate labels).
 			),
 			'checkout' => array(
@@ -71,8 +71,8 @@ final class SettingsService {
 			'display'  => array(
 				'title'           => array( 'text', __( 'Check delivery', 'woo-pincode-checker' ) ),
 				'placeholder'     => array( 'text', __( 'Enter pincode', 'woo-pincode-checker' ) ),
-				'check_label'     => array( 'text', __( 'Check', 'woo-pincode-checker' ) ),
-				'change_label'    => array( 'text', __( 'Change', 'woo-pincode-checker' ) ),
+				'check_label'     => array( 'text', _x( 'Check', 'button: check delivery to a pincode', 'woo-pincode-checker' ) ),
+				'change_label'    => array( 'text', _x( 'Change', 'button: enter a different pincode', 'woo-pincode-checker' ) ),
 				'msg_available'   => array( 'text', __( 'Delivery available to {city}', 'woo-pincode-checker' ) ),
 				'msg_estimate'    => array( 'text', __( 'Arrives {estimate}', 'woo-pincode-checker' ) ),
 				'msg_unavailable' => array( 'text', __( "Sorry, we don't deliver to {postcode} yet.", 'woo-pincode-checker' ) ),

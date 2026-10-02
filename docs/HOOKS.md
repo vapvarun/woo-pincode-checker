@@ -8,6 +8,7 @@ Prefix: `wbpc_`. Every hook below exists in 1.6.0 (file:line in `includes/` unle
 |---|---|---|---|
 | `wbpc_check_result` | `array $result` | Change a check result before any surface uses it (product page, cart, checkout, REST, CLI). | Services/CheckService.php |
 | `wbpc_estimate` | `array $estimate` {min, max, label}, `int $extra_days` | Adjust a delivery estimate (Pro warehouses). | Services/DeliveryDateService.php |
+| `wbpc_shipping_estimate` | `array\|null $estimate`, `string $method_id`, `int $instance_id` | Estimate for one shipping method, shown on its rate and saved on the order. Null for local pickup by default; return null to hide it, or shift dates for express. | Integrations/WooCommerce/DeliveryEstimates.php |
 | `wbpc_is_product_excluded` | `bool $excluded`, `WC_Product $product` | Turn the checker and its enforcement off or on for a product. | Services/ProductService.php |
 | `wbpc_before_area_save` | `array $row`, `int $area_id` (0 on create) | Change or reject (return `WP_Error`) an area before it is written. Runs for admin, REST, CLI and imports. | Services/AreaService.php |
 | `wbpc_load_public_assets` | `bool $load` | Load the checker CSS/JS on extra pages (custom templates, page builders). | Frontend/Storefront.php |

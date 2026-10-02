@@ -103,13 +103,13 @@ final class Storefront {
 				'cookieDays'   => (int) $general['remember_days'],
 				'requireCheck' => (bool) $general['require_check'],
 				'action'       => (string) $general['unavailable_action'],
+				'locale'       => determine_locale(), // The REST answer is written in the page's language.
 				'i18n'         => array(
-					'checking'    => __( 'Checking...', 'woo-pincode-checker' ),
-					'required'    => $display['msg_required'],
-					'error'       => __( 'Could not check right now. Please try again.', 'woo-pincode-checker' ),
-					'retry'       => __( 'Try again', 'woo-pincode-checker' ),
-					'nearby'      => __( 'We deliver nearby:', 'woo-pincode-checker' ),
-					'unavailable' => __( 'Not deliverable to this pincode.', 'woo-pincode-checker' ),
+					'checking' => __( 'Checking...', 'woo-pincode-checker' ),
+					'required' => $display['msg_required'],
+					'error'    => __( 'Could not check right now. Please try again.', 'woo-pincode-checker' ),
+					'retry'    => __( 'Try again', 'woo-pincode-checker' ),
+					'nearby'   => __( 'We deliver nearby:', 'woo-pincode-checker' ),
 				),
 			)
 		);

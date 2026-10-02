@@ -51,6 +51,11 @@ final class CheckController {
 						'minimum' => 0,
 						'default' => 0,
 					),
+					'locale'     => array(
+						'type'    => 'string',
+						'pattern' => '^[A-Za-z]{2,3}(_[A-Za-z0-9]+)*$|^$',
+						'default' => '',
+					),
 				),
 			)
 		);
@@ -69,6 +74,10 @@ final class CheckController {
 			return $response;
 		}
 
+		// REST requests run in the site language; answer in the language of the page that asked.
+		$locale   = (string) $request['locale'];
+		$switched = '' !== $locale && ( 'en_US' === $locale || in_array( $locale, get_available_languages(), true ) ) && switch_to_locale( $locale );
+
 		$product = $request['product_id'] ? wc_get_product( (int) $request['product_id'] ) : null;
 		$result  = Plugin::checker()->check( (string) $request['postcode'], strtoupper( (string) $request['country'] ), $product ? Plugin::products()->extra_days( $product ) : 0 );
 
@@ -81,6 +90,10 @@ final class CheckController {
 				)
 			)
 		);
+
+		if ( $switched ) {
+			restore_previous_locale();
+		}
 
 		// Personal to the shopper: browsers may reuse it briefly, shared caches and CDNs must not.
 		$response->header( 'Cache-Control', 'private, max-age=60' );

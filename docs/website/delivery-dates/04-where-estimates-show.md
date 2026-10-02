@@ -10,7 +10,7 @@ Control these places with **Show the estimate on** on the **Delivery Dates** tab
 | Place | Setting | What shoppers see |
 |-------|---------|-------------------|
 | Product page | Product page | The "Arrives ..." line under the checker result |
-| Cart and checkout | Cart and checkout (next to each shipping option) | Each shipping option label ends with "(arrives ...)" |
+| Cart and checkout | Cart and checkout (next to each shipping option) | Each delivery option label ends with "(arrives ...)". Local pickup has no estimate. |
 | Order details | Order details | "Estimated delivery:" on the thank-you page and the My Account order view |
 | Order emails | Order emails | "Estimated delivery:" in order emails, HTML and plain text |
 

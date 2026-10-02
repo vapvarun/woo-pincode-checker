@@ -7,15 +7,49 @@
 	'use strict';
 
 	var __ = wp.i18n.__;
+	var _x = wp.i18n._x;
 	var _n = wp.i18n._n;
 	var sprintf = wp.i18n.sprintf;
 	var apiFetch = wp.apiFetch;
 	var addQueryArgs = wp.url.addQueryArgs;
-	var cfg = window.wbpcAdmin || { currency: '', decimals: 2 };
+	var cfg = window.wbpcAdmin || { currency: '', decimals: 2, decimalSep: '.', thousandSep: ',', currencyPos: 'left' };
+
+	/* Numbers and prices follow the store's WooCommerce separators, not the browser's locale. */
+	function num( value, decimals ) {
+		var parts = Math.abs( Number( value ) ).toFixed( decimals || 0 ).split( '.' );
+		parts[ 0 ] = parts[ 0 ].replace( /\B(?=(\d{3})+(?!\d))/g, cfg.thousandSep );
+		return ( Number( value ) < 0 ? '-' : '' ) + parts.join( cfg.decimalSep );
+	}
 
 	function money( value ) {
-		return null === value || undefined === value ? '' : cfg.currency + Number( value ).toFixed( cfg.decimals );
+		if ( null === value || undefined === value ) {
+			return '';
+		}
+		var amount = num( value, cfg.decimals );
+		return {
+			right: amount + cfg.currency,
+			left_space: cfg.currency + '\u00a0' + amount,
+			right_space: amount + '\u00a0' + cfg.currency
+		}[ cfg.currencyPos ] || cfg.currency + amount;
 	}
+
+	/* Whole sentences side by side, each its own node: never glued into one string. */
+	function sentences( node, list ) {
+		node.textContent = '';
+		list.filter( Boolean ).forEach( function ( text ) {
+			node.appendChild( el( 'span', { class: 'wbpc-sentence' }, text ) );
+		} );
+	}
+
+	var TYPE_LABELS = {
+		exact: _x( 'Exact', 'postcode area type', 'woo-pincode-checker' ),
+		prefix: _x( 'Prefix', 'postcode area type', 'woo-pincode-checker' ),
+		range: _x( 'Range', 'postcode area type', 'woo-pincode-checker' )
+	};
+	var STATUS_LABELS = {
+		serviceable: _x( 'Serviceable', 'area status', 'woo-pincode-checker' ),
+		blocked: _x( 'Blocked', 'area status', 'woo-pincode-checker' )
+	};
 
 	function el( tag, attrs, text ) {
 		var node = document.createElement( tag );
@@ -60,7 +94,7 @@
 
 	function daysLabel( area ) {
 		if ( null === area.days_min ) {
-			return __( 'Default', 'woo-pincode-checker' );
+			return _x( 'Default', 'delivery days: store default', 'woo-pincode-checker' );
 		}
 		return null === area.days_max || area.days_max === area.days_min ? String( area.days_min ) : area.days_min + '-' + area.days_max;
 	}
@@ -122,7 +156,7 @@
 					state.rows = rows;
 					render();
 					if ( note ) {
-						setStatus( note + ' ' + statusEl.textContent );
+						sentences( statusEl, [ note, statusEl.textContent ] );
 					}
 				} )
 				.catch( function ( error ) {
@@ -170,6 +204,7 @@
 
 			state.rows.forEach( function ( area ) {
 				var tr = el( 'tr', { 'data-id': area.id } );
+				/* translators: %s: area code or range, e.g. 110001. */
 				var check = el( 'input', { type: 'checkbox', 'aria-label': sprintf( __( 'Select area %s', 'woo-pincode-checker' ), codeLabel( area ) ) } );
 				check.dataset.wbpcCheck = area.id;
 
@@ -177,22 +212,25 @@
 				tdCheck.appendChild( check );
 				tr.appendChild( tdCheck );
 
-				tr.appendChild( cell( __( 'Code', 'woo-pincode-checker' ), codeLabel( area ), { exact: __( 'Exact', 'woo-pincode-checker' ), prefix: __( 'Prefix', 'woo-pincode-checker' ), range: __( 'Range', 'woo-pincode-checker' ) }[ area.type ], 'wbpc-col-code' ) );
-				tr.appendChild( cell( __( 'Country', 'woo-pincode-checker' ), area.country || __( 'Any', 'woo-pincode-checker' ) ) );
+				tr.appendChild( cell( __( 'Code', 'woo-pincode-checker' ), codeLabel( area ), TYPE_LABELS[ area.type ], 'wbpc-col-code' ) );
+				tr.appendChild( cell( __( 'Country', 'woo-pincode-checker' ), area.country || _x( 'Any', 'country: any country', 'woo-pincode-checker' ) ) );
 				tr.appendChild( cell( __( 'City / State', 'woo-pincode-checker' ), area.city || area.state || '-', area.city ? area.state : '' ) );
 				tr.appendChild( cell( __( 'Delivery days', 'woo-pincode-checker' ), daysLabel( area ) ) );
 				tr.appendChild( cell( __( 'Shipping', 'woo-pincode-checker' ), null === area.shipping_fee ? '-' : money( area.shipping_fee ) ) );
-				/* translators: %s: COD fee. */
-				tr.appendChild( cell( __( 'COD', 'woo-pincode-checker' ), area.cod_allowed ? __( 'Yes', 'woo-pincode-checker' ) : __( 'No', 'woo-pincode-checker' ), area.cod_allowed && area.cod_fee > 0 ? sprintf( __( '+%s fee', 'woo-pincode-checker' ), money( area.cod_fee ) ) : '' ) );
+				tr.appendChild( cell( __( 'COD', 'woo-pincode-checker' ), area.cod_allowed ? __( 'Yes', 'woo-pincode-checker' ) : __( 'No', 'woo-pincode-checker' ), area.cod_allowed && area.cod_fee > 0
+					? sprintf( /* translators: %s: cash on delivery fee with currency, e.g. ₹25.00. */ __( '+%s fee', 'woo-pincode-checker' ), money( area.cod_fee ) )
+					: '' ) );
 
 				var status = el( 'td', { 'data-label': __( 'Status', 'woo-pincode-checker' ) } );
-				status.appendChild( 'serviceable' === area.status ? badge( __( 'Serviceable', 'woo-pincode-checker' ), 'success' ) : badge( __( 'Blocked', 'woo-pincode-checker' ), 'danger' ) );
+				status.appendChild( badge( STATUS_LABELS[ area.status ], 'serviceable' === area.status ? 'success' : 'danger' ) );
 				tr.appendChild( status );
 
 				var actions = el( 'td', { class: 'wbpc-col-actions' } );
+				/* translators: %s: area code or range. */
 				var edit = el( 'button', { type: 'button', class: 'button wbcom-btn wbpc-icon-btn', 'aria-label': sprintf( __( 'Edit %s', 'woo-pincode-checker' ), codeLabel( area ) ) } );
 				edit.appendChild( el( 'i', { 'data-lucide': 'pencil' } ) );
 				edit.dataset.wbpcEdit = area.id;
+				/* translators: %s: area code or range. */
 				var del = el( 'button', { type: 'button', class: 'button wbcom-btn wbpc-icon-btn wbpc-icon-btn--danger', 'aria-label': sprintf( __( 'Delete %s', 'woo-pincode-checker' ), codeLabel( area ) ) } );
 				del.appendChild( el( 'i', { 'data-lucide': 'trash-2' } ) );
 				del.dataset.wbpcDelete = area.id;
@@ -205,10 +243,11 @@
 
 			var first = ( state.page - 1 ) * state.perPage + 1;
 			/* translators: 1: first row, 2: last row, 3: total areas. */
-			setStatus( sprintf( _n( 'Showing %1$s-%2$s of %3$s area', 'Showing %1$s-%2$s of %3$s areas', state.total, 'woo-pincode-checker' ), first.toLocaleString(), ( first + state.rows.length - 1 ).toLocaleString(), state.total.toLocaleString() ) );
+			setStatus( sprintf( _n( 'Showing %1$s-%2$s of %3$s area', 'Showing %1$s-%2$s of %3$s areas', state.total, 'woo-pincode-checker' ), num( first ), num( first + state.rows.length - 1 ), num( state.total ) ) );
 
 			pager.hidden = state.pages <= 1;
-			q( '[data-wbpc-page-label]' ).textContent = sprintf( __( 'Page %1$s of %2$s', 'woo-pincode-checker' ), state.page.toLocaleString(), state.pages.toLocaleString() );
+			/* translators: 1: current page number, 2: total pages. */
+			q( '[data-wbpc-page-label]' ).textContent = sprintf( __( 'Page %1$s of %2$s', 'woo-pincode-checker' ), num( state.page ), num( state.pages ) );
 			q( '[data-wbpc-prev]' ).disabled = state.page <= 1;
 			q( '[data-wbpc-next]' ).disabled = state.page >= state.pages;
 
@@ -224,11 +263,13 @@
 			var selectAll = q( '[data-wbpc-select-all]' );
 
 			bulkbar.hidden = 0 === count;
-			q( '[data-wbpc-selected]' ).textContent = sprintf( _n( '%s area selected', '%s areas selected', count, 'woo-pincode-checker' ), count.toLocaleString() );
+			/* translators: %s: number of selected areas. */
+			q( '[data-wbpc-selected]' ).textContent = sprintf( _n( '%s area selected', '%s areas selected', count, 'woo-pincode-checker' ), num( count ) );
 
 			var pageFull = state.rows.length > 0 && state.selected.size === state.rows.length;
 			selectAll.hidden = ! pageFull || state.allMatching || state.total <= state.rows.length;
-			selectAll.textContent = sprintf( __( 'Select all %s matching areas', 'woo-pincode-checker' ), state.total.toLocaleString() );
+			/* translators: %s: number of areas matching the filters. */
+			selectAll.textContent = sprintf( _n( 'Select the %s matching area', 'Select all %s matching areas', state.total, 'woo-pincode-checker' ), num( state.total ) );
 		};
 
 		rowsEl.addEventListener( 'change', function ( e ) {
@@ -306,7 +347,8 @@
 					} else if ( state.page > 1 && body.ids.length >= state.rows.length ) {
 						state.page--;
 					}
-					load( sprintf( _n( '%s area deleted.', '%s areas deleted.', res.deleted, 'woo-pincode-checker' ), res.deleted.toLocaleString() ) );
+					/* translators: %s: number of areas deleted. */
+					load( sprintf( _n( '%s area deleted.', '%s areas deleted.', res.deleted, 'woo-pincode-checker' ), num( res.deleted ) ) );
 				} )
 				.catch( function ( error ) {
 					setStatus( message( error ) );
@@ -316,7 +358,8 @@
 		q( '[data-wbpc-bulk-delete]' ).addEventListener( 'click', function () {
 			var count = state.allMatching ? state.total : state.selected.size;
 			askConfirm(
-				sprintf( _n( 'Delete %s area? This cannot be undone.', 'Delete %s areas? This cannot be undone.', count, 'woo-pincode-checker' ), count.toLocaleString() ),
+				/* translators: %s: number of areas to delete. */
+				sprintf( _n( 'Delete %s area? This cannot be undone.', 'Delete %s areas? This cannot be undone.', count, 'woo-pincode-checker' ), num( count ) ),
 				count,
 				function () {
 					removeAreas( state.allMatching ? Object.assign( filters(), { all: true } ) : { ids: Array.from( state.selected ) } );
@@ -340,9 +383,11 @@
 				area = state.rows.find( function ( row ) {
 					return row.id === Number( delBtn.dataset.wbpcDelete );
 				} );
+				/* translators: %s: area code or range. */
 				askConfirm( sprintf( __( 'Delete area %s? This cannot be undone.', 'woo-pincode-checker' ), codeLabel( area ) ), 1, function () {
 					apiFetch( { path: '/wbpc/v1/areas/' + area.id, method: 'DELETE' } )
 						.then( function () {
+							/* translators: %s: area code or range. */
 							load( sprintf( __( 'Area %s deleted.', 'woo-pincode-checker' ), codeLabel( area ) ) );
 						} )
 						.catch( function ( error ) {
@@ -376,7 +421,9 @@
 			clearErrors();
 			form.reset();
 			state.editing = area ? area.id : 0;
-			q( '[data-wbpc-form-title]' ).textContent = area ? sprintf( __( 'Edit area %s', 'woo-pincode-checker' ), codeLabel( area ) ) : __( 'Add a delivery area', 'woo-pincode-checker' );
+			q( '[data-wbpc-form-title]' ).textContent = area
+				? sprintf( /* translators: %s: area code or range. */ __( 'Edit area %s', 'woo-pincode-checker' ), codeLabel( area ) )
+				: __( 'Add a delivery area', 'woo-pincode-checker' );
 
 			if ( area ) {
 				form.querySelector( 'input[name="type"][value="' + area.type + '"]' ).checked = true;
@@ -429,7 +476,9 @@
 
 			apiFetch( state.editing ? { path: '/wbpc/v1/areas/' + state.editing, method: 'PATCH', data: data } : { path: '/wbpc/v1/areas', method: 'POST', data: data } )
 				.then( function ( area ) {
-					var note = sprintf( state.editing ? __( 'Area %s updated.', 'woo-pincode-checker' ) : __( 'Area %s added.', 'woo-pincode-checker' ), codeLabel( area ) );
+					var note = state.editing
+						? sprintf( /* translators: %s: area code or range. */ __( 'Area %s updated.', 'woo-pincode-checker' ), codeLabel( area ) )
+						: sprintf( /* translators: %s: area code or range. */ __( 'Area %s added.', 'woo-pincode-checker' ), codeLabel( area ) );
 					closeForm();
 					load( note );
 				} )
@@ -573,7 +622,7 @@
 						add(
 							__( 'Decided by', 'woo-pincode-checker' ),
 							res.area
-								? sprintf( __( 'Area %1$s (%2$s, %3$s, %4$s)', 'woo-pincode-checker' ), codeLabel( res.area ), res.area.type, res.area.country || __( 'any country', 'woo-pincode-checker' ), res.area.status )
+								? sprintf( /* translators: 1: area code or range, 2: area type (Exact, Prefix or Range), 3: country code or "Any", 4: area status (Serviceable or Blocked). */ __( 'Area %1$s (%2$s, %3$s, %4$s)', 'woo-pincode-checker' ), codeLabel( res.area ), TYPE_LABELS[ res.area.type ], res.area.country || _x( 'Any', 'country: any country', 'woo-pincode-checker' ), STATUS_LABELS[ res.area.status ] )
 								: __( 'No area matched, so the unknown-postcode setting applies.', 'woo-pincode-checker' )
 						);
 					}
@@ -583,7 +632,9 @@
 					if ( 'available' === r.status ) {
 						add( __( 'Delivery days', 'woo-pincode-checker' ), null === r.days_min ? __( 'Store default', 'woo-pincode-checker' ) : daysLabel( r ) );
 						add( __( 'Shipping fee', 'woo-pincode-checker' ), null === r.shipping_fee ? __( 'None from this area', 'woo-pincode-checker' ) : money( r.shipping_fee ) );
-						add( __( 'Cash on delivery', 'woo-pincode-checker' ), r.cod.allowed ? ( r.cod.fee > 0 ? sprintf( __( 'Allowed (+%s)', 'woo-pincode-checker' ), money( r.cod.fee ) ) : __( 'Allowed', 'woo-pincode-checker' ) ) : __( 'Not allowed', 'woo-pincode-checker' ) );
+						add( __( 'Cash on delivery', 'woo-pincode-checker' ), r.cod.allowed ? ( r.cod.fee > 0
+							? sprintf( /* translators: %s: cash on delivery fee with currency. */ __( 'Allowed (+%s)', 'woo-pincode-checker' ), money( r.cod.fee ) )
+							: __( 'Allowed', 'woo-pincode-checker' ) ) : __( 'Not allowed', 'woo-pincode-checker' ) );
 					}
 					if ( r.nearby && r.nearby.length ) {
 						add( __( 'Suggested nearby', 'woo-pincode-checker' ), r.nearby.map( function ( n ) {
@@ -618,12 +669,17 @@
 
 		var counts = function ( job ) {
 			/* translators: 1: added, 2: updated, 3: skipped, 4: failed. */
-			return sprintf( __( '%1$s added, %2$s updated, %3$s skipped (already existed), %4$s failed.', 'woo-pincode-checker' ), job.added.toLocaleString(), job.updated.toLocaleString(), job.skipped.toLocaleString(), job.failed.toLocaleString() );
+			return sprintf( __( '%1$s added, %2$s updated, %3$s skipped (already existed), %4$s failed.', 'woo-pincode-checker' ), num( job.added ), num( job.updated ), num( job.skipped ), num( job.failed ) );
 		};
 
 		var showResult = function ( job ) {
-			var lead = { done: __( 'Import finished:', 'woo-pincode-checker' ), cancelled: __( 'Import cancelled. Rows already imported were kept:', 'woo-pincode-checker' ), failed: sprintf( __( 'Import stopped: %s', 'woo-pincode-checker' ), job.message ) }[ job.status ] || job.message;
-			iq( '[data-wbpc-result-text]' ).textContent = lead + ' ' + counts( job );
+			var lead = {
+				done: __( 'Import finished.', 'woo-pincode-checker' ),
+				cancelled: __( 'Import cancelled. Rows already imported were kept.', 'woo-pincode-checker' ),
+				/* translators: %s: reason the import stopped. */
+				failed: sprintf( __( 'Import stopped: %s', 'woo-pincode-checker' ), job.message )
+			}[ job.status ] || job.message;
+			sentences( iq( '[data-wbpc-result-text]' ), [ lead, counts( job ) ] );
 			var link = iq( '[data-wbpc-errors]' );
 			link.hidden = ! job.has_errors;
 			link.href = cfg.errorsUrl + '&job=' + encodeURIComponent( job.id );
@@ -636,7 +692,7 @@
 			iq( 'progress' ).value = pct;
 			iq( '[data-wbpc-progress-label]' ).textContent = 'queued' === job.status && ! job.processed
 				? __( 'Waiting for the background worker to start...', 'woo-pincode-checker' )
-				: sprintf( __( 'Imported %1$s of %2$s rows (%3$s%%)', 'woo-pincode-checker' ), job.processed.toLocaleString(), job.total.toLocaleString(), pct );
+				: sprintf( /* translators: 1: rows imported so far, 2: total rows, 3: percent complete. */ __( 'Imported %1$s of %2$s rows (%3$s%%)', 'woo-pincode-checker' ), num( job.processed ), num( job.total ), num( pct ) );
 			show( 'progress' );
 		};
 
@@ -684,15 +740,19 @@
 						tr.appendChild( el( 'td', { 'data-label': __( 'Line', 'woo-pincode-checker' ) }, String( row.line ) ) );
 						tr.appendChild( el( 'td', { 'data-label': __( 'Code', 'woo-pincode-checker' ) }, row.code || '-' ) );
 						tr.appendChild( el( 'td', { 'data-label': __( 'City', 'woo-pincode-checker' ) }, row.city || '-' ) );
-						var check = el( 'td', { 'data-label': __( 'Check', 'woo-pincode-checker' ) } );
+						var check = el( 'td', { 'data-label': _x( 'Check', 'import preview column: row validation result', 'woo-pincode-checker' ) } );
 						check.appendChild( row.error ? badge( row.error, 'danger' ) : badge( __( 'OK', 'woo-pincode-checker' ), 'success' ) );
 						tr.appendChild( check );
 						rows.appendChild( tr );
 					} );
 
-					iq( '[data-wbpc-preview-summary]' ).textContent =
-						sprintf( _n( '%1$s row found in %2$s.', '%1$s rows found in %2$s.', res.job.total, 'woo-pincode-checker' ), res.job.total.toLocaleString(), res.job.name ) + ' ' +
-						( bad ? sprintf( _n( '%s of the first rows has a problem and will be skipped; the import reports every such row.', '%s of the first rows have problems and will be skipped; the import reports every such row.', bad, 'woo-pincode-checker' ), bad ) : __( 'The first rows look good.', 'woo-pincode-checker' ) );
+					sentences( iq( '[data-wbpc-preview-summary]' ), [
+						/* translators: 1: number of rows, 2: file name. */
+						sprintf( _n( '%1$s row found in %2$s.', '%1$s rows found in %2$s.', res.job.total, 'woo-pincode-checker' ), num( res.job.total ), res.job.name ),
+						bad
+							? sprintf( /* translators: %s: number of preview rows with problems. */ _n( '%s of the first rows has a problem and will be skipped; the import reports every such row.', '%s of the first rows have problems and will be skipped; the import reports every such row.', bad, 'woo-pincode-checker' ), num( bad ) )
+							: __( 'The first rows look good.', 'woo-pincode-checker' )
+					] );
 
 					iq( '[data-wbpc-replace-confirm]' ).hidden = 'replace' !== stagedMode;
 					iq( '#wbpc-replace-input' ).value = '';

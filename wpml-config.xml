@@ -17,5 +17,9 @@
 		<key name="wbpc_checkout">
 			<key name="cod_fee_label" />
 		</key>
+		<!-- The Pincode rate shipping method's name, one option per shipping zone instance. -->
+		<key name="woocommerce_wbpc_pincode_rate_*_settings">
+			<key name="title" />
+		</key>
 	</admin-texts>
 </wpml-config>

@@ -70,7 +70,7 @@ final class ImportTab {
 							<th scope="col"><?php esc_html_e( 'Line', 'woo-pincode-checker' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Code', 'woo-pincode-checker' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'City', 'woo-pincode-checker' ); ?></th>
-							<th scope="col"><?php esc_html_e( 'Check', 'woo-pincode-checker' ); ?></th>
+							<th scope="col"><?php echo esc_html_x( 'Check', 'import preview column: row validation result', 'woo-pincode-checker' ); ?></th>
 						</tr></thead>
 						<tbody data-wbpc-preview-rows></tbody>
 					</table>
@@ -145,15 +145,15 @@ final class ImportTab {
 			<label class="screen-reader-text" for="wbpc-export-type"><?php esc_html_e( 'Type', 'woo-pincode-checker' ); ?></label>
 			<select id="wbpc-export-type" name="type" class="wbcom-select">
 				<option value=""><?php esc_html_e( 'All types', 'woo-pincode-checker' ); ?></option>
-				<option value="exact"><?php esc_html_e( 'Exact', 'woo-pincode-checker' ); ?></option>
-				<option value="prefix"><?php esc_html_e( 'Prefix', 'woo-pincode-checker' ); ?></option>
-				<option value="range"><?php esc_html_e( 'Range', 'woo-pincode-checker' ); ?></option>
+				<option value="exact"><?php echo esc_html_x( 'Exact', 'postcode area type', 'woo-pincode-checker' ); ?></option>
+				<option value="prefix"><?php echo esc_html_x( 'Prefix', 'postcode area type', 'woo-pincode-checker' ); ?></option>
+				<option value="range"><?php echo esc_html_x( 'Range', 'postcode area type', 'woo-pincode-checker' ); ?></option>
 			</select>
 			<label class="screen-reader-text" for="wbpc-export-status"><?php esc_html_e( 'Status', 'woo-pincode-checker' ); ?></label>
 			<select id="wbpc-export-status" name="status" class="wbcom-select">
 				<option value=""><?php esc_html_e( 'All statuses', 'woo-pincode-checker' ); ?></option>
-				<option value="serviceable"><?php esc_html_e( 'Serviceable', 'woo-pincode-checker' ); ?></option>
-				<option value="blocked"><?php esc_html_e( 'Blocked', 'woo-pincode-checker' ); ?></option>
+				<option value="serviceable"><?php echo esc_html_x( 'Serviceable', 'area status', 'woo-pincode-checker' ); ?></option>
+				<option value="blocked"><?php echo esc_html_x( 'Blocked', 'area status', 'woo-pincode-checker' ); ?></option>
 			</select>
 			<button type="submit" class="button wbcom-btn"><i data-lucide="download"></i><?php esc_html_e( 'Download CSV', 'woo-pincode-checker' ); ?></button>
 		</form>
