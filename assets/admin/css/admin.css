@@ -34,6 +34,11 @@
 	max-width: none;
 }
 
+/* Export: three filters and the download button. */
+.wbpc-toolbar--export {
+	grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+}
+
 /* Result count on the left, the page's one primary action on the right. */
 .wbpc-listbar {
 	display: flex;
@@ -462,7 +467,8 @@ tbody.is-loading {
 /* Responsive --------------------------------------------------------------------------- */
 
 @media screen and (max-width: 782px) {
-	.wbpc-area-form {
+	.wbpc-area-form,
+	.wbpc-toolbar--export {
 		grid-template-columns: minmax(0, 1fr);
 	}
 }

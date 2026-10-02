@@ -131,7 +131,7 @@ final class ImportTab {
 			__( 'Download your areas as CSV - for backups, or to edit in a spreadsheet and import again in "update" mode.', 'woo-pincode-checker' )
 		);
 		?>
-		<form class="wbpc-toolbar" method="get" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+		<form class="wbpc-toolbar wbpc-toolbar--export" method="get" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="wbpc_export">
 			<?php wp_nonce_field( 'wbpc_export', '_wpnonce', false ); ?>
 			<label class="screen-reader-text" for="wbpc-export-country"><?php esc_html_e( 'Country', 'woo-pincode-checker' ); ?></label>
